@@ -23,7 +23,7 @@
 static constexpr auto STATUS_SERVER_NAME = "OTX Server";
 static constexpr auto STATUS_SERVER_VERSION = "3";
 static constexpr auto MINOR_VERSION = "10";
-static constexpr auto STATUS_SERVER_DEVELOPERS = "Matt Gomez, Leandro Brewster, Erick Nunes, Joao Leonardo Pereira, Bruno Carvalho, Charles Kassab, Guilherme Sidney Magal, OTX Contributors and The Forgotten Server Developers";
+static constexpr auto STATUS_SERVER_DEVELOPERS = "Matt Gomez, Leandro Brewster, Erick Nunes, Joao Leonardo Pereira, Bruno Carvalho, Charles Kassab, Guilherme Sidney Magal, Marson Schneider, OTX Contributors and The Forgotten Server Developers";
 static constexpr auto GIT_REPO = "https://gitlab.com/malucooo/Otxserver-Global/";
 
 static constexpr auto CLIENT_VERSION_MIN = 1100;
