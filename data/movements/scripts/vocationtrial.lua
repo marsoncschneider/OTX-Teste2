@@ -53,7 +53,7 @@ local function changeVocation(player, fromVocation, toVocation)
         -- paladin
         [3] = {
             [CONST_SLOT_LEFT] = {2456, 1, true}, -- bow
-            [CONST_SLOT_AMMO] = {23839, 50, true}, -- 100 arrows
+            [CONST_SLOT_AMMO] = {23839, 100, true}, -- 100 arrows
             [11] = {8704, 7, true, limitStorage = 10038, limit = 1}, -- potion
 			[12] = {7620, 5, true, limitStorage = 10039, limit = 1}, -- potion
 			[13] = {23723, 1, true, limitStorage = 10040, limit = 1}, -- 1 lightest missile rune
@@ -197,35 +197,47 @@ local function changeVocation(player, fromVocation, toVocation)
         }
 		)
 		end
-		end
-		
-		--
-		-- done
-		local position = player:getPosition()
-		position:getNextPosition(player:getDirection())
-		player:teleportTo(position)
+	end
 		player:setVocation(toVocation)
 		--recalculate cap hp and mana
-		--
 		player:setMaxHealth(130 + (player:getVocation():getHealthGain() * player:getLevel()))
 		player:addHealth(player:getMaxHealth())
 		player:setMaxMana(0 + (player:getVocation():getManaGain() * player:getLevel()))
 		player:addMana(player:getMaxMana())
 		player:setCapacity(40000 + (player:getVocation():getCapacityGain() * player:getLevel()))
 		
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Congratulations! Now you are %s.', player:getVocation():getName()))
+		msg1 = {'As this is your first time as a sorcerer, you received a few extra items. ',
+		'As this is your first time as a druid, you received a few extra items. ',
+		'As this is your first time as a paladin, you received a few extra items. ',
+		'As this is your first time as a knight, you received a few extra items. '}
+		msg2 = {'As a sorcerer, you can use the following spells: Magic Patch, Buzz, Scorch',
+		'As a druid, you can use these spells: Mud Attack, Chill Out, Magic Patch',
+		'As a paladin, you can use the following spells: Magic Patch, Arrow Call',
+		'As a knight, you can use the following spells: Bruise Bane'}
+		
+		trialStorages = {Storage.Dawnport.sorcerer, Storage.Dawnport.druid, Storage.Dawnport.paladin, Storage.Dawnport.knight}		
+				
+		if player:getStorageValue(trialStorages[1]) == -1 and player:getStorageValue(trialStorages[2]) == -1 and player:getStorageValue(trialStorages[3]) == -1 and player:getStorageValue(trialStorages[4]) == -1 then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'As this is the first time you try out a vocation, the Guild has kitted you out. ' .. msg2[toVocation])
+		elseif player:getStorageValue(trialStorages[toVocation]) == -1 then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, msg1[toVocation] .. msg2[toVocation])
+		elseif player:getStorageValue(trialStorages[toVocation]) > -1 then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('You have received the weapons of a %s' .. '. ' .. msg2[toVocation], player:getVocation():getName()))
+		end
+		
 		
 		if fromVocation ~= 0 then
-			if toVocation == 1 or toVocation == 2 then -- sorc
-				skills, limits = {1,2,3,4,5}, {0, 20}
-			elseif toVocation == 3 then -- pala
-				skills, limits = {1,2,3,5}, {7, 20}
-			elseif toVocation == 4 then -- ek
-				skills, limits = {4}, {3, 20}
+		player:setStorageValue(trialStorages[toVocation], 1)
+			if toVocation == 1 or toVocation == 2 then -- (1 = sorc 2 = druid 3 = pala 4 = knight)
+				skills, limits = {1,2,3,4,5}, {nil, 20}
+			elseif toVocation == 3 then
+				skills, limits = {1,2,3,5}, {5, 20}
+			elseif toVocation == 4 then
+				skills, limits = {4}, {2, 20}
 			end
 				
 			for i= 1, #skills do
-				if limits[1] > 0 and getPlayerMagLevel(player) > limits[1] or getPlayerSkill(player, skills[i]) > limits[2] then
+				if limits[1] ~= nil and getPlayerMagLevel(player) > limits[1] or getPlayerSkill(player, skills[i]) > limits[2] then
 					local resultId = db.storeQuery("SELECT `id` FROM `players` WHERE `name` = " .. db.escapeString(player:getName():lower()))
 					local accountId = result.getDataInt(resultId, "id")
 					player:remove()

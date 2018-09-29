@@ -3,6 +3,12 @@
 -- Sort it in Values -
 
 Storage = {
+	Dawnport = {
+		knight = 10101,
+		sorcerer = 10102,
+		druid = 10103,
+		paladin = 10104
+	},
 	Grimvale = {
 		SilverVein = 10094
 	},
