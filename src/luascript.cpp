@@ -2316,7 +2316,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "getSkillPercent", LuaScriptInterface::luaPlayerGetSkillPercent);
 	registerMethod("Player", "getSkillTries", LuaScriptInterface::luaPlayerGetSkillTries);
 	registerMethod("Player", "addSkillTries", LuaScriptInterface::luaPlayerAddSkillTries);
-	registerMethod("Player", "setSkill", LuaScriptInterface::luaPlayerSetSkill);
 
 	registerMethod("Player", "addOfflineTrainingTime", LuaScriptInterface::luaPlayerAddOfflineTrainingTime);
 	registerMethod("Player", "getOfflineTrainingTime", LuaScriptInterface::luaPlayerGetOfflineTrainingTime);
@@ -8405,37 +8404,6 @@ int LuaScriptInterface::luaPlayerAddSkillTries(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaPlayerSetSkill(lua_State* L)
-{
-	// player:setSkill(skillType, value[, resetTries = true, [resetPercent = true]])
-	Player* player = getUserdata<Player>(L, 1);
-	if (player) {
-		skills_t skillType = getNumber<skills_t>(L, 2);
-		uint64_t value = getNumber<uint64_t>(L, 3);
-		bool resetTries = getBoolean(L, 4, true);
-		bool resetPercent = getBoolean(L, 5, true);
-		if(skillType == SKILL_MAGLEVEL){
-			player->magLevel = value;
-
-			if (resetTries)
-				player->manaSpent = 0;
-		}else{
-			player->skills[skillType].level = value;
-
-			if (resetTries)
-				player->skills[skillType].tries = 0;
-
-			if(resetPercent)
-				player->skills[skillType].percent = 0;
-		}
-		player->sendSkills();
-		pushBoolean(L, true);
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaPlayerAddOfflineTrainingTime(lua_State* L)
 {
 	// player:addOfflineTrainingTime(time)
@@ -10420,7 +10388,6 @@ int LuaScriptInterface::luaPlayerSetExpBoostStamina(lua_State* L)
 	if (player) {
 		uint16_t stamina = getNumber<uint16_t>(L, 2);
 		player->setExpBoostStamina(stamina);
-		player->sendStats();
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);

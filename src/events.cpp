@@ -131,9 +131,7 @@ bool Events::load()
 			} else if (methodName == "onRequestQuestLine") {
 				info.playerOnRequestQuestLine = event;
 			} else if (methodName == "onStorageUpdate") {
-				info.playerOnStorageUpdate = event;	
-			}else if (methodName == "onRemoveCount") {
-				info.playerOnRemoveCount = event;
+				info.playerOnStorageUpdate = event;				
 			} else {
 				std::cout << "[Warning - Events::load] Unknown player method: " << methodName << std::endl;
 			}
@@ -606,33 +604,6 @@ bool Events::eventPlayerOnMove(Player* player)
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 
 	return scriptInterface.callFunction(1);
-}
-
-bool Events::eventPlayerOnRemoveCount(Player* player, Item* item)
-{
-	// Player:onMove()
-	if (info.playerOnRemoveCount == -1) {
-		return true;
-	}
-
-	if (!scriptInterface.reserveScriptEnv()) {
-		std::cout << "[Error - Events::eventPlayerOnMove] Call stack overflow" << std::endl;
-		return false;
-	}
-
-	ScriptEnvironment* env = scriptInterface.getScriptEnv();
-	env->setScriptId(info.playerOnRemoveCount, &scriptInterface);
-
-	lua_State* L = scriptInterface.getLuaState();
-	scriptInterface.pushFunction(info.playerOnRemoveCount);
-
-	LuaScriptInterface::pushUserdata<Player>(L, player);
-	LuaScriptInterface::setMetatable(L, -1, "Player");
-
-	LuaScriptInterface::pushUserdata<Item>(L, item);
-	LuaScriptInterface::setItemMetatable(L, -1, item);
-
-	return scriptInterface.callFunction(2);
 }
 
 bool Events::eventPlayerOnMoveItem(Player* player, Item* item, uint16_t count, const Position& fromPosition, const Position& toPosition, Cylinder* fromCylinder, Cylinder* toCylinder)

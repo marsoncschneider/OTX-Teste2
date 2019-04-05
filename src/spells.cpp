@@ -25,7 +25,6 @@
 #include "monster.h"
 #include "pugicast.h"
 #include "spells.h"
-#include "events.h"
 
 extern Game g_game;
 extern Spells* g_spells;
@@ -33,7 +32,6 @@ extern Monsters g_monsters;
 extern Vocations g_vocations;
 extern ConfigManager g_config;
 extern LuaEnvironment g_luaEnvironment;
-extern Events* g_events;
 
 Spells::Spells()
 {
@@ -1261,7 +1259,6 @@ bool RuneSpell::executeUse(Player* player, Item* item, const Position&, Thing* t
 	if (hasCharges && item && g_config.getBoolean(ConfigManager::REMOVE_RUNE_CHARGES)) {
 		int32_t newCount = std::max<int32_t>(0, item->getItemCount() - 1);
 		g_game.transformItem(item, item->getID(), newCount);
-		g_events->eventPlayerOnRemoveCount(player, item);
 	}
 	return true;
 }

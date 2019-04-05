@@ -1353,13 +1353,13 @@ ReturnValue Game::internalRemoveItem(Item* item, int32_t count /*= -1*/, bool te
 		cylinder->removeThing(item, count);
 
 		if (item->isRemoved()) {
-			item->onRemoved();		    
 			ReleaseItem(item);
 		}
 
 		cylinder->postRemoveNotification(item, nullptr, index);
 	}
 
+	item->onRemoved();
 	return RETURNVALUE_NOERROR;
 }
 
@@ -2325,13 +2325,6 @@ void Game::playerWrapableItem(uint32_t playerId, const Position& pos, uint8_t st
 	const ItemType& iiType = Item::items[item->getID()];
 	uint16_t newWrapId = Item::items[item->getID()].wrapableTo;
 	std::string itemName = item->getName();
-
-	// It is not possible to unwrap containers with one or more items inside.
-	const Container* container = item->getContainer();
-	if(container && container->getItemHoldingCount() > 0){
-		player->sendCancelMessage(RETURNVALUE_NOTPOSSIBLE);
-		return;
-	}
 
 	// FOR ITEMS THAT DO NOT LOSE ACTIONID TO TRANSFORM
 	if (!iiType.wrapContainer) {

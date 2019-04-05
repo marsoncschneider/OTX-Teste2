@@ -436,7 +436,6 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 		case WEAPONACTION_REMOVECOUNT:
 			if(g_config.getBoolean(ConfigManager::REMOVE_WEAPON_AMMO)) {
 				Weapon::decrementItemCount(item);
-				g_events->eventPlayerOnRemoveCount(player, item); 
 			}
 			break;
 
@@ -444,7 +443,6 @@ void Weapon::onUsedWeapon(Player* player, Item* item, Tile* destTile) const
 			uint16_t charges = item->getCharges();
 			if (charges != 0 && g_config.getBoolean(ConfigManager::REMOVE_WEAPON_CHARGES)) {
 				g_game.transformItem(item, item->getID(), charges - 1);
-				g_events->eventPlayerOnRemoveCount(player, item); 
 			}
 			break;
 		}

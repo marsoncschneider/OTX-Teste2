@@ -66,7 +66,6 @@ class Events
 		int32_t playerOnRequestQuestLog = -1;
 		int32_t playerOnRequestQuestLine = -1;
 		int32_t playerOnStorageUpdate = -1;		
-		int32_t playerOnRemoveCount = -1;
 
 		// Custom
 		int32_t monsterOnSpawn = -1;
@@ -108,7 +107,6 @@ class Events
 		void eventPlayerOnUseWeapon(Player* player, int32_t& normalDamage, CombatType_t& elementType, int32_t& elementDamage);
 		void eventPlayerOnCombatSpell(Player* player, int32_t& normalDamage, int32_t& elementDamage, CombatType_t& elementType, bool changeDamage);
 		bool eventPlayerOnMove(Player* player);
-		bool eventPlayerOnRemoveCount(Player* player, Item * item);
 		void eventPlayerOnEquipImbuement(Player* player, Item* item);
 		void eventPlayerOnDeEquipImbuement(Player* player, Item* item);
 		void eventPlayerOnRequestQuestLog(Player* player);
