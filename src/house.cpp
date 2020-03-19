@@ -1,8 +1,6 @@
 /**
- * @file house.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -226,69 +224,49 @@ bool House::transferToDepot(Player* player) const
 	if (townId == 0 || owner == 0) {
 		return false;
 	}
-int constructionKits[58][2] = {
-{3901, 1666}, {3902, 1670}, {3903, 1652}, {3904, 1674},
-{3905, 1658}, {3906, 3813}, {3907, 3817}, {3908, 1619}, {3909, 12799}, {3910, 2105},
-{3911, 1614}, {3912, 3806}, {3913, 3807}, {3914, 3809}, {3915, 1716}, {3916, 1724},
-{3917, 1732}, {3918, 1775}, {3919, 1774}, {3920, 1750}, {3921, 3832}, {3922, 2095},
-{3923, 2098}, {3924, 2064}, {3925, 2582}, {3926, 2117}, {3927, 1728}, {3928, 1442},
-{3929, 1446}, {3930, 1447}, {3931, 2034}, {3932, 2604}, {3933, 2080}, {3934, 2084},
-{3935, 3821}, {3936, 3811}, {3937, 2101}, {3938, 3812}, {5086, 5046}, {5087, 5055},
-{5088, 5056}, {6114, 6111}, {6115, 6109}, {6372, 6356}, {6373, 6371}, {8692, 8688},
-{9974, 9975}, {11124, 11125}, {11126, 11127}, {11133, 11129}, {11205, 11203}, {14328, 1616},
-{14329, 1615}, {16075, 16020}, {16099, 16098}, {20254, 20295}, {20255, 20297}, {20257, 20299},
-	};
+
 	ItemList moveItemList;
+
+	uint8_t itemCountMoved = 0;
+	uint32_t itensDeleted = 0;
+
+	uint32_t maxItensTransfer = static_cast<uint32_t>(g_config.getNumber(ConfigManager::MAX_ITEM_TRANSFER_DEPOT));
 	for (HouseTile* tile : houseTiles) {
 		if (const TileItemVector* items = tile->getItemList()) {
 			for (Item* item : *items) {
-				if (item->isWrapable()) {
-					Container* container = item->getContainer();
-					if (container) {
-						for (Item* containerItem : container->getItemList()) {
-							moveItemList.push_back(containerItem);
-						}
+				if (itemCountMoved > maxItensTransfer) {
+					if (item->isPickupable()) {
+						g_game.internalRemoveItem(item, 1);
+						itensDeleted++;
+						continue;
 					}
+				}
+
+				if (item->isWrapable()) {
 					std::string itemName = item->getName();
 					uint16_t itemID = item->getID();
 					Item* newItem = g_game.transformItem(item, 26054);
-					ItemAttributes::CustomAttribute val;
-					val.set<int64_t>(itemID);
-					std::string key = "unWrapId";
-					newItem->setCustomAttribute(key, val);
+					newItem->setIntAttr(ITEM_ATTRIBUTE_ACTIONID, itemID);
 					std::ostringstream ss;
 					ss << "Unwrap it in your own house to create a <" << itemName << ">.";
 					newItem->setStrAttr(ITEM_ATTRIBUTE_DESCRIPTION, ss.str());
 					moveItemList.push_back(newItem);
+					itemCountMoved++;
 				}
-				else if (item->isPickupable()) {
+
+				if (item->isPickupable()) {
 					moveItemList.push_back(item);
-				}
-				else {
+					itemCountMoved++;
+				} else {
 					Container* container = item->getContainer();
 					if (container) {
 						for (Item* containerItem : container->getItemList()) {
-							moveItemList.push_back(containerItem);
-						}
-					}
-					for (int i = 0; i < 58; i++) {
-						if (constructionKits[i][1] == item->getID()) {
-							Item* newItem = g_game.transformItem(item, constructionKits[i][0]);
-							moveItemList.push_back(newItem);
-							break;
-						}
-						if (item->isRotatable()) {
-							uint16_t newRotation = item->getID();
-							for (int x = 0; x < 5; x++) {
-								if (!Item::items[newRotation].rotatable) break;
-								newRotation = Item::items[newRotation].rotateTo;
-								if (newRotation == item->getID()) break;
-								if (newRotation == constructionKits[i][1]) {
-									Item* newItem = g_game.transformItem(item, constructionKits[i][0]);
-									moveItemList.push_back(newItem);
-									break;
-								}
+							if (itemCountMoved > maxItensTransfer) {
+								break;
 							}
+
+							moveItemList.push_back(containerItem);
+							itemCountMoved++;
 						}
 					}
 				}
@@ -296,9 +274,17 @@ int constructionKits[58][2] = {
 		}
 	}
 
+	if (itensDeleted > 0) {
+		std::ostringstream ss;
+		ss << itensDeleted << " dos seus itens nao foram enviados para o seu Inbox devido a que ter passado de " << maxItensTransfer << " itens em sua casa.";
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, ss.str());
+		std::cout << "[House Protection] - " << itensDeleted << " was been deleted. The player with this amount of itens was " << player->getName() << ". " << itemCountMoved << " was been moved to his Inbox." << std::endl;
+	}
+
 	for (Item* item : moveItemList) {
 		g_game.internalMoveItem(item->getParent(), player->getInbox(), INDEX_WHEREEVER, item, item->getItemCount(), nullptr, FLAG_NOLIMIT);
 	}
+
 	return true;
 }
 
@@ -444,18 +430,18 @@ bool House::executeTransfer(HouseTransferItem* item, Player* newOwner)
 	return true;
 }
 
-void AccessList::parseList(const std::string& listToParse)
+void AccessList::parseList(const std::string& list)
 {
 	playerList.clear();
 	guildRankList.clear();
 	expressionList.clear();
 	regExList.clear();
-	this->list = listToParse;
-	if (listToParse.empty()) {
+	this->list = list;
+	if (list.empty()) {
 		return;
 	}
 
-	std::istringstream listStream(listToParse);
+	std::istringstream listStream(list);
 	std::string line;
 
 	while (getline(listStream, line)) {
@@ -557,6 +543,19 @@ void AccessList::addExpression(const std::string& expression)
 
 	replaceString(outExp, "*", ".*");
 	replaceString(outExp, "?", ".?");
+	replaceString(outExp, "0", "");
+	replaceString(outExp, "1", "");
+	replaceString(outExp, "2", "");
+	replaceString(outExp, "3", "");
+	replaceString(outExp, "4", "");
+	replaceString(outExp, "5", "");
+	replaceString(outExp, "6", "");
+	replaceString(outExp, "7", "");
+	replaceString(outExp, "8", "");
+	replaceString(outExp, "9", "");
+	replaceString(outExp, "**", ".*");
+	replaceString(outExp, "*", ".*");
+	replaceString(outExp, "?", ".?");
 
 	try {
 		if (!outExp.empty()) {
@@ -593,9 +592,9 @@ bool AccessList::isInList(const Player* player)
 	return rank && guildRankList.find(rank->id) != guildRankList.end();
 }
 
-void AccessList::getList(std::string& retList) const
+void AccessList::getList(std::string& list) const
 {
-	retList = this->list;
+	list = this->list;
 }
 
 Door::Door(uint16_t type) :	Item(type) {}
@@ -614,13 +613,13 @@ Attr_ReadValue Door::readAttr(AttrTypes_t attr, PropStream& propStream)
 	return Item::readAttr(attr, propStream);
 }
 
-void Door::setHouse(House* newHouse)
+void Door::setHouse(House* house)
 {
 	if (this->house != nullptr) {
 		return;
 	}
 
-	this->house = newHouse;
+	this->house = house;
 
 	if (!accessList) {
 		accessList.reset(new AccessList());

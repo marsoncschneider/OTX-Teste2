@@ -1,6 +1,4 @@
 /**
- * @file signals.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -32,12 +30,16 @@
 #include "movement.h"
 #include "weapons.h"
 #include "raids.h"
+#include "quests.h"
 #include "mounts.h"
 #include "globalevent.h"
 #include "monster.h"
 #include "events.h"
+#include "scheduler.h"
+#include "databasetasks.h"
 
-
+extern Scheduler g_scheduler;
+extern DatabaseTasks g_databaseTasks;
 extern Dispatcher g_dispatcher;
 
 extern ConfigManager g_config;
@@ -64,6 +66,10 @@ Signals::Signals(boost::asio::io_service& service) :
 #ifndef _WIN32
 	set.add(SIGUSR1);
 	set.add(SIGHUP);
+	#else
+			// this must be a blocking call as Windows calls it in a new thread and terminates
+			// the process when the handler returns (or after 5 seconds, whichever is earlier)
+		signal(SIGBREAK, dispatchSignalHandler);
 #endif
 
 	asyncWait();
@@ -97,10 +103,24 @@ void Signals::dispatchSignalHandler(int signal)
 		case SIGUSR1: //Saves game state
 			g_dispatcher.addTask(createTask(sigusr1Handler));
 			break;
+			#else
+				 case SIGBREAK: //Shuts the server down
+					g_dispatcher.addTask(createTask(sigbreakHandler));
+					g_scheduler.join();
+					g_databaseTasks.join();
+					g_dispatcher.join();
+					break;
 #endif
 		default:
 			break;
 	}
+}
+
+void Signals::sigbreakHandler()
+{
+		//Dispatcher thread
+	std::cout << "SIGBREAK received, shutting game server down..." << std::endl;
+	g_game.setGameState(GAME_STATE_SHUTDOWN);
 }
 
 void Signals::sigtermHandler()
@@ -156,6 +176,9 @@ void Signals::sighupHandler()
 	g_weapons->reload();
 	g_weapons->loadDefaults();
 	std::cout << "Reloaded weapons." << std::endl;
+
+	g_game.quests.reload();
+	std::cout << "Reloaded quests." << std::endl;
 
 	g_game.mounts.reload();
 	std::cout << "Reloaded mounts." << std::endl;

@@ -1,8 +1,6 @@
 /**
- * @file configmanager.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_CONFIGMANAGER_H_
-#define OT_SRC_CONFIGMANAGER_H_
+#ifndef FS_CONFIGMANAGER_H_6BDD23BD0B8344F4B7C40E8BE6AF6F39
+#define FS_CONFIGMANAGER_H_6BDD23BD0B8344F4B7C40E8BE6AF6F39
 
 class ConfigManager
 {
@@ -43,17 +41,13 @@ class ConfigManager
 			CONVERT_UNSAFE_SCRIPTS,
 			CLASSIC_EQUIPMENT_SLOTS,
 			CLASSIC_ATTACK_SPEED,
-			SCRIPTS_CONSOLE_LOGS,
 			ALLOW_BLOCK_SPAWN,
+			ENABLE_LIVE_CASTING,
 			REMOVE_WEAPON_AMMO,
 			REMOVE_WEAPON_CHARGES,
 			REMOVE_POTION_CHARGES,
 			STOREMODULES,
 			QUEST_LUA,
-			SERVER_SAVE_NOTIFY_MESSAGE,
-			SERVER_SAVE_CLEAN_MAP,
-			SERVER_SAVE_CLOSE,
-			SERVER_SAVE_SHUTDOWN,
 
 			LAST_BOOLEAN_CONFIG /* this must be the last one */
 		};
@@ -107,7 +101,7 @@ class ConfigManager
 			LOGIN_PORT,
 			STATUS_PORT,
 			STAIRHOP_DELAY,
-			MAX_CONTAINER,
+			MAX_CONTAINER,			
 			MAX_ITEM,
 			MARKET_OFFER_DURATION,
 			CHECK_EXPIRED_MARKET_OFFERS_EACH_MINUTES,
@@ -115,18 +109,20 @@ class ConfigManager
 			EXP_FROM_PLAYERS_LEVEL_RANGE,
 			MAX_PACKETS_PER_SECOND,
 			STORE_COIN_PACKET,
+			LIVE_CAST_PORT,
 			VERSION_MIN,
 			VERSION_MAX,
 			FREE_DEPOT_LIMIT,
 			PREMIUM_DEPOT_LIMIT,
 			DEPOT_BOXES,
 			DAY_KILLS_TO_RED,
+			AUTOLOOT_MODE,
 			WEEK_KILLS_TO_RED,
 			MONTH_KILLS_TO_RED,
 			RED_SKULL_DURATION,
 			BLACK_SKULL_DURATION,
 			ORANGE_SKULL_DURATION,
-			SERVER_SAVE_NOTIFY_DURATION,
+			MAX_ITEM_TRANSFER_DEPOT,
 
 			LAST_INTEGER_CONFIG /* this must be the last one */
 		};
@@ -143,7 +139,6 @@ class ConfigManager
 		bool reload();
 
 		const std::string& getString(string_config_t what) const;
-		int16_t getShortNumber(integer_config_t what) const;
 		int32_t getNumber(integer_config_t what) const;
 		bool getBoolean(boolean_config_t what) const;
 		float getFloat(floating_config_t what) const;

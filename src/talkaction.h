@@ -1,8 +1,6 @@
 /**
- * @file talkaction.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_TALKACTION_H_
-#define OT_SRC_TALKACTION_H_
+#ifndef FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
+#define FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
 
 #include "luascript.h"
 #include "baseevents.h"
@@ -45,28 +43,22 @@ class TalkAction : public Event
 		const std::string& getWords() const {
 			return words;
 		}
-		void setWords(std::string word) {
-			words = word;
-		}
-		std::string getSeparator() const {
+		char getSeparator() const {
 			return separator;
-		}
-		void setSeparator(std::string sep) {
-			separator = sep;
 		}
 
 		//scripting
 		bool executeSay(Player* player, const std::string& param, SpeakClasses type) const;
 		//
 
-	private:
+	protected:
 		std::string getScriptEventName() const override;
 
 		std::string words;
-		std::string separator = "\"";
+		char separator = '"';
 };
 
-class TalkActions final : public BaseEvents
+class TalkActions : public BaseEvents
 {
 	public:
 		TalkActions();
@@ -78,16 +70,14 @@ class TalkActions final : public BaseEvents
 
 		TalkActionResult_t playerSaySpell(Player* player, SpeakClasses type, const std::string& words) const;
 
-		bool registerLuaEvent(TalkAction* event);
-		void clear(bool fromLua) override final;
+	protected:
+		LuaScriptInterface& getScriptInterface() final;
+		std::string getScriptBaseName() const final;
+		Event_ptr getEvent(const std::string& nodeName) final;
+		bool registerEvent(Event_ptr event, const pugi::xml_node& node) final;
+		void clear() final;
 
-	private:
-		LuaScriptInterface& getScriptInterface() override;
-		std::string getScriptBaseName() const override;
-		Event_ptr getEvent(const std::string& nodeName) override;
-		bool registerEvent(Event_ptr event, const pugi::xml_node& node) override;
-
-		std::map<std::string, TalkAction> talkActions;
+		std::forward_list<TalkAction> talkActions;
 
 		LuaScriptInterface scriptInterface;
 };
