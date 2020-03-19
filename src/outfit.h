@@ -1,8 +1,6 @@
 /**
- * @file outfit.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +17,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_OUTFIT_H_
-#define OT_SRC_OUTFIT_H_
+#ifndef FS_OUTFIT_H_C56E7A707E3F422C8C93D9BE09916AA3
+#define FS_OUTFIT_H_C56E7A707E3F422C8C93D9BE09916AA3
 
 #include "enums.h"
 
 struct Outfit {
-	Outfit(std::string initName, uint16_t initLookType, bool initPremium, bool initUnlocked) :
-		name(std::move(initName)), lookType(initLookType), premium(initPremium), unlocked(initUnlocked) {}
+	Outfit(std::string name, uint16_t lookType, bool premium, bool unlocked) :
+		name(std::move(name)), lookType(lookType), premium(premium), unlocked(unlocked) {}
 
 	std::string name;
 	uint16_t lookType;
@@ -35,8 +33,8 @@ struct Outfit {
 };
 
 struct ProtocolOutfit {
-	ProtocolOutfit(const std::string& initName, uint16_t initLookType, uint8_t initAddons) :
-		name(initName), lookType(initLookType), addons(initAddons) {}
+	ProtocolOutfit(const std::string& name, uint16_t lookType, uint8_t addons) :
+		name(name), lookType(lookType), addons(addons) {}
 
 	const std::string& name;
 	uint16_t lookType;

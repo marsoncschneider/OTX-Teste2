@@ -1,8 +1,6 @@
 /**
- * @file gamestore.cpp
- * 
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * The OTXServer Project - based on TFS
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +56,7 @@ bool GameStore::reload()
 	for (auto category:storeCategoryOffers) {
 		for (auto offer:category->offers) {
 			offer->icons.clear();
-			if (offer->type == BLESSING) {
+			if(offer->type == BLESSING) {
 				((BlessingOffer *) offer)->blessings.clear();
 			}
 			free(offer); //offer is a pointer, so it needs to be released manually
@@ -74,7 +72,7 @@ bool GameStore::reload()
 
 bool GameStore::loadFromXml()
 {
-	if (isLoaded()) {
+	if(isLoaded()) {
 		return true;
 	} else {
 		offerCount = 0;
@@ -194,11 +192,11 @@ bool GameStore::loadFromXml()
 					} else {
 						offer = tmp;
 					}
-				} else if (boost::iequals(type, "bless")) {
+				} else if(boost::iequals(type, "bless")) {
 					BlessingOffer* tmp = new BlessingOffer();
 					tmp->blessings = getIntVector(offerNode.attribute("blessnumber").as_string());
 					tmp->type = BLESSING;
-					if (!tmp->blessings.size()) {
+					if(!tmp->blessings.size()) {
 						//no number was found
 						printXMLError("Error Parsing XML bless offer - no blessnumber specified  - GameStore::loadFromXml",
 										"data/XML/gamestore.xml", result);
@@ -206,7 +204,7 @@ bool GameStore::loadFromXml()
 					}
 
 					offer = tmp;
-				} else if (boost::iequals(type, "teleport")) {
+				} else if(boost::iequals(type, "teleport")) {
 					TeleportOffer* tmp = new TeleportOffer();
 					tmp->type = TELEPORT;
 
@@ -219,12 +217,12 @@ bool GameStore::loadFromXml()
 					tmp->position = Position(posX,posY,posZ);
 
 					offer = tmp;
-				} else if (boost::iequals(type, "premiumtime")) {
+				} else if(boost::iequals(type, "premiumtime")) {
 					PremiumTimeOffer* tmp = new PremiumTimeOffer();
 					tmp->type = PREMIUM_TIME;
 
 					tmp->days = (uint16_t)offerNode.attribute("days").as_uint();
-					if (tmp->days == 0) {
+					if(tmp->days == 0) {
 						printXMLError("Error parsing XML premiumtime offer type - required 'days' attribute not found - GameStore::loadFromXml",
 									  "data/XML/gamestore.xml",
 									  result);
@@ -277,7 +275,7 @@ bool GameStore::loadFromXml()
 	}
 }
 
-int8_t GameStore::getCategoryIndexByName(std::string categoryName)
+const int8_t GameStore::getCategoryIndexByName(std::string categoryName) const
 {
 	for (uint16_t i = 0; i < storeCategoryOffers.size(); i++) {
 		if (boost::iequals(storeCategoryOffers.at(i)->name, categoryName)) {
@@ -330,10 +328,10 @@ HistoryStoreOfferList IOGameStore::getHistoryEntries(uint32_t account_id, uint32
 
 	query << "SELECT `description`,`mode`,`coin_amount`,`time` FROM `store_history` WHERE `account_id` = " <<account_id << " ORDER BY `time` DESC LIMIT "
 		  << (std::max<int>((page-1),0)*GameStore::HISTORY_ENTRIES_PER_PAGE)
-		  << "," << GameStore::HISTORY_ENTRIES_PER_PAGE <<";";
+		  << "," << (uint16_t)GameStore::HISTORY_ENTRIES_PER_PAGE <<";";
 	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
 
-	if (result) {
+	if(result) {
 		do {
 			HistoryStoreOffer entry;
 

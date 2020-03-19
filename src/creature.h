@@ -1,8 +1,6 @@
 /**
- * @file creature.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_CREATURE_H_
-#define OT_SRC_CREATURE_H_
+#ifndef FS_CREATURE_H_5363C04015254E298F84E6D59A139508
+#define FS_CREATURE_H_5363C04015254E298F84E6D59A139508
 
 #include "map.h"
 #include "position.h"
@@ -78,7 +76,7 @@ static constexpr int32_t EVENT_CHECK_CREATURE_INTERVAL = (EVENT_CREATURE_THINK_I
 class FrozenPathingConditionCall
 {
 	public:
-		explicit FrozenPathingConditionCall(Position newTargetPos) : targetPos(std::move(newTargetPos)) {}
+		explicit FrozenPathingConditionCall(Position targetPos) : targetPos(std::move(targetPos)) {}
 
 		bool operator()(const Position& startPos, const Position& testPos,
 						const FindPathParams& fpp, int32_t& bestMatchDist) const;
@@ -385,13 +383,15 @@ class Creature : virtual public Thing
 		virtual void onAttackedCreatureChangeZone(ZoneType_t zone);
 		virtual void onIdleStatus();
 
-		virtual LightInfo getCreatureLight() const;
+		virtual void getCreatureLight(LightInfo& light) const;
 		virtual void setNormalCreatureLight();
-		void setCreatureLight(LightInfo lightInfo);
+		void setCreatureLight(LightInfo light) {
+			internalLight = light;
+		}
 
 		virtual void onThink(uint32_t interval);
 		void onAttacking(uint32_t interval);
-		virtual void onCreatureWalk();
+		virtual void onWalk();
 		virtual bool getNextStep(Direction& dir, uint32_t& flags);
 
 		void onAddTileItem(const Tile* tile, const Position& pos);
@@ -419,11 +419,11 @@ class Creature : virtual public Thing
 		size_t getSummonCount() const {
 			return summons.size();
 		}
-		void setDropLoot(bool newLootDrop) {
-			this->lootDrop = newLootDrop;
+		void setDropLoot(bool lootDrop) {
+			this->lootDrop = lootDrop;
 		}
-		void setSkillLoss(bool newSkillLoss) {
-			this->skillLoss = newSkillLoss;
+		void setSkillLoss(bool skillLoss) {
+			this->skillLoss = skillLoss;
 		}
 		void setUseDefense(bool useDefense) {
 			canUseDefense = useDefense;

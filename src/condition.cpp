@@ -1,8 +1,6 @@
 /**
- * @file condition.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -188,7 +186,7 @@ Condition* Condition::createCondition(ConditionId_t id, ConditionType_t type, in
 
 		case CONDITION_INFIGHT:
 		case CONDITION_DRUNK:
-		case CONDITION_EXHAUST:
+		case CONDITION_EXHAUST_WEAPON:
 		case CONDITION_EXHAUST_COMBAT:
 		case CONDITION_EXHAUST_HEAL:
 		case CONDITION_MUTED:
@@ -436,18 +434,17 @@ void ConditionAttributes::updatePercentStats(Player* player)
 
 void ConditionAttributes::updateStats(Player* player)
 {
-	bool needUpdate = false;
+	bool needUpdateStats = false;
 
 	for (int32_t i = STAT_FIRST; i <= STAT_LAST; ++i) {
 		if (stats[i]) {
-			needUpdate = true;
+			needUpdateStats = true;
 			player->setVarStats(static_cast<stats_t>(i), stats[i]);
 		}
 	}
 
-	if (needUpdate) {
+	if (needUpdateStats) {
 		player->sendStats();
-		player->sendSkills();
 	}
 }
 
@@ -488,30 +485,36 @@ void ConditionAttributes::endCondition(Creature* creature)
 {
 	Player* player = creature->getPlayer();
 	if (player) {
-		bool needUpdate = false;
+		bool needUpdateSkills = false;
 
 		for (int32_t i = SKILL_FIRST; i <= SKILL_LAST; ++i) {
 			if (skills[i] || skillsPercent[i]) {
-				needUpdate = true;
+				needUpdateSkills = true;
 				player->setVarSkill(static_cast<skills_t>(i), -skills[i]);
 			}
 		}
 
+		if (needUpdateSkills) {
+			player->sendSkills();
+		}
+
+		bool needUpdateStats = false;
+
 		for (int32_t i = STAT_FIRST; i <= STAT_LAST; ++i) {
 			if (stats[i]) {
-				needUpdate = true;
+				needUpdateStats = true;
 				player->setVarStats(static_cast<stats_t>(i), -stats[i]);
 			}
 		}
 
-		if (needUpdate) {
+		if (needUpdateStats) {
 			player->sendStats();
-			player->sendSkills();
 		}
 	}
-
-	if (disableDefense) {
+	
+		if (disableDefense) {
 		creature->setUseDefense(true);
+		
 	}
 }
 
@@ -609,8 +612,18 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
+		case CONDITION_PARAM_SKILL_CRITICAL_HIT_CHANCEPERCENT: {
+			skillsPercent[SKILL_CRITICAL_HIT_CHANCE] = value;
+			return true;
+		}
+
 		case CONDITION_PARAM_SKILL_CRITICAL_HIT_DAMAGE: {
 			skills[SKILL_CRITICAL_HIT_DAMAGE] = value;
+			return true;
+		}
+
+		case CONDITION_PARAM_SKILL_CRITICAL_HIT_DAMAGEPERCENT: {
+			skillsPercent[SKILL_CRITICAL_HIT_DAMAGE] = value;
 			return true;
 		}
 
@@ -619,8 +632,18 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
+		case CONDITION_PARAM_SKILL_LIFE_LEECH_CHANCEPERCENT: {
+			skillsPercent[SKILL_LIFE_LEECH_CHANCE] = value;
+			return true;
+		}
+
 		case CONDITION_PARAM_SKILL_LIFE_LEECH_AMOUNT: {
 			skills[SKILL_LIFE_LEECH_AMOUNT] = value;
+			return true;
+		}
+
+		case CONDITION_PARAM_SKILL_LIFE_LEECH_AMOUNTPERCENT: {
+			skillsPercent[SKILL_LIFE_LEECH_AMOUNT] = value;
 			return true;
 		}
 
@@ -629,8 +652,18 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
+		case CONDITION_PARAM_SKILL_MANA_LEECH_CHANCEPERCENT: {
+			skillsPercent[SKILL_MANA_LEECH_CHANCE] = value;
+			return true;
+		}
+
 		case CONDITION_PARAM_SKILL_MANA_LEECH_AMOUNT: {
 			skills[SKILL_MANA_LEECH_AMOUNT] = value;
+			return true;
+		}
+
+		case CONDITION_PARAM_SKILL_MANA_LEECH_AMOUNTPERCENT: {
+			skillsPercent[SKILL_MANA_LEECH_AMOUNT] = value;
 			return true;
 		}
 
@@ -669,7 +702,7 @@ bool ConditionAttributes::setParam(ConditionParam_t param, int32_t value)
 			return true;
 		}
 
-		default:
+			default:
 			return ret;
 	}
 }
@@ -1256,12 +1289,12 @@ void ConditionDamage::generateDamageList(int32_t amount, int32_t start, std::lis
 	}
 }
 
-void ConditionSpeed::setFormulaVars(float NewMina, float NewMinb, float NewMaxa, float NewMaxb)
+void ConditionSpeed::setFormulaVars(float mina, float minb, float maxa, float maxb)
 {
-	this->mina = NewMina;
-	this->minb = NewMinb;
-	this->maxa = NewMaxa;
-	this->maxb = NewMaxb;
+	this->mina = mina;
+	this->minb = minb;
+	this->maxa = maxa;
+	this->maxb = maxb;
 }
 
 void ConditionSpeed::getFormulaValues(int32_t var, int32_t& min, int32_t& max) const
@@ -1417,9 +1450,9 @@ void ConditionInvisible::endCondition(Creature* creature)
 	}
 }
 
-void ConditionOutfit::setOutfit(const Outfit_t& newOutfit)
+void ConditionOutfit::setOutfit(const Outfit_t& outfit)
 {
-	this->outfit = newOutfit;
+	this->outfit = outfit;
 }
 
 bool ConditionOutfit::unserializeProp(ConditionAttr_t attr, PropStream& propStream)
@@ -1489,11 +1522,12 @@ bool ConditionLight::executeCondition(Creature* creature, int32_t interval)
 
 	if (internalLightTicks >= lightChangeInterval) {
 		internalLightTicks = 0;
-		LightInfo creatureLightInfo = creature->getCreatureLight();
+		LightInfo creatureLight;
+		creature->getCreatureLight(creatureLight);
 
-		if (creatureLightInfo.level > 0) {
-			--creatureLightInfo.level;
-			creature->setCreatureLight(creatureLightInfo);
+		if (creatureLight.level > 0) {
+			--creatureLight.level;
+			creature->setCreatureLight(creatureLight);
 			g_game.changeLight(creature);
 		}
 	}
@@ -1507,12 +1541,12 @@ void ConditionLight::endCondition(Creature* creature)
 	g_game.changeLight(creature);
 }
 
-void ConditionLight::addCondition(Creature* creature, const Condition* condition)
+void ConditionLight::addCondition(Creature* creature, const Condition* addCondition)
 {
-	if (updateCondition(condition)) {
-		setTicks(condition->getTicks());
+	if (updateCondition(addCondition)) {
+		setTicks(addCondition->getTicks());
 
-		const ConditionLight& conditionLight = static_cast<const ConditionLight&>(*condition);
+		const ConditionLight& conditionLight = static_cast<const ConditionLight&>(*addCondition);
 		lightInfo.level = conditionLight.lightInfo.level;
 		lightInfo.color = conditionLight.lightInfo.color;
 		lightChangeInterval = ticks / lightInfo.level;

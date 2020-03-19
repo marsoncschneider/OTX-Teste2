@@ -1,8 +1,6 @@
 /**
- * @file scriptmanager.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,8 +30,6 @@
 #include "globalevent.h"
 #include "events.h"
 #include "modules.h"
-#include "script.h"
-#include "imbuements.h"
 
 Actions* g_actions = nullptr;
 CreatureEvents* g_creatureEvents = nullptr;
@@ -44,9 +40,7 @@ Spells* g_spells = nullptr;
 TalkActions* g_talkActions = nullptr;
 MoveEvents* g_moveEvents = nullptr;
 Weapons* g_weapons = nullptr;
-Scripts* g_scripts = nullptr;
 Modules* g_modules = nullptr;
-Imbuements* g_imbuements = nullptr;
 
 extern LuaEnvironment g_luaEnvironment;
 
@@ -61,21 +55,12 @@ ScriptingManager::~ScriptingManager()
 	delete g_chat;
 	delete g_creatureEvents;
 	delete g_globalEvents;
-	delete g_scripts;
-	delete g_imbuements;
 }
 
 bool ScriptingManager::loadScriptSystems()
 {
 	if (g_luaEnvironment.loadFile("data/global.lua") == -1) {
 		std::cout << "[Warning - ScriptingManager::loadScriptSystems] Can not load data/global.lua" << std::endl;
-	}
-
-	g_scripts = new Scripts();
-	std::cout << ">> Loading lua libs" << std::endl;
-	if (!g_scripts->loadScripts("scripts/lib", true, false)) {
-		std::cout << "> ERROR: Unable to load lua libs!" << std::endl;
-		return false;
 	}
 
 	g_chat = new Chat();
@@ -133,12 +118,6 @@ bool ScriptingManager::loadScriptSystems()
 	g_modules = new Modules();
 	if (!g_modules->loadFromXml()) {
 		std::cout << "> ERROR: Unable to load modules!" << std::endl;
-		return false;
-	}
-
-	g_imbuements = new Imbuements();
-	if (!g_imbuements->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load imbuements!" << std::endl;
 		return false;
 	}
 

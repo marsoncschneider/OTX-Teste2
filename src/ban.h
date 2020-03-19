@@ -1,8 +1,6 @@
 /**
- * @file ban.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_BAN_H_
-#define OT_SRC_BAN_H_
+#ifndef FS_BAN_H_CADB975222D745F0BDA12D982F1006E3
+#define FS_BAN_H_CADB975222D745F0BDA12D982F1006E3
 
 struct BanInfo {
 	std::string bannedBy;
@@ -29,8 +27,8 @@ struct BanInfo {
 };
 
 struct ConnectBlock {
-	constexpr ConnectBlock(uint64_t initLastAttempt, uint64_t initBlockTime, uint32_t initCount) :
-		lastAttempt(initLastAttempt), blockTime(initBlockTime), count(initCount) {}
+	constexpr ConnectBlock(uint64_t lastAttempt, uint64_t blockTime, uint32_t count) :
+		lastAttempt(lastAttempt), blockTime(blockTime), count(count) {}
 
 	uint64_t lastAttempt;
 	uint64_t blockTime;

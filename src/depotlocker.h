@@ -1,8 +1,6 @@
 /**
- * @file depotlocker.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_DEPOTLOCKER_H_
-#define OT_SRC_DEPOTLOCKER_H_
+#ifndef FS_DEPOTLOCKER_H_53AD8E0606A34070B87F792611F4F3F8
+#define FS_DEPOTLOCKER_H_53AD8E0606A34070B87F792611F4F3F8
 
 #include "container.h"
 #include "inbox.h"
@@ -45,8 +43,8 @@ class DepotLocker final : public Container
 		uint16_t getDepotId() const {
 			return depotId;
 		}
-		void setDepotId(uint16_t newDepotId) {
-			this->depotId = newDepotId;
+		void setDepotId(uint16_t depotId) {
+			this->depotId = depotId;
 		}
 
 		//cylinder implementations

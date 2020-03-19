@@ -1,8 +1,6 @@
 /**
- * @file wildcardtree.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +17,15 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_WILDCARDTREE_H_
-#define OT_SRC_WILDCARDTREE_H_
+#ifndef FS_WILDCARDTREE_H_054C9BA46A1D4EA4B7C77ECE60ED4DEB
+#define FS_WILDCARDTREE_H_054C9BA46A1D4EA4B7C77ECE60ED4DEB
 
 #include "enums.h"
 
 class WildcardTreeNode
 {
 	public:
-		explicit WildcardTreeNode(bool initBreakpoint) : breakpoint(initBreakpoint) {}
+		explicit WildcardTreeNode(bool breakpoint) : breakpoint(breakpoint) {}
 		WildcardTreeNode(WildcardTreeNode&& other) = default;
 
 		// non-copyable

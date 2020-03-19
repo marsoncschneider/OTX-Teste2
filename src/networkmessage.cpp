@@ -1,8 +1,6 @@
 /**
- * @file networkmessage.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +26,7 @@
 
 int32_t NetworkMessage::decodeHeader()
 {
-	int32_t newSize = buffer[0] | buffer[1] << 8;
+	int32_t newSize = static_cast<int32_t>(buffer[0] | buffer[1] << 8);
 	info.length = newSize;
 	return info.length;
 }
@@ -104,6 +102,43 @@ void NetworkMessage::addPosition(const Position& pos)
 	add<uint16_t>(pos.x);
 	add<uint16_t>(pos.y);
 	addByte(pos.z);
+}
+
+void NetworkMessage::addItem(uint16_t id, uint8_t count)
+{
+	const ItemType& it = Item::items[id];
+
+	add<uint16_t>(it.clientId);
+
+	addByte(0xFF); // MARK_UNMARKED
+
+	if (it.stackable) {
+		addByte(count);
+	} else if (it.isSplash() || it.isFluidContainer()) {
+		addByte(fluidMap[count & 7]);
+	}
+
+	if (it.isAnimation) {
+		addByte(0xFE); // random phase (0xFF for async)
+	}
+}
+
+void NetworkMessage::addItem(const Item* item)
+{
+	const ItemType& it = Item::items[item->getID()];
+
+	add<uint16_t>(it.clientId);
+	addByte(0xFF); // MARK_UNMARKED
+
+	if (it.stackable) {
+		addByte(std::min<uint16_t>(0xFF, item->getItemCount()));
+	} else if (it.isSplash() || it.isFluidContainer()) {
+		addByte(fluidMap[item->getFluidType() & 7]);
+	}
+
+	if (it.isAnimation) {
+		addByte(0xFE); // random phase (0xFF for async)
+	}
 }
 
 void NetworkMessage::addItemId(uint16_t itemId)

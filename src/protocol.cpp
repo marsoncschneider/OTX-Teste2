@@ -1,8 +1,6 @@
 /**
- * @file protocol.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +25,7 @@
 
 extern RSA g_RSA;
 
-void Protocol::onSendMessage(const OutputMessage_ptr& msg)
+void Protocol::onSendMessage(const OutputMessage_ptr& msg) const
 {
 	if (!rawMessages) {
 		msg->writeMessageLength();
@@ -35,9 +33,9 @@ void Protocol::onSendMessage(const OutputMessage_ptr& msg)
 		if (encryptionEnabled) {
 			XTEA_encrypt(*msg);
 			if (!compactCrypt) {
-				msg->addCryptoHeader((checksumEnabled ? 1 : 0), sequenceNumber);
+				msg->addCryptoHeader((checksumEnabled ? 1 : 0));
 			} else {
-				msg->addCryptoHeader(2, sequenceNumber);
+				msg->addCryptoHeader(2);
 			}
 		}
 	}
@@ -131,7 +129,7 @@ bool Protocol::XTEA_decrypt(NetworkMessage& msg) const
 		readPos += 4;
 	}
 
-	NetworkMessage::MsgSize_t innerLength = msg.get<uint16_t>();
+	int innerLength = msg.get<uint16_t>();
 	if (innerLength > msg.getLength() - 8) {
 		return false;
 	}
@@ -152,8 +150,8 @@ bool Protocol::RSA_decrypt(NetworkMessage& msg)
 
 uint32_t Protocol::getIP() const
 {
-	if (auto conn = getConnection()) {
-		return conn->getIP();
+	if (auto connection = getConnection()) {
+		return connection->getIP();
 	}
 
 	return 0;

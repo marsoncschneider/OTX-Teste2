@@ -1,8 +1,6 @@
 /**
- * @file database.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +22,7 @@
 #include "configmanager.h"
 #include "database.h"
 
-#include <mysql/errmsg.h>
+#include <errmsg.h>
 
 extern ConfigManager g_config;
 
@@ -45,7 +43,7 @@ bool Database::connect()
 	}
 
 	// automatic reconnect
-	bool reconnect = true;
+	my_bool reconnect = true;
 	mysql_options(handle, MYSQL_OPT_RECONNECT, &reconnect);
 
 	// connects to database
@@ -247,7 +245,7 @@ bool DBResult::next()
 	return row != nullptr;
 }
 
-DBInsert::DBInsert(std::string insertQuery) : query(std::move(insertQuery))
+DBInsert::DBInsert(std::string query) : query(std::move(query))
 {
 	this->length = this->query.length();
 }

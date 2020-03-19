@@ -1,8 +1,6 @@
 /**
- * @file server.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_SERVER_H_
-#define OT_SRC_SERVER_H_
+#ifndef FS_SERVER_H_984DA68ABF744127850F90CC710F281B
+#define FS_SERVER_H_984DA68ABF744127850F90CC710F281B
 
 #include "connection.h"
 #include "signals.h"
@@ -64,7 +62,7 @@ class Service final : public ServiceBase
 class ServicePort : public std::enable_shared_from_this<ServicePort>
 {
 	public:
-		explicit ServicePort(boost::asio::io_service& init_io_service) : io_service(init_io_service) {}
+		explicit ServicePort(boost::asio::io_service& io_service) : io_service(io_service) {}
 		~ServicePort();
 
 		// non-copyable

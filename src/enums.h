@@ -1,8 +1,6 @@
 /**
- * @file enums.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_ENUMS_H_
-#define OT_SRC_ENUMS_H_
+#ifndef FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
+#define FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
 
 enum RuleViolationType_t : uint8_t {
 	REPORT_TYPE_NAME = 0,
@@ -93,7 +91,6 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_DOORID = 1 << 22,
 	ITEM_ATTRIBUTE_SPECIAL = 1 << 23,
 	ITEM_ATTRIBUTE_IMBUINGSLOTS = 1 << 24,
-	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
 };
 
 enum VipStatus_t : uint8_t {
@@ -132,9 +129,7 @@ enum CreatureType_t : uint8_t {
 	CREATURETYPE_PLAYER = 0,
 	CREATURETYPE_MONSTER = 1,
 	CREATURETYPE_NPC = 2,
-	CREATURETYPE_SUMMONPLAYER = 3,
-	CREATURETYPE_SUMMON_OWN = 3,
-	CREATURETYPE_SUMMON_OTHERS = 4,
+	CREATURETYPE_SUMMONPLAYER = 3
 };
 
 enum OperatingSystem_t : uint8_t {
@@ -157,48 +152,6 @@ enum SpellGroup_t : uint8_t {
 	SPELLGROUP_SUPPORT = 3,
 	SPELLGROUP_SPECIAL = 4,
 	SPELLGROUP_CONJURE = 5,
-};
-
-// New Prey
-enum PreySlotNum_t : uint8_t
-{
-	PREY_SLOTNUM_FIRST = 0,
-	PREY_SLOTNUM_SECOND = 1,
-	PREY_SLOTNUM_THIRD = 2,
-};
-
-enum PreySlotStatus_t : uint16_t
-{
-	PREY_SLOT_LOCKED = 0,
-	PREY_SLOT_UNLOCKED = 1,
-};
-
-
-enum PreyState_t : uint16_t
-{
-	PREY_STATE_LOCKED = 0,
-	PREY_STATE_INACTIVE = 1,
-	PREY_STATE_ACTIVE = 2,
-	PREY_STATE_SELECTION = 3,
-	PREY_STATE_SELECTION_CHANGE_MONSTER = 4,
-};
-
-enum PreyBonusType_t : uint8_t
-{
-	PREY_BONUS_DAMAGE_BOOST = 0,
-	PREY_BONUS_DAMAGE_REDUCTION = 1,
-	PREY_BONUS_XP_BONUS = 2,
-	PREY_BONUS_IMPROVED_LOOT = 3,
-	PREY_BONUS_NONE = 4,
-
-	PREY_BONUS_FIRST = PREY_BONUS_DAMAGE_BOOST,
-	PREY_BONUS_LAST = PREY_BONUS_IMPROVED_LOOT,
-};
-
-enum SpellType_t : uint8_t {
-	SPELL_UNDEFINED = 0,
-	SPELL_INSTANT = 1,
-	SPELL_RUNE = 2,
 };
 
 enum AccountType_t : uint8_t {
@@ -310,7 +263,13 @@ enum ConditionParam_t {
 	CONDITION_PARAM_SKILL_LIFE_LEECH_AMOUNT = 50,
 	CONDITION_PARAM_SKILL_MANA_LEECH_CHANCE = 51,
 	CONDITION_PARAM_SKILL_MANA_LEECH_AMOUNT = 52,
-	CONDITION_PARAM_DISABLE_DEFENSE = 53,
+	CONDITION_PARAM_SKILL_CRITICAL_HIT_CHANCEPERCENT = 53,
+	CONDITION_PARAM_SKILL_CRITICAL_HIT_DAMAGEPERCENT = 54,
+	CONDITION_PARAM_SKILL_LIFE_LEECH_CHANCEPERCENT = 55,
+	CONDITION_PARAM_SKILL_LIFE_LEECH_AMOUNTPERCENT = 56,
+	CONDITION_PARAM_SKILL_MANA_LEECH_CHANCEPERCENT = 57,
+	CONDITION_PARAM_SKILL_MANA_LEECH_AMOUNTPERCENT = 58,
+	CONDITION_PARAM_DISABLE_DEFENSE = 59,
 };
 
 enum BlockType_t : uint8_t {
@@ -374,7 +333,7 @@ enum ConditionType_t {
 	CONDITION_MANASHIELD = 1 << 9,
 	CONDITION_INFIGHT = 1 << 10,
 	CONDITION_DRUNK = 1 << 11,
-	CONDITION_EXHAUST = 1 << 12, // unused
+	CONDITION_EXHAUST_WEAPON = 1 << 12, // unused
 	CONDITION_REGENERATION = 1 << 13,
 	CONDITION_SOUL = 1 << 14,
 	CONDITION_DROWN = 1 << 15,
@@ -509,15 +468,6 @@ enum SpeechBubble_t
 	SPEECHBUBBLE_QUESTTRADER = 4,
 };
 
-enum SpawnType_t
-{
-	RESPAWN_IN_ALL = 0,
-	RESPAWN_IN_DAY = 1,
-	RESPAWN_IN_NIGHT = 2,
-	RESPAWN_IN_DAY_CAVE = 3,
-	RESPAWN_IN_NIGHT_CAVE = 4,
-};
-
 enum MapMark_t
 {
 	MAPMARK_TICK = 0,
@@ -557,7 +507,7 @@ struct LightInfo {
 	uint8_t level = 0;
 	uint8_t color = 0;
 	constexpr LightInfo() = default;
-	constexpr LightInfo(uint8_t newLevel, uint8_t newColor) : level(newLevel), color(newColor) {}
+	constexpr LightInfo(uint8_t level, uint8_t color) : level(level), color(color) {}
 };
 
 struct ShopInfo {
@@ -574,8 +524,8 @@ struct ShopInfo {
 		sellPrice = 0;
 	}
 
-	ShopInfo(uint16_t newItemId, int32_t newSubType = 0, uint32_t newBuyPrice = 0, uint32_t newSellPrice = 0, std::string newRealName = "")
-		: itemId(newItemId), subType(newSubType), buyPrice(newBuyPrice), sellPrice(newSellPrice), realName(std::move(newRealName)) {}
+	ShopInfo(uint16_t itemId, int32_t subType = 0, uint32_t buyPrice = 0, uint32_t sellPrice = 0, std::string realName = "")
+		: itemId(itemId), subType(subType), buyPrice(buyPrice), sellPrice(sellPrice), realName(std::move(realName)) {}
 };
 
 struct MarketOffer {
@@ -635,8 +585,8 @@ struct ModalWindow
 	uint8_t defaultEnterButton, defaultEscapeButton;
 	bool priority;
 
-	ModalWindow(uint32_t newId, std::string newTitle, std::string newMessage)
-		: title(std::move(newTitle)), message(std::move(newMessage)), id(newId), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
+	ModalWindow(uint32_t id, std::string title, std::string message)
+		: title(std::move(title)), message(std::move(message)), id(id), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
 };
 
 enum CombatOrigin
@@ -657,7 +607,6 @@ struct CombatDamage
 
 	CombatOrigin origin;
 	bool critical;
-	int affected;
 
 	CombatDamage()
 	{
@@ -665,21 +614,11 @@ struct CombatDamage
 		primary.type = secondary.type = COMBAT_NONE;
 		primary.value = secondary.value = 0;
 		critical = false;
-		affected = 1;
 	}
 };
 
 using MarketOfferList = std::list<MarketOffer>;
 using HistoryMarketOfferList = std::list<HistoryMarketOffer>;
 using ShopInfoList = std::list<ShopInfo>;
-
-enum MonstersEvent_t : uint8_t {
-	MONSTERS_EVENT_NONE = 0,
-	MONSTERS_EVENT_THINK = 1,
-	MONSTERS_EVENT_APPEAR = 2,
-	MONSTERS_EVENT_DISAPPEAR = 3,
-	MONSTERS_EVENT_MOVE = 4,
-	MONSTERS_EVENT_SAY = 5,
-};
 
 #endif

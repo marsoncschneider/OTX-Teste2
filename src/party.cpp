@@ -1,8 +1,6 @@
 /**
- * @file party.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +28,7 @@ extern Game g_game;
 extern ConfigManager g_config;
 extern Events* g_events;
 
-Party::Party(Player* initLeader) : leader(initLeader)
+Party::Party(Player* leader) : leader(leader)
 {
 	leader->setParty(this);
 }
@@ -338,6 +336,15 @@ void Party::broadcastPartyMessage(MessageClasses msgClass, const std::string& ms
 	}
 }
 
+void Party::broadcastPartyLoot(const std::string& loot)
+{
+	leader->sendTextMessage(MESSAGE_INFO_DESCR, loot);
+
+	for (Player* member : memberList) {
+		member->sendTextMessage(MESSAGE_INFO_DESCR, loot);
+	}
+}
+
 void Party::updateSharedExperience()
 {
 	if (sharedExpActive) {
@@ -349,19 +356,19 @@ void Party::updateSharedExperience()
 	}
 }
 
-bool Party::setSharedExperience(Player* player, bool newSharedExpActive)
+bool Party::setSharedExperience(Player* player, bool sharedExpActive)
 {
 	if (!player || leader != player) {
 		return false;
 	}
 
-	if (this->sharedExpActive == newSharedExpActive) {
+	if (this->sharedExpActive == sharedExpActive) {
 		return true;
 	}
 
-	this->sharedExpActive = newSharedExpActive;
+	this->sharedExpActive = sharedExpActive;
 
-	if (newSharedExpActive) {
+	if (sharedExpActive) {
 		this->sharedExpEnabled = canEnableSharedExperience();
 
 		if (this->sharedExpEnabled) {

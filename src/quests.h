@@ -1,8 +1,6 @@
 /**
- * @file quests.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_QUESTS_H_
-#define OT_SRC_QUESTS_H_
+#ifndef FS_QUESTS_H_16E44051F23547BE8097F8EA9FCAACA0
+#define FS_QUESTS_H_16E44051F23547BE8097F8EA9FCAACA0
 
 #include "player.h"
 #include "networkmessage.h"
@@ -34,8 +32,8 @@ using QuestsList = std::list<Quest>;
 class Mission
 {
 	public:
-		Mission(std::string initName, int32_t initStorageID, int32_t initStartValue, int32_t initEndValue, bool initIgnoreEndValue) :
-			name(std::move(initName)), storageID(initStorageID), startValue(initStartValue), endValue(initEndValue), ignoreEndValue(initIgnoreEndValue) {}
+		Mission(std::string name, int32_t storageID, int32_t startValue, int32_t endValue, bool ignoreEndValue) :
+			name(std::move(name)), storageID(storageID), startValue(startValue), endValue(endValue), ignoreEndValue(ignoreEndValue) {}
 
 		bool isCompleted(Player* player) const;
 		bool isStarted(Player* player) const;
@@ -65,8 +63,8 @@ class Mission
 class Quest
 {
 	public:
-		Quest(std::string initName, uint16_t initId, int32_t initStartStorageID, int32_t initStartStorageValue) :
-			name(std::move(initName)), startStorageID(initStartStorageID), startStorageValue(initStartStorageValue), id(initId) {}
+		Quest(std::string name, uint16_t id, int32_t startStorageID, int32_t startStorageValue) :
+			name(std::move(name)), startStorageID(startStorageID), startStorageValue(startStorageValue), id(id) {}
 
 		bool isCompleted(Player* player) const;
 		bool isStarted(Player* player) const;
