@@ -1,6 +1,8 @@
 /**
+ * @file globalevent.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_GLOBALEVENT_H_B3FB9B848EA3474B9AFC326873947E3C
-#define FS_GLOBALEVENT_H_B3FB9B848EA3474B9AFC326873947E3C
+#ifndef OT_SRC_GLOBALEVENT_H_
+#define OT_SRC_GLOBALEVENT_H_
 #include "baseevents.h"
 
 #include "const.h"
@@ -53,13 +55,15 @@ class GlobalEvents final : public BaseEvents
 		void execute(GlobalEvent_t type) const;
 
 		GlobalEventMap getEventMap(GlobalEvent_t type);
-		static void clearMap(GlobalEventMap& map);
+		static void clearMap(GlobalEventMap& map, bool fromLua);
+
+		bool registerLuaEvent(GlobalEvent* event);
+		void clear(bool fromLua) override final;
 
 	private:
 		std::string getScriptBaseName() const override {
 			return "globalevents";
 		}
-		void clear() override;
 
 		Event_ptr getEvent(const std::string& nodeName) override;
 		bool registerEvent(Event_ptr event, const pugi::xml_node& node) override;
@@ -86,13 +90,22 @@ class GlobalEvent final : public Event
 		GlobalEvent_t getEventType() const {
 			return eventType;
 		}
+		void setEventType(GlobalEvent_t type) {
+			eventType = type;
+		}
 
 		const std::string& getName() const {
 			return name;
 		}
+		void setName(std::string eventName) {
+			name = eventName;
+		}
 
 		uint32_t getInterval() const {
 			return interval;
+		}
+		void setInterval(uint32_t eventInterval) {
+			interval |= eventInterval;
 		}
 
 		int64_t getNextExecution() const {

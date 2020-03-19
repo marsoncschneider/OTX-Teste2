@@ -1,6 +1,8 @@
 /**
+ * @file const.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_CONST_H_0A49B5996F074465BF44B90F4F780E8B
-#define FS_CONST_H_0A49B5996F074465BF44B90F4F780E8B
+#ifndef OT_SRC_CONST_H_
+#define OT_SRC_CONST_H_
 
 static constexpr int32_t NETWORKMESSAGE_MAXSIZE = 24590;
 
@@ -369,6 +371,7 @@ enum TextColor_t : uint8_t {
 	TEXTCOLOR_LIGHTGREY = 129,
 	TEXTCOLOR_SKYBLUE = 143,
 	TEXTCOLOR_PURPLE = 155,
+	TEXTCOLOR_ELECTRICPURPLE = 155,
 	TEXTCOLOR_RED = 180,
 	TEXTCOLOR_ORANGE = 198,
 	TEXTCOLOR_YELLOW = 210,
@@ -425,6 +428,7 @@ enum WeaponAction_t : uint8_t {
 };
 
 enum WieldInfo_t {
+	WIELDINFO_NONE = 0 << 0,
 	WIELDINFO_LEVEL = 1 << 0,
 	WIELDINFO_MAGLV = 1 << 1,
 	WIELDINFO_VOCREQ = 1 << 2,
@@ -515,11 +519,12 @@ enum item_t : uint16_t {
 	ITEM_WILDGROWTH_SAFE = 11099,
 
 	ITEM_BAG = 1987,
+	ITEM_SHOPPING_BAG = 23782,
 
 	ITEM_GOLD_COIN = 2148,
 	ITEM_PLATINUM_COIN = 2152,
 	ITEM_CRYSTAL_COIN = 2160,
-	ITEM_GOLD_INGOT = 15515,
+	ITEM_STORE_COIN = 24774,
 
 	ITEM_REWARD_CONTAINER = 21518,
 	ITEM_REWARD_CHEST = 21584,
@@ -529,6 +534,23 @@ enum item_t : uint16_t {
 	ITEM_INBOX = 14404,
 	ITEM_MARKET = 14405,
 	ITEM_STORE_INBOX = 26052,
+	ITEM_DEPOT_BOX_I = 25453,
+	ITEM_DEPOT_BOX_II = 25454,
+	ITEM_DEPOT_BOX_III = 25455,
+	ITEM_DEPOT_BOX_IV = 25456,
+	ITEM_DEPOT_BOX_V = 25457,
+	ITEM_DEPOT_BOX_VI = 25458,
+	ITEM_DEPOT_BOX_VII = 25459,
+	ITEM_DEPOT_BOX_VIII = 25460,
+	ITEM_DEPOT_BOX_IX = 25461,
+	ITEM_DEPOT_BOX_X = 25462,
+	ITEM_DEPOT_BOX_XI = 25463,
+	ITEM_DEPOT_BOX_XII = 25464,
+	ITEM_DEPOT_BOX_XIII = 25465,
+	ITEM_DEPOT_BOX_XIV = 25466,
+	ITEM_DEPOT_BOX_XV = 25467,
+	ITEM_DEPOT_BOX_XVI = 25468,
+	ITEM_DEPOT_BOX_XVII = 25469,
 
 	ITEM_MALE_CORPSE = 3058,
 	ITEM_FEMALE_CORPSE = 3065,
@@ -543,7 +565,8 @@ enum item_t : uint16_t {
 
 	ITEM_AMULETOFLOSS = 2173,
 
-	ITEM_TIBIA_COIN = 24774,
+	ITEM_EXERCISE_START = 32384,
+	ITEM_EXERCISE_END = 32389,
 
 	/** Casks and Kegs **/
 	ITEM_HEALTH_CASK_START = 28555,
@@ -618,11 +641,12 @@ enum ReloadTypes_t : uint8_t  {
 	RELOAD_TYPE_MOUNTS,
 	RELOAD_TYPE_MOVEMENTS,
 	RELOAD_TYPE_NPCS,
-	RELOAD_TYPE_QUESTS,
 	RELOAD_TYPE_RAIDS,
+	RELOAD_TYPE_SCRIPTS,
 	RELOAD_TYPE_SPELLS,
 	RELOAD_TYPE_TALKACTIONS,
 	RELOAD_TYPE_WEAPONS,
+	RELOAD_TYPE_IMBUEMENTS,
 };
 
 enum NameEval_t : uint8_t {
@@ -637,9 +661,6 @@ enum NameEval_t : uint8_t {
 static constexpr int32_t CHANNEL_GUILD = 0x00;
 static constexpr int32_t CHANNEL_PARTY = 0x01;
 static constexpr int32_t CHANNEL_PRIVATE = 0xFFFF;
-
-static constexpr int32_t CHANNEL_CAST = 40;
-const std::string LIVE_CAST_CHAT_NAME = "Live Cast Chat";
 
 static constexpr int32_t STORAGEVALUE_PROMOTION = 30018;
 static constexpr int32_t STORAGEVALUE_EMOTE = 30019;
