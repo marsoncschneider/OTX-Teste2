@@ -1,6 +1,8 @@
 /**
+ * @file container.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_CONTAINER_H_5590165FD8A2451B98D71F13CD3ED8DC
-#define FS_CONTAINER_H_5590165FD8A2451B98D71F13CD3ED8DC
+#ifndef OT_SRC_CONTAINER_H_
+#define OT_SRC_CONTAINER_H_
 
 #include <queue>
 
@@ -123,6 +125,7 @@ class Container : public Item, public Cylinder
 		bool isHoldingItem(const Item* item) const;
 
 		uint32_t getItemHoldingCount() const;
+		uint32_t getContainerHoldingCount() const;
 		uint16_t getFreeSlots() const;
 		uint32_t getWeight() const final;
 
@@ -171,6 +174,7 @@ class Container : public Item, public Cylinder
 		void onRemoveContainerItem(uint32_t index, Item* item);
 
 		Container* getParentContainer();
+		Container* getTopParentContainer() const;
 		void updateItemWeight(int32_t diff);
 
 	protected:

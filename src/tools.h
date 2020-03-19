@@ -1,6 +1,8 @@
 /**
+ * @file tools.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
-#define FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
+#ifndef OT_SRC_TOOLS_H_
+#define OT_SRC_TOOLS_H_
 
 #include <random>
 #include <regex>
@@ -70,7 +72,9 @@ ShootType_t getShootType(const std::string& strValue);
 Ammo_t getAmmoType(const std::string& strValue);
 WeaponAction_t getWeaponAction(const std::string& strValue);
 Skulls_t getSkullType(const std::string& strValue);
+SpawnType_t getSpawnType(const std::string& strValue);
 std::string getCombatName(CombatType_t combatType);
+CombatType_t getCombatType(const std::string& combatname);
 
 std::string getSkillName(uint8_t skillid);
 
@@ -98,5 +102,7 @@ NameEval_t validateName(const std::string &name);
 bool isCaskItem(uint16_t itemId);
 
 int64_t OTSYS_TIME();
+
+SpellGroup_t stringToSpellGroup(std::string value);
 
 #endif

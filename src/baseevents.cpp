@@ -1,6 +1,8 @@
 /**
+ * @file baseevents.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,8 +69,11 @@ bool BaseEvents::loadFromXml()
 		if (scriptAttribute) {
 			std::string scriptFile = "scripts/" + std::string(scriptAttribute.as_string());
 			success = event->checkScript(basePath, scriptsName, scriptFile) && event->loadScript(basePath + scriptFile);
+			if (node.attribute("function")) {
+				event->loadFunction(node.attribute("function"), true);
+			}
 		} else {
-			success = event->loadFunction(node.attribute("function"));
+			success = event->loadFunction(node.attribute("function"), false);
 		}
 
 		if (success) {
@@ -81,8 +86,15 @@ bool BaseEvents::loadFromXml()
 bool BaseEvents::reload()
 {
 	loaded = false;
-	clear();
+	clear(false);
 	return loadFromXml();
+}
+
+void BaseEvents::reInitState(bool fromLua)
+{
+	if (!fromLua) {
+		getScriptInterface().reInitState();
+	}
 }
 
 Event::Event(LuaScriptInterface* interface) : scriptInterface(interface) {}
@@ -92,7 +104,7 @@ bool Event::checkScript(const std::string& basePath, const std::string& scriptsN
 	LuaScriptInterface* testInterface = g_luaEnvironment.getTestInterface();
 	testInterface->reInitState();
 
-	if (testInterface->loadFile(std::string(basePath + "lib/" + scriptsName + ".lua")) == -1) {
+	if (testInterface->loadFile(basePath + "lib/" + scriptsName + ".lua") == -1) {
 		std::cout << "[Warning - Event::checkScript] Can not load " << scriptsName << " lib/" << scriptsName << ".lua" << std::endl;
 	}
 
@@ -138,6 +150,25 @@ bool Event::loadScript(const std::string& scriptFile)
 	scriptId = id;
 	return true;
 }
+
+bool Event::loadCallback()
+{
+	if (!scriptInterface || scriptId != 0) {
+		std::cout << "Failure: [Event::loadCallback] scriptInterface == nullptr. scriptid = " << scriptId << std::endl;
+		return false;
+	}
+
+	int32_t id = scriptInterface->getEvent();
+	if (id == -1) {
+		std::cout << "[Warning - Event::loadCallback] Event " << getScriptEventName() << " not found. " << std::endl;
+		return false;
+	}
+
+	scripted = true;
+	scriptId = id;
+	return true;
+}
+
 
 bool CallBack::loadCallBack(LuaScriptInterface* interface, const std::string& name)
 {

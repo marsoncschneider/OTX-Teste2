@@ -1,6 +1,8 @@
 ﻿/**
+ * @file items.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2017  Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_ITEMS_H_4E2221634ABA45FE85BA50F710669B3C
-#define FS_ITEMS_H_4E2221634ABA45FE85BA50F710669B3C
+#ifndef OT_SRC_ITEMS_H_
+#define OT_SRC_ITEMS_H_
 
 #include "const.h"
 #include "enums.h"
@@ -54,6 +56,7 @@ enum ItemTypes_t {
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
 	ITEM_TYPE_RUNE,
+ 	ITEM_TYPE_SUPPLY,
 	ITEM_TYPE_REWARDCHEST,
 	ITEM_TYPE_CARPET,
 	ITEM_TYPE_LAST,
@@ -287,6 +290,7 @@ class Items
 {
 	public:
 		using NameMap = std::unordered_multimap<std::string, uint16_t>;
+		using InventoryVector = std::vector<uint16_t>;
 
 		Items();
 
@@ -315,6 +319,11 @@ class Items
 		bool loadFromXml();
 		void parseItemNode(const pugi::xml_node& itemNode, uint16_t id);
 
+		void buildInventoryList();
+		const InventoryVector& getInventory() const {
+			return inventory;
+		}
+
 		size_t size() const {
 			return items.size();
 		}
@@ -324,5 +333,6 @@ class Items
 	protected:
 		std::map<uint16_t, uint16_t> reverseItemMap;
 		std::vector<ItemType> items;
+		InventoryVector inventory;
 };
 #endif
