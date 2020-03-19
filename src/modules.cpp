@@ -1,6 +1,23 @@
 /**
-* This file doesn't belong to theforgottenserver developers.
-*/
+ * @file modules.cpp
+ * 
+ * The Forgotten Server - a free and open-source MMORPG server emulator
+ * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 
 #include "otpch.h"
 
@@ -13,7 +30,7 @@ Modules::Modules() :
 	scriptInterface.initState();
 }
 
-void Modules::clear()
+void Modules::clear(bool) 
 {
 	//clear recvbyte list
 	for (auto& it : recvbyteList) {
@@ -171,7 +188,7 @@ void Module::executeOnRecvbyte(Player* player, NetworkMessage& msg)
 	LuaScriptInterface::pushUserdata<Player>(L, player);
 	LuaScriptInterface::setMetatable(L, -1, "Player");
 	
-	LuaScriptInterface::pushUserdata<NetworkMessage>(L, const_cast<NetworkMessage*>(&msg));
+	LuaScriptInterface::pushUserdata<NetworkMessage>(L, &msg);
 	LuaScriptInterface::setWeakMetatable(L, -1, "NetworkMessage");
 
 	lua_pushnumber(L, recvbyte);
