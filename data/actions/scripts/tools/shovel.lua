@@ -7,16 +7,9 @@ local config = {
 }
 
 local exhausth = 3600 --em quantos segundos podera usar denovo
-
-
-
-
 local holes = {468, 481, 483, 7932, 23712}
 local pools = {2016, 2017, 2018, 2019, 2020, 2021, 2025, 2026, 2027, 2028, 2029, 2030}
 function onUse(cid, item, fromPosition, itemEx, toPosition)
-beto(cid, toPosition)
-digo(cid, toPosition)
-charles(cid, toPosition)
 if isInArray(pools, itemEx.itemid) then
         itemEx = Tile(toPosition):getGround()
     end
@@ -27,8 +20,8 @@ if isInArray(pools, itemEx.itemid) then
             local quantGain = math.random(1,config.itemGain[posGain].quantGain)
             doPlayerAddItem(cid, config.itemGain[posGain].itemId, quantGain)
             doSendMagicEffect(toPosition, 8)
-            doCreatureSay(cid,  "You dug up ".. quantGain .." ".. getItemName(config.itemGain[posGain].itemId) ..".", TALKTYPE_ORANGE_1)  
-            setPlayerStorageValue(cid, 32901, os.time()+exhausth)  
+            doCreatureSay(cid,  "You dug up ".. quantGain .." ".. getItemName(config.itemGain[posGain].itemId) ..".", TALKTYPE_ORANGE_1)
+            setPlayerStorageValue(cid, 32901, os.time()+exhausth)
         end
     else
             doPlayerSendCancel(cid, "You are exhausted, use again in 1 hour.")
@@ -36,41 +29,22 @@ if isInArray(pools, itemEx.itemid) then
     else
         return shovelNormal(cid, item, fromPosition, itemEx, toPosition)
     end
-    return true
+ 	-- ferumbras ascendant
+	if targetActionId == 53803 then
+		if player:getStorageValue(Storage.FerumbrasAscension.Ring) >= 1 then
+			return false
+		end
+		player:addItem(24826, 1)
+		player:setStorageValue(Storage.FerumbrasAscension.Ring, 1)
+	elseif targetId == 23712 then
+		target:transform(23713)
+		addEvent(revertItem, 30 * 1000, toPosition, 23713, 23712)
+	else
+		return false
+	end
+   return true
 end
 
-function beto(cid, pos)
-local tilepos1 = {x=33065, y=32423, z=10} --32024, 32830, 4
-if(getPlayerStorageValue(cid, 1826) < 1 and pos.x == tilepos1.x and pos.y == tilepos1.y and pos.z == tilepos1.z) then
-doPlayerAddItem(cid, 21401, 1)
-setPlayerStorageValue(cid, 1826, 1)
-doSendMagicEffect(tilepos1,CONST_ME_DRAWBLOOD)
-return true
-end
-
-end
-
-function digo(cid, pos)
-local tilepos2 = {x=33061, y=32428, z=10} --32024, 32830, 4
-if(getPlayerStorageValue(cid, 1827) < 1 and pos.x == tilepos2.x and pos.y == tilepos2.y and pos.z == tilepos2.z) then
-doPlayerAddItem(cid, 21401, 1)
-setPlayerStorageValue(cid, 1827, 1)
-doSendMagicEffect(tilepos2,CONST_ME_DRAWBLOOD)
-return true
-end
-
-end
-
-function charles(cid, pos)
-local tilepos3 = {x=33064, y=32435, z=10} --32024, 32830, 4
-if(getPlayerStorageValue(cid, 1828) < 1 and pos.x == tilepos3.x and pos.y == tilepos3.y and pos.z == tilepos3.z) then
-doPlayerAddItem(cid, 21401, 1)
-setPlayerStorageValue(cid, 1828, 1)
-doSendMagicEffect(tilepos3,CONST_ME_DRAWBLOOD)
-return true
-end
-
-end
 
 
 function shovelNormal(cid, item, fromPosition, itemEx, toPosition)
@@ -93,20 +67,7 @@ local target = itemEx
             hole:decay()
         else
             return false
-        end   
-	elseif(itemEx.actionid  == 4205 and player:getStorageValue(3938) == 1) then -- Into the Pit Bone Quest
-		target:getPosition():sendMagicEffect(CONST_ME_POFF)
-        Game.createItem(2248, 1, Position(target:getPosition()))
-addEvent(function()
-	local tile = Tile(Position(target:getPosition()))
-	if (tile and tile:getItemCountById(2248)) > 0 then
-	tile:getItemById(2248):remove()
- end
-end, 60000)
-	elseif(itemEx.actionid  == 1345 and player:getStorageValue(12690) >= 2) then -- Aritos Task
-		target:getPosition():sendMagicEffect(CONST_ME_POFF)
-        iEx:transform(489)
-        iEx:decay()						 
+        end
     elseif itemEx.itemid == 231 or itemEx.itemid == 9059 or itemEx.itemid == 22672 then
         local rand = math.random(1, 100)
         if(itemEx.actionid  == 100 and rand <= 20) then
@@ -128,6 +89,15 @@ end, 60000)
         player:getPosition():sendMagicEffect(CONST_ME_POFF)
         player:addItem(21250, 1)
         player:setStorageValue(12903, 1)
+         -- ferumbras ascendant
+	elseif itemEx.actionid == 53803 and player:getStorageValue(Storage.FerumbrasAscension.Ring) < 1 then
+		player:addItem(24826, 1)
+		player:setStorageValue(Storage.FerumbrasAscension.Ring, 1)
+		target:getPosition():sendMagicEffect(CONST_ME_POFF)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You are digging out a precious looking signet ring, made of silver and adorned with a sun.')
+	elseif targetId == 23712 then
+		target:transform(23713)
+		addEvent(revertItem, 30 * 1000, toPosition, 23713, 23712)
     else
         return false
     end

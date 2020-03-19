@@ -73,19 +73,19 @@ bool Vocations::loadFromXml()
 		}
 
 		if ((attr = vocationNode.attribute("gainhpticks"))) {
-			voc.gainHealthTicks = pugi::cast<uint32_t>(attr.value()) / 2;
+			voc.gainHealthTicks = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("gainhpamount"))) {
-			voc.gainHealthAmount = pugi::cast<uint32_t>(attr.value()) * 2;
+			voc.gainHealthAmount = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("gainmanaticks"))) {
-			voc.gainManaTicks = pugi::cast<uint32_t>(attr.value()) / 2;
+			voc.gainManaTicks = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("gainmanaamount"))) {
-			voc.gainManaAmount = pugi::cast<uint32_t>(attr.value()) *      2;
+			voc.gainManaAmount = pugi::cast<uint32_t>(attr.value());
 		}
 
 		if ((attr = vocationNode.attribute("manamultiplier"))) {

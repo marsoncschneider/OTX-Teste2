@@ -1,4 +1,4 @@
- local keywordHandler = KeywordHandler:new()
+local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
@@ -19,7 +19,7 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
-	
+
 	-- Pegando a quest
 	if msgcontains(msg, "mission") and player:getStorageValue(Storage.TibiaTales.ToAppeaseTheMightyQuest) < 1 then
 			if player:getStorageValue(Storage.DjinnWar.Faction.Marid) < 1 and player:getStorageValue(Storage.DjinnWar.Faction.Efreet) < 1 then
@@ -51,7 +51,6 @@ local function creatureSayCallback(cid, type, msg)
 		player:addItem(2152, 20)
 end
 
-	
 	if player:getStorageValue(Storage.WhatAFoolishQuest.Questline) == 35
 			and player:getStorageValue(Storage.WhatAFoolishQuest.ScaredKazzan) ~= 1
 			and player:getOutfit().lookType == 65 then
@@ -61,8 +60,6 @@ end
 	end
 	return true
 end
-
-
 
 npcHandler:setCallback(CALLBACK_ONADDFOCUS, onAddFocus)
 npcHandler:setCallback(CALLBACK_ONRELEASEFOCUS, onReleaseFocus)

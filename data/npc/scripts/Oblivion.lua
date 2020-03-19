@@ -21,10 +21,10 @@ local function creatureSayCallback(cid, type, msg)
 		return false
 	end
 	local player = Player(cid)
-	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission42) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission45) < 1 then
+	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission44) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission45) < 1 then
 		npcHandler:say("Lost. Hidden. The keys are shadow names. Find them, they will talk to me and reveal what is hidden. Will you go on that quest?", cid)
 		npcHandler.topic[cid] = 1
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission42) == 1 then
+	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission44) == 1 then
 		npcHandler:say({
 			"Then into the vampire crypts, deep down, you must go. ...",
 			"There... three graves where the shadows swirl, unseen. The first one: name the colour of the silent gong. Then ...",

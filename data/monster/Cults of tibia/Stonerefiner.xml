@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Stonerefiner" nameDescription="a Stonerefiner" race="blood" experience="500" speed="250" manacost="0">
-	<health now="800" max="800" />
-	<look type="1053" corpse="8721" />
-	<targetchange interval="2000" chance="11" />
+<monster name="Stonerefiner" nameDescription="a Stonerefiner" race="blood" experience="500" speed="110">
+	<health now="800" max="800"/>
+	<look type="1032" corpse="30771"/>
+	<targetchange interval="4000" chance="10"/>
 	<flags>
-		<flag summonable="0" />
-		<flag attackable="1" />
-		<flag hostile="1" />
-		<flag illusionable="0" />
-		<flag convinceable="0" />
-		<flag pushable="0" />
-				<flag isblockable="0" />
-		<flag canpushitems="1" />
-		<flag canpushcreatures="1" />
-		<flag targetdistance="4" />
-		<flag staticattack="90" />
-		<flag runonhealth="240" />
+		<flag summonable="0"/>
+		<flag attackable="1"/>
+		<flag hostile="1"/>
+		<flag illusionable="0"/>
+		<flag convinceable="0"/>
+		<flag pushable="0"/>
+		<flag canpushitems="1"/>
+		<flag canpushcreatures="1"/>
+		<flag targetdistance="1"/>
+		<flag staticattack="90"/>
+		<flag runonhealth="0"/>
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" skill="50" attack="50" />
-		<attack name="manadrain" interval="2000" chance="10" length="8" spread="0" min="-50" max="-200">
-			<attribute key="areaEffect" value="redshimmer" />
+		<attack name="melee" interval="2000" min="0" max="-100"/>
+		<attack name="lifedrain" interval="2000" chance="15" range="7" radius="4" target="1" min="-40" max="-100">
+			<attribute key="areaEffect" value="stones"/>
 		</attack>
-		<attack name="lifedrain" interval="2000" chance="16" radius="4" target="0" min="-50" max="-150">
-			<attribute key="areaEffect" value="redshimmer" />
+				<attack name="lifedrain" interval="1000" chance="15" range="4" radius="2" min="-40" max="-100">
+			<attribute key="areaEffect" value="blackspark"/>
 		</attack>
-		<attack name="physical" interval="2000" chance="22" range="7" min="-0" max="-150">
-			<attribute key="shootEffect" value="huntingspear" />
-			<attribute key="areaEffect" value="explosionarea" />
-		</attack>
-		<attack name="bleedcondition" interval="2000" chance="40" target="1" radius="4" min="-100" max="-150">
-			<attribute key="shootEffect" value="throwingknife" />
-			<attribute key="areaEffect" value="redspark" />
-		</attack>
-		<attack name="minotaur amazon paralyze" interval="2000" chance="15" />
 	</attacks>
-	<defenses armor="35" defense="35" />
+	<defenses armor="40" defense="45">
+		<defense name="healing" interval="4000" chance="15" min="50" max="145">
+			<attribute key="areaEffect" value="blueshimmer"/>
+		</defense>
+	</defenses>
 	<elements>
-		<element energyPercent="-10" />
-		<element firePercent="-5" />
-		<element icePercent="5" />
-		<element deathPercent="10" />
-		<element holyPercent="10" />
+		<element earthPercent="1"/>
+		<element firePercent="1"/>
+		<element holyPercent="90"/>
 	</elements>
 	<immunities>
-		<immunity paralyze="1" />
-		<immunity invisible="1" />
+		<immunity earth="1"/>
+		<immunity invisible="1"/>
+		<immunity paralyze="1"/>
 	</immunities>
-	<voices interval="2000" chance="5">
-		<voice sentence="I'll protect the herd!" />
-		<voice sentence="Never surrender!" />
-		<voice sentence="You won't hurt us!" />
-		<voice sentence="I will not allow your evil to continue!" />
+			<voices interval="5000" chance="10">
+		<voice sentence="knak knak knak"/>
+		<voice sentence="nomnomnom"/>
 	</voices>
 	<loot>
-		<item id="2671" countmax="1" chance="60780" />		<!-- ham -->
-		<item id="2666" countmax="1" chance="4920" />		<!-- meat -->
+		<!--Comum-->
+		<item name="gold coin" countmax="200" chance="4050"/>
+		<item name="platinum coin" countmax="3" chance="4050"/>
+		<item name="glob of acid slime" chance="4050"/>
+		<item id="13757" countmax="5" chance="450"/>
+ 		<item name="poisonous slime" countmax="3" chance="350"/>
+ 		<item name="rat cheese" countmax="2" chance="4050"/>
+ 		<item name="stonerefiner's skull" countmax="200" chance="300"/>
+		<item name="Half-Digested Stones" countmax="5" chance="400"/>
 	</loot>
 </monster>

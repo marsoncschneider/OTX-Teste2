@@ -413,22 +413,22 @@ local function revertTree()
 	end
 end
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	if item.itemid == 26467 then
-		if target.itemid ~= 26470 then
+	if item.itemid == 26479 then
+		if target.itemid ~= 26482 then
 			return false
 		end
-		target:transform(26472)
+		target:transform(26484)
 		target:getPosition():sendMagicEffect(CONST_ME_SMALLPLANTS)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You planted some seeds into the soil.')
-		addEvent(revertItem, 10 * 60 * 1000, target:getPosition(), 26472, 26470)
+		addEvent(revertItem, 10 * 60 * 1000, target:getPosition(), 26484, 26482)
 		item:remove(1)
 		return true
-	elseif item.itemid == 26466 then
-		if target.itemid == 26472 then
-			target:transform(26471)
+	elseif item.itemid == 26478 then
+		if target.itemid == 26484 then
+			target:transform(26483)
 			target:getPosition():sendMagicEffect(CONST_ME_SMALLPLANTS)
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'The birch grows as you pour the sparkling water from the phial over it.')
-			addEvent(revertItem, 10 * 60 * 1000, target:getPosition(), 26471, 26470)
+			addEvent(revertItem, 10 * 60 * 1000, target:getPosition(), 26483, 26482)
 			if player:getStorageValue(Storage.ForgottenKnowledge.PlantCounter) < 0 then
 				player:setStorageValue(Storage.ForgottenKnowledge.PlantCounter, 0)
 			end

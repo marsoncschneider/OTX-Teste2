@@ -5,16 +5,15 @@ NpcSystem.parseParameters(npcHandler)
 function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
 function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
-function onThink()						npcHandler:onThink()						end
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
-		return false
-	end
+function creatureSayCallback(cid, type, msg)
+    if not npcHandler:isFocused(cid) then
+	return false
+    end
 
-	local player = Player(cid)
+    local player = Player(cid)
 	if msgcontains(msg, 'fugio') then
-		if player:getStorageValue(Storage.WhiteRavenMonasteryQuest.Passage) == 1 and player:getStorageValue(Storage.WhiteRavenMonasteryQuest.Diary) < 1 then
+		if player:getStorageValue(Storage.QuestChests.FamilyBrooch) == 1 then
 			npcHandler:say('To be honest, I fear the omen in my dreams may be true. Perhaps Fugio is unable to see the danger down there. Perhaps ... you are willing to investigate this matter?', cid)
 			npcHandler.topic[cid] = 1
 		end

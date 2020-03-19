@@ -13,6 +13,34 @@ local config = {
 	bridgeId = 5770
 }
 
+function moveToPosition(self, toPosition, pushMove, monsterPosition)
+	if self:getPosition() == toPosition then
+		return false
+	end
+
+	if not Tile(toPosition) then
+		return false
+	end
+
+	for i = self:getThingCount() - 1, 0, -1 do
+		local thing = self:getThing(i)
+		if thing then
+			if thing:isItem() then
+				if thing:getId() ~= config.bridgeId then
+					thing:moveTo(toPosition)
+				end
+			elseif thing:isCreature() then
+				if monsterPosition and thing:isMonster() then
+					thing:teleportTo(monsterPosition, pushMove)
+				else
+					thing:teleportTo(toPosition, pushMove)
+				end
+			end
+		end
+	end
+	return true
+end
+
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local leverLeft, lever = item.itemid == 1945
 	for i = 1, #config.leverPositions do
@@ -50,34 +78,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			Game.createItem(bridge.itemId, 1, bridge.position)
 		end
 
-	end
-	return true
-end
-
-function moveToPosition(self, toPosition, pushMove, monsterPosition)
-	if self:getPosition() == toPosition then
-		return false
-	end
-
-	if not Tile(toPosition) then
-		return false
-	end
-
-	for i = self:getThingCount() - 1, 0, -1 do
-		local thing = self:getThing(i)
-		if thing then
-			if thing:isItem() then
-				if thing:getId() ~= config.bridgeId then
-					thing:moveTo(toPosition)
-				end
-			elseif thing:isCreature() then
-				if monsterPosition and thing:isMonster() then
-					thing:teleportTo(monsterPosition, pushMove)
-				else
-					thing:teleportTo(toPosition, pushMove)
-				end
-			end
-		end
 	end
 	return true
 end

@@ -13,7 +13,7 @@ function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
 	end
-	
+
 	local player = Player(cid)
 
 	if msgcontains(msg, 'job') then
@@ -39,7 +39,7 @@ function creatureSayCallback(cid, type, msg)
 	end
 
 	if msgcontains(msg, 'mission') then
-		if player:getLevel() < level then	
+		if player:getLevel() < level then
 			npcHandler:say('Sorry, but no! Your expertise could be put to better use elsewhere. You are desperately needed in the upper levels of the Spike. Report there immediately. ', cid)
 		else
 			npcHandler:say('I can offer you several missions: to {deliver} parcels to our boys and girls in the battlefield, to get reports from our {undercover} gnomes, to do some {temperature} measuring and to {kill} some drillworms.', cid)
@@ -112,7 +112,7 @@ function creatureSayCallback(cid, type, msg)
 	////PARCEL DELIVERY////
 	/////////////////////]]
 	if msgcontains(msg, 'deliver') then
-		if player:getExhaustion(SPIKE_LOWER_PARCEL_DAILY) > 0 then
+		if player:getStorageValue(SPIKE_LOWER_PARCEL_DAILY) >= os.time() then
 			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_PARCEL_DAILY)-os.time()) .. ' before this task gets available again.', cid)
 		end
 
@@ -120,7 +120,7 @@ function creatureSayCallback(cid, type, msg)
 			return npcHandler:say('Sorry, you are not on the required minimum level [' .. level ..'].', cid)
 		end
 
-		if player:getStorageValue(SPIKE_LOWER_PARCEL_MAIN) == -1 then		
+		if player:getStorageValue(SPIKE_LOWER_PARCEL_MAIN) == -1 then
 			npcHandler:say('We need someone to bring four parcels to some of our far away outposts in the caverns. If you are interested, I can give you some more {information} about it. Are you willing to accept this mission?', cid)
 			talkState[cid] = 'delivery'
 		else
@@ -144,7 +144,7 @@ function creatureSayCallback(cid, type, msg)
 	////UNDERCOVER////
 	////////////////]]
 	if msgcontains(msg, 'undercover') then
-		if player:getExhaustion(SPIKE_LOWER_UNDERCOVER_DAILY) > 0 then
+		if player:getStorageValue(SPIKE_LOWER_UNDERCOVER_DAILY) >= os.time() then
 			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_UNDERCOVER_DAILY)-os.time()) .. ' before this task gets available again.', cid)
 		end
 
@@ -152,7 +152,7 @@ function creatureSayCallback(cid, type, msg)
 			return npcHandler:say('Sorry, you are not on the required minimum level [' .. level ..'].', cid)
 		end
 
-		if player:getStorageValue(SPIKE_LOWER_UNDERCOVER_MAIN) == -1 then		
+		if player:getStorageValue(SPIKE_LOWER_UNDERCOVER_MAIN) == -1 then
 			npcHandler:say('Someone is needed to get three reports from our undercover agents posing as monsters in the caves around us. If you are interested, I can give you some more {information} about it. Are you willing to accept this mission?', cid)
 			talkState[cid] = 'undercover'
 		else
@@ -175,7 +175,7 @@ function creatureSayCallback(cid, type, msg)
 	////TEMPERATURE/////
 	//////////////////]]
 	if msgcontains(msg, 'temperature') then
-		if player:getExhaustion(SPIKE_LOWER_LAVA_DAILY) > 0 then
+		if player:getStorageValue(SPIKE_LOWER_LAVA_DAILY) >= os.time() then
 			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_LAVA_DAILY)-os.time()) .. ' before this task gets available again.', cid)
 		end
 
@@ -207,7 +207,7 @@ function creatureSayCallback(cid, type, msg)
 	////KILL/////
 	///////////]]
 	if msgcontains(msg, 'kill') then
-		if player:getExhaustion(SPIKE_LOWER_KILL_DAILY) > 0 then
+		if player:getStorageValue(SPIKE_LOWER_KILL_DAILY) >= os.time() then
 			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_KILL_DAILY)-os.time()) .. ' before this task gets available again.', cid)
 		end
 
@@ -215,7 +215,7 @@ function creatureSayCallback(cid, type, msg)
 			return npcHandler:say('Sorry, you are not on the required minimum level [' .. level ..'].', cid)
 		end
 
-		if player:getStorageValue(SPIKE_LOWER_KILL_MAIN) == -1 then		
+		if player:getStorageValue(SPIKE_LOWER_KILL_MAIN) == -1 then
 			npcHandler:say('This mission will require you to kill some drillworms for us. If you are interested, I can give you some more {information} about it. Are you willing to accept this mission?', cid)
 			talkState[cid] = 'kill'
 		else
@@ -232,7 +232,7 @@ function creatureSayCallback(cid, type, msg)
 			npcHandler:say('Ok then.', cid)
 			talkState[cid] = nil
 		end
-	end	
+	end
 	return true
 end
 

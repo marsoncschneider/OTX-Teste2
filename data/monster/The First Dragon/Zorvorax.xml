@@ -4,6 +4,7 @@
 	<look type="928" corpse="6306" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -24,7 +25,7 @@
 			<attribute key="shootEffect" value="suddendeath" />
 			<attribute key="areaEffect" value="mortarea" />
 			<attribute key="areaEffect" value="smallclouds" />
-		</attack>	
+		</attack>
 		<attack name="lifedrain" interval="2000" chance="10" length="8" spread="3" min="-250" max="-350">
 			<attribute key="areaEffect" value="redshimmer" />
 		</attack>
@@ -35,8 +36,8 @@
 		</defense>
 	</defenses>
 	<elements>
-		<element physicalPercent="40" />
-		<element icePercent="40" />
+		<element physicalPercent="10" />
+		<element icePercent="30" />
 		<element holyPercent="-30" />
 	</elements>
 	<immunities>
@@ -44,48 +45,23 @@
 		<immunity death="1" />
 		<immunity invisible="1" />
 	</immunities>
-	<voices interval="5000" chance="10">
-		<voice sentence="FEEEED MY ETERNAL HUNGER!" yell="1" />
-		<voice sentence="I SENSE LIFE" yell="1" />
-	</voices>
 	<loot>
-	    <item id="2672" countmax="2" chance="80000"/> <!-- dragon ham -->
 		<item id="2173" chance="1000"/> <!-- amulet of loss -->
-		<item id="27605" chance="100000"/> <!-- dragon blood -->
-		<item id="27606" chance="100000"/> <!-- dragon tongue -->
 		<item id="27610" chance="100000"/> <!-- bones of Zorvorax -->
 		<item id="6300" chance="100000"/> <!-- death ring -->
-		<item id="6500" countmax="3" chance="25000"/> <!-- demonic essence -->
+		<item id="6500" chance="25000"/> <!-- demonic essence -->
 		<item id="7430" chance="3500"/> <!-- dragonbone staff -->
-		<item id="2148" countmax="24" chance="100000"/> <!-- gold coin -->
+		<item id="2148" countmax="100" chance="100000"/> <!-- gold coin -->
 		<item id="9971" chance="75000"/> <!-- gold ingot -->
 		<item id="7591" countmax="3" chance="30000"/> <!-- great health potion -->
+		<item id="7590" countmax="3" chance="30000"/> <!-- great mana potion -->
 		<item id="8472" countmax="3" chance="30000"/> <!-- great spirit potion -->
 		<item id="5925" chance="25000"/> <!-- hardened bone -->
 		<item id="13291" chance="500"/> <!-- maxilla maximus -->
 		<item id="2152" countmax="3" chance="70000"/> <!-- platinum coin -->
-		<item id="9810" chance="500"/> <!-- rusty armor (rare) -->
-		<item id="8865" chance="500"/> <!-- dark lords cape -->
-		<item id="12643" chance="500"/> <!-- royal scale robe -->
+		<item id="9810" chance="30000"/> <!-- rusty armor (rare) -->
 		<item id="5741" chance="5000"/> <!-- skull helmet -->
 		<item id="5944" chance="4000"/> <!-- soul orb -->
 		<item id="11233" countmax="2" chance="100000"/> <!-- unholy bone -->
 	</loot>
 </monster>
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-

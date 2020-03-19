@@ -2,14 +2,22 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
-function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
-function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
-function onThink()				npcHandler:onThink()					end
+function onCreatureAppear(cid)
+npcHandler:onCreatureAppear(cid)
+end
+function onCreatureDisappear(cid)
+npcHandler:onCreatureDisappear(cid)
+end
+function onCreatureSay(cid, type, msg)
+npcHandler:onCreatureSay(cid, type, msg)
+end
+function onThink()
+npcHandler:onThink()	
+end
 
 local function greetCallback(cid, message)
 	local player = Player(cid)
-	if not msgcontains(message, 'djanni\'hah') and player:getStorageValue(Storage.DjinnWar.Faction.Efreet) ~= 1 then
+	if not msgcontains(message, "djanni'hah") and player:getStorageValue(Storage.DjinnWar.Faction.Efreet) ~= 1 then
 		npcHandler:say('Shove off, little one! Humans are not welcome here, |PLAYERNAME|!', cid)
 		return false
 	end
@@ -36,8 +44,8 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
-	
-	-- To Appease the Mighty Quest	
+
+	-- To Appease the Mighty Quest
 	if msgcontains(msg, "mission") and player:getStorageValue(Storage.TibiaTales.ToAppeaseTheMightyQuest) == 2 then
 			npcHandler:say({
 				'You have the smell of the Marid on you. Tell me who sent you?'}, cid)
@@ -48,8 +56,7 @@ local function creatureSayCallback(cid, type, msg)
 				'...or do you want to join us and fight those stinking Marid who claim themselves to be noble and righteous?!? Just let me know.'}, cid)
 			player:setStorageValue(Storage.TibiaTales.ToAppeaseTheMightyQuest, player:getStorageValue(Storage.TibiaTales.ToAppeaseTheMightyQuest) + 1)
 	end
-	
-	
+
 	if msgcontains(msg, 'passage') then
 		if player:getStorageValue(Storage.DjinnWar.Faction.Efreet) ~= 1 then
 			npcHandler:say({
@@ -106,7 +113,7 @@ local function creatureSayCallback(cid, type, msg)
 			}, cid)
 			player:setStorageValue(Storage.DjinnWar.Faction.Efreet, 1)
 			player:setStorageValue(Storage.DjinnWar.Faction.Greeting, 0)
-            player:setStorageValue(Storage.DjinnWar.EfreetFaction.Start, 1)
+
 		elseif msgcontains(msg, 'no') then
 			npcHandler:say('Of course. Then don\'t waste my time and shove off.', cid)
 		end
@@ -115,14 +122,13 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
+-- Greeting
+keywordHandler:addGreetKeyword({"djanni'hah"}, {npcHandler = npcHandler, text = "Shove off, little one! Humans are not welcome here, |PLAYERNAME|"})
+
 npcHandler:setMessage(MESSAGE_FAREWELL, 'Farewell human!')
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Farewell human!')
 
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 
-local focusModule = FocusModule:new()
-focusModule:addGreetMessage('hi')
-focusModule:addGreetMessage('hello')
-focusModule:addGreetMessage('djanni\'hah')
-npcHandler:addModule(focusModule)
+npcHandler:addModule(FocusModule:new())

@@ -474,7 +474,7 @@ local storage, duration = 1.4, 0.8
 	function NpcHandler:onBuy(creature, itemid, subType, amount, ignoreCap, inBackpacks)
 		local cid = creature.uid
 		if (os.time() - getPlayerStorageValue(cid, storage)) >= duration then
-		setPlayerStorageValue(cid, storage, os.time()) -- DELAY PRA COMPRAR 
+		setPlayerStorageValue(cid, storage, os.time()) -- DELAY PRA COMPRAR
 		local callback = self:getCallback(CALLBACK_ONBUY)
 		if callback == nil or callback(cid, itemid, subType, amount, ignoreCap, inBackpacks) then
 			if self:processModuleCallback(CALLBACK_ONBUY, cid, itemid, subType, amount, ignoreCap, inBackpacks) then
@@ -653,7 +653,7 @@ local storage, duration = 1.4, 0.8
 
 			local player = Player(focusId)
 			if player then
-				local parseInfo = {[TAG_PLAYERNAME] = player:getName(), [TAG_TIME] = getTibianTime(), [TAG_BLESSCOST] = getBlessingsCost(player:getLevel()), [TAG_PVPBLESSCOST] = getPvpBlessingCost(player:getLevel())}
+				local parseInfo = {[TAG_PLAYERNAME] = player:getName(), [TAG_TIME] = getFormattedWorldTime(), [TAG_BLESSCOST] = getBlessingsCost(player:getLevel()), [TAG_PVPBLESSCOST] = getPvpBlessingCost(player:getLevel())}
 				npc:say(self:parseMessage(message, parseInfo), TALKTYPE_PRIVATE_NP, false, player, npc:getPosition())
 			end
 		end, self.talkDelayTime * 1000, Npc().uid, message, focus)

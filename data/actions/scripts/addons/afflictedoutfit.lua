@@ -1,6 +1,5 @@
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local hasOutfit = player:getStorageValue(Storage.OutfitQuest.Afflicted.Outfit) == 1
-
 	-- Plgue Mask
 	if item.itemid == 13925 then
 		if not hasOutfit then

@@ -155,7 +155,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say({
 					'Finally my people are safe! You have done incredible good for ape people and one day even me brethren will recognise that. ...',
 					'I wish I could speak for all when me call you true friend but my people need time to get accustomed to change. ...',
-					'Let us hope one day whole Banuta will greet you as a friend. Perhaps you want to check me offers for special friends... or {shamanic powers}.'
+					'Let us hope one day whole Banuta will greet you as a friend. Perhaps you want to check me offers for special friends... or shamanic powers.'
 				}, cid)
 				player:setStorageValue(Storage.TheApeCity.Questline, 18)
 				player:addAchievement('Friend of the Apes')

@@ -42,10 +42,11 @@ end
 local function onSell(cid, item, subType, amount, ignoreCap, inBackpacks)
 	local player = Player(cid)
 	local items = setNewTradeTable(getTable(player))
-	if items[item].sellPrice then
+	if items[item].sellPrice and player:removeItem(items[item].itemId, amount) then
 		player:addMoney(items[item].sellPrice * amount)
-		player:removeItem(items[item].itemId, amount)
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Sold '..amount..'x '..items[item].realName..' for '..items[item].sellPrice * amount..' gold coins.')
+	else
+		selfSay("You don't have item to sell.", cid)
 	end
 	return true
 end

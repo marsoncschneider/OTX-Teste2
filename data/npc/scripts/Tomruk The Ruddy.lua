@@ -21,7 +21,7 @@ local function creatureSayCallback(cid, type, msg)
 		return false
 	end
 	local player = Player(cid)
-	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission34) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission36) < 1 then
+	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission35) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission36) < 1 then
 		npcHandler:say({
 			"So someone sent you after a scroll, eh? A stroll for a scroll! <chuckles> Sounds like an old-fashioned necromancer thing. ...",
 			"Well, this piece here is a rather fascinating thing - see those strange blood stains? - ...",
@@ -29,7 +29,7 @@ local function creatureSayCallback(cid, type, msg)
 			"Ah, so you want it, too? Well, do me a favour: fetch two samples and assist in my experiment, in exchange for the scroll piece. Yes?"
 		}, cid)
 		npcHandler.topic[cid] = 1
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission34) == 1 then
+	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission35) == 1 then
 		npcHandler:say({
 			"Sanguine! I need two different blood samples - The first one from the necromancer's pure blood chamber. ... ",
 			"I was barred from the premises. For my research! Shameful! I'm a martyr to the cause - oh, the second sample you said? ...",

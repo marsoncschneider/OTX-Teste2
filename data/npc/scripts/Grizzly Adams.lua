@@ -124,7 +124,7 @@ local function onBuy(cid, item, subType, amount, ignoreCap, inBackpacks)
 	if not ignoreCap and player:getFreeCapacity() < ItemType(items[item].id):getWeight(amount) then
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You don\'t have enough cap.')
 	end
-	if not doPlayerRemoveMoney(cid, items[item].buy * amount) then
+	if not player:removeMoneyNpc(items[item].buy * amount) then
 		selfSay("You don't have enough money.", cid)
 	else
 		player:addItem(items[item].id, amount)
@@ -135,10 +135,12 @@ end
 
 local function onSell(cid, item, subType, amount, ignoreCap, inBackpacks)
 	local player = Player(cid)
-	if items[item].sell then
-		player:addMoney(items[item].sell * amount)
-		player:removeItem(items[item].id, amount)
-		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Sold '..amount..'x '..items[item].name..' for '..items[item].sell * amount..' gold coins.')
+	local items = setNewTradeTable(getTable(player))
+	if items[item].sellPrice and player:removeItem(items[item].itemId, amount) then
+		player:addMoney(items[item].sellPrice * amount)
+		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Sold '..amount..'x '..items[item].realName..' for '..items[item].sellPrice * amount..' gold coins.')
+	else
+		selfSay("You don't have item to sell.", cid)
 	end
 	return true
 end
@@ -405,9 +407,9 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.KillingInTheNameOf.MissionDemodras, 1) -- Won't give this task again.
 			end
 
-			if (player:getStorageValue(Storage.KillingInTheNameOf.MissionDemodras) == 1 and 
+			if (player:getStorageValue(Storage.KillingInTheNameOf.MissionDemodras) == 1 and
 				player:getStorageValue(Storage.KillingInTheNameOf.DemodrasTeleport) == 0 and
-				player:getStorageValue(Storage.KillingInTheNameOf.MissionTiquandasRevenge) == 1 and 
+				player:getStorageValue(Storage.KillingInTheNameOf.MissionTiquandasRevenge) == 1 and
 				player:getStorageValue(Storage.KillingInTheNameOf.TiquandasRevengeTeleport) == 0) then
 				npcHandler:say('You have already finished all special tasks.', cid)
 			end

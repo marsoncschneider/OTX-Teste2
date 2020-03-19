@@ -39,36 +39,24 @@ function Player.checkGnomeRank(self)
 	return true
 end
 
-function Player.setExhaustion(self, value, time)
-    return self:setStorageValue(value, time + os.time())
-end
- 
-function Player.getExhaustion(self, value)
-    local storage = self:getStorageValue(value)
-    if storage <= 0 then
-        return 0
-    end
-    return storage - os.time()
-end
- 
 function Player.addFamePoint(self)
     local points = self:getStorageValue(SPIKE_FAME_POINTS)
     local current = math.max(0, points)
     self:setStorageValue(SPIKE_FAME_POINTS, current + 1)
     self:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You have received a fame point.")
 end
- 
+
 function Player.getFamePoints(self)
     local points = self:getStorageValue(SPIKE_FAME_POINTS)
     return math.max(0, points)
 end
- 
+
 function Player.removeFamePoints(self, amount)
     local points = self:getStorageValue(SPIKE_FAME_POINTS)
     local current = math.max(0, points)
     self:setStorageValue(SPIKE_FAME_POINTS, current - amount)
 end
- 
+
 function Player.depositMoney(self, amount)
 	if not self:removeMoney(amount) then
 		return false
@@ -215,7 +203,7 @@ function Player.sendExtendedOpcode(self, opcode, buffer)
  	networkMessage:addByte(0x32)
  	networkMessage:addByte(opcode)
  	networkMessage:addString(buffer)
-	networkMessage:sendToPlayer(self, false) 
+	networkMessage:sendToPlayer(self)
  	networkMessage:delete()
 	return true
 end
@@ -267,38 +255,36 @@ function Player.addManaSpent(...)
 	return ret
 end
 
---[[ Analytics ]]--
+--jlcvp - impact analyser
+function Player.sendHealingImpact(self, healAmmount)
+	local msg = NetworkMessage()
+	msg:addByte(0xCC) -- DEC: 204
+	msg:addByte(0) -- 0 = healing / 1 = damage (boolean)
+	msg:addU32(healAmmount) -- unsigned int
+	msg:sendToPlayer(self)
+end
 
-    -- Impact Analyser
-    function Player.sendHealingImpact(self, healAmmount)
-    	local msg = NetworkMessage()
-    	msg:addByte(0xCC) -- DEC: 204
-    	msg:addByte(0) -- 0 = healing / 1 = damage (boolean)
-    	msg:addU32(healAmmount) -- unsigned int
-    	msg:sendToPlayer(self)
-    end
-    
-    function Player.sendDamageImpact(self, damage)
-    	local msg = NetworkMessage()
-    	msg:addByte(0xCC) -- DEC: 204
-    	msg:addByte(1) -- 0 = healing / 1 = damage (boolean)
-    	msg:addU32(damage) -- unsigned int
-    	msg:sendToPlayer(self)
-    end 
-    
-    -- Loot Analyser
-    function Player.sendLootStats(self, item)
-    	local msg = NetworkMessage()
-    	msg:addByte(0xCF) -- loot analyser bit
-    	msg:addItem(item) -- item userdata
-    	msg:addString(getItemName(item:getId()))
-    	msg:sendToPlayer(self)
-    end
-    
-    -- Supply Analyser
-    function Player.sendWaste(self, item)
-        local msg = NetworkMessage()
-        msg:addByte(0xCE) -- waste bit
-        msg:addItemId(item) -- itemId
-        msg:sendToPlayer(self)
-    end
+function Player.sendDamageImpact(self, damage)
+	local msg = NetworkMessage()
+	msg:addByte(0xCC) -- DEC: 204
+	msg:addByte(1) -- 0 = healing / 1 = damage (boolean)
+	msg:addU32(damage) -- unsigned int
+	msg:sendToPlayer(self)
+end
+
+-- Loot Analyser
+function Player.sendLootStats(self, item)
+    local msg = NetworkMessage()
+    msg:addByte(0xCF) -- loot analyser bit
+    msg:addItem(item, self) -- item userdata
+    msg:addString(getItemName(item:getId()))
+    msg:sendToPlayer(self)
+end
+
+-- Supply Analyser
+function Player.sendWaste(self, item)
+    local msg = NetworkMessage()
+    msg:addByte(0xCE) -- waste bit
+    msg:addItemId(item) -- itemId
+    msg:sendToPlayer(self)
+end

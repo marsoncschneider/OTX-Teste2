@@ -21,21 +21,21 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	local player = Player(cid)
-	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission59) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
+	if(msgcontains(msg, 'scroll') or msgcontains(msg, 'mission')) and player:getStorageValue(Storage.GravediggerOfDrefia.Mission60) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
 		npcHandler:say("Hello, brother. You come with a question to me, I believe?", cid)
 		npcHandler.topic[cid] = 1
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission59) == 1 then
+	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission60) == 1 then
 		npcHandler:say("And what is it you want? Do you bring news from the undead, or do you seek a dark {artefact}?", cid)
 		player:setStorageValue(Storage.GravediggerOfDrefia.Mission45, 1)
 		npcHandler.topic[cid] = 2
-	elseif(msgcontains(msg, 'artefact') or msgcontains(msg, 'yes')) and npcHandler.topic[cid] == 2 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission59) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
+	elseif(msgcontains(msg, 'artefact') or msgcontains(msg, 'yes')) and npcHandler.topic[cid] == 2 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission60) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
 		npcHandler:say({
 			"The scroll piece there? The symbols look promising, but it is incomplete. ...",
 			"It is of little use to us. But it seems to be of interest to you ...",
 			"In exchange for the scroll piece, you must assist me with something. {Agreed}?"
 		}, cid)
 		npcHandler.topic[cid] = 3
-	elseif(msgcontains(msg, 'agreed') or msgcontains(msg, 'yes')) and npcHandler.topic[cid] == 3 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission59) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
+	elseif(msgcontains(msg, 'agreed') or msgcontains(msg, 'yes')) and npcHandler.topic[cid] == 3 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission60) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission61) < 1 then
 		npcHandler:say({
 			"I would have to sing to the Dark Shrines, but I cannot. ...",
 			"I... cannot bear Urgith's breed. Everywhere, I hear them - scrabbling, squeaking ...",

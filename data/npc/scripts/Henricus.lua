@@ -7,6 +7,8 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
+local flaskCost = 1000
+
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
@@ -17,9 +19,9 @@ local function creatureSayCallback(cid, type, msg)
 	if msgcontains(msg, "inquisitor") then
 		npcHandler:say("The churches of the gods entrusted me with the enormous and responsible task to lead the inquisition. I leave the field work to inquisitors who I recruit from fitting people that cross my way.", cid)
 	elseif msgcontains(msg, "join") then
-		if player:getStorageValue(Storage.TheInquisition.Questline) < 0 then
+		if player:getStorageValue(Storage.TheInquisition.Questline) < 1 then
 			npcHandler:say("Do you want to join the inquisition?", cid)
-			npcHandler.topic[cid] = 1
+			npcHandler.topic[cid] = 2
 		end
 	elseif msgcontains(msg, "blessing") or msgcontains(msg, "bless") then
 		if player:getStorageValue(Storage.TheInquisition.Questline) == 25 then --if quest is done
@@ -29,36 +31,40 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("You cannot get this blessing unless you have completed The Inquisition Quest.", cid)
 			npcHandler.topic[cid] = 0
 		end
+    elseif msgcontains(msg, "flask") or msgcontains(msg, "special flask") then
+        if player:getStorageValue(Storage.TheInquisition.Questline) >= 12 then -- give player the ability to purchase the flask.
+        npcHandler:say("Do you want to buy the special flask of holy water for " .. flaskCost .. " gold?" , cid)
+        npcHandler.topic[cid] = 8
+        else 
+			npcHandler:say("You do not need this flask right now.", cid)
+			npcHandler.topic[cid] = 0
+        end		
 	elseif msgcontains(msg, "mission") or msgcontains(msg, "report") then
-		if player:getStorageValue(Storage.TheInquisition.Questline) < 0 then
+		if player:getStorageValue(Storage.TheInquisition.Questline) < 1 then
 			npcHandler:say("Do you want to join the inquisition?", cid)
-			npcHandler.topic[cid] = 1
-		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 0 then
+			npcHandler.topic[cid] = 2
+		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 1 then
 			npcHandler:say({
 				"Let's see if you are worthy. Take an inquisitor's field guide from the box in the back room. ...",
 				"Follow the instructions in the guide to talk to the Thaian guards that protect the walls and gates of the city and test their loyalty. Then report to me about your {mission}."
 			}, cid)
-			player:setStorageValue(Storage.TheInquisition.Questline, 1)
+			player:setStorageValue(Storage.TheInquisition.Questline, 2)
 			player:setStorageValue(Storage.TheInquisition.Mission01, 1) -- The Inquisition Questlog- "Mission 1: Interrogation"
 			npcHandler.topic[cid] = 0
-		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 1 then
-			npcHandler:say("Your current mission is to investigate the reliability of certain guards. Are you done with that mission?", cid)
-			npcHandler.topic[cid] = 2
 		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 2 then
+			npcHandler:say("Your current mission is to investigate the reliability of certain guards. Are you done with that mission?", cid)
+			npcHandler.topic[cid] = 3
+		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 3 then
 			npcHandler:say({
 				"Listen, we have information about a heretic coven that hides in a mountain called the Big Old One. The witches reach this cursed place on flying brooms and think they are safe there. ...",
 				"I've arranged a flying carpet that will bring you to their hideout. Travel to Femor Hills and tell the carpet pilot the codeword 'eclipse' ...",
 				"He'll bring you to your destination. At their meeting place, you'll find a cauldron in which they cook some forbidden brew ...",
 				"Use this vial of holy water to destroy the brew. Also steal their grimoire and bring it to me."
 			}, cid)
-			player:setStorageValue(Storage.TheInquisition.Questline, 3)
+			player:setStorageValue(Storage.TheInquisition.Questline, 4)
 			player:setStorageValue(Storage.TheInquisition.Mission02, 1) -- The Inquisition Questlog- "Mission 2: Eclipse"
 			player:addItem(7494, 1)
 			npcHandler.topic[cid] = 0
-		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 4 then
-            npcHandler:say("Your current mission is to destroy this coven. Are you done with that mission?", cid)
-            npcHandler.topic[cid] = 3
-		
 		elseif player:getStorageValue(Storage.TheInquisition.Questline) == 5 then
 			if player:removeItem(8702, 1) then
 				npcHandler:say({
@@ -140,26 +146,22 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 6
 		end
 	elseif msgcontains(msg, "yes") then
-		if npcHandler.topic[cid] == 1 then
+		if npcHandler.topic[cid] == 2 then
 			npcHandler:say("So be it. Now you are a member of the inquisition. You might ask me for a {mission} to raise in my esteem.", cid)
-			player:setStorageValue(Storage.TheInquisition.Questline, 0)
+			player:setStorageValue(Storage.TheInquisition.Questline, 1)
 			npcHandler.topic[cid] = 0
-		elseif npcHandler.topic[cid] == 2 then
+		elseif npcHandler.topic[cid] == 3 then
 			if player:getStorageValue(Storage.TheInquisition.WalterGuard) == 1 and player:getStorageValue(Storage.TheInquisition.KulagGuard) == 1 and player:getStorageValue(Storage.TheInquisition.GrofGuard) == 1 and player:getStorageValue(Storage.TheInquisition.MilesGuard) == 1 and player:getStorageValue(Storage.TheInquisition.TimGuard) == 1 then
 				npcHandler:say({
 					"Indeed, this is exactly what my other sources told me. Of course I knew the outcome of this investigation in advance. This was just a test. ...",
 					"Well, now that you've proven yourself as useful, you can ask me for another mission. Let's see if you can handle some field duty, too."
 				}, cid)
-				player:setStorageValue(Storage.TheInquisition.Questline, 2)
+				player:setStorageValue(Storage.TheInquisition.Questline, 3)
 				player:setStorageValue(Storage.TheInquisition.Mission01, 7) -- The Inquisition Questlog- "Mission 1: Interrogation"
 			else
 				npcHandler:say("You haven't done your mission yet.", cid)
 			end
 			npcHandler.topic[cid] = 0
-		elseif npcHandler.topic[cid] == 3 then
-            npcHandler:say("Fine, fine. You have proven that you can work efficiently. Still, only further missions will show if you are truly capable. Ask me for another mission if you're ready.", cid)
-            player:setStorageValue(Storage.TheInquisition.Questline, 5)
-            npcHandler.topic[cid] = 0
 		elseif npcHandler.topic[cid] == 4 then
 			if player:getStorageValue(Storage.TheInquisition.Questline) == 10 then
 				npcHandler:say("Good, you've returned. Your skill in practical matters seems to be useful. If you're ready for a further mission, just ask. ", cid)
@@ -191,6 +193,14 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Come back when you have destroyed the shadow nexus.", cid)
 			end
 			npcHandler.topic[cid] = 0
+        elseif npcHandler.topic[cid] == 8 then
+            if player:removeMoneyNpc(flaskCost) then
+            npcHandler:say("Here is your new flask!, |PLAYERNAME|.", cid)
+            player:addItem(7494, 1)     
+            else
+			npcHandler:say("Come back when you have enough money.", cid)
+		end              
+           npcHandler.topic[cid] = 0			
 		elseif npcHandler.topic[cid] == 7 then
 			if player:getBlessings() == 5 then
 				npcHandler:say("You already have been blessed!", cid)

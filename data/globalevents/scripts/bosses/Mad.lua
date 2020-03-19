@@ -1,33 +1,22 @@
-local BOSSii = "Mad Mage" -- boss name
-local BOSS_POSii = {x = 33361, y = 31873, z = 9} -- boss spawn coord 
-local roomii = {fromx = 33306, tox = 33372, fromy = 31844, toy = 31917, z = 9} -- boss room
-local BOSS_GLOBAL_STORAGEii = 80701 -- dont change
+local spawns = {
+    [1]  = {position = Position(33339,31914,9), monster = 'Mad Mage'},
+    [2]  = {position = Position(33358,31914,9), monster = 'Mad Mage'},
+    [3]  = {position = Position(33348,31899,9), monster = 'Mad Mage'},
+    [4]  = {position = Position(33369,31873,9), monster = 'Mad Mage'},
+    [5]  = {position = Position(33360,31852,9), monster = 'Mad Mage'},
+    [6]  = {position = Position(33328,31860,9), monster = 'Mad Mage'},
+    [7]  = {position = Position(33335,31873,9), monster = 'Mad Mage'}
+}
 
-function onTime()
---function onThink(interval, lastExecution)
+ function onThink(interval, lastExecution)
+    local spawn = spawns[math.random(#spawns)]
+    local monster =
+   Game.createMonster(spawn.monster, spawn.position, true, true)
+	 monster:setReward(true)
 
-local bossii = 0
-for x = roomii.fromx, roomii.tox do
-for y = roomii.fromy, roomii.toy do
-for z = roomii.z, roomii.z do
-
-creatureii = {x = x, y = y, z = z}
-mobii = getTopCreature(creatureii).uid
-
-    if getCreatureName(mobii) == BOSSii then
-        bossii = 1
+    if not monster then
+        print('>> Failed to spawn '..rand.bossName..'.')
+        return true
     end
-end
-end
-end
-
-if bossii == 1 then
-end
-
-if bossii == 0 then
-  local monster3 = Game.createMonster("Mad Mage", Position(33361, 31873, 9))
- monster3:setReward(true)
-end
-
-return true
+  return true
 end

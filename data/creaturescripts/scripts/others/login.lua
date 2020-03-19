@@ -1,98 +1,33 @@
-local events = {
-    'ParasiteWarzone',
-    'ElementalSpheresOverlords',
-    'BigfootBurdenVersperoth',
-    'Razzagorn',
-    'Shatterer',
-    'Zamulosh',	
-	'The Hunger',
-	'The Rage',
-	'Eradicator',
-	'Eradicator1',
-	'Rupture',
-	'World Devourer',	
-    'Tarbaz',
-    'Shulgrax',
-    'Ragiaz',
-    'Plagirath',
-    'Mazoran',
-    'Destabilized',
-    'BigfootBurdenWiggler',
-    'SvargrondArenaKill',
-    'NewFrontierShardOfCorruption',
-    'NewFrontierTirecz',
-    'ServiceOfYalaharDiseasedTrio',
-    'ServiceOfYalaharAzerus',
-    'ServiceOfYalaharQuaraLeaders',
-    'InquisitionBosses',
-    'InquisitionUngreez',
-    'KillingInTheNameOfKills',
-	'KillingInTheNameOfKillss',
-	'KillingInTheNameOfKillsss',
-    'MastersVoiceServants',
-    'SecretServiceBlackKnight',
-    'ThievesGuildNomad',
-    'WotELizardMagistratus',
-    'WotELizardNoble',
-    'WotEKeeper',
-	'Maxxed',
-    'WotEBosses',
-    'WotEZalamon',
-    'WarzoneThree',
-    'PlayerDeath',
-    'AdvanceSave',
-    'bossesWarzone',
-    'AdvanceRookgaard',
-    'PythiusTheRotten',
-    'DropLoot',
-    'Yielothax',
-    'BossParticipation',
-    'Energized Raging Mage',
-    'Raging Mage', 
-    'modalMD1',
-	'VibrantEgg',
-    'DeathCounter',
-    'KillCounter',
-    'bless1',
-	'lowerRoshamuul',
-	'SpikeTaskQuestCrystal',
-	'SpikeTaskQuestDrillworm',
-	'petlogin',
-	'Idle',
-	'petthink',
-	'UpperSpikeKill',
-	'MiddleSpikeKill',
-	'LowerSpikeKill'
-}
- 
+function Player.sendTibiaTime(self, hours, minutes)
+	local msg = NetworkMessage()
+	msg:addByte(0xEF)
+	msg:addByte(hours)
+	msg:addByte(minutes)
+	msg:sendToPlayer(self)
+	msg:delete()
+	return true
+end
+
 local function onMovementRemoveProtection(cid, oldPosition, time)
     local player = Player(cid)
     if not player then
         return true
     end
- 
+
     local playerPosition = player:getPosition()
     if (playerPosition.x ~= oldPosition.x or playerPosition.y ~= oldPosition.y or playerPosition.z ~= oldPosition.z) or player:getTarget() then
         player:setStorageValue(Storage.combatProtectionStorage, 0)
         return true
     end
- 
-    addEvent(onMovementRemoveProtection, 1000, cid, oldPosition, time - 1) 
+
+    addEvent(onMovementRemoveProtection, 1000, cid, oldPosition, time - 1)
 end
- 
+
 function onLogin(player)
 	local loginStr = 'Welcome to ' .. configManager.getString(configKeys.SERVER_NAME) .. '!'
 	if player:getLastLoginSaved() <= 0 then
-		loginStr = loginStr .. ' Please choose your outfit.'		
-		player:setBankBalance(0)
-
-		if player:getSex() == 1 then
-			player:setOutfit({lookType = 128, lookHead = 78, lookBody = 106, lookLegs = 58, lookFeet = 76})		
-		else
-			player:setOutfit({lookType = 136, lookHead = 78, lookBody = 106, lookLegs = 58, lookFeet = 76})	
-		end
-
-		player:sendTutorial(1)
+		loginStr = loginStr .. ' Please choose your outfit.'
+		player:sendOutfitWindow()
 	else
 		if loginStr ~= "" then
 			player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
@@ -100,18 +35,20 @@ function onLogin(player)
 
 		loginStr = string.format('Your last visit was on %s.', os.date('%a %b %d %X %Y', player:getLastLoginSaved()))
 	end
- 
+
     player:sendTextMessage(MESSAGE_STATUS_DEFAULT, loginStr)
-   
+
     local playerId = player:getId()
-    
+
+	DailyReward.init(playerId)
+
     player:loadSpecialStorage()
 
     --[[-- Maintenance mode
     if (player:getGroup():getId() < 2) then
         return false
     else
-        
+
     end--]]
 
     if (player:getGroup():getId() >= 4) then
@@ -124,118 +61,105 @@ function onLogin(player)
     -- EXP Stamina
     nextUseXpStamina[playerId] = 1
 
-    -- Prey Stamina
-    nextUseStaminaPrey[playerId+1] = {Time = 1}
-    nextUseStaminaPrey[playerId+2] = {Time = 1}
-    nextUseStaminaPrey[playerId+3] = {Time = 1}
+	-- Prey Small Window
+	if player:getClient().version > 1110 then
+		for slot = CONST_PREY_SLOT_FIRST, CONST_PREY_SLOT_THIRD do
+			player:sendPreyData(slot)
+		end
+	end	 
 
-    -- Prey Data
-    if (player:getVocation():getId() ~= 0) then
-        local columnUnlocked = getUnlockedColumn(player)
-        if (not columnUnlocked) then
-            columnUnlocked = 0
-        end
-
-        for i = 0, columnUnlocked do
-            sendPreyData(player, i)
-        end
-    end
+    -- New Prey
+    nextPreyTime[playerId] = {
+        [CONST_PREY_SLOT_FIRST] = 1,
+        [CONST_PREY_SLOT_SECOND] = 1,
+        [CONST_PREY_SLOT_THIRD] = 1
+    }
 
     if (player:getAccountType() == ACCOUNT_TYPE_TUTOR) then
-        local msg = [[:: Regras Tutor ::
-            1*>3 Advertências você perde o cargo.
-            2*>Sem conversas paralelas com jogadores no Help, se o player começar a ofender, você simplesmente o mute.
-            3*>Seja educado com os player no Help e principalmente no Privado, tenta ajudar o máximo possível.
-            4*>Sempre logue no seu horário, caso não tiver uma justificativa você será removido da staff.
-            5*>Help é somente permitido realizar dúvidas relacionadas ao tibia.
-            6*>Não é Permitido divulgar time pra upar ou para ajudar em quest.
-            7*>Não é permitido venda de itens no Help.
-            8*>Caso o player encontre um bug, peça para ir ao site mandar um ticket e explicar em detalhes.
-            9*>Mantenha sempre o Chat dos Tutores aberto. (obrigatório).
-            10*>Você terminou de cumprir seu horário, viu que não tem nenhum tutor Online, você comunica com algum CM in-game ou ts e fica no help até alguém logar, se der.
-            11*>Mantenha sempre um ótimo português no Help, queremos tutores que dêem suporte, não que fiquem falando um ritual satânico.
-            12*>Se ver um tutor fazendo algo que infrinja as regras, tire uma print e envie aos superiores."
-            -- Comandos --
-            Mutar Player: /mute nick,90. (90 segundos)
-            Desmutar Player: /unmute nick.
-            -- Comandos --]]
+        local msg = [[:: Tutor Rules
+            1 *> 3 Warnings you lose the job.
+            2 *> Without parallel conversations with players in Help, if the player starts offending, you simply mute it.
+            3 *> Be educated with the players in Help and especially in the Private, try to help as much as possible.
+            4 *> Always be on time, if you do not have a justification you will be removed from the staff.
+            5 *> Help is only allowed to ask questions related to tibia.
+            6 *> It is not allowed to divulge time up or to help in quest.
+            7 *> You are not allowed to sell items in the Help.
+            8 *> If the player encounters a bug, ask to go to the website to send a ticket and explain in detail.
+            9 *> Always keep the Tutors Chat open. (required).
+            10 *> You have finished your schedule, you have no tutor online, you communicate with some CM in-game or ts and stay in the help until someone logs in, if you can.
+            11 *> Always keep a good Portuguese in the Help, we want tutors who support, not that they speak a satanic ritual.
+            12 *> If you see a tutor doing something that violates the rules, take a print and send it to your superiors. "
+            - Commands -
+            Mute Player: / mute nick, 90. (90 seconds)
+            Unmute Player: / unmute nick.
+            - Commands -]]
         player:popupFYI(msg)
     end
-   
- 	-- OPEN CHANNERLS (ABRIR CHANNELS)
+
+ 	-- OPEN CHANNELS
 	if table.contains({"Rookgaard", "Dawnport"}, player:getTown():getName())then
-		--player:openChannel(7) -- help channel
 		player:openChannel(3) -- world chat
 		player:openChannel(6) -- advertsing rook main
 	else
-		--player:openChannel(7) -- help channel
 		player:openChannel(3) -- world chat
 		player:openChannel(5) -- advertsing main
 	end
 
-      --
     -- Rewards
     local rewards = #player:getRewardList()
     if(rewards > 0) then
-        player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You have %d %s in your reward chest.", rewards, rewards > 1 and "rewards" or "reward"))
+        player:sendTextMessage(MESSAGE_INFO_DESCR, string.format("You have %d %s in your reward chest.", rewards, rewards > 1 and "rewards" or "reward"))
     end
- 
+
     -- Update player id
     local stats = player:inBossFight()
     if stats then
         stats.playerId = player:getId()
     end
- 
-    -- fury gates
-    local messageType = nil
-    if (player:getClient().os == 3 or
-    	player:getClient().os == 5) then
-    	messageType = MESSAGE_EVENT_ADVANCE
-    end
 
-    if Game.getStorageValue(9710) == 1 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Venore Today.')
-    elseif Game.getStorageValue(9711) == 2 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Abdendriel Today.')
-    elseif Game.getStorageValue(9712) == 3 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Thais Today.')
-    elseif Game.getStorageValue(9713) == 4 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Carlin Today.')
-    elseif Game.getStorageValue(9714) == 5 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Edron Today.')
-    elseif Game.getStorageValue(9716) == 6 then
-        player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_BLUE, 'Fury Gate is on Kazordoon Today.')
-    end
-
-	player:sendTextMessage(messageType or MESSAGE_STATUS_CONSOLE_ORANGE, '[BUGS?] Reporte em http://www.github.com/malucooo/otxserver-new/issues')
-   
-    -- Events
-    for i = 1, #events do
-        player:registerEvent(events[i])
-    end
- 
- 
  	if player:getStorageValue(Storage.combatProtectionStorage) < 1 then
         player:setStorageValue(Storage.combatProtectionStorage, 1)
         onMovementRemoveProtection(playerId, player:getPosition(), 10)
 	end
 
-	-- Exp stats
+	-- Set Client XP Gain Rate
+	if Game.getStorageValue(GlobalStorage.XpDisplayMode) > 0 then
+		displayRate = Game.getExperienceStage(player:getLevel())
+		else
+		displayRate = 1
+	end
 	local staminaMinutes = player:getStamina()
-	local Boost = player:getExpBoostStamina()
-	if staminaMinutes > 2400 and player:isPremium() and Boost > 0 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*2) -- 200 = 1.0x, 200 = 2.0x, ... premium account
-	elseif staminaMinutes > 2400 and player:isPremium() and Boost <= 0 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.0x, 150 = 1.5x, ... premium account
-	elseif staminaMinutes <= 2400 and staminaMinutes > 840 and player:isPremium() and Boost > 0 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.5x		premium account
-	elseif staminaMinutes > 840 and Boost > 0 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1.5) -- 150 = 1.5x		free account
-	elseif staminaMinutes <= 840 and Boost > 0 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*1) -- 50 = 0.5x	all players
+	local storeBoost = player:getExpBoostStamina()
+	player:setStoreXpBoost(storeBoost > 0 and 50 or 0)
+	if staminaMinutes > 2400 and player:isPremium() and storeBoost > 0 then
+		player:setBaseXpGain(displayRate*2*100) -- Premium + Stamina boost + Store boost
+		player:setStaminaXpBoost(150)
+	elseif staminaMinutes > 2400 and player:isPremium() and storeBoost <= 0 then
+		player:setBaseXpGain(displayRate*1.5*100) -- Premium + Stamina boost
+		player:setStaminaXpBoost(150)
+	elseif staminaMinutes <= 2400 and staminaMinutes > 840 and player:isPremium() and storeBoost > 0 then
+		player:setBaseXpGain(displayRate*1.5*100) -- Premium + Store boost
+		player:setStaminaXpBoost(100)
+	elseif staminaMinutes > 840 and storeBoost > 0 then
+		player:setBaseXpGain(displayRate*1.5*100) -- FACC + Store boost
+		player:setStaminaXpBoost(100)
+	elseif staminaMinutes <= 840 and storeBoost > 0 then
+		player:setBaseXpGain(displayRate*1*100) -- ALL players low stamina + Store boost
+		player:setStaminaXpBoost(50)
 	elseif staminaMinutes <= 840 then
-		player:setBaseXpGain(Game.getExperienceStage(player:getLevel())*0.5) -- 50 = 0.5x	all players
+		player:setBaseXpGain(displayRate*0.5*100) -- ALL players low stamina
+		player:setStaminaXpBoost(50)
 	end
 
+	if player:getClient().version > 1110 then
+		local worldTime = getWorldTime()
+		local hours = math.floor(worldTime / 60)
+		local minutes = worldTime % 60
+		player:sendTibiaTime(hours, minutes)
+	end
+	
+	if player:getStorageValue(Storage.isTraining) == 1 then -- redefinir storage de exercise weapon
+		player:setStorageValue(Storage.isTraining,0)
+	end
     return true
 end

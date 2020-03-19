@@ -1,13 +1,21 @@
- local keywordHandler = KeywordHandler:new()
+local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
-function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
-function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
-function onThink()		npcHandler:onThink()		end
+function onCreatureAppear(cid)
+npcHandler:onCreatureAppear(cid)
+end
+function onCreatureDisappear(cid)
+npcHandler:onCreatureDisappear(cid)
+end
+function onCreatureSay(cid, type, msg)
+npcHandler:onCreatureSay(cid, type, msg)
+end
+function onThink()
+npcHandler:onThink()	
+end
 
-dream     = 23042
+dream = 23042
 
 local action = {}
 local weapon = {}
@@ -100,65 +108,65 @@ local ACTION = {
 	TRANSFORM = 3
 }
 
-	 -- dream START -- 
-	 
-	 
-function dreamFirst(cid, message, keywords, parameters, node) 
+	 -- dream START --
 
-    if(not npcHandler:isFocused(cid)) then 
-        return false 
-    end 
 
-    if isPremium(cid) then 
-    addon = getPlayerStorageValue(cid,dream) 
-    if addon == -1 then 
-        if getPlayerItemCount(cid,22610) >= 1 then 
-        if doPlayerRemoveItem(cid,22610,1) then 
-            selfSay(newaddon, cid) 
-              
-            doSendMagicEffect(getCreaturePosition(cid), 13) 
-            doPlayerAddOutfit(cid, 577, 1) 
-            doPlayerAddOutfit(cid, 578, 1) 
-            setPlayerStorageValue(cid,dream,1) 
-        end 
-        else 
-            selfSay(noitems, cid) 
-        end 
-    else 
-        selfSay(already, cid) 
-    end 
-    end 
+function dreamFirst(cid, message, keywords, parameters, node)
 
-end 
+    if(not npcHandler:isFocused(cid)) then
+        return false
+    end
 
-function dreamSecond(cid, message, keywords, parameters, node) 
+    if isPremium(cid) then
+    addon = getPlayerStorageValue(cid,dream)
+    if addon == -1 then
+        if getPlayerItemCount(cid,22610) >= 1 then
+        if doPlayerRemoveItem(cid,22610,1) then
+            selfSay(newaddon, cid)
 
-    if(not npcHandler:isFocused(cid)) then 
-        return false 
-    end 
+            doSendMagicEffect(getCreaturePosition(cid), 13)
+            doPlayerAddOutfit(cid, 577, 1)
+            doPlayerAddOutfit(cid, 578, 1)
+            setPlayerStorageValue(cid,dream,1)
+        end
+        else
+            selfSay(noitems, cid)
+        end
+    else
+        selfSay(already, cid)
+    end
+    end
 
-    if isPremium(cid) then 
-    addon = getPlayerStorageValue(cid,dream+1) 
-    if addon == -1 then 
-        if getPlayerItemCount(cid,22609) >= 1 then 
-        if doPlayerRemoveItem(cid,22609,1) then 
-            selfSay(newaddon, cid) 
-              
-            doSendMagicEffect(getCreaturePosition(cid), 13) 
-           doPlayerAddOutfit(cid, 577, 2) 
-            doPlayerAddOutfit(cid, 578, 2) 
-            setPlayerStorageValue(cid,dream+1,1) 
-        end 
-        else 
-            selfSay(noitems, cid) 
-        end 
-    else 
-        selfSay(already, cid) 
-    end 
-    end 
+end
 
-end 
--- dream END -- 
+function dreamSecond(cid, message, keywords, parameters, node)
+
+    if(not npcHandler:isFocused(cid)) then
+        return false
+    end
+
+    if isPremium(cid) then
+    addon = getPlayerStorageValue(cid,dream+1)
+    if addon == -1 then
+        if getPlayerItemCount(cid,22609) >= 1 then
+        if doPlayerRemoveItem(cid,22609,1) then
+            selfSay(newaddon, cid)
+
+            doSendMagicEffect(getCreaturePosition(cid), 13)
+           doPlayerAddOutfit(cid, 577, 2)
+            doPlayerAddOutfit(cid, 578, 2)
+            setPlayerStorageValue(cid,dream+1,1)
+        end
+        else
+            selfSay(noitems, cid)
+        end
+    else
+        selfSay(already, cid)
+    end
+    end
+
+end
+-- dream END --
 
 local function greetCallback(cid)
 	local player = Player(cid)
@@ -376,28 +384,22 @@ local function creatureSayCallback(cid, type, msg)
 	end
 end
 
-npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")
+keywordHandler:addKeyword({'outfit'}, StdModule.say, {npcHandler = npcHandler, text = 'What addon you are looking? I need for first addon: {dream warden claw} and for second {dream warden mask}.'})
+	node1 = keywordHandler:addKeyword({'dream warden mask'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'To achieve the first dream addon you need to give me 1 dream warden claw. Do you have them with you?'})
+    node1:addChildKeyword({'yes'}, dreamFirst, {})
+    node1:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then. Come back when you got all neccessary items.', reset = true})
 
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
+	node2 = keywordHandler:addKeyword({'dream warden claw'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'To achieve the second dream addon you need to give me 1 dream warden mask. Do you have them with you?'})
+    node2:addChildKeyword({'yes'}, dreamSecond, {})
+    node2:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then. Come back when you got all neccessary items.', reset = true})
+
+-- Greeting message
+keywordHandler:addGreetKeyword({"ashari"}, {npcHandler = npcHandler, text = "Greetings, |PLAYERNAME|."})
+--Farewell message
+keywordHandler:addFarewellKeyword({"asgha thrazi"}, {npcHandler = npcHandler, text = "Goodbye, |PLAYERNAME|."})
+
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 
-   -- node1 = keywordHandler:addKeyword({'outfit'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'What addon you are looking? I need for first addon: {Dream Warden Claw} and for second {Dream Warden Mask}.'}) 
-   -- node1:addChildKeyword({'yes'}, YalaharianSecond, {}) 
-   -- node1:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then. Come back when you got all neccessary items.', reset = true}) 
-keywordHandler:addKeyword({'outfit'}, StdModule.say, {npcHandler = npcHandler, text = 'What addon you are looking? I need for first addon: {Dream Warden Claw} and for second {Dream Warden Mask}.'})
+npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")
 
-	
-	node1 = keywordHandler:addKeyword({'dream warden mask'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'To achieve the first Dream addon you need to give me 1 Dream Warden Claw. Do you have them with you?'}) 
-    node1:addChildKeyword({'yes'}, dreamFirst, {}) 
-    node1:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then. Come back when you got all neccessary items.', reset = true}) 
-
-	node2 = keywordHandler:addKeyword({'dream warden claw'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'To achieve the second Dream addon you need to give me 1 Dream Warden Mask. Do you have them with you?'}) 
-    node2:addChildKeyword({'yes'}, dreamSecond, {}) 
-    node2:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then. Come back when you got all neccessary items.', reset = true}) 
-
-	
-	
-local focusModule = FocusModule:new()
-focusModule:addGreetMessage({'hi', 'hello', 'ashari'})
-focusModule:addFarewellMessage({'bye', 'farewell', 'asgha thrazi'})
-npcHandler:addModule(focusModule)
+npcHandler:addModule(FocusModule:new())

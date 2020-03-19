@@ -186,7 +186,7 @@ local function creatureSayCallback(cid, type, msg)
 				"<sobs drily> I never want to see you again! You and your dirty gravedigger hands! Take this, you ungrateful, useless, imbecile... human! ...",
 				"Now... get out! And never, ever, dare come back! You ruined EVERYTHING!"
 			}, cid)
-			player:setStorageValue(Storage.GravediggerOfDrefia.Mission74, 2)
+			player:setStorageValue(Storage.GravediggerOfDrefia.Mission73, 2)
 			player:addItem(21452, 1)
 		end
 	elseif msgcontains(msg, "yes") then
@@ -325,7 +325,7 @@ local function creatureSayCallback(cid, type, msg)
 				"Oh, one more thing! They only talk to you when you look like a fellow summoner. It's dangerous to go without a cape. Use this."
 			}, cid)
 		elseif npcHandler.topic[cid] == 15 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission68) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission69) < 1 then
-			
+
 			if player:removeItem(21250, 1) then
 				player:setStorageValue(Storage.GravediggerOfDrefia.Mission69, 1)
 				npcHandler:say({
@@ -454,7 +454,7 @@ local function creatureSayCallback(cid, type, msg)
 		elseif player:getStorageValue(Storage.GravediggerOfDrefia.Mission64) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission65) < 1 then
 			npcHandler:say("Hello, young apprentice. Do you have that {scroll} piece from the priestess?", cid)
 			player:addItem(21464, 1)
-			
+
 		elseif player:getStorageValue(Storage.GravediggerOfDrefia.Mission68) == 1 and player:getStorageValue(Storage.GravediggerOfDrefia.Mission69) < 1 then
 			npcHandler:say("Welcome, welcome! Finally! The last {scroll} piece.... you do have it, haven't you?", cid)
 			npcHandler.topic[cid] = 15
@@ -495,8 +495,8 @@ local function creatureSayCallback(cid, type, msg)
 			--player:setStorageValue(Storage.GravediggerOfDrefia.Mission72, 1)
 			player:setStorageValue(Storage.GravediggerOfDrefia.Mission73, 1)
 			npcHandler.topic[cid] = 17
-			
-		
+
+
 		else
 			npcHandler:say("You don't have my scroll.", cid)
 			npcHandler.topic[cid] = 0

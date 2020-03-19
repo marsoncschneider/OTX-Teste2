@@ -1,4 +1,0 @@
-/home/Otxserver-New/cmake/CMakeFiles/all_pch.dir
-/home/Otxserver-New/cmake/CMakeFiles/clean_cotire.dir
-/home/Otxserver-New/cmake/CMakeFiles/tfs.dir
-/home/Otxserver-New/cmake/CMakeFiles/tfs_pch.dir

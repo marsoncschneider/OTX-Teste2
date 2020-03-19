@@ -230,10 +230,9 @@ bool Imbuements::loadFromXml(bool /* reloading */) {
 							imb.stats[skillId] = bonus;
 						} else if (usenormalskill == 3) {
 							imb.skills[skillId] = bonus;
-							int32_t chance = 500;
+							int32_t chance = 100;
 							if ((attr = childNode.attribute("chance")))
-								//chance = std::min<uint32_t>(100, pugi::cast<int32_t>(attr.value()));
-						chance = 500;
+								chance = std::min<uint32_t>(100, pugi::cast<int32_t>(attr.value()));
 
 							imb.skills[skillId - 1] = chance;
 						}
@@ -254,12 +253,10 @@ bool Imbuements::loadFromXml(bool /* reloading */) {
 							continue;
 						}
 
-						//uint32_t percent = std::min<uint32_t>(200, pugi::cast<uint32_t>(attr.value()));
-						//uint32_t percent = 200;
+						uint32_t percent = std::min<uint32_t>(100, pugi::cast<uint32_t>(attr.value()));
 
 						imb.combatType = combatType;
-						//imb.elementDamage = std::min<int16_t>(200, percent);
-						imb.elementDamage = 200;
+						imb.elementDamage = std::min<int16_t>(100, percent);
 					} else if (strcasecmp(effecttype.c_str(), "reduction") == 0) {
 						if (!(attr = childNode.attribute("combat"))) {
 							std::cout << "[Warning - Imbuements::loadFromXml] Missing combat for imbuement name " << imb.name << std::endl;
@@ -277,8 +274,7 @@ bool Imbuements::loadFromXml(bool /* reloading */) {
 							continue;
 						}
 
-						//uint32_t percent = std::min<uint32_t>(200, pugi::cast<uint32_t>(attr.value()));
-						uint32_t percent = 200;
+						uint32_t percent = std::min<uint32_t>(100, pugi::cast<uint32_t>(attr.value()));
 
 						imb.absorbPercent[combatTypeToIndex(combatType)] = percent;
 					} else if (strcasecmp(effecttype.c_str(), "speed") == 0) {

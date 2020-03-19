@@ -44,13 +44,13 @@ local function getTable(player)
 		{name = "Flexible Dragon Scale", id = 12506, buy = 4000},		-- Flexible Dragon Scale
 		{name = "Formula for a Memory Potion", id = 14351, buy = 5000},		-- Formula for a Memory Potion
 		{name = "Funeral Urn", id = 4858, buy = 6000},		-- Funeral Urn
-		{name = "Fur of a Wolf Whelp", id = 28599, buy = 5000},		-- Fur of a Wolf Whelp
 		{name = "Ghost Charm", id = 9737, buy = 20000},       -- Ghost Charm
 		{name = "Ghost's Tear", id = 9662, buy = 50000},		-- Ghost's Tear
 		{name = "Giant Ape's Hair", id = 4843, buy = 24000},		-- Giant Ape's Hair
 		{name = "Golem Blueprint", id = 10165, buy = 13500},		-- Golem Blueprint
 		{name = "Golem Head", id = 10173, buy = 25000},		-- Golem Head
 		{name = "Headache Pill", id = 10454, buy = 350},		-- Headache Pill
+		{name = "Ivory Lyre", id = 36282, buy = 5000},		-- Ivory Lyre
 		{name = "Letterbag", id = 2330, buy = 8000},		-- Letterbag
 		{name = "Lump of Clay", id = 12285, buy = 1000},		-- Lump of Clay
 		{name = "Machine Crate", id = 10307, buy = 8500},		-- Machine Crate
@@ -66,6 +66,7 @@ local function getTable(player)
 		{name = "Plans for a Strange Device", id = 10613, buy = 1000},		-- Plans for a Strange Device
 		{name = "Rare Crystal", id = 11104, buy = 1000},		-- Rare Crystal
 		{name = "Sacred Earth", id = 12297, buy = 1000},		-- Sacred Earth
+		{name = "Sceptre of Sun and Sea", id = 36249, buy = 50000},		-- Sceptre of Sun and Sea
 		{name = "Shadow Orb", id = 10155, buy = 12500},		-- Shadow Orb
 		{name = "Sheet of Tracing Paper", id = 4854, buy = 500},			-- Sheet of Tracing Paper
 		{name = "Suspicious Signet Ring", id = 7697, buy = 15000},		-- Suspicious Signet Ring
@@ -111,7 +112,7 @@ local function onBuy(cid, item, subType, amount, ignoreCap, inBackpacks)
 	if not ignoreCap and player:getFreeCapacity() < ItemType(items[item].itemId):getWeight(amount) then
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You don\'t have enough cap.')
 	end
-	if not doPlayerRemoveMoney(cid, items[item].buyPrice * amount) then
+	if not player:removeMoneyNpc(items[item].buyPrice * amount) then
 		selfSay("You don't have enough money.", cid)
 	else
 		player:addItem(items[item].itemId, amount)
@@ -123,10 +124,11 @@ end
 local function onSell(cid, item, subType, amount, ignoreCap, inBackpacks)
 	local player = Player(cid)
 	local items = setNewTradeTable(getTable(player))
-	if items[item].sellPrice then
+	if items[item].sellPrice and player:removeItem(items[item].itemId, amount) then
 		player:addMoney(items[item].sellPrice * amount)
-		player:removeItem(items[item].itemId, amount)
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Sold '..amount..'x '..items[item].realName..' for '..items[item].sellPrice * amount..' gold coins.')
+	else
+		selfSay("You don't have item to sell.", cid)
 	end
 	return true
 end

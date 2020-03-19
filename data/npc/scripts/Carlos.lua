@@ -159,12 +159,11 @@ local function creatureSayCallback(cid, type, msg)
 			storeTalkCid[cid] = 7
 			local items = setNewTradeTable(getTable())
 			local function onSell(cid, item, subType, amount, ignoreEquipped)
-				if items[item].sellPrice then
-					return
-					player:removeItem(items[item].itemId, amount, -1, ignoreEquipped) and
-					player:addMoney(items[item].sellPrice * amount) and
-
-					player:sendTextMessage(MESSAGE_INFO_DESCR, 'You sold '..amount..'x '..items[item].realName..' for '..items[item].sellPrice * amount..' gold coins.')
+				if items[item].sellPrice and player:removeItem(items[item].itemId, amount, -1, ignoreEquipped) then
+					player:addMoney(items[item].sellPrice * amount)
+					return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You sold '..amount..'x '..items[item].realName..' for '..items[item].sellPrice * amount..' gold coins.')
+				else
+					selfSay("You don't have item to sell.", cid)
 				end
 				return true
 			end

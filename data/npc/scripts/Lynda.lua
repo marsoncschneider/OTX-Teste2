@@ -1,4 +1,4 @@
- local keywordHandler = KeywordHandler:new()
+local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
@@ -10,8 +10,10 @@ function onThink()		npcHandler:onThink()		end
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
-	end
-	local player = Player(cid)
+    end
+    
+    local player = Player(cid)
+    
 	if msgcontains(msg, "angelina") then
 		if player:getStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand) == 1 then
 			npcHandler:say({
@@ -40,6 +42,19 @@ local function creatureSayCallback(cid, type, msg)
 		if player:getStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand) == 5 then
 			npcHandler:say("Am I sensing enough holy energy from ankhs here?", cid)
 			npcHandler.topic[cid] = 6
+        end
+    elseif msgcontains(msg, "ritual") then
+		if player:getStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand) == 6 then
+            if player:getStorageValue(Storage.OutfitQuest.MageSummoner.AddonWandTimer) < os.time() then
+                player:setStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand, 7)
+				player:addOutfitAddon(141, 1)
+				player:addOutfitAddon(130, 1)
+                player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+                npcHandler:say('I\'m glad to tell you that I have finished the ritual, player. Here is your new wand. I hope you carry it proudly for everyone to see..', cid)
+                npcHandler.topic[cid] = 0
+			else
+				npcHandler:say('Please let me focus for a while, |PLAYERNAME|.', cid)
+			end
 		end
 	elseif msgcontains(msg, "yes") then
 		if npcHandler.topic[cid] == 1 then
@@ -87,104 +102,20 @@ local function creatureSayCallback(cid, type, msg)
 			end
 		elseif npcHandler.topic[cid] == 6 then
 			if player:removeItem(2193, 20) then
-				npcHandler:say("The ingredients for the ritual are complete! I will start to prepare your blessed wand,... I'm glad to tell you that I have finished the ritual, |PLAYERNAME|. Here is your new wand. I hope you carry it proudly for everyone to see.", cid)
-				player:setStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand, 6)
-				player:addOutfitAddon(141, 1)
-				player:addOutfitAddon(130, 1)
-				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+                npcHandler:say("The ingredients for the ritual are complete! I will start to prepare your blessed wand, but I have to medidate first. Please come back later to hear how the ritual went.", cid)
+                player:setStorageValue(Storage.OutfitQuest.MageSummoner.AddonWand, 6)
+                player:setStorageValue(Storage.OutfitQuest.MageSummoner.AddonWandTimer, os.time() + 10800)
 				npcHandler.topic[cid] = 0
 			end
-		end
-		
-		-- START --
-		elseif msgcontains(msg, "wedding") or msgcontains(msg, "marriage") then
-        local playerStatus = getPlayerMarriageStatus(player:getGuid())
-        local playerSpouse = getPlayerSpouse(player:getGuid())
-        if (playerStatus == MARRIED_STATUS) then
-            msg = msg .. ' I see that you are a happily married ' .. ((player:getSex() == PLAYERSEX_FEMALE) and 'woman' or 'man') .. '. What brings you here? Looking for a {divorce}?'
-        elseif (playerStatus == PROPOSED_STATUS) then
-            msg = msg .. ' You are still waiting for the wedding proposal you made to {' .. (getPlayerNameById(playerSpouse)) .. '}. Would you like to {remove} it?'
-        else
-            msg = msg .. ' So this is a good news! You want to {marry} someone?'
-        end
-        npcHandler:say(msg,cid)
-        --selfSay(msg,cid)
-        npcHandler:addFocus(cid)
-        return false
-    end
-    return true
-end
-		-- END --
-		
-		-- START -- 
-		local function tryEngage(cid, message, keywords, parameters, node)
-    if(not npcHandler:isFocused(cid)) then
-        return false
-    end
-   
-    local player = Player(cid)
-   
-    local playerStatus = getPlayerMarriageStatus(player:getGuid())
-    local playerSpouse = getPlayerSpouse(player:getGuid())
-    if playerStatus == MARRIED_STATUS then -- check if the player is already married
-        npcHandler:say('You are already married to {' .. getPlayerNameById(playerSpouse) .. '}.', cid)
-    elseif playerStatus == PROPOSED_STATUS then --check if the player already made a proposal to some1 else
-        npcHandler:say('You already made a wedding proposal to {' .. getPlayerNameById(playerSpouse) .. '}. You can always remove the proposal by saying {remove} proposal.', cid)
-    else
-        local candidate = getPlayerGUIDByName(message)
-        if candidate == 0 then -- check if there is actually a player called like this
-            npcHandler:say('A player with this name does not exist.', cid)
-        elseif candidate == player:getGuid() then -- if it's himself, cannot marry
-            npcHandler:say('You REALLY want to marry yourself? c\'mon, be serious.', cid)
-        else
-            if player:getItemCount(ITEM_WEDDING_RING) == 0 or player:getItemCount(10503) == 0 then -- check for items (wedding ring and outfit box)
-                npcHandler:say('As I said, you need a wedding ring and the wedding outfit box in order to marry.', cid)
-            else
-                local candidateStatus = getPlayerMarriageStatus(candidate)
-                local candidateSpouse = getPlayerSpouse(candidate)
-                if candidateStatus == MARRIED_STATUS then -- if the player you want to marry is already married and to whom
-                    npcHandler:say('{' .. getPlayerNameById(candidate) .. '} is already married to {' .. getPlayerNameById(candidateSpouse) .. '}.', cid)
-                elseif candidateStatus == PROPACCEPT_STATUS then -- if the player you want to marry is already going to marry some1 else
-                    npcHandler:say('{' .. getPlayerNameById(candidate) .. '} is already engaged to {' .. getPlayerNameById(candidateSpouse) .. '} and they will going to marry soon.', cid)
-                elseif candidateStatus == PROPOSED_STATUS then -- if he/she already made a proposal to some1
-                    if candidateSpouse == player:getGuid() then -- if this someone is you.
-                        if not Player(getPlayerNameById(candidate)) then
-                            npcHandler:say('I understand you want to marry each other, but both of you need to be online.',cid)
-                        else
-                            npcHandler:say('Since both of you are willing to marry, I accept to celebrate your marriage, go prepare yourself, and tell me when you are ready for the {celebration}',cid)
-                            player:removeItem(ITEM_WEDDING_RING,1)
-                            player:removeItem(10503,1) -- wedding outfit box
-                            player:addOutfit(329) --Wife
-                            player:addOutfit(328) --Husb
-                            setPlayerMarriageStatus(player:getGuid(), PROPACCEPT_STATUS)
-                            setPlayerMarriageStatus(candidate, PROPACCEPT_STATUS)
-                            setPlayerSpouse(player:getGuid(), candidate)
-                            local player = Player(getPlayerNameById(candidate))
-                            player:addOutfit(329)
-                            player:addOutfit(328)
-                        end
-                    else -- if this some1 is not you
-                        npcHandler:say('{' .. getPlayerNameById(candidate) .. '} already made a wedding proposal to {' .. getPlayerNameById(candidateSpouse) .. '}.', cid)
-                    end
-                else -- if the player i want to propose doesn't have other proposal
-                    npcHandler:say('Ok, now let\'s wait and see if {' ..  getPlayerNameById(candidate) .. '} accepts your proposal. I\'ll give you back your wedding ring as soon as {' ..  getPlayerNameById(candidate) .. '} accepts your proposal or you {remove} it.', cid)
-                    player:removeItem(ITEM_WEDDING_RING,1)
-                    player:removeItem(10503,1)
-                    setPlayerMarriageStatus(player:getGuid(), PROPOSED_STATUS)
-                    setPlayerSpouse(player:getGuid(), candidate)
-                end
-            end
         end
     end
-    keywordHandler:moveUp(1)
-    return false
 end
- 
+
 local function confirmWedding(cid, message, keywords, parameters, node)
     if(not npcHandler:isFocused(cid)) then
         return false
     end
- 
+
     local player = Player(cid)
     local playerStatus = getPlayerMarriageStatus(player:getGuid())
     local candidate = getPlayerSpouse(player:getGuid())
@@ -209,18 +140,19 @@ local function confirmWedding(cid, message, keywords, parameters, node)
     return true
 end
 		-- END --
-	local function confirmRemoveEngage(cid, message, keywords, parameters, node)
+local function confirmRemoveEngage(cid, message, keywords, parameters, node)
     if(not npcHandler:isFocused(cid)) then
         return false
     end
-   
+
     local player = Player(cid)
     local playerStatus = getPlayerMarriageStatus(player:getGuid())
     local playerSpouse = getPlayerSpouse(player:getGuid())
     if playerStatus == PROPOSED_STATUS then
+
         npcHandler:say('Are you sure you want to remove your wedding proposal with {' .. getPlayerNameById(playerSpouse) .. '}?', cid)
         node:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, moveup = 3, text = 'Ok, let\'s keep it then.'})
-       
+
         local function removeEngage(cid, message, keywords, parameters, node)
             doPlayerAddItem(cid,ITEM_WEDDING_RING,1)
        doPlayerAddItem(cid,10503,1)
@@ -241,14 +173,14 @@ local function confirmDivorce(cid, message, keywords, parameters, node)
     if(not npcHandler:isFocused(cid)) then
         return false
     end
-   
+
     local player = Player(cid)
     local playerStatus = getPlayerMarriageStatus(player:getGuid())
     local playerSpouse = getPlayerSpouse(player:getGuid())
     if playerStatus == MARRIED_STATUS then
         npcHandler:say('Are you sure you want to divorce of {' .. getPlayerNameById(playerSpouse) .. '}?', cid)
         node:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, moveup = 3, text = 'Great! Marriages should be an eternal commitment.'})
-       
+
         local function divorce(cid, message, keywords, parameters, node)
             local player = Player(cid)
             local spouse = getPlayerSpouse(player:getGuid())
@@ -277,12 +209,9 @@ node3:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus
 local node4 = node3:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Good, let\'s {begin} then!.'}) --, confirmWedding, {})
 node4:addChildKeyword({'begin'}, confirmWedding, {})
 
-
 keywordHandler:addKeyword({'remove'}, confirmRemoveEngage, {})
 
 keywordHandler:addKeyword({'divorce'}, confirmDivorce, {})
-
---keywordHandler:addKeyword({'celebration'}, confirmwedding,{})
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome in the name of the gods, pilgrim |PLAYERNAME|!")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Be careful on your journeys.")

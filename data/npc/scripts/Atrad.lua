@@ -1,16 +1,20 @@
- local keywordHandler = KeywordHandler:new()
+local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
- 
+
 function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
 function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
 function greetCallback(cid)
-	if(getCreatureCondition(cid, CONDITION_FIRE)) then
+	local player = Player(cid)
+	local fire = player:getCondition(CONDITION_FIRE)
+
+	if fire then
 		return true
 	end
+	
 	return false
 end
 
@@ -18,7 +22,7 @@ function creatureSayCallback(cid, type, msg)
 	if(not npcHandler:isFocused(cid)) then
 		return false
 	end
-	
+
 	if(msgcontains(msg, "addon") or msgcontains(msg, "outfit")) then
 		if(getPlayerStorageValue(cid, 18999) < 1) then
 			npcHandler:say("You managed to deceive Erayo? Impressive. Well, I guess, since you have come that far, I might as well give you a task too, eh?", cid)
@@ -37,7 +41,7 @@ function creatureSayCallback(cid, type, msg)
 			npcHandler:say("You don't have it...", cid)
 		end
 	end
-	
+
 	elseif(msgcontains(msg, "yes")) then
 		if(npcHandler.topic[cid] == 2) then
 				npcHandler:say("Okay, listen up. I don't have a list of stupid objects, I just want two things. A behemoth claw and a nose ring. Got that?", cid)

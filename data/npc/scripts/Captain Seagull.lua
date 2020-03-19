@@ -7,7 +7,7 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
--- Travel 
+-- Travel
 local function addTravelKeyword(keyword, cost, destination, condition)
 	if condition then
 		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m sorry but I don\'t sail there.'}, condition)
@@ -26,7 +26,7 @@ addTravelKeyword('venore', 90, Position(32954, 32022, 6))
 addTravelKeyword('yalahar', 160, Position(32816, 31272, 6), function(player) return player:getStorageValue(Storage.SearoutesAroundYalahar.AbDendriel) ~= 1 and player:getStorageValue(Storage.SearoutesAroundYalahar.TownsCounter) < 5 end)
 
 -- Kick
---keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(32724, 31669, 6), Position(32726, 31665, 6)}})
+keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(32724, 31669, 6), Position(32726, 31665, 6)}})
 
 -- Basic
 keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = "My name is Captain Seagull from the Royal Tibia Line."})

@@ -14,7 +14,7 @@ local function creatureSayCallback(cid, type, msg)
 
 	local player = Player(cid)
 	if(msgcontains(msg, "mission")) then
-		--[[if player:getStorageValue(Storage.WrathoftheEmperor.Questline) == 25 then
+		if player:getStorageValue(Storage.WrathoftheEmperor.Questline) == 25 then
 			npcHandler:say("You made it! Az zoon az you are prepared, I will brief you for your nexzt mizzion. ", cid)
 			player:setStorageValue(Storage.WrathoftheEmperor.Mission08, 2) --Questlog, Wrath of the Emperor "Mission 08: Uninvited Guests"
 			player:setStorageValue(Storage.WrathoftheEmperor.Questline, 26)
@@ -30,9 +30,9 @@ local function creatureSayCallback(cid, type, msg)
 				"A zignificant part of ze emperor'z power iz uzed to reztrain ze dragon. Ze only way to free him will be to enter hiz dreamz. Are you prepared for ziz?"
 			}, cid)
 			npcHandler.topic[cid] = 1
-		
-		elseif player:getStorageValue(Storage.WrathoftheEmperor.Questline) == 29 then ]]--
-		if player:getStorageValue(Storage.WrathoftheEmperor.Questline) < 29 then
+
+		elseif player:getStorageValue(Storage.WrathoftheEmperor.Questline) == 29 then
+		if player:getStorageValue(Storage.WrathoftheEmperor.Questline) < 30 then
 			npcHandler:say({
 				"You freed ze dragon! And you pozzezz ze key to enter ze inner realmz of ze emperor, well done. ...",
 				"Now you are ready to reach ze inner zanctum of ze emperor. Zalamon'z revelationz showed him zat zere are four cryztalz channelling ze will of ze emperor into ze land. ...",
@@ -48,9 +48,12 @@ local function creatureSayCallback(cid, type, msg)
 			player:setStorageValue(Storage.WrathoftheEmperor.BossStatus, 1)
 			player:addItem(12318, 1)
 			npcHandler.topic[cid] = 0
-			else 
+			else
 			npcHandler:say({"Now go to the north of Sleeping Dragon room, {dont need talk} with he!"}, cid)
 		end
+
+	end
+
 	elseif msgcontains(msg, "yes") then
 		if npcHandler.topic[cid] == 1 then
 			npcHandler:say({
@@ -65,6 +68,7 @@ local function creatureSayCallback(cid, type, msg)
 		end
 		npcHandler.topic[cid] = 0
 	end
+
 	return true
 end
 

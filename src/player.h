@@ -1249,16 +1249,6 @@ class Player final : public Creature, public Cylinder
 				client->sendAddMarker(pos, markType, desc);
 			}
 		}
-		void sendQuestLog() {
-			if (client) {
-				client->sendQuestLog();
-			}
-		}
-		void sendQuestLine(const Quest* quest) {
-			if (client) {
-				client->sendQuestLine(quest);
-			}
-		}
 		void sendEnterWorld() {
 			if (client) {
 				client->sendEnterWorld();
@@ -1321,11 +1311,11 @@ class Player final : public Creature, public Cylinder
 		void learnInstantSpell(const std::string& spellName);
 		void forgetInstantSpell(const std::string& spellName);
 		bool hasLearnedInstantSpell(const std::string& spellName) const;
-		
-		void addAutoLootItem(uint16_t itemId);
-		void removeAutoLootItem(uint16_t itemId);
-		bool getAutoLootItem(uint16_t itemId);
-		
+
+		const std::map<uint8_t, OpenContainer>& getOpenContainers() const {
+			return openContainers;
+		}
+
 		uint16_t getBaseXpGain() const {
 			return baseXpGain;
 		}
@@ -1409,6 +1399,7 @@ class Player final : public Creature, public Cylinder
  			}
  		}
 
+		uint16_t getFreeBackpackSlots() const;
 
 	protected:
 		std::forward_list<Condition*> getMuteConditions() const;
@@ -1459,8 +1450,6 @@ class Player final : public Creature, public Cylinder
 		void internalAddThing(Thing* thing) final;
 		void internalAddThing(uint32_t index, Thing* thing) final;
 
-		std::unordered_set<uint32_t> autoLootList;
-		
 		std::unordered_set<uint32_t> attackedSet;
 
 		std::unordered_set<uint32_t> VIPList;
@@ -1538,7 +1527,6 @@ class Player final : public Creature, public Cylinder
 		uint32_t magLevel = 0;
 		uint32_t actionTaskEvent = 0;
 		uint32_t nextStepEvent = 0;
-		uint32_t maxInboxItems = 8000;
 		uint32_t walkTaskEvent = 0;
 		uint32_t MessageBufferTicks = 0;
 		uint32_t lastIP = 0;

@@ -65,114 +65,6 @@ std::multimap<ScriptEnvironment*, Item*> ScriptEnvironment::tempItems;
 
 LuaEnvironment g_luaEnvironment;
 
-//Autoloot wrote by Psychonaut#4421
- 
-int LuaScriptInterface::luaPlayerAddAutoLootItem(lua_State* L)
-{
-    // player:addAutoLootItem(itemId)
-    Player* player = getUserdata<Player>(L, 1);
-    if (!player) {
-        lua_pushnil(L);
-        return 1;
-    }
- 
-    uint16_t itemId;
-    if (isNumber(L, 2)) {
-        itemId = getNumber<uint16_t>(L, 2);
-    } else {
-        itemId = Item::items.getItemIdByName(getString(L, 2));
-        if (itemId == 0) {
-            lua_pushnil(L);
-            return 1;
-        }
-    }
-    player->addAutoLootItem(itemId);
-    pushBoolean(L, true);
-    return 1;
-}
- 
-int LuaScriptInterface::luaPlayerRemoveAutoLootItem(lua_State* L)
-{
-    // player:removeAutoLootItem(itemId)
-    Player* player = getUserdata<Player>(L, 1);
-    if (!player) {
-        lua_pushnil(L);
-        return 1;
-    }
- 
-    uint16_t itemId;
-    if (isNumber(L, 2)) {
-        itemId = getNumber<uint16_t>(L, 2);
-    } else {
-        itemId = Item::items.getItemIdByName(getString(L, 2));
-        if (itemId == 0) {
-            lua_pushnil(L);
-            return 1;
-        }
-    }
- 
-    player->removeAutoLootItem(itemId);
-    pushBoolean(L, true);
- 
-    return 1;
-}
- 
-int LuaScriptInterface::luaPlayerGetAutoLootItem(lua_State* L)
-{
-    // player:getAutoLootItem(itemId)
-    Player* player = getUserdata<Player>(L, 1);
-    if (!player) {
-        lua_pushnil(L);
-        return 1;
-    }
- 
-    uint16_t itemId;
-    if (isNumber(L, 2)) {
-        itemId = getNumber<uint16_t>(L, 2);
-    } else {
-        itemId = Item::items.getItemIdByName(getString(L, 2));
-        if (itemId == 0) {
-            lua_pushnil(L);
-            return 1;
-        }
-    }
- 
-    if (player->getAutoLootItem(itemId)) {
-        pushBoolean(L, true);
-    } else {
-        pushBoolean(L, false);
-    }
- 
-    return 1;
-}
- 
-int LuaScriptInterface::luaPlayerGetAutoLootList(lua_State* L)
-{
-    // player:getAutoLootList()
-    Player* player = getUserdata<Player>(L, 1);
- 
-    if (player) {
-        std::unordered_set<uint32_t> value = player->autoLootList;
-   
-        if (value.size() == 0) {
-          lua_pushnil(L);
-          return 1;
-        }
- 
-        int index = 0;
-        lua_createtable(L, value.size(), 0);
-        for(auto i : value) {
-            lua_pushnumber(L, i);
-            lua_rawseti(L, -2, ++index);
-        }
-   
-    } else {
-        lua_pushnil(L);
-    }
- 
-    return 1;
-}
-
 ScriptEnvironment::ScriptEnvironment()
 {
 	resetEnv();
@@ -1073,7 +965,7 @@ void LuaScriptInterface::pushLoot(lua_State* L, const std::vector<LootBlock>& lo
 
 	int index = 0;
 	for (const auto& lootBlock : lootList) {
-		lua_createtable(L, 0, 7);
+		lua_createtable(L, 0, 8);
 
 		setField(L, "itemId", lootBlock.id);
 		setField(L, "chance", lootBlock.chance);
@@ -1081,6 +973,8 @@ void LuaScriptInterface::pushLoot(lua_State* L, const std::vector<LootBlock>& lo
 		setField(L, "maxCount", lootBlock.countmax);
 		setField(L, "actionId", lootBlock.actionId);
 		setField(L, "text", lootBlock.text);
+		pushBoolean(L, lootBlock.unique);
+		lua_setfield(L, -2, "unique");
 
 		pushLoot(L, lootBlock.childLoot);
 		lua_setfield(L, -2, "childLoot");
@@ -1182,9 +1076,6 @@ void LuaScriptInterface::registerFunctions()
 
 	//sendGuildChannelMessage(guildId, type, message)
 	lua_register(luaState, "sendGuildChannelMessage", LuaScriptInterface::luaSendGuildChannelMessage);
-
-	//getPreyMonsters() table
-	lua_register(luaState, "getPreyMonsters", LuaScriptInterface::luaGetPreyMonsters);
 
 #ifndef LUAJIT_VERSION
 	//bit operations for Lua, based on bitlib project release 24
@@ -1565,6 +1456,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONST_PROP_NOFIELDBLOCKPATH)
 	registerEnum(CONST_PROP_SUPPORTHANGABLE)
 
+	registerEnum(CONST_SLOT_FIRST)
 	registerEnum(CONST_SLOT_HEAD)
 	registerEnum(CONST_SLOT_NECKLACE)
 	registerEnum(CONST_SLOT_BACKPACK)
@@ -1576,6 +1468,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CONST_SLOT_RING)
 	registerEnum(CONST_SLOT_AMMO)
 	registerEnum(CONST_SLOT_STORE_INBOX)
+	registerEnum(CONST_SLOT_LAST)
 
 	registerEnum(CREATURE_EVENT_NONE)
 	registerEnum(CREATURE_EVENT_LOGIN)
@@ -1665,6 +1558,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(ITEM_ATTRIBUTE_FLUIDTYPE)
 	registerEnum(ITEM_ATTRIBUTE_DOORID)
 	registerEnum(ITEM_ATTRIBUTE_SPECIAL)
+	registerEnum(ITEM_ATTRIBUTE_OPENCONTAINER)
 
 	registerEnum(ITEM_TYPE_DEPOT)
 	registerEnum(ITEM_TYPE_REWARDCHEST)
@@ -2028,7 +1922,6 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(RELOAD_TYPE_MOUNTS)
 	registerEnum(RELOAD_TYPE_MOVEMENTS)
 	registerEnum(RELOAD_TYPE_NPCS)
-	registerEnum(RELOAD_TYPE_QUESTS)
 	registerEnum(RELOAD_TYPE_RAIDS)
 	registerEnum(RELOAD_TYPE_SCRIPTS)
 	registerEnum(RELOAD_TYPE_SPELLS)
@@ -2717,14 +2610,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "setExpBoostStamina", LuaScriptInterface::luaPlayerSetExpBoostStamina);
 
 	registerMethod("Player", "getIdleTime", LuaScriptInterface::luaPlayerGetIdleTime);
-	
-	// AutoLoot
-   
-    registerMethod("Player", "addAutoLootItem", LuaScriptInterface::luaPlayerAddAutoLootItem);
-    registerMethod("Player", "removeAutoLootItem", LuaScriptInterface::luaPlayerRemoveAutoLootItem);
-    registerMethod("Player", "getAutoLootItem", LuaScriptInterface::luaPlayerGetAutoLootItem);
-    registerMethod("Player", "getAutoLootList", LuaScriptInterface::luaPlayerGetAutoLootList);
-	
+	registerMethod("Player", "getFreeBackpackSlots", LuaScriptInterface::luaPlayerGetFreeBackpackSlots);
+
 	// Monster
 	registerClass("Monster", "Creature", LuaScriptInterface::luaMonsterCreate);
 	registerMetaMethod("Monster", "__eq", LuaScriptInterface::luaUserdataCompare);
@@ -2978,7 +2865,6 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MonsterType", "isPet", LuaScriptInterface::luaMonsterTypeIsPet);
 	registerMethod("MonsterType", "isPassive", LuaScriptInterface::luaMonsterTypeIsHostile);
 	registerMethod("MonsterType", "isRewardBoss", LuaScriptInterface::luaMonsterTypeIsRewardBoss);
-	registerMethod("MonsterType", "isPreyable", LuaScriptInterface::luaMonsterTypeIsPreyable);
 
 	registerMethod("MonsterType", "respawnType", LuaScriptInterface::luaMonsterTypeRespawnType);
 	registerMethod("MonsterType", "canSpawn", LuaScriptInterface::luaMonsterTypeCanSpawn);
@@ -3725,7 +3611,7 @@ int LuaScriptInterface::luaDoAreaCombatCondition(lua_State* L)
 	if (area || areaId == 0) {
 		CombatParams params;
 		params.impactEffect = getNumber<uint8_t>(L, 5);
-		params.conditionList.emplace_front(condition->clone());
+		params.conditionList.emplace_front(condition);
 		Combat::doCombatCondition(creature, getPosition(L, 2), area, params);
 		pushBoolean(L, true);
 	} else {
@@ -4601,20 +4487,6 @@ int LuaScriptInterface::luaGameGetPlayers(lua_State* L)
 		setMetatable(L, -1, "Player");
 		lua_rawseti(L, -2, ++index);
 	}
-	return 1;
-}
-
-int LuaScriptInterface::luaGetPreyMonsters(lua_State* L)
-{
-	std::vector<std::string> monsters = g_monsters.getPreyMonsters();
-	lua_createtable(L, monsters.size(), 0);
-
-	int index = 0;
-	for (const auto& name : monsters) {
-		pushString(L, name);
-		lua_rawseti(L, -2, ++index);
-	}
-
 	return 1;
 }
 
@@ -8750,23 +8622,6 @@ int LuaScriptInterface::luaMonsterTypeIsRewardBoss(lua_State* L)
 	return 1;
 }
 
-int LuaScriptInterface::luaMonsterTypeIsPreyable(lua_State* L)
-{
-	// get: monsterType:isPreyable() set: monsterType:isPreyable(bool)
-	MonsterType* monsterType = getUserdata<MonsterType>(L, 1);
-	if (monsterType) {
-		if (lua_gettop(L) == 1) {
-			pushBoolean(L, monsterType->info.isPreyable);
-		} else {
-			monsterType->info.isPreyable = getBoolean(L, 2);
-			pushBoolean(L, true);
-		}
-	} else {
-		lua_pushnil(L);
-	}
-	return 1;
-}
-
 int LuaScriptInterface::luaMonsterTypeRespawnType(lua_State* L)
 {
 	// get: monsterType:respawnType() set: monsterType:respawnType(spawnType)
@@ -11362,6 +11217,18 @@ int LuaScriptInterface::luaPlayerGetIdleTime(lua_State* L)
 	} else {
 		lua_pushnil(L);
 	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetFreeBackpackSlots(lua_State* L)
+{
+	// player:getFreeBackpackSlots()
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+	}
+
+	lua_pushnumber(L, std::max<uint16_t>(0, player->getFreeBackpackSlots()));
 	return 1;
 }
 

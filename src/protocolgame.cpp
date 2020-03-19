@@ -2386,56 +2386,6 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::sendQuestTracker()
-{
-	NetworkMessage msg;
-	msg.addByte(0xD0); // byte quest tracker
-	msg.addByte(1); // send quests of quest log ??
-	msg.add<uint16_t>(1); // unknown
-	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendQuestLog()
-{
-	NetworkMessage msg;
-	msg.addByte(0xF0);
-	msg.add<uint16_t>(g_game.quests.getQuestsCount(player));
-
-	for (const Quest& quest : g_game.quests.getQuests()) {
-		if (quest.isStarted(player)) {
-			msg.add<uint16_t>(quest.getID());
-			msg.addString(quest.getName());
-			msg.addByte(quest.isCompleted(player));
-		}
-	}
-
-	writeToOutputBuffer(msg);
-}
-
-void ProtocolGame::sendQuestLine(const Quest* quest)
-{
-	NetworkMessage msg;
-	msg.addByte(0xF1);
-	msg.add<uint16_t>(quest->getID());
-	msg.addByte(quest->getMissionsCount(player));
-
-	for (const Mission& mission : quest->getMissions()) {
-		if (mission.isStarted(player)) {
-			if (player->getProtocolVersion() >= 1120){
-				msg.add<uint16_t>(0x00); // missionID (TODO, this is used for quest tracker)
-			}
-			msg.addString(mission.getName(player));
-			msg.addString(mission.getDescription(player));
-		}
-	}
-
-	if (player->operatingSystem == CLIENTOS_NEW_WINDOWS) {
-		sendQuestTracker();
-	}
-
-	writeToOutputBuffer(msg);
-}
-
 void ProtocolGame::sendTradeItemRequest(const std::string& traderName, const Item* item, bool ack)
 {
 	NetworkMessage msg;
@@ -3608,50 +3558,7 @@ void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
 	}
 
 	for (uint8_t i = SKILL_CRITICAL_HIT_CHANCE; i <= SKILL_LAST; ++i) {
-		if (i == SKILL_MANA_LEECH_CHANCE) {
-		uint8_t soma = 0;
-		
-		for (int x = CONST_SLOT_FIRST; x <= CONST_SLOT_LAST; ++x) {
-			Item* item = player->getInventoryItem(static_cast<slots_t>(x));
-			if (item) {
-				const ItemType& it = Item::items[item->getID()];
-				uint8_t slot = it.imbuingSlots;
-				for (uint8_t i = 0; i < slot; i++) {
-					uint32_t info = item->getImbuement(i);
-						if (info >> 8) {
-							Category* category = g_imbuements->getCategoryByID(g_imbuements->getImbuement((info & 0xFF))->getCategory());
-								if (category->id == 2){
-									soma = soma+1;
-								}
-						}
-				
-				}
-			}
-		}
-		msg.add<uint16_t>(player->getSkillLevel(i)*soma);
-		} else if (i == SKILL_LIFE_LEECH_CHANCE) {
-			uint8_t soma = 0;
-		
-		for (int x = CONST_SLOT_FIRST; x <= CONST_SLOT_LAST; ++x) {
-			Item* item = player->getInventoryItem(static_cast<slots_t>(x));
-			if (item) {
-			const ItemType& it = Item::items[item->getID()];
-			uint8_t slot = it.imbuingSlots;
-				for (uint8_t i = 0; i < slot; i++) {
-					uint32_t info = item->getImbuement(i);
-					if (info >> 8) {
-						Category* category = g_imbuements->getCategoryByID(g_imbuements->getImbuement((info & 0xFF))->getCategory());
-							if (category->id == 1){
-								soma = soma+1;
-							}
-					}			
-				}
-			}
-		}
-		msg.add<uint16_t>(player->getSkillLevel(i)*soma);
-		} else {
-			msg.add<uint16_t>(std::min<int32_t>(player->getSkillLevel(i), std::numeric_limits<uint16_t>::max()));
-		}
+		msg.add<uint16_t>(std::min<int32_t>(player->getSkillLevel(i), std::numeric_limits<uint16_t>::max()));
 		msg.add<uint16_t>(player->getBaseSkill(i));
 	}
 
@@ -3724,7 +3631,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	std::vector<Imbuement*> imbuements = g_imbuements->getImbuements(player, item);
 	if (!itemHasImbue && imbuements.empty()) {
-		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You cannot imbue this item.");
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You did not collect enough knowledge from the ancient Shapers. Visit the Shaper temple in Thais for help.");
 		return;
 	}
 	// Seting imbuing item

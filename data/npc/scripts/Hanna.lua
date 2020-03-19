@@ -32,6 +32,7 @@ local function creatureSayCallback(cid, type, msg)
 
 	if npcHandler.topic[cid] == 1 then
 		if msgcontains(msg, 'yes') then
+			player:setStorageValue(Storage.OutfitQuest.Ref, math.max(0, player:getStorageValue(Storage.OutfitQuest.Ref)) + 1)
 			player:setStorageValue(Storage.OutfitQuest.Citizen.AddonHat, 1)
 			player:setStorageValue(Storage.OutfitQuest.Citizen.MissionHat, 1)
 			npcHandler:say('Okay, here we go, listen closely! I need a few things... a basic hat of course, maybe a legion helmet would do. Then about 100 chicken feathers... and 50 honeycombs as glue. That\'s it, come back to me once you gathered it!', cid)
@@ -51,11 +52,15 @@ local function creatureSayCallback(cid, type, msg)
 			else
 				npcHandler:say('Great job! That must have taken a lot of work. Okay, you put it like this... then glue like this... here!', cid)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+
 				player:removeItem(2480, 1)
 				player:removeItem(5902, 50)
 				player:removeItem(5890, 100)
+
 				player:addOutfitAddon(136, 2)
 				player:addOutfitAddon(128, 2)
+
+				player:setStorageValue(Storage.OutfitQuest.Ref, math.min(0, player:getStorageValue(Storage.OutfitQuest.Ref) - 1))
 				player:setStorageValue(Storage.OutfitQuest.Citizen.MissionHat, 0)
 				player:setStorageValue(Storage.OutfitQuest.Citizen.AddonHat, 2)
 			end

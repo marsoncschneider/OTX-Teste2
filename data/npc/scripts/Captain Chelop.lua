@@ -6,7 +6,7 @@ function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
 function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()		npcHandler:onThink()		end
- 
+
 local voices = { {text = 'By direct edict of the honorable Henricus, we are ordered to give passage for all recruits to Thais.'} }
 npcHandler:addModule(VoiceModule:new(voices))
 
@@ -17,7 +17,7 @@ local travelKeyword = keywordHandler:addKeyword({'thais'}, StdModule.say, {npcHa
 keywordHandler:addAliasKeyword({'town'})
 
 -- Kick
---keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(33495, 32564, 7), Position(33495, 32563, 7), Position(33496, 32562, 7)}})
+keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(33495, 32564, 7), Position(33495, 32563, 7), Position(33496, 32562, 7)}})
 
 -- Basic
 keywordHandler:addKeyword({'sail'}, StdModule.say, {npcHandler = npcHandler, text = "I can bring you back to {Thais} if you are weary or you can stay and fight. What shall it be?"})
