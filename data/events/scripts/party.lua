@@ -1,4 +1,9 @@
 function Party:onJoin(player)
+	self:broadcastUpdateInfo(CONST_PARTY_BASICINFO, player:getId())
+	self:broadcastUpdateInfo(CONST_PARTY_MANA, player:getId())
+	self:broadcastUpdateInfo(CONST_PARTY_UNKNOW, player:getId())
+	self:broadcastInfo(true)
+
 	return true
 end
 
@@ -10,26 +15,31 @@ function Party:onDisband()
 	return true
 end
 
-function Party:onShareExperience(exp)
-	local sharedExperienceMultiplier = 1.20 --20%
-	local vocationsIds = {}
+local config = {
+	{amount = 2, multiplier = 1.3},
+	{amount = 3, multiplier = 1.6},
+	{amount = 4, multiplier = 2}
+}
 
+function Party:onShareExperience(exp)
+	local sharedExperienceMultiplier = 1.2 -- 20% if the same vocation
+	local vocationsIds = {}
 	local vocationId = self:getLeader():getVocation():getBase():getId()
 	if vocationId ~= VOCATION_NONE then
 		table.insert(vocationsIds, vocationId)
 	end
-
 	for _, member in ipairs(self:getMembers()) do
 		vocationId = member:getVocation():getBase():getId()
 		if not table.contains(vocationsIds, vocationId) and vocationId ~= VOCATION_NONE then
 			table.insert(vocationsIds, vocationId)
 		end
-	end
-
+	end	
 	local size = #vocationsIds
-	if size > 1 then
-		sharedExperienceMultiplier = 1.0 + ((size * (5 * (size - 1) + 10)) / 100)
-	end
-
-	return (exp * sharedExperienceMultiplier) / (#self:getMembers() + 1)
+	for _, info in pairs(config) do
+		if size == info.amount then
+			sharedExperienceMultiplier = info.multiplier
+		end
+	end	
+	exp = (exp * sharedExperienceMultiplier) / (#self:getMembers() + 1)
+	return exp
 end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Diamond Servant Replica" nameDescription="a diamond servant replica" race="energy" experience="700" speed="86">
+<monster name="Diamond Servant Replica" nameDescription="a diamond servant replica" race="energy" experience="700" speed="86" raceid="1326">
 	<health now="2000" max="2000"/>
 	<look type="397" corpse="13485"/>
 	<targetchange interval="5000" chance="8"/>
@@ -16,6 +16,7 @@
 		<flag staticattack="90"/>
 		<flag runonhealth="100"/>
 		<flag isblockable="0"/>
+
 	</flags>
 	<attacks>
       		<attack name="melee" interval="2000" skill="40" attack="40"/>
@@ -53,13 +54,11 @@
 		<item id="2148" countmax="179" chance="94130"/><!-- gold coin -->
 		<item id="5944" chance="44990"/><!-- soul orb -->
 		<item id="2177" chance="9150"/><!-- life crystal -->
-		<item id="7589" chance="5980"/><!-- strong mana potion -->
-		<item id="7588" chance="5790"/><!-- strong health potion -->
 		<item id="9976" chance="5320"/><!-- crystal pedestal -->
 		<item id="2164" chance="940"/><!-- might ring -->
 		<item id="7889" chance="710"/><!-- lightning pendant -->
 		<item id="2154" chance="550"/><!-- yellow gem -->
-		<item id="2189" chance="530"/><!-- wand of cosmic energy -->
+
 		<item id="13758" chance="480"/><!-- slime mould -->
 		<item id="7440" chance="400"/><!-- mastermind potion -->
 		<item id="10221" chance="110"/><!-- shockwave amulet -->

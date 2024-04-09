@@ -48,7 +48,7 @@ local function creatureSayCallback(cid, type, msg)
 
 			player:addItem(7484, 1)
 			player:setStorageValue(Storage.WhatAFoolishQuest.PieBuying, player:getStorageValue(Storage.WhatAFoolishQuest.PieBuying) - 1)
-			player:setStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer, os.time() + 1200) -- 20 minutes to deliver
+			player:setStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer, os.stime() + 1200) -- 20 minutes to deliver
 			npcHandler:say({
 				'Here they are. Wait! Two things you should know: Firstly, they won\'t last long in the sun so you better get them to their destination as quickly as possible ...',
 				'Secondly, since my pies are that delicious it is forbidden to leave the town with them. We can\'t afford to attract more tourists to Edron.'

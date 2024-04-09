@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Galuna" script="Galuna.lua" walkinterval="2000" floorchange="0">
+<npc name="Galuna" script="Galuna.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
-	<look type="137" head="40" body="96" legs="95" feet="96" addons="0" />
+	<look type="973" head="40" body="96" legs="95" feet="96" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="
-			arrow,2544,3;
+			bunda,2544,3;
 			bolt,2543,4;
+			quiver,40965,100;
+			blue quiver,41242,100;
+			red quiver,41243,100;
+			jungle quiver,40927,10000;
 			bow,2456,400;
 			crossbow,2455,500;
 			spear,2389,9;" />

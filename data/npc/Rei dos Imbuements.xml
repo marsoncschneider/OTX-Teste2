@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<npc name="Imbuements Seller" script="Rei dos Imbuements.lua" walkinterval="0" floorchange="0">
+	<health now="100" max="100" />
+<look type="1279" head="114" body="89" legs="132" feet="78" addons="2" mount="0" />
+	<parameters>
+
+		<parameter key="module_shop" value="1" />
+		<parameter key="shop_buyable" value="
+		           Protective Charm,12400,10000;   
+					Vampire Teeth,10602,10000;
+					Rope Belt,12448,10000;		 
+					Cyclops Toe,10574,10000;
+					Piece of Scarab Shell,10574,10000;
+					Orc Tooth,11113,10000;
+					Elvish Talisman,10552,10000;
+					Elven Scouting Glasses,12420,10000;
+					Lion's Mane,10608,10000;	
+			       Damselfly Wing,19738,10000;
+					Wereboar Hooves,24709,10000;
+					Rorc Feather,21310,10000;
+					Frosty Heart,10578,10000;	
+		           Pile of Grave Earth,12440,10000;
+					Fiery Hearts,10553,10000;
+					Swamp Grass,10603,10000;
+					Wyvern Talisman,10561,10000;
+					Cultish Robe,10556,10000;
+					Green Dragon Leather,5877,10000;
+					Flask of Embalming Fluid,12422,10000;
+					Winter Wolf Fur,11212,10000;
+					Piece of Swampling Wood,20103,10000;
+					Piece of Scarab Shell,10558,10000;
+					Fairy Wings,28999,10000;			
+					 
+					 
+					Sabretooth,11228,17000;
+					Bloody Pincers,10550,17000;
+					Silencer Claws,22534,17000;
+					Ogre Nose Ring,24845,17000;
+					Brimstone Shells,12659,17000;
+					Battle Stone,12403,17000;
+					Broken Shamanic Staff,12408,17000;
+					Elven Hoof,21311,17000;
+					Mooh'tah Shell,23573,17000;
+					Little Bowl of Myrrh,29007,17000;
+					Compass,11219,17000;
+					Crystallized Anger,26163,17000;
+					Peacock Feather Fan,24631,17000;
+					Seacrest Hair,24170,17000;
+					Demonic Skeletal Hand,10564,17000;
+		           Green Dragon Scale,5920,17000;
+					Poisonous Slime,10557,17000;
+					Crawler Head Plating,15482,17000;
+					Cultish Mask,10555,17000;
+					Blazing Bone,18425,17000;
+					Gloom Wolf Fur,24663,17000;
+					Thick Fur,11224,17000;
+			       Snake Skin,10611,17000;
+					
+					
+					Vexclaw Talon,25384,25000;
+					Piece of Dead Brain,10580,25000;
+					Some Grimeleech Wings,25386,25000;
+				    Warmaster's Wristguards,11322,25000;
+					Frazzle Skin,22533,25000;
+					Strand of Medusa Hair,11226,25000;
+					Metal Spike,11215,25000;
+					War Crystal,10571,25000;
+					Goosebump Leather,22539,25000;
+					Waspoid Wing,15484,25000;
+					Quill,33314,25000;
+					Energy Vein,26164,25000;
+					Polar Bear Paw,10567,25000;
+					Petrified Scream,11337,25000;
+					Demon Horn,5954,25000;
+					Slime Heart,23565,25000;
+					Wyrm Scale,10582,25000;
+					Hellspawn Tail,11221,25000;
+					Draken Sulphur,12614,25000;
+					Mystical Hourglass,10577,25000;
+					Deepling Warts,15425,25000;
+					Moohtant Horn,23571,25000;
+					Brimstone Fangss,12658,25000;
+					
+			        Energy Soil,8303,150000;" />
+	</parameters>
+</npc>

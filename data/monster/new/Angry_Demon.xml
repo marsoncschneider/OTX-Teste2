@@ -4,7 +4,7 @@
 	<look type="35" corpse="5995" />
 	<targetchange interval="4000" chance="20" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -102,8 +102,8 @@
 		<item name="assassin star" countmax="10" chance="12550" />
 		<item name="demonrage sword" chance="70" />
 		<item id="7393" chance="90" /><!-- demon trophy -->
-		<item name="great mana potion" countmax="3" chance="22220" />
-		<item name="ultimate health potion" countmax="3" chance="19540" />
-		<item name="great spirit potion" countmax="3" chance="18510" />
+		<item name="gold coin" countmax="3" chance="22220" />
+		<item name="gold coin" countmax="3" chance="19540" />
+		<item name="gold coin" countmax="3" chance="18510" />
 	</loot>
 </monster>

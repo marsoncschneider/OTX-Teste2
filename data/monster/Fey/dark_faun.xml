@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dark Faun" nameDescription="a dark faun" race="blood" experience="900" speed="108" manacost="450">
+<monster name="Dark Faun" nameDescription="a dark faun" race="blood" experience="900" speed="108" manacost="450" raceid="1496">
 	<look type="980" head="94" body="114" legs="57" feet="94" corpse="29101"/>
 	<health now="1100" max="1100"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
-		<flag respawntype="night"/>
+		<flag respawntype="nightandcave"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -70,8 +70,8 @@
 		<item name="panpipes" chance="719"/>
 		<item name="prismatic quartz" chance="719"/>
 		<item name="leaf star" countmax="8" chance="10000"/>
-		<item name="strong health potion" countmax="2" chance="6800"/>
+		<item name="gold coin" countmax="2" chance="6800"/>
 		<item name="goat grass" chance="5155"/>
-		<item name="great health potion" chance="591"/>
+		<item name="gold coin" chance="591"/>
 	</loot>
 </monster>

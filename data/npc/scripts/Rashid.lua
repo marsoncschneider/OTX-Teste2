@@ -13,7 +13,7 @@ local function creatureSayCallback(cid, type, msg)
 	end
 	local player = Player(cid)
 	if(msgcontains(msg, "mission")) then
-		if(os.date("%A") == "Monday") then
+		if(os.sdate("%A") == "Monday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission01) < 1) then
 				npcHandler:say("Well, you could attempt the mission to become a recognised trader, but it requires a lot of travelling. Are you willing to try?", cid)
 				npcHandler.topic[cid] = 1
@@ -21,7 +21,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Have you managed to obtain a rare deer trophy for my customer?", cid)
 				npcHandler.topic[cid] = 3
 			end
-		elseif(os.date("%A") == "Tuesday") then
+		elseif(os.sdate("%A") == "Tuesday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission01) == 2 and player:getStorageValue(Storage.TravellingTrader.Mission02) < 1 ) then
 				npcHandler:say("So, my friend, are you willing to proceed to the next mission to become a recognised trader?", cid)
 				npcHandler.topic[cid] = 4
@@ -29,7 +29,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Did you bring me the package?", cid)
 				npcHandler.topic[cid] = 6
 			end
-		elseif(os.date("%A") == "Wednesday") then
+		elseif(os.sdate("%A") == "Wednesday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission02) == 5 and player:getStorageValue(Storage.TravellingTrader.Mission03) < 1 ) then
 				npcHandler:say("So, my friend, are you willing to proceed to the next mission to become a recognised trader?", cid)
 				npcHandler.topic[cid] = 7
@@ -37,7 +37,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Have you brought the cheese?", cid)
 				npcHandler.topic[cid] = 9
 			end
-		elseif(os.date("%A") == "Thursday") then
+		elseif(os.sdate("%A") == "Thursday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission03) == 3 and player:getStorageValue(Storage.TravellingTrader.Mission04) < 1) then
 				npcHandler:say("So, my friend, are you willing to proceed to the next mission to become a recognised trader?", cid)
 				npcHandler.topic[cid] = 10
@@ -45,7 +45,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Have you brought the vase?", cid)
 				npcHandler.topic[cid] = 12
 			end
-		elseif(os.date("%A") == "Friday") then
+		elseif(os.sdate("%A") == "Friday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission04) == 3 and player:getStorageValue(Storage.TravellingTrader.Mission05) < 1) then
 				npcHandler:say("So, my friend, are you willing to proceed to the next mission to become a recognised trader?", cid)
 				npcHandler.topic[cid] = 13
@@ -53,7 +53,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Have you brought a cheap but good crimson sword?", cid)
 				npcHandler.topic[cid] = 15
 			end
-		elseif(os.date("%A") == "Saturday") then
+		elseif(os.sdate("%A") == "Saturday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission05) == 3 and player:getStorageValue(Storage.TravellingTrader.Mission06) < 1) then
 				npcHandler:say("So, my friend, are you willing to proceed to the next mission to become a recognised trader?", cid)
 				npcHandler.topic[cid] = 16
@@ -61,7 +61,7 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Have you brought me a gold fish??", cid)
 				npcHandler.topic[cid] = 18
 			end
-		elseif(os.date("%A") == "Sunday") then
+		elseif(os.sdate("%A") == "Sunday") then
 			if(player:getStorageValue(Storage.TravellingTrader.Mission06) == 2 and player:getStorageValue(Storage.TravellingTrader.Mission07) ~= 1) then
 				npcHandler:say("Ah, right. <ahem> I hereby declare you - one of my recognised traders! Feel free to offer me your wares!", cid)
 				player:setStorageValue(Storage.TravellingTrader.Mission07, 1)
@@ -82,6 +82,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 2
 		elseif(npcHandler.topic[cid] == 2) then
 			npcHandler:say("Fine. Then get a hold of that deer trophy and bring it to me while I'm in Svargrond. Just ask me about your mission.", cid)
+			player:setStorageValue(Storage.TravellingTrader.Questline, 1)
 			player:setStorageValue(Storage.TravellingTrader.Mission01, 1)
 			npcHandler.topic[cid] = 0
 		elseif(npcHandler.topic[cid] == 3) then
@@ -216,11 +217,11 @@ npcHandler:setMessage(MESSAGE_WALKAWAY, "Come back soon!")
 npcHandler:setMessage(MESSAGE_SENDTRADE, "Take all the time you need to decide what you want!")
 
 local function onTradeRequest(cid)
-	if Player(cid):getStorageValue(Storage.TravellingTrader.Mission07) ~= 1 then
+	local player = Player(cid)
+	if player and player:getStorageValue(Storage.TravellingTrader.Mission07) ~= 1 then
 		npcHandler:say('Sorry, but you do not belong to my exclusive customers. I have to make sure that I can trust in the quality of your wares.', cid)
 		return false
 	end
-
 	return true
 end
 

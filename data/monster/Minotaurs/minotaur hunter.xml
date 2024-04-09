@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Minotaur Hunter" nameDescription="a minotaur hunter" race="blood" experience="1700" speed="115">
+<monster name="Minotaur Hunter" nameDescription="a minotaur hunter" race="blood" experience="1700" speed="115" raceid="1052">
 	<health now="1400" max="1400"/>
 	<look type="612" corpse="23466"/>
 	<targetchange interval="2000" chance="11"/>
@@ -65,8 +65,6 @@
 		<item id="3965" countmax="5" chance="14880"/>	<!-- hunting spear -->
 		<item id="2152" countmax="3" chance="33890"/>	<!-- platinum coin -->
 		<item id="7378" countmax="5" chance="11410"/>	<!-- royal spear -->
-		<item id="7588" countmax="2" chance="10350"/>	<!-- strong health potion -->
-		<item id="7589" countmax="2" chance="10620"/>	<!-- strong mana potion -->
 		<item id="5944" chance="7430"/>					<!-- soul orb -->
 		<item id="5878" chance="5030"/>					<!-- minotaur leather -->
 		<item id="12428" countmax="2" chance="4720"/>	<!-- minotaur horn -->

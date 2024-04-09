@@ -23,7 +23,6 @@ if not warzoneConfig then
             boss = "Gnomevil",   -- nome do boss
             teleportTo = Position(33106, 31955, 11),
             locked = false,
-
             storage = Storage.BigfootBurden.BossWarzone2,    -- storage
             interval = 20 * 60 * 60,
 
@@ -50,9 +49,9 @@ if not warzoneConfig then
     }
 
     warzoneConfig.spawnBoss = function (name, pos)
+	local c = warzoneConfig.findByName(name)
     local boss = Game.createMonster(name, pos)
     if boss then
-        local c = warzoneConfig.findByName(name)
         c.locked = true
         boss:registerEvent('WarzoneBossDeath')
         end
@@ -112,7 +111,7 @@ function onStepIn(creature, item, pos, fromPosition)
         return false
     end
 
-    if  creature:getStorageValue(info.storage) > os.time() then
+    if creature:getStorageValue(info.storage) > os.stime() then
         creature:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You have already cleared this warzone in the last 20 hours.")
         creature:teleportTo(fromPosition)
         return false

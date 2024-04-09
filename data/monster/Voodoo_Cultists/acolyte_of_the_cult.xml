@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Acolyte of the Cult" nameDescription="an acolyte of the cult" race="blood" experience="300" speed="100">
+<monster name="Acolyte of the Cult" nameDescription="an acolyte of the cult" race="blood" experience="300" speed="100" raceid="253">
 	<health now="390" max="390"/>
 	<look type="194" head="114" body="121" legs="121" feet="57" corpse="20319"/>
 	<targetchange interval="4000" chance="10"/>
@@ -59,7 +59,7 @@
 		<item name="gold coin" countmax="40" chance="66940"/>
 		<item name="small emerald" chance="550"/>
 		<item name="life ring" chance="560"/>
-		<item name="terra rod" chance="250"/>
+
 		<item name="dragon necklace" chance="1050"/>
 		<item name="morning star" chance="4990"/>
 		<item name="pirate voodoo doll" chance="1060"/>

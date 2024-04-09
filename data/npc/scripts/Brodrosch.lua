@@ -17,7 +17,7 @@ local function creatureSayCallback(cid, type, msg)
 	end
 
 	if msgcontains(msg, 'ticket') then
-		if Player(cid):getStorageValue(Storage.wagonTicket) >= os.time() then
+		if Player(cid):getStorageValue(Storage.wagonTicket) >= os.stime() then
 			npcHandler:say('Your weekly ticket is still valid. Would be a waste of money to purchase a second one', cid)
 			return true
 		end
@@ -33,7 +33,7 @@ local function creatureSayCallback(cid, type, msg)
 				return true
 			end
 
-			player:setStorageValue(Storage.wagonTicket, os.time() + 7 * 24 * 60 * 60)
+			player:setStorageValue(Storage.wagonTicket, os.stime() + 7 * 24 * 60 * 60)
 			npcHandler:say('Here is your stamp. It can\'t be transferred to another person and will last one week from now. You\'ll get notified upon using an ore wagon when it isn\'t valid anymore.', cid)
 		end
 		npcHandler.topic[cid] = 0

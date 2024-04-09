@@ -12,9 +12,8 @@ local function nexusMessage(player, message)
 end
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-    if player:teleportTo(Position(32319, 32248, 9))
-
-    then
+    if player:teleportTo(Position(32319, 32248, 9))  then
+		player:setStorageValue(Storage.TheInquisition.Antiabuse, 1)
     end
 
     return true

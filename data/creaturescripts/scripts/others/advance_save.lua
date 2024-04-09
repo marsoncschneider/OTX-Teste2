@@ -5,6 +5,7 @@ local config = {
 }
 
 function onAdvance(player, skill, oldLevel, newLevel)
+	player:updateExpState()
 	if skill ~= SKILL_LEVEL or newLevel <= oldLevel then
 		return true
 	end

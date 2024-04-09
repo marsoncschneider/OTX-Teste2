@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Wyrm" nameDescription="a wyrm" race="blood" experience="1550" speed="140">
+<monster name="Wyrm" nameDescription="a wyrm" race="blood" experience="1550" speed="140" raceid="461">
 	<health now="1825" max="1825"/>
 	<look type="291" corpse="8941"/>
 	<targetchange interval="4000" chance="10"/>
@@ -64,16 +64,14 @@
 		<item name="gold coin" countmax="30" chance="30000"/>
 		<item name="crossbow" chance="5920"/>
 		<item name="burst arrow" countmax="10" chance="7650"/>
-		<item name="dragon ham" countmax="3" chance="34800"/>
+		<item id="2672" countmax="3" chance="34800"/> <!-- dragon ham -->
 		<item name="dragonbone staff" chance="110"/>
-		<item name="strong health potion" chance="19970"/>
-		<item name="strong mana potion" chance="15310"/>
 		<item name="lightning pendant" chance="720"/>
 		<item name="composite hornbow" chance="90"/>
 		<item name="focus cape" chance="1250"/>
 		<item name="hibiscus dress" chance="250"/>
-		<item name="wand of starstorm" chance="420"/>
-		<item name="wand of draconia" chance="990"/>
+
+
 		<item name="shockwave amulet" chance="110"/>
 		<item name="wyrm scale" chance="15360"/>
 	</loot>

@@ -76,11 +76,10 @@
 		<item name="small amethyst" countmax="3" chance="7000" />
 		<item name="violet gem" chance="500" />
 		<item name="orb" chance="500" />
-		<item name="crystal wand" chance="500" />
+		<item id="2184" chance="500" /><!-- crystal wand -->
 		<item name="ring of healing" chance="7000" />
-		<item name="ancient rune" chance="100000" />
 		<item name="twin axe" chance="200" />
 		<item name="magician hat" chance="300" />
-		<item name="great mana potion" chance="7000" />
+		<item name="gold coin" chance="7000" />
 	</loot>
 </monster>

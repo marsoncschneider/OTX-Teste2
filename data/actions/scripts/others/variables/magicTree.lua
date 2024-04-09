@@ -27,11 +27,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return false
 	end
 
-	if player:getStorageValue(itemInfo[2]) >= os.time() then
+	if player:getStorageValue(itemInfo[2]) >= os.stime() then
 		return false
 	end
 
 	item:transform(itemInfo[1])
-	player:setStorageValue(itemInfo[2], os.time() + exhaustDelaySeconds)
+	player:setStorageValue(itemInfo[2], os.stime() + exhaustDelaySeconds)
 	return true
 end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Turvy" script="Turvy.lua" walkinterval="2000" floorchange="0">
+<npc name="Turvy" script="Turvy.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
-	<look type="139" head="78" body="52" legs="100" feet="115" addons="0" />
+	<look type="971" head="78" body="52" legs="100" feet="115" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="
@@ -10,10 +10,10 @@
 			battle hammer,2417,350;
 			mace,2398,90;
 			dagger,2379,5;
-			exercise sword,32384,262500,500;
-			exercise axe,32385,262500,500;
-			exercise club,32386,262500,500;
-			exercise bow,32387,262500,500;
+
+
+
+
 			rapier,2384,15;
 			sabre,2385,35;
 			sword,2376,85;

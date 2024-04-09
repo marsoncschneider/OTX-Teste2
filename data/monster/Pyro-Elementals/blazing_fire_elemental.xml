@@ -40,7 +40,6 @@
 	</immunities>
 	<loot>
 		<item name="gold coin" countmax="40" chance="10000" />
-		<item name="flaming arrow" countmax="4" chance="5000" />
 		<item name="glimmering soil" chance="2500" />
 		<item name="fiery heart" chance="5475" />
 	</loot>

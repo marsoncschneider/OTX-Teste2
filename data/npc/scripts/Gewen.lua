@@ -17,7 +17,7 @@ local function creatureSayCallback(cid, type, msg)
 
 	local player = Player(cid)
 	if msgcontains(msg, 'ticket') then
-		if player:getStorageValue(Storage.wagonTicket) >= os.time() then
+		if player:getStorageValue(Storage.wagonTicket) >= os.stime() then
 			npcHandler:say('Your weekly ticket is still valid. Would be a waste of money to purchase a second one', cid)
 			return true
 		end
@@ -31,7 +31,7 @@ local function creatureSayCallback(cid, type, msg)
 				return true
 			end
 
-			player:setStorageValue(Storage.wagonTicket, os.time() + 7 * 24 * 60 * 60)
+			player:setStorageValue(Storage.wagonTicket, os.stime() + 7 * 24 * 60 * 60)
 			npcHandler:say('Here is your stamp. It can\'t be transferred to another person and will last one week from now. You\'ll get notified upon using an ore wagon when it isn\'t valid anymore.', cid)
 		elseif msgcontains(msg, 'no') then
 			npcHandler:say('No then.', cid)
@@ -57,8 +57,7 @@ addTravelKeyword('darashia', 'Darashia on Darama', 40, Position(33270, 32441, 6)
 addTravelKeyword('svargrond', 'Svargrond', 60, Position(32253, 31097, 4))
 addTravelKeyword('femor hills', 'the Femor Hills', 60, Position(32536, 31837, 4))
 addTravelKeyword('edron', 'Edron', 40, Position(33193, 31784, 3))
-addTravelKeyword('hills', 'the Femor Hills', 60, Position(32536, 31837, 4))
-addTravelKeyword('issavi', 'Issavi', 100, Position(33957, 31515, 0))
+addTravelKeyword('issavi', 'Issavi', 60, Position(33957, 31514, 0))
 
 npcHandler:setMessage(MESSAGE_GREET, "Greetings, traveller |PLAYERNAME|. Where do you want me to {fly} you? Or do you need a weekly ticket for the Kazordoon public lorry transport?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")

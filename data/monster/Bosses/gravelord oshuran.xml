@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Gravelord Oshuran" nameDescription="Gravelord Oshuran" race="undead" experience="2400" speed="220">
+<monster name="Gravelord Oshuran" nameDescription="Gravelord Oshuran" race="undead" experience="2400" speed="220" >
 	<health now="3100" max="3100" />
 	<look type="99" head="95" body="116" legs="119" feet="115" corpse="6028" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -58,7 +58,6 @@
 	</voices>
 	<loot>
 		<item id="2148" countmax="115" chance="100000" />	<!-- gold coin -->
-		<item id="7589" chance="17500" />					<!-- strong mana potion -->
 		<item id="2144" chance="15960" />					<!-- black pearl -->
 		<item id="2143" chance="15000" />					<!-- white pearl -->
 		<item id="2214" chance="15040" />					<!-- ring of healing -->

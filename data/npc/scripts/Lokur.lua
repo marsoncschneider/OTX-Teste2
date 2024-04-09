@@ -14,86 +14,8 @@ local voices = { {text = 'Don\'t forget to deposit your money here in the Tibian
 if VoiceModule then
     npcHandler:addModule(VoiceModule:new(voices))
 end
---------------------------------guild bank-----------------------------------------------
-local receiptFormat = 'Date: %s\nType: %s\nGold Amount: %d\nReceipt Owner: %s\nRecipient: %s\n\n%s'
-local function getReceipt(info)
-    local receipt = Game.createItem(info.success and 24301 or 24302)
-    receipt:setAttribute(ITEM_ATTRIBUTE_TEXT, receiptFormat:format(os.date('%d. %b %Y - %H:%M:%S'), info.type, info.amount, info.owner, info.recipient, info.message))
 
-    return receipt
-end
 
-local function getGuildIdByName(name, func)
-    db.asyncStoreQuery('SELECT `id` FROM `guilds` WHERE `name` = ' .. db.escapeString(name),
-        function(resultId)
-            if resultId then
-                func(result.getNumber(resultId, 'id'))
-                result.free(resultId)
-            else
-                func(nil)
-            end
-        end
-    )
-end
-
-local function getGuildBalance(id)
-    local guild = Guild(id)
-    if guild then
-        return guild:getBankBalance()
-    else
-        local balance
-        local resultId = db.storeQuery('SELECT `balance` FROM `guilds` WHERE `id` = ' .. id)
-        if resultId then
-            balance = result.getNumber(resultId, 'balance')
-            result.free(resultId)
-        end
-
-        return balance
-    end
-end
-
-local function setGuildBalance(id, balance)
-    local guild = Guild(id)
-    if guild then
-        guild:setBankBalance(balance)
-    else
-        db.query('UPDATE `guilds` SET `balance` = ' .. balance .. ' WHERE `id` = ' .. id)
-    end
-end
-
-local function transferFactory(playerName, amount, fromGuildId, info)
-    return function(toGuildId)
-        if not toGuildId then
-            local player = Player(playerName)
-            if player then
-                info.success = false
-                info.message = 'We are sorry to inform you that we could not fulfil your request, because we could not find the recipient guild.'
-                local inbox = player:getInbox()
-                local receipt = getReceipt(info)
-                inbox:addItemEx(receipt, INDEX_WHEREEVER, FLAG_NOLIMIT)
-            end
-        else
-            local fromBalance = getGuildBalance(fromGuildId)
-            if fromBalance < amount then
-                info.success = false
-                info.message = 'We are sorry to inform you that we could not fulfill your request, due to a lack of the required sum on your guild account.'
-            else
-                info.success = true
-                info.message = 'We are happy to inform you that your transfer request was successfully carried out.'
-                setGuildBalance(fromGuildId, fromBalance - amount)
-                setGuildBalance(toGuildId, getGuildBalance(toGuildId) + amount)
-            end
-
-            local player = Player(playerName)
-            if player then
-                local inbox = player:getInbox()
-                local receipt = getReceipt(info)
-                inbox:addItemEx(receipt, INDEX_WHEREEVER, FLAG_NOLIMIT)
-            end
-        end
-    end
-end
---------------------------------guild bank-----------------------------------------------
 
 local function greetCallback(cid)
     count[cid], transfer[cid] = nil, nil
@@ -105,7 +27,7 @@ local function creatureSayCallback(cid, type, msg)
         return false
     end
     local player = Player(cid)
----------------------------- help ------------------------
+
     if msgcontains(msg, 'bank account') then
         npcHandler:say({
             'Every Tibian has one. The big advantage is that you can access your money in every branch of the Tibian Bank! ...',
@@ -113,17 +35,17 @@ local function creatureSayCallback(cid, type, msg)
         }, cid)
         npcHandler.topic[cid] = 0
         return true
----------------------------- balance ---------------------
---------------------------------guild bank-----------------------------------------------
+
+	-- Guild Bank System --
     elseif msgcontains(msg, 'guild balance') then
         npcHandler.topic[cid] = 0
         if not player:getGuild() then
             npcHandler:say('You are not a member of a guild.', cid)
             return false
         end
-        npcHandler:say('Your guild account balance is ' .. player:getGuild():getBankBalance() .. ' gold.', cid)
+        npcHandler:say('Your guild account balance is ' .. player:getGuild():getBalance() .. ' gold.', cid)
         return true
---------------------------------guild bank-----------------------------------------------
+		-- Guild Bank System --
     elseif msgcontains(msg, 'balance') then
         npcHandler.topic[cid] = 0
         if player:getBankBalance() >= 100000000 then
@@ -136,6 +58,9 @@ local function creatureSayCallback(cid, type, msg)
             npcHandler:say('Wow, you have reached the magic number of a million gp!!! Your account balance is ' .. player:getBankBalance() .. ' gold!', cid)
             return true
         elseif player:getBankBalance() >= 100000 then
+            npcHandler:say('You certainly have made a pretty penny. Your account balance is ' .. player:getBankBalance() .. ' gold.' .. player:getBankBalance() .. ' gold!', cid)
+            return true
+        elseif player:getBankBalance() >= 100000 then
             npcHandler:say('You certainly have made a pretty penny. Your account balance is ' .. player:getBankBalance() .. ' gold.', cid)
             return true
         else
@@ -143,7 +68,7 @@ local function creatureSayCallback(cid, type, msg)
             return true
         end
 ---------------------------- deposit ---------------------
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'guild deposit') then
         if not player:getGuild() then
             npcHandler:say('You are not a member of a guild.', cid)
@@ -211,7 +136,7 @@ local function creatureSayCallback(cid, type, msg)
         end
         npcHandler.topic[cid] = 0
         return true
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'deposit') then
         count[cid] = player:getMoney()
         if count[cid] < 1 then
@@ -259,7 +184,8 @@ local function creatureSayCallback(cid, type, msg)
         end
     elseif npcHandler.topic[cid] == 2 then
         if msgcontains(msg, 'yes') then
-            if player:depositMoney(count[cid]) then
+            if player:getMoney() + player:getBankBalance() >= tonumber(count[cid]) then
+                player:depositMoney(count[cid])
                 npcHandler:say('Alright, we have added the amount of ' .. count[cid] .. ' gold to your {balance}. You can {withdraw} your money anytime you want to.', cid)
             else
                 npcHandler:say('You do not have enough gold.', cid)
@@ -270,7 +196,7 @@ local function creatureSayCallback(cid, type, msg)
         npcHandler.topic[cid] = 0
         return true
 ---------------------------- withdraw --------------------
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'guild withdraw') then
         if not player:getGuild() then
             npcHandler:say('I am sorry but it seems you are currently not in any guild.', cid)
@@ -338,7 +264,7 @@ local function creatureSayCallback(cid, type, msg)
             npcHandler.topic[cid] = 0
         end
         return true
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'withdraw') then
         if string.match(msg,'%d+') then
             count[cid] = getMoneyCount(msg)
@@ -383,7 +309,7 @@ local function creatureSayCallback(cid, type, msg)
         end
         return true
 ---------------------------- transfer --------------------
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'guild transfer') then
         if not player:getGuild() then
             npcHandler:say('I am sorry but it seems you are currently not in any guild.', cid)
@@ -465,7 +391,7 @@ local function creatureSayCallback(cid, type, msg)
             npcHandler:say('Alright, is there something else I can do for you?', cid)
         end
         npcHandler.topic[cid] = 0
---------------------------------guild bank-----------------------------------------------
+
     elseif msgcontains(msg, 'transfer') then
         npcHandler:say('Please tell me the amount of gold you would like to transfer.', cid)
         npcHandler.topic[cid] = 11
@@ -623,7 +549,7 @@ local function creatureSayCallback(cid, type, msg)
     end
 	-- WAGON TICKET
 	if msgcontains(msg, 'ticket') then
-		if player:getStorageValue(Storage.wagonTicket) < os.time() then
+		if player:getStorageValue(Storage.wagonTicket) < os.stime() then
 			npcHandler:say("Do you want to purchase a weekly ticket for the ore wagons? With it you can travel freely and swiftly through Kazordoon for one week. 250 gold only. Deal?", cid)
 			npcHandler.topic[cid] = 29
 		else
@@ -633,7 +559,7 @@ local function creatureSayCallback(cid, type, msg)
 	elseif msgcontains(msg, 'yes') then
 		if npcHandler.topic[cid] == 29 then
 			if player:removeMoneyNpc(250) then
-				player:setStorageValue(Storage.wagonTicket, os.time() + 7 * 24 * 60 * 60)
+				player:setStorageValue(Storage.wagonTicket, os.stime() + 7 * 24 * 60 * 60)
 				npcHandler:say("Here is your stamp. It can't be transferred to another person and will last one week from now. You'll get notified upon using an ore wagon when it isn't valid anymore.", cid)
 			else
 				npcHandler:say("You don't have enough money.", cid)

@@ -29,7 +29,7 @@ local function creatureSayCallback(cid, type, msg)
 	--  Matchmaker
 	elseif msgcontains(msg, "matchmaker") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 27 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionMatchmaker) < 1 and player:getStorageValue(Storage.BigfootBurden.MatchmakerTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionMatchmaker) < 1 and player:getStorageValue(Storage.BigfootBurden.MatchmakerTimeout) < os.stime() then
 				npcHandler:say({
 				"You will have to find a lonely crystal a perfect match. I don't understand the specifics but the gnomes told me that even crystals need a mate to produce offspring. ...",
 				"Be that as it may, in this package you'll find a crystal. Take it out of the package and go to the crystal caves to find it a mate. Just look out for huge red crystals and try your luck. ...",
@@ -39,7 +39,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.BigfootBurden.MatchmakerStatus, 0)
 				player:setStorageValue(Storage.BigfootBurden.MatchmakerIdNeeded, math.random(18320, 18326))
 				player:addItem(18313, 1)   --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.MatchmakerTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.MatchmakerTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionMatchmaker) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.MatchmakerStatus) == 1 then -- can report missions
@@ -49,7 +49,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:setStorageValue(Storage.BigfootBurden.MissionMatchmaker, 0)
 					player:setStorageValue(Storage.BigfootBurden.MatchmakerStatus, -1)
 					player:setStorageValue(Storage.BigfootBurden.MatchmakerIdNeeded, -1)
-					player:setStorageValue(Storage.BigfootBurden.MatchmakerTimeout, os.time() + 72000)
+					player:setStorageValue(Storage.BigfootBurden.MatchmakerTimeout, os.stime() + 72000)
 					player:addAchievement('Crystals in Love')
 					player:checkGnomeRank()
 					npcHandler:say("Gnomo arigato |PLAYERNAME|! You did well. That will help us a lot. Take your tokens and this gnomish supply package as a reward. ", cid)
@@ -71,7 +71,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- Golem Repair
 	elseif msgcontains(msg, "repair") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 27 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionTinkersBell) < 1 and player:getStorageValue(Storage.BigfootBurden.TinkerBellTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionTinkersBell) < 1 and player:getStorageValue(Storage.BigfootBurden.TinkerBellTimeout) < os.stime() then
 				npcHandler:say("Our gnomish crystal golems sometimes go nuts. A recent earthquake has disrupted the entire production of a golem factory. ... ", cid)
 				npcHandler:say({
 					"I'm no expert on how those golems work, but it seems that when the crystals of the golems get out of harmony, they do as they please and even sometimes become violent. The violent ones are lost. ...",
@@ -81,7 +81,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.BigfootBurden.MissionTinkersBell, 1)
 				player:setStorageValue(Storage.BigfootBurden.GolemCount, 0)
 				player:addItem(18343, 1)  --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.TinkerBellTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.TinkerBellTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionTinkersBell) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.GolemCount) >= 4 then -- can report missions
@@ -91,7 +91,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionTinkersBell, 0)
 					player:setStorageValue(Storage.BigfootBurden.GolemCount, -1)
-					player:setStorageValue(Storage.BigfootBurden.TinkerBellTimeout, os.time() + 72000)
+					player:setStorageValue(Storage.BigfootBurden.TinkerBellTimeout, os.stime() + 72000)
 					player:addAchievement('Substitute Tinker')
 					player:checkGnomeRank()
 					npcHandler:say("Gnomo arigato |PLAYERNAME|! You did well. That will help us a lot. Take your tokens and this gnomish supply package as a reward. ", cid)
@@ -113,7 +113,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- Spore Gathering
 	elseif msgcontains(msg, "spore") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 28 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionSporeGathering) < 1 and player:getStorageValue(Storage.BigfootBurden.SporeGatheringTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionSporeGathering) < 1 and player:getStorageValue(Storage.BigfootBurden.SporeGatheringTimeout) < os.stime() then
 				npcHandler:say({
 					"We gnomes want you to gather a special collection of spores. All you have to do is use a puffball mushroom and use the spore gathering kit I gave you to gather the spores. ...",
 					"There is a catch though. You need to collect different spores in a specific sequence to fill your gathering kit. If you mix the spores in the wrong way, you ruin your collection and have to start over. ...",
@@ -123,7 +123,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.BigfootBurden.SporeCount, 0)
 				player:addItem(18328, 1)
 				npcHandler.topic[cid] = 0  --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.SporeGatheringTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.SporeGatheringTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionSporeGathering) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.SporeCount) == 4 then -- can report missions
@@ -133,7 +133,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionSporeGathering, 0)
 					player:setStorageValue(Storage.BigfootBurden.SporeCount, -1)
-					player:setStorageValue(Storage.BigfootBurden.SporeGatheringTimeout, os.time() + 72000)
+					player:setStorageValue(Storage.BigfootBurden.SporeGatheringTimeout, os.stime() + 72000)
 					player:addAchievement('Spore Hunter')
 					player:checkGnomeRank()
 					npcHandler:say("Gnomo arigato |PLAYERNAME|! You did well. That will help us a lot. Take your tokens and this gnomish supply package as a reward. ", cid)
@@ -155,7 +155,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- Grindstone Hunt
 	elseif msgcontains(msg, "grindstone") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 28 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionGrindstoneHunt) < 1 and player:getStorageValue(Storage.BigfootBurden.GrindstoneTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionGrindstoneHunt) < 1 and player:getStorageValue(Storage.BigfootBurden.GrindstoneTimeout) < os.stime() then
 				npcHandler:say({
 					"We gnomes need some special grindstones to cut and polish specific crystals. The thing is, they can only be found in a quite dangerous lava cave full of vile monsters. You'll reach it via the hot spot teleporter. ...",
 					"It will be your task to get one such grindstone and bring it back to me."
@@ -163,7 +163,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.BigfootBurden.MissionGrindstoneHunt, 1)
 				player:setStorageValue(Storage.BigfootBurden.GrindstoneStatus, 0)
 				npcHandler.topic[cid] = 0 --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.GrindstoneTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.GrindstoneTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionGrindstoneHunt) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.GrindstoneStatus) == 1 then -- can report missions
@@ -173,7 +173,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionGrindstoneHunt, 0)
 					player:setStorageValue(Storage.BigfootBurden.GrindstoneStatus, -1)
-					player:setStorageValue(Storage.BigfootBurden.GrindstoneTimeout, os.time() + 72000)
+					player:setStorageValue(Storage.BigfootBurden.GrindstoneTimeout, os.stime() + 72000)
 					player:addAchievement('Grinding Again')
 					player:checkGnomeRank()
 					npcHandler:say("Gnomo arigato |PLAYERNAME|! You did well. That will help us a lot. Take your tokens and this gnomish supply package as a reward. ", cid)

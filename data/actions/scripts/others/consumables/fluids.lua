@@ -69,6 +69,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			end
 
 			player:say(fluidMessage[item.type] or 'Gulp.', TALKTYPE_MONSTER_SAY)
+			player:sendWaste(item:getId())
 			item:transform(item.itemid, 0)
 		else
 			local pool = Game.createItem(2016, item.type, toPosition)
@@ -78,6 +79,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 					checkWallArito(pool, toPosition)
 				end
 			end
+			player:sendWaste(item:getId())
 			item:transform(item.itemid, 0)
 		end
 
@@ -85,6 +87,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 		local fluidSource = targetType:getFluidSource()
 		if fluidSource ~= 0 then
+			player:sendWaste(item:getId())
 			item:transform(item.itemid, fluidSource)
 
 		elseif item.type == 0 then
@@ -119,9 +122,12 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
     				end
 				end
 			end
+			player:sendWaste(item:getId())
 			item:transform(item.itemid, 0)
 		end
 	end
-
+	if target:getId() == 22459 or target:getId() == 22470 then
+		item:transform(22388)
+	end
 	return true
 end

@@ -27,12 +27,12 @@ local function creatureSayCallback(cid, type, msg)
 	-- Crystal Kepper
 	elseif msgcontains(msg, "keeper") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 25 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionCrystalKeeper) < 1 and player:getStorageValue(Storage.BigfootBurden.CrystalKeeperTimout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionCrystalKeeper) < 1 and player:getStorageValue(Storage.BigfootBurden.CrystalKeeperTimout) < os.stime() then
 				npcHandler:say("You will have to repair some damaged crystals. Go into the Crystal grounds and repair them, using this harmonic crystal. Repair five of them and return to me. ", cid)
 				player:setStorageValue(Storage.BigfootBurden.MissionCrystalKeeper, 1)
 				player:setStorageValue(Storage.BigfootBurden.RepairedCrystalCount, 0)
 				player:addItem(18219, 1)   --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.CrystalKeeperTimout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.CrystalKeeperTimout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionCrystalKeeper) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.RepairedCrystalCount) >= 5 then -- can report missions
@@ -41,7 +41,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18422, 1)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionCrystalKeeper, 0)
-					player:setStorageValue(Storage.BigfootBurden.CrystalKeeperTimout, os.time() + 20 * 60 * 60)
+					player:setStorageValue(Storage.BigfootBurden.CrystalKeeperTimout, os.stime() + 20 * 60 * 60)
 					player:setStorageValue(Storage.BigfootBurden.RepairedCrystalCount, -1)
 					player:addAchievement('Crystal Keeper')
 					player:checkGnomeRank()
@@ -64,13 +64,13 @@ local function creatureSayCallback(cid, type, msg)
 	-- Raiders of the Lost Spark
 	elseif msgcontains(msg, "spark") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 25 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionRaidersOfTheLostSpark) < 1 and player:getStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionRaidersOfTheLostSpark) < 1 and player:getStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout) < os.stime() then
 				npcHandler:say({"Take this extractor and drive it into a body of a slain crystal crusher. This will charge your own body with energy sparks. Charge it with seven sparks and return to me. ...",
 					"Don't worry. The gnomes assured me you'd be save. That is if nothing strange or unusual occurs! "}, cid)
 				player:setStorageValue(Storage.BigfootBurden.MissionRaidersOfTheLostSpark, 1)
 				player:setStorageValue(Storage.BigfootBurden.ExtractedCount, 0)
 				player:addItem(18213, 1)   --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionRaidersOfTheLostSpark) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.ExtractedCount) >= 7 then -- can report missions
@@ -80,7 +80,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionRaidersOfTheLostSpark, 0)
 					player:setStorageValue(Storage.BigfootBurden.ExtractedCount, -1)
-					player:setStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout, os.time() + 20 * 60 * 60)
+					player:setStorageValue(Storage.BigfootBurden.RaidersOfTheLostSparkTimeout, os.stime() + 20 * 60 * 60)
 					player:addAchievement('Call Me Sparky')
 					player:checkGnomeRank()
 					npcHandler:say("You did well. That will help us a lot. Take your {token} and this gnomish supply package as a reward. ", cid)
@@ -102,11 +102,11 @@ local function creatureSayCallback(cid, type, msg)
 	-- Exterminators
 	elseif msgcontains(msg, "extermination") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 26 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionExterminators) < 1 and player:getStorageValue(Storage.BigfootBurden.ExterminatorsTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionExterminators) < 1 and player:getStorageValue(Storage.BigfootBurden.ExterminatorsTimeout) < os.stime() then
 				npcHandler:say("The wigglers have become a pest that threaten our resources and supplies. Kill 10 wigglers in the caves like the mushroon gardens or the truffles ground. {Report} back to me when you are done. ", cid)
 				player:setStorageValue(Storage.BigfootBurden.MissionExterminators, 1)
 				player:setStorageValue(Storage.BigfootBurden.ExterminatedCount, 0) --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.ExterminatorsTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.ExterminatorsTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionExterminators) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.ExterminatedCount) >= 10 then -- can report missions
@@ -115,7 +115,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionExterminators, 0)
 					player:setStorageValue(Storage.BigfootBurden.ExterminatedCount, -1)
-					player:setStorageValue(Storage.BigfootBurden.ExterminatorsTimeout, os.time() + 20 * 60 * 60)
+					player:setStorageValue(Storage.BigfootBurden.ExterminatorsTimeout, os.stime() + 20 * 60 * 60)
 					player:addAchievement('One Foot Vs. Many')
 					player:checkGnomeRank()
 					npcHandler:say("You did well. That will help us a lot. Take your {token} and this gnomish supply package as a reward. ", cid)
@@ -137,7 +137,7 @@ local function creatureSayCallback(cid, type, msg)
 	-- Mushroom Digger
 	elseif msgcontains(msg, "digging") then
 		if player:getStorageValue(Storage.BigfootBurden.QuestLine) >= 26 then
-			if player:getStorageValue(Storage.BigfootBurden.MissionMushroomDigger) < 1 and player:getStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout) < os.time() then
+			if player:getStorageValue(Storage.BigfootBurden.MissionMushroomDigger) < 1 and player:getStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout) < os.stime() then
 				npcHandler:say({
 					"Take this little piggy here. It will one day become a great mushroom hunter for sure. For now it is depended on you and other pigs. ...",
 					"Well, other pigs like it is one, I mean. I was of course not comparing you with a pig! Go to the truffles area and follow the truffle pigs there. If they dig up some truffles, let the little pig eat the mushrooms. ...",
@@ -147,7 +147,7 @@ local function creatureSayCallback(cid, type, msg)
 				player:setStorageValue(Storage.BigfootBurden.MissionMushroomDigger, 1)
 				player:setStorageValue(Storage.BigfootBurden.MushroomCount, 0)
 				player:addItem(18339, 1)   --- taking missions
-			elseif player:getStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout) > os.time() then  -- trying to take mission while in cooldown
+			elseif player:getStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout) > os.stime() then  -- trying to take mission while in cooldown
 				npcHandler:say("Sorry, you will have to wait before you can undertake this mission again.", cid)
 			elseif player:getStorageValue(Storage.BigfootBurden.MissionMushroomDigger) > 0 then  -- reporting mission
 				if player:getStorageValue(Storage.BigfootBurden.MushroomCount) >= 3 then -- can report missions
@@ -157,7 +157,7 @@ local function creatureSayCallback(cid, type, msg)
 					player:addItem(18215, 1)
 					player:setStorageValue(Storage.BigfootBurden.MissionMushroomDigger, 0)
 					player:setStorageValue(Storage.BigfootBurden.MushroomCount, -1)
-					player:setStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout, os.time() + 20 * 60 * 60)
+					player:setStorageValue(Storage.BigfootBurden.MushroomDiggerTimeout, os.stime() + 20 * 60 * 60)
 					player:addAchievement('The Picky Pig')
 					player:checkGnomeRank()
 					npcHandler:say("You did well. That will help us a lot. Take your {token} and this gnomish supply package as a reward. ", cid)

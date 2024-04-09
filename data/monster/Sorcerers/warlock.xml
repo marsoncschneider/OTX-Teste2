@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Warlock" nameDescription="a warlock" race="blood" experience="4000" speed="115">
+<monster name="Warlock" nameDescription="a warlock" race="blood" experience="4000" speed="115" raceid="10">
 	<health now="3500" max="3500"/>
 	<look type="130" head="19" body="71" legs="128" feet="128" addons="1" corpse="20527"/>
 	<targetchange interval="4000" chance="10"/>
@@ -87,8 +87,8 @@
 		<item name="dark mushroom" chance="3000"/>
 		<item name="assassin star" countmax="4" chance="3500"/>
 		<item name="assassin star" countmax="4" chance="3470"/>
-		<item name="great mana potion" chance="4760"/>
-		<item name="great health potion" chance="5190"/>
+		<item name="gold coin" chance="4760"/>
+		<item name="gold coin" chance="5190"/>
 		<item name="lightning robe" chance="1000"/>
 		<item name="luminous orb" chance="510"/>
 	</loot>

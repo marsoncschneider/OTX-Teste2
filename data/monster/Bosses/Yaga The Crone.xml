@@ -4,7 +4,7 @@
 	<look type="54" corpse="20587"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -62,7 +62,7 @@
 		<item name="garlic necklace" chance="8333"/>
 		<item name="spellbook of mind control" chance="8333"/>
 		<item name="coat" chance="4170"/>
-		<item name="necrotic rod" chance="4170"/>
+
 		<item name="silver dagger" chance="4170"/>
 	</loot>
 </monster>

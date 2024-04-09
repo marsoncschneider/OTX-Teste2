@@ -50,7 +50,7 @@ local function creatureSayCallback(cid, type, msg)
 				"Please find my crossbow. It has my name engraved on it and is very special to me. ...",
 				"Secondly, we need a lot of leather for new quivers. 100 pieces of lizard leather and 100 pieces of red dragon leather should suffice. ...",
 				"Third, since we are giving out tiaras, we are always in need of enchanted chicken wings. Please bring me 5, that would help us tremendously. ...",
-				"Lastly, for our arrow heads we need a lot of steel. Best would be one piece of royal steel, one piece of draconian steel and one piece of hell steel. ...",
+				"Lastly, for our bunda heads we need a lot of steel. Best would be one piece of royal steel, one piece of draconian steel and one piece of hell steel. ...",
 				"Did you understand everything I told you and are willing to handle this task?"
 			}, cid)
 			npcHandler.topic[cid] = 3

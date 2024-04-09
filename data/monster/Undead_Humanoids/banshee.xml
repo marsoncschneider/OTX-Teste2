@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Banshee" nameDescription="a banshee" race="undead" experience="900" speed="110">
+<monster name="Banshee" nameDescription="a banshee" race="undead" experience="900" speed="110" raceid="78">
 	<health now="1000" max="1000"/>
 	<look type="78" corpse="6019"/>
 	<targetchange interval="4000" chance="10"/>
@@ -73,7 +73,6 @@
 		<item name="red robe" chance="150"/>
 		<item name="blue robe" chance="700"/>
 		<item name="simple dress" chance="6050"/>
-		<item name="strong mana potion" chance="680"/>
 		<item name="terra mantle" chance="340"/>
 		<item name="petrified scream" chance="4150"/>
 		<item name="hair of a banshee" chance="4810"/>

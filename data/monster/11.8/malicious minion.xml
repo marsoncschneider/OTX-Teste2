@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<monster name="Malicious Minion" nameDescription="a malicious minion" race="undead" experience="0" speed="250">
-	<health now="10000" max="10000"/>
+<monster name="Malicious Minion" nameDescription="a malicious minion" race="undead" experience="0" speed="30">
+	<health now="2500" max="2500"/>
 	<look type="40" corpse="5985"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
@@ -12,18 +11,17 @@
 		<flag pushable="0"/>
 		<flag canpushitems="1"/>
 		<flag canpushcreatures="1"/>
-		<flag targetdistance="1"/>
+		<flag targetdistance="5"/>
 		<flag staticattack="90"/>
 		<flag runonhealth="0"/>
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-200"/>
-		<attack name="physical" interval="1000" chance="15" range="7" min="0" max="-180">
-			<attribute key="shootEffect" value="snowball"/>
-			<attribute key="areaEffect" value="poff"/>
-		</attack>
-		<attack name="energy" interval="1000" chance="12" length="3" spread="3" min="0" max="-175">
-			<attribute key="areaEffect" value="poff"/>
+		<attack name="fire" interval="1000" chance="15" range="7" min="0" max="-600">
+			<attribute key="areaEffect" value="fire"/>
+		</attack>		
+		<attack name="fire" interval="1000" chance="15" range="7" target="1" radius="2" min="0" max="-400">
+			<attribute key="areaEffect" value="fireattack"/>
 		</attack>
 	</attacks>
 	<defenses armor="28" defense="33"/>

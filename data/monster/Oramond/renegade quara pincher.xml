@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Renegade Quara Pincher" nameDescription="a renegade quara pincher" race="blood" experience="2200" speed="198" manacost="330">
+<monster name="Renegade Quara Pincher" nameDescription="a renegade quara pincher" race="blood" experience="2200" speed="198" manacost="330" raceid="1100">
 	<health now="2800" max="2800"/>
 	<look type="77" corpse="6063"/>
 	<targetchange interval="2000" chance="0"/>
@@ -42,7 +42,6 @@
 		<item id="7590" countmax="2" chance="10000"/> <!-- great mana potion -->
 		<item id="2147" countmax="2" chance="9090"/> <!-- small ruby -->
 		<item id="2670" chance="7692"/> <!-- shrimp -->
-		<item id="15649" countmax="4" chance="5000"/> <!-- vortex bolt -->
 		<item id="2156" chance="5000"/> <!-- red gem -->
 		<item id="2178" chance="4166"/> <!-- mind stone -->
 		<item id="5895" chance="1666"/> <!-- fish fin -->

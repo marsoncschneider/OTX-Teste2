@@ -5,13 +5,13 @@ function onStepIn(creature, item, position, fromPosition)
         return true
     end
 
-    if not lionrock.checkPlayerCanEnterMysticFlame(player) then
-        if item.actionid == 41344 then
-            player:teleportTo(fromPosition, true)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are not able to pass in this teleport yet.")
-        end
-        return false
-    end
+    -- if not lionrock.checkPlayerCanEnterMysticFlame(player) then
+        -- if item.actionid == 41344 then
+            -- player:teleportTo(fromPosition, true)
+			-- player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are not able to pass in this teleport yet.")
+        -- end
+        -- return false
+   -- end
     -- Mystic Flame.
     if item.actionid == 41344 then
         if player:getStorageValue(lionrock.storages.firstMysticEnter) < 1 then

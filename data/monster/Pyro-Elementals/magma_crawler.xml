@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Magma Crawler" nameDescription="a magma crawler" race="fire" experience="2700" speed="230">
+<monster name="Magma Crawler" nameDescription="a magma crawler" race="fire" experience="2700" speed="230" raceid="885">
 	<health now="4800" max="4800"/>
 	<look type="492" corpse="17336"/>
 	<targetchange interval="4000" chance="10"/>
@@ -67,15 +67,15 @@
 		<item name="white piece of cloth" chance="2310"/>
 		<item name="red piece of cloth" chance="930"/>
 		<item name="yellow piece of cloth" chance="2980"/>
-		<item name="great mana potion" chance="6500"/>
-		<item name="great health potion" chance="7270"/>
+		<item name="gold coin" chance="6500"/>
+		<item name="gold coin" chance="7270"/>
 		<item name="magma amulet" chance="3120"/>
 		<item name="magma boots" chance="1820"/>
-		<item name="wand of draconia" chance="4280"/>
+
 		<item name="fiery heart" chance="7810"/>
 		<item id="13757" chance="1675"/><!-- coal -->
 		<item name="crystalline arrow" countmax="10" chance="5950"/>
-		<item name="wand of everblazing" chance="690"/>
+
 		<item name="blue crystal shard" countmax="2" chance="3930"/>
 		<item name="brown crystal splinter" countmax="2" chance="8500"/>
 		<item name="green crystal fragment" chance="7000"/>

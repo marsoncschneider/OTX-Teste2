@@ -2,18 +2,10 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)
-npcHandler:onCreatureAppear(cid)
-end
-function onCreatureDisappear(cid)
-npcHandler:onCreatureDisappear(cid)
-end
-function onCreatureSay(cid, type, msg)
-npcHandler:onCreatureSay(cid, type, msg)
-end
-function onThink()
-npcHandler:onThink()	
-end
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
 
 -- Twist of Fate
 local blessKeyword = keywordHandler:addKeyword({'twist of fate'}, StdModule.say, {npcHandler = npcHandler,
@@ -25,21 +17,6 @@ local blessKeyword = keywordHandler:addKeyword({'twist of fate'}, StdModule.say,
 	}})
 	blessKeyword:addChildKeyword({'yes'}, StdModule.bless, {npcHandler = npcHandler, text = 'So receive the protection of the twist of fate, pilgrim.', cost = '|PVPBLESSCOST|', bless = 1})
 	blessKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'Fine. You are free to decline my offer.', reset = true})
-
--- Adventurer Stone
-keywordHandler:addKeyword({'adventurer stone'}, StdModule.say, {npcHandler = npcHandler, text = 'Keep your adventurer\'s stone well.'}, function(player) return player:getItemById(18559, true) end)
-
-local stoneKeyword = keywordHandler:addKeyword({'adventurer stone'}, StdModule.say, {npcHandler = npcHandler, text = 'Ah, you want to replace your adventurer\'s stone for free?'}, function(player) return player:getStorageValue(Storage.AdventurersGuild.FreeStone.Maealil) ~= 1 end)
-	stoneKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'Here you are. Take care.', reset = true}, nil, function(player) player:addItem(18559, 1) player:setStorageValue(Storage.AdventurersGuild.FreeStone.Maealil, 1) end)
-	stoneKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'No problem.', reset = true})
-
-local stoneKeyword = keywordHandler:addKeyword({'adventurer stone'}, StdModule.say, {npcHandler = npcHandler, text = 'Ah, you want to replace your adventurer\'s stone for 30 gold?'})
-	stoneKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'Here you are. Take care.', reset = true},
-		function(player) return player:getMoney() + player:getBankBalance() >= 30 end,
-		function(player) if player:removeMoneyNpc(30) then player:addItem(18559, 1) end end
-	)
-	stoneKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'Sorry, you don\'t have enough money.', reset = true})
-	stoneKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'No problem.', reset = true})
 
 -- Wooden Stake
 keywordHandler:addKeyword({'stake'}, StdModule.say, {npcHandler = npcHandler, text = 'I think you have forgotten to bring your stake.'}, function(player) return player:getStorageValue(Storage.FriendsandTraders.TheBlessedStake) == 3 and player:getItemCount(5941) == 0 end)
@@ -101,13 +78,11 @@ keywordHandler:addAliasKeyword({'spark'})
 keywordHandler:addKeyword({'solitude'}, StdModule.say, {npcHandler = npcHandler, text = 'Talk to the hermit Eremo on the isle of Cormaya about this blessing.'})
 keywordHandler:addAliasKeyword({'wisdom'})
 
--- Greeting message
-keywordHandler:addGreetKeyword({"ashari"}, {npcHandler = npcHandler, text = "Welcome, young |PLAYERNAME|! If you are heavily wounded or poisoned, I can {heal} you for free."})
---Farewell message
-keywordHandler:addFarewellKeyword({"asgha thrazi"}, {npcHandler = npcHandler, text = "May the gods bless you, |PLAYERNAME|!"})
-
 npcHandler:setMessage(MESSAGE_GREET, 'Welcome, young |PLAYERNAME|! If you are heavily wounded or poisoned, I can {heal} you for free.')
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Remember: If you are heavily wounded or poisoned, I can heal you for free.')
 npcHandler:setMessage(MESSAGE_FAREWELL, 'May the gods bless you, |PLAYERNAME|!')
 
-npcHandler:addModule(FocusModule:new())
+local focusModule = FocusModule:new()
+focusModule:addGreetMessage({'hi', 'hello', 'ashari'})
+focusModule:addFarewellMessage({'bye', 'farewell', 'asgha thrazi'})
+npcHandler:addModule(focusModule)

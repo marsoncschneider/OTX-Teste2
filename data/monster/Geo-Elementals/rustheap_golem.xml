@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Rustheap Golem" nameDescription="a rustheap golem" race="energy" experience="2300" speed="125">
+<monster name="Rustheap Golem" nameDescription="a rustheap golem" race="energy" experience="2300" speed="125" raceid="1041">
 	<health now="2800" max="2800"/>
 	<look type="603" corpse="23355"/>
   <targetchange interval="2000" chance="5"/>
@@ -10,12 +10,15 @@
     <flag illusionable="0"/>
     <flag convinceable="0"/>
     <flag pushable="0"/>
-			<flag isblockable="0"/>
+	<flag isblockable="0"/>
     <flag canpushitems="1"/>
     <flag canpushcreatures="1"/>
     <flag targetdistance="1"/>
     <flag staticattack="90"/>
     <flag runonhealth="0"/>
+    <flag canwalkonenergy="1"/>
+    <flag canwalkonfire="0"/>
+    <flag canwalkonpoison="1"/>
   </flags>
   <attacks>
     <attack name="melee" interval="2000" skill="118" attack="50"/>
@@ -54,8 +57,6 @@
 		<item id="2152" countmax="3" chance="58310"/><!-- platinum coin -->
 		<item id="2143" chance="1300"/><!-- white pearl -->
 		<item id="2144" chance="1630"/><!-- black pearl -->
-		<item id="7588" countmax="2" chance="10100"/><!-- strong health potion -->
-		<item id="7589" countmax="2" chance="7170"/><!-- strong mana potion -->
 		<item id="2391" chance="3580"/><!-- war hammer -->
 		<item id="7452" chance="330"/><!-- spiked squelcher -->
 		<item id="23542" chance="330"/><!-- metal bat -->

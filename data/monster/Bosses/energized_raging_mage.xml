@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Energized Raging Mage" nameDescription="an energized raging mage" race="blood" experience="0" speed="230">
+<monster name="Energized Raging Mage" nameDescription="an energized raging mage" race="blood" experience="0" speed="230" >
 	<health now="3500" max="3500" />
 	<look type="423" corpse="0" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -23,8 +23,8 @@
 			<attribute key="shootEffect" value="energy" />
 		</attack>
 		<attack name="melee" interval="2000" skill="32" attack="37" />
-		<attack name="thunderstorm" interval="2000" chance="40" range="7" target="1" min="-150" max="-230" />
-		<attack name="manadrain" interval="2000" chance="20" range="7" min="-100" max="-210" />
+		<!-- <attack name="thunderstorm" interval="2000" chance="40" range="7" target="1" min="-150" max="-230" />
+		 --><attack name="manadrain" interval="2000" chance="20" range="7" min="-100" max="-210" />
 		<attack name="energy" interval="2000" chance="25" length="8" spread="0" min="-200" max="-300">
 			<attribute key="areaEffect" value="bigclouds" />
 		</attack>

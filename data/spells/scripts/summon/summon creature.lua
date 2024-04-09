@@ -24,15 +24,19 @@ function onCastSpell(creature, variant)
 
 	local manaCost = monsterType:getManaCost()
 	if creature:getMana() < manaCost and not getPlayerFlagValue(creature, PlayerFlag_HasInfiniteMana) then
-		creature:sendCancelMessage(RETURNVALUE_NOTENOUGHMANA)
+		if creature:isPlayer() then
+			creature:sendCancelMessage(Game.getReturnMessage(RETURNVALUE_NOTENOUGHMANA))
+		end
 		creature:getPosition():sendMagicEffect(CONST_ME_POFF)
 		return false
 	end
 
 	local position = creature:getPosition()
-	local summon = Game.createMonster(monsterName, position, true)
+	local summon = Game.createMonster(monsterName, position, true, false, creature)
 	if not summon then
-		creature:sendCancelMessage(RETURNVALUE_NOTENOUGHROOM)
+		if creature:isPlayer() then
+			creature:sendCancelMessage(Game.getReturnMessage(RETURNVALUE_NOTENOUGHROOM))
+		end
 		position:sendMagicEffect(CONST_ME_POFF)
 		return false
 	end

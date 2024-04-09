@@ -87,5 +87,15 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
+local function onTradeRequest(cid)
+	local player = Player(cid)
+	if player:getStorageValue(Storage.OutfitQuest.BrotherhoodOutfit) < 4 then
+		npcHandler:say('You are not allowed yet.', cid)
+		return false
+	end
+	return true
+end
+
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+npcHandler:addModule(FocusModule:new())
 npcHandler:addModule(FocusModule:new())

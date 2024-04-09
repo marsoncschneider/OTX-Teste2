@@ -18,7 +18,7 @@ local function getTable(player)
 		{name='crowbar', id=2416, buy=260, sell=50},
 		{name='expedition backpack', id=11241, buy=100},
 		{name='expedition bag', id=11242, buy=50},
-		{name='fishing rod', id=2580, buy=150, sell=40},
+		{name='BUNDA', id=2580, buy=150, sell=40},
 		{name='lamp', id=2044, buy=8},
 		{name='pick', id=2553, buy=50, sell=15},
 		{name='rope', id=2120, buy=50, sell=15},
@@ -39,24 +39,24 @@ local function getTable(player)
 			{name='bolt', id=2543, buy=4},
 			{name='bow', id=2456, buy=400, sell=100},
 			{name='crossbow', id=2455, buy=500, sell=120},
-			{name='crystalline arrow', id=18304, buy=20},
+
 			{name='dragon tapestry', id=11264, buy=80},
-			{name='drill bolt', id=18436, buy=12},
-			{name='earth arrow', id=7850, buy=5},
-			{name='envenomed arrow', id=18437, buy=12},
-			{name='flaming arrow', id=7840, buy=5},
-			{name='flash arrow', id=7838, buy=5},
-			{name='onyx arrow', id=7365, buy=7},
-			{name='piercing bolt', id=7363, buy=5},
+
+
+
+
+
+
+
 			{name='power bolt', id=2547, buy=7},
-			{name='prismatic bolt', id=18435, buy=20},
-			{name='royal spear', id=7378, buy=15},
-			{name='shiver arrow', id=7839, buy=5},
-			{name='sniper arrow', id=7364, buy=5},
+
+
+
+
 			{name='spear', id=2389, buy=9, sell=3},
-			{name='tarsal arrow', id=15648, buy=6},
+
 			{name='throwing star', id=2399, buy=42},
-			{name='vortex bolt', id=15649, buy=6},
+
 			{name='corrupted flag', id=11326, sell=700},
 			{name='high guard flag', id=11332, sell=550},
 			{name='legionnaire flags', id=11334, sell=500},
@@ -109,7 +109,7 @@ local function onBuy(cid, item, subType, amount, ignoreCap, inBackpacks)
 	if not ignoreCap and player:getFreeCapacity() < ItemType(items[item].itemId):getWeight(amount) then
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You don\'t have enough cap.')
 	end
-	if not player:removeMoneyNpc(items[item].buyPrice * amount) then
+	if not doPlayerRemoveMoney(cid, items[item].buyPrice * amount) then
 		selfSay("You don't have enough money.", cid)
 	else
 		player:addItem(items[item].itemId, amount)

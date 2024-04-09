@@ -43,6 +43,6 @@
 		<item name="gold coin" countmax="65" chance="12500" />
 		<item name="gold coin" countmax="60" chance="12500" />
 		<item name="glimmering soil" chance="2500" />
-		<item name="wand of draconia" chance="1250" />
+
 	</loot>
 </monster>

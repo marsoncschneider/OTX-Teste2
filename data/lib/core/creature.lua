@@ -1,3 +1,47 @@
+local function sendSquare(cid, color, sec, n, send)
+    local creature = Creature(cid)
+    if not creature then
+        return false
+    end
+    if n <= sec then
+        local pos = creature:getPosition()
+        local msg = NetworkMessage()
+        msg:addByte(0x93)
+        msg:addU32(cid)
+        msg:addByte(0x01)
+        msg:addByte(color)
+        for i = 1, #send do
+            if pos:getDistance(send[i]:getPosition()) <= 7 then
+                msg:sendToPlayer(send[i])
+            end
+        end
+        addEvent(sendSquare, 1000, cid, color, sec, n + 1, send)
+    end
+end
+
+function Creature:sendSquare(color, sec, canSee, n)
+    --// Creature:sendSquare(color, sec[, canSee])
+    local pos = self:getPosition()
+
+    --// Create a send table if canSee is an argument (otherwise uses spectators)
+    local specs = Game.getSpectators(pos, false, true, 0, 8, 0, 6)
+    local send = {}
+    if canSee then
+        if type(canSee) == 'table' then
+            for i = 1, #specs do
+                if isInArray(canSee, specs[i]:getName()) then
+                    send[#send+1] = specs[i]
+                end
+            end
+        else
+            return print('Error [Creature:sendSquare] invalid argument type for canSee')
+        end
+    end
+    send = (next(send) and send) or specs
+    sendSquare(self:getId(), color, sec, (n and n+1) or 0, send)
+    return true
+end
+
 function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReachable)
 	maxRadius = maxRadius or 1
 
@@ -91,6 +135,17 @@ function Creature:setItemOutfit(item, time)
 	return true
 end
 
+local function smallFixSummon(cid, mid)
+	local m = Monster(cid)
+	local p = Player(cid)
+	if not p or not  m then
+		return
+	end
+	local last = m:getPosition()
+	m:teleportTo(p:getPosition(), false)
+	m:teleportTo(last, false)
+end
+
 function Creature:addSummon(monster)
 	local summon = Monster(monster)
 	if not summon then
@@ -102,7 +157,7 @@ function Creature:addSummon(monster)
 	summon:setDropLoot(false)
 	summon:setSkillLoss(false)
 	summon:setMaster(self)
-
+	addEvent(smallFixSummon, 200, summon:getId(), self:getId())
 	return true
 end
 
@@ -127,7 +182,7 @@ function Creature:addDamageCondition(target, type, list, damage, period, rounds)
 	end
 
 	local condition = Condition(type)
-	condition:setParameter(CONDITION_PARAM_OWNER, self:getId())
+	condition:setParameter(CONDITION_PARAM_OWNER, self:getCombatId())
 	condition:setParameter(CONDITION_PARAM_DELAYED, true)
 
 	if list == DAMAGELIST_EXPONENTIAL_DAMAGE then

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Razzagorn" nameDescription="razzagorn" race="fire" experience="65000" speed="340" script="rewardboss.lua">
+<monster name="Razzagorn" nameDescription="razzagorn" race="fire" experience="65000" speed="340">
 	<health now="290000" max="290000" />
 	<look type="842" head="78" body="94" legs="52" feet="126" addons="0" corpse="25151" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -92,7 +92,7 @@
 		<item id="2154" chance="1000"/><!-- yellow gem -->
 		<item id="2156" chance="1000"/><!-- red gem -->
 		<item id="2158" chance="1000"/><!-- blue gem -->
-		<item id="2181" chance="13000"/><!-- terra rod -->
+
 		<item id="2462" chance="8000"/><!-- devil helmet-->
 		<item id="24849" countmax="5" chance="46100"/><!-- onyx chip -->
 		<item id="24850" countmax="5" chance="46100"/><!-- opal -->

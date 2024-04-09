@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Tunnel Tyrant" nameDescription="a tunnel tyrant" race="blood" experience="4000" speed="120">
+<monster name="Tunnel Tyrant" nameDescription="a tunnel tyrant" race="blood" experience="4000" speed="120" raceid="1545">
 	<health now="6400" max="6400" />
 	<look type="1035" corpse="30790" />
 	<targetchange interval="10000" chance="10" />
@@ -18,16 +18,12 @@
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-400" />
-		<attack name="Stalagmite" interval="2000" chance="15" range="7" length="6" spread="3" min="-190" max="-300">
-		<attribute key="shootEffect" value="poison" />
-		</attack>
 		<attack name="death" interval="2000" chance="15" range="3" length="6" spread="3" min="-70" max="-160">
 		<attribute key="areaEffect" value="mortarea" />
 		</attack>
 		<attack name="fire" interval="2000" chance="15" range="3" length="6" spread="3" min="-90" max="-160">
 		<attribute key="areaEffect" value="fire" />
 		</attack>
-		<attack name="Stone Shower" interval="2000" chance="10" range="7" min="-230" max="-450" />
 	</attacks>
 	<elements>
 		<element firePercent="0" />
@@ -61,5 +57,6 @@
 			<!--raro-->
 					<item name="Crystalline Armor" chance="860" />
 					<item name="Suspicious Device" chance="1290" />
+
 	</loot>
 </monster>

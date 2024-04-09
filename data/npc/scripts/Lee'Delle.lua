@@ -29,7 +29,7 @@ keywordHandler:addKeyword({'tibia'}, StdModule.say, {npcHandler = npcHandler, te
 keywordHandler:addKeyword({'temple'}, StdModule.say, {npcHandler = npcHandler, text = 'The temple is the place to go when you are very low on {health} or poisoned. Ask {Cipfried} for a heal - he usually notices emergencies by himself.'})
 keywordHandler:addKeyword({'health'}, StdModule.say, {npcHandler = npcHandler, text = 'Health potions will heal you for about 75 hit points. It can\'t hurt to carry one with you, just in case.'})
 keywordHandler:addKeyword({'equipment'}, StdModule.say, {npcHandler = npcHandler, text = 'Well, very important equipment would be a {backpack}, a {rope}, a {shovel}, a {weapon}, an {armor} and a {shield}. Maybe also a torch if you\'re heading into a dark {dungeon}.'})
-keywordHandler:addKeyword({'fishing'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell fishing rods and worms in case you want to go fishing. Simply ask me for a {trade}.'})
+keywordHandler:addKeyword({'fishing'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell BUNDAs and worms in case you want to go fishing. Simply ask me for a {trade}.'})
 keywordHandler:addKeyword({'weapon'}, StdModule.say, {npcHandler = npcHandler, text = 'You could check out which weapons I offer by asking me for a {trade}. Don\'t be shy!'})
 keywordHandler:addKeyword({'food'}, StdModule.say, {npcHandler = npcHandler, text = 'Oh, I\'m sorry, that\'s one of the things I don\'t have for sale. But {Willie} or {Billy} surely have something to eat for you.'})
 keywordHandler:addKeyword({'king'}, StdModule.say, {npcHandler = npcHandler, text = 'The king supports our little village very much!'})

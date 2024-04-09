@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Terror Bird" nameDescription="a terror bird" race="blood" experience="150" speed="106" manacost="490">
+<monster name="Terror Bird" nameDescription="a terror bird" race="blood" experience="150" speed="106" manacost="490" raceid="218">
 	<health now="300" max="300" />
 	<look type="218" corpse="6057" />
 	<targetchange interval="4000" chance="10" />
@@ -41,7 +41,6 @@
 		<item name="terrorbird beak" chance="10310" />
 		<item name="worm" countmax="3" chance="9540" />
 		<item name="colourful feather" chance="3090" />
-		<item name="health potion" chance="660" />
 		<item name="seeds" chance="240" />
 		<item name="feather headdress" chance="100" />
 	</loot>

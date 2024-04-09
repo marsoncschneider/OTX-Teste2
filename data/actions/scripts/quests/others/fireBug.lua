@@ -23,5 +23,38 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		addEvent(revert, 2 * 60 * 1000, toPosition, 25532, 25531)
 		return true
 	end
+	
+	if isInArray({12550, 12551}, target.actionid) then
+		if player:getStorageValue(Storage.secretService.Quest) == 2 and player:getStorageValue(Storage.secretService.TBIMission01) == 1 then
+			local fire = Game.createItem(1487, 1, toPosition)
+			player:setStorageValue(Storage.secretService.TBIMission01, 2)
+		end
+	end
+
+	if target.itemid == 5466 then
+		target:transform(5465)
+		-- Game.createItem(5467,1,target:getPosition())
+	end
+
+	if target.uid == 2243 and target.itemid == 2249 then
+		local fromPos = Position(32847, 32230, 9)
+		local toPos = Position(32850, 32233, 9)
+		for x = fromPos.x, toPos.x do
+			for y = fromPos.y, toPos.y do
+				local tile = Tile(Position(x, y, 9))
+					if tile then
+					local pox = tile:getItemById(1496)
+					local ashes = tile:getItemById(2249)
+					if pox or ashes then
+						if ashes then
+							ashes:transform(1387)
+							addEvent(revert, 2* 60 * 1000, toPosition, 1387, 2249)
+						end
+						tile:getPosition():sendMagicEffect(CONST_ME_FIREAREA)						
+					end
+				end
+			end
+		end
+	end
 	return true
 end

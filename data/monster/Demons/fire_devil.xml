@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Fire Devil" nameDescription="a fire devil" race="blood" experience="145" speed="90" manacost="530">
+<monster name="Fire Devil" nameDescription="a fire devil" race="blood" experience="145" speed="90" manacost="530" raceid="40">
 	<health now="200" max="200"/>
 	<look type="40" corpse="5985"/>
 	<targetchange interval="4000" chance="10"/>
@@ -49,7 +49,7 @@
 		<item id="2050" chance="10000"/><!-- torch -->
 		<item id="2050" countmax="2" chance="1420"/><!-- torch -->
 		<item name="small amethyst" chance="300"/>
-		<item name="necrotic rod" chance="460"/>
+
 		<item name="blank rune" chance="10950"/>
 		<item name="double axe" chance="1500"/>
 		<item id="2419" chance="3000"/><!-- scimitar -->

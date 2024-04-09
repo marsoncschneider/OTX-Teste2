@@ -1,4 +1,4 @@
-local keywordHandler = KeywordHandler:new()
+ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
@@ -8,13 +8,10 @@ function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)
 function onThink()				npcHandler:onThink()					end
 
 function greetCallback(cid)
-	local player = Player(cid)
-	local fire = player:getCondition(CONDITION_FIRE)
-
-	if fire then
+	local creature = Creature(cid)
+	if creature and creature:getCondition(CONDITION_FIRE) then
 		return true
 	end
-	
 	return false
 end
 

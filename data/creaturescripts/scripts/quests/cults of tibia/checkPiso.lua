@@ -1,6 +1,6 @@
 function onThink(creature, interval)
 	if creature:getName():lower() == 'the corruptor of souls' then
-		if Game.getStorageValue('checkPiso') < os.time() then
+		if Game.getStorageValue('checkPiso') < os.stime() then
 			local pos = creature:getPosition()
 			Game.setStorageValue('healthSoul', creature:getHealth())
 			creature:remove()

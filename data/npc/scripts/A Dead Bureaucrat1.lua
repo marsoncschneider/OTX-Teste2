@@ -15,8 +15,8 @@ local voices = {
 npcHandler:addModule(VoiceModule:new(voices))
 
 local config = {
-	[1] = "wand",
-	[2] = "rod",
+
+
 	[3] = "bow",
 	[4] = "sword"
 }

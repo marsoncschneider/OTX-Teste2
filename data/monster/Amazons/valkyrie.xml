@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Valkyrie" nameDescription="a valkyrie" race="blood" experience="85" speed="88" manacost="450">
+<monster name="Valkyrie" nameDescription="a valkyrie" race="blood" experience="85" speed="88" manacost="450" raceid="12">
 	<health now="190" max="190"/>
 	<look type="139" head="113" body="38" legs="95" feet="96" corpse="20523"/>
 	<targetchange interval="4000" chance="10"/>
@@ -52,7 +52,6 @@
 		<item name="protection amulet" chance="1100"/>
 		<item name="plate armor" chance="830"/>
 		<item id="2229" chance="760"/><!-- skull -->
-		<item name="health potion" chance="500"/>
 		<item name="double axe" chance="430"/>
 		<item name="small diamond" chance="130"/>
 	</loot>

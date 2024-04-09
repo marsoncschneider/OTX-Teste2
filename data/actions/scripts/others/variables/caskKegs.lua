@@ -27,8 +27,8 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	end
 
 	if target then
-		local charges = target:getCharges()
- 		if item:getCount() > charges then
+		local charges = target:getAttribute(ITEM_ATTRIBUTE_DATE)
+ 		if charges and item:getCount() > charges then
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Sorry, only Remaining %s charges.', charges))
 			return false
 		end
@@ -36,13 +36,14 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
  		local targetId = targetIdList[target:getId()]
  		if targetId then
  			if item:getId() == targetId.itemId then
-				item:transform(targetId.transform)
-				charges = charges - item:getCount()
-				target:transform(target:getId(), charges)
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Remaining %s charges.', charges))
-
-				if charges == 0 then
-					target:remove()
+				if item:remove(item:getCount()) then
+					player:addItem(targetId.transform, item:getCount())
+					charges = charges - item:getCount()
+					target:setAttribute(ITEM_ATTRIBUTE_DATE, charges)
+					player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format('Remaining %s charges.', charges))
+					if charges == 0 then
+						target:remove()
+					end
 				end
  			end
  		end

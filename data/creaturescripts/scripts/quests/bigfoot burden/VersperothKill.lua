@@ -39,7 +39,7 @@ function onKill(creature, target)
 	end
 
 	addEvent(transformTeleport, 1 * 60 * 1000, false)
-	addEvent(transformTeleport, 30 * 60 * 1000, true)
+	addEvent(transformTeleport, 31 * 60 * 1000, true)
 	addEvent(warzoneConfig.spawnBoss, 1 * 80 * 1000, config.boss, config.bossResp)
 	addEvent(warzoneConfig.resetRoom, 30 * 60 * 1000, config, "You were teleported out by the gnomish emergency device.", true)
 	return true

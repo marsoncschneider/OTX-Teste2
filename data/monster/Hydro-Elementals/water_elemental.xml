@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Water Elemental" nameDescription="a water elemental" race="undead" experience="650" speed="115">
+<monster name="Water Elemental" nameDescription="a water elemental" race="undead" experience="650" speed="115" raceid="236">
 	<health now="550" max="550"/>
 	<look type="286" corpse="10499"/>
 	<targetchange interval="4000" chance="10"/>
@@ -66,8 +66,6 @@
 		<item id="2667" chance="20000"/><!-- fish -->
 		<item name="rainbow trout" chance="940"/>
 		<item name="green perch" chance="1050"/>
-		<item name="strong health potion" chance="10000"/>
-		<item name="strong mana potion" chance="10000"/>
 		<item id="7632" chance="800"/><!-- giant shimmering pearl -->
 		<item id="7633" chance="800"/><!-- giant shimmering pearl -->
 	</loot>

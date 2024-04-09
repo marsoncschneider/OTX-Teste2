@@ -14,8 +14,8 @@ local info = {
 		['hammer'] = {id = 30689, value = 50},
 		['bow'] = {id = 30690, value = 50},
 		['crossbow'] = {id = 30691, value = 50},
-		['wand'] = {id = 30692, value = 50},
-		['rod'] = {id = 30693, value = 50}
+
+
 	},
 	products = {
 		['strike'] = {
@@ -128,14 +128,14 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler:say("If you have any {gold} tokens with you, let's have a look! Maybe I can offer you something in exchange.", cid)
 	elseif msgcontains(msg, "gold") then
 		npcHandler:say({"Here are my deals. For 50 of your gold tokens, I sell the following weapons of destruction: I can offer you a one-handed weapon: {sword}, {axe} or {club}. ...",
-		"You may also take a two-handed weapon: {slayer}, {chopper} or {hammer}. I also can offer you a {bow}, {crossbow}, {wand} or {rod}. Furthermore I trade {creature products}. What do you choose?"}, cid)
+
 		npcHandler.topic[cid] = 2
 	elseif msgcontains(msg, "creature products") then
 		npcHandler:say({"I have creature products for the imbuements {strike}, {vampirism} and {void}. Make your choice, please!"}, cid)
 		npcHandler.topic[cid] = 3
 	elseif msgcontains(msg, "gold") then
 		npcHandler:say({"Here are my deals. For 50 of your gold tokens, I sell the following weapons of destruction: I can offer you a one-handed weapon: {sword}, {axe} or {club}. ...",
-		"You may also take a two-handed weapon: {slayer}, {chopper} or {hammer}. I also can offer you a {bow}, {crossbow}, {wand} or {rod}. Furthermore I trade {creature products}. What do you choose?"}, cid)
+
 	elseif npcHandler.topic[cid] == 2 then
 		local weapon = info.weapons[msg:lower()]
 		if weapon then

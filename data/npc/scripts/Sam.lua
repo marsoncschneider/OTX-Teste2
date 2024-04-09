@@ -23,10 +23,10 @@ local function creatureSayCallback(cid, type, msg)
 		if addonProgress == 5 then
 			player:setStorageValue(Storage.OutfitQuest.Knight.MissionHelmet, 6)
 			player:setStorageValue(Storage.OutfitQuest.Knight.AddonHelmet, 6)
-			player:setStorageValue(Storage.OutfitQuest.Knight.AddonHelmetTimer, os.time() + 7200)
+			player:setStorageValue(Storage.OutfitQuest.Knight.AddonHelmetTimer, os.stime() + 7200)
 			npcHandler:say('Oh, Gregor sent you? I see. It will be my pleasure to adorn your helmet. Please give me some time to finish it.', cid)
 		elseif addonProgress == 6 then
-			if player:getStorageValue(Storage.OutfitQuest.Knight.AddonHelmetTimer) < os.time() then
+			if player:getStorageValue(Storage.OutfitQuest.Knight.AddonHelmetTimer) < os.stime() then
 				player:setStorageValue(Storage.OutfitQuest.Knight.MissionHelmet, 0)
 				player:setStorageValue(Storage.OutfitQuest.Knight.AddonHelmet, 7)
 				player:setStorageValue(Storage.OutfitQuest.Ref, math.min(0, player:getStorageValue(Storage.OutfitQuest.Ref) - 1))
@@ -60,7 +60,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler.topic[cid] = 2
 
 	elseif msgcontains(msg, 'contract') then
-		if player:getStorageValue(Storage.WhatAFoolishQuest.Contract) == 0 then
+		if player:getStorageValue(Storage.WhatAFoolishQuest.Contract) == 1 then
 			npcHandler:say('Have you signed the contract?', cid)
 			npcHandler.topic[cid] = 4
 		end
@@ -92,8 +92,8 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler.topic[cid] = 0
 				return true
 			end
-
 			player:setStorageValue(Storage.WhatAFoolishQuest.Contract, 2)
+			player:setStorageValue(Storage.WhatAFoolishQuest.ContractCheck, 1)
 			npcHandler:say('Excellent! I will start working right away! Now that I am going to be rich, I will take the opportunity to tell some people what I REALLY think about them!', cid)
 			npcHandler.topic[cid] = 0
 		end

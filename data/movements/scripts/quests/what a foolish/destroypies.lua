@@ -4,7 +4,7 @@ function onStepIn(creature, item, position, fromPosition)
 		return true
 	end
 
-	if player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) > os.time() then
+	if player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) > os.stime() then
 		player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer, 1)
 	end
 

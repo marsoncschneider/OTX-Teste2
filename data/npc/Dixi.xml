@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Dixi" script="Dixi.lua" walkinterval="2000" floorchange="0">
+<npc name="Dixi" script="Dixi.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
-	<look type="136" head="96" body="99" legs="76" feet="115" addons="0" />
+	<look type="975" head="96" body="99" legs="76" feet="115" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="chain helmet,2458,52;coat,2651,8;doublet,2485,16;jacket,2650,10;leather armor,2467,25;leather helmet,2461,12;leather legs,2649,10;studded helmet,2482,63;studded shield,2526,50;wooden shield,2512,15;" />

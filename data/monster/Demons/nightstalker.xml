@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Nightstalker" nameDescription="a nightstalker" experience="500" speed="130" race="undead">
+<monster name="Nightstalker" nameDescription="a nightstalker" experience="500" speed="130" race="undead" raceid="520">
 	<health now="700" max="700"/>
 	<targetchange speed="0" chance="8"/>
 	<look type="320" corpse="9915"/>
@@ -71,7 +71,6 @@
 		<item name="shadow herb" chance="4761"/>
 		<item name="haunted blade" chance="318"/>
 		<item name="chaos mace" chance="121"/>
-		<item name="strong mana potion" chance="1612"/>
 		<item name="spirit cloak" chance="520"/>
 		<item name="crystal of balance" chance="127"/>
 	</loot>

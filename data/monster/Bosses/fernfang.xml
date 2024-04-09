@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Fernfang" nameDescription="Fernfang" race="blood" experience="600" speed="240">
+<monster name="Fernfang" nameDescription="Fernfang" race="blood" experience="600" speed="240" >
 	<health now="400" max="400" />
 	<look type="206" corpse="20566" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -64,7 +64,6 @@
 		<item id="12449" chance="40000" />				<!-- safety pin -->
 		<item id="2154" chance="33000" />				<!-- yellow gem -->
 		<item id="2015" chance="20000" />				<!-- brown flask -->
-		<item id="7589" chance="20000" />				<!-- strong mana potion -->
 		<item id="2044" chance="13000" />				<!-- lamp -->
 		<item id="2401" chance="13000" />				<!-- staff -->
 		<item id="5786" chance="13000" />				<!-- wooden whistle -->

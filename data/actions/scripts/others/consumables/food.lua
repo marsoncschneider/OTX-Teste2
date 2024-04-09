@@ -1,5 +1,5 @@
 local foods = {
-	[2695] = {6, 'Gulp.'}, -- egg
+	[2328] = {6, 'Gulp.'}, -- egg
 	[2362] = {5, 'Crunch.'}, -- carrot
 	[2666] = {15, 'Munch.'}, -- meat
 	[23516] = {15, 'Burp.'}, -- Bottle of Glooth Wine
@@ -22,7 +22,7 @@ local foods = {
 	[2679] = {1, 'Yum.'}, -- cherry
 	[2680] = {2, 'Yum.'}, -- strawberry
 	[2681] = {9, 'Yum.'}, -- grapes
-	[7966] = {9, 'Hum.'}, -- cream cake
+	[7966] = {9, 'Hum.'}, -- BOLO
 	[2682] = {20, 'Yum.'}, -- melon
 	[2683] = {17, 'Munch.'}, -- pumpkin
 	[2684] = {5, 'Crunch.'}, -- carrot
@@ -82,6 +82,7 @@ local foods = {
 	[8847] = {11, 'Yum.'}, -- chocolate cake
 	[9005] = {7, 'Slurp.'}, -- yummy gummy worm
 	[9114] = {5, 'Crunch.'}, -- bulb of garlic
+	[9996] = {0, 'Slurp.'}, -- banana chocolate shake
 	[10454] = {0, 'Your head begins to feel better.'}, -- headache pill
 	[11246] = {15, 'Yum.'}, -- rice ball
 	[11370] = {3, 'Urgh.'}, -- terramite eggs
@@ -106,21 +107,48 @@ local foods = {
 	[23517] = {25, 'Chomp.'}, -- glooth steak
 	[24843] = {25, 'Chomp.'}, -- Roasted Meat
 	[24841] = {8, 'Yum.'}, -- pickle pear
-	[27050] = {20, 'Urgh.'}, -- bug meat
-	[27051] = {10, 'Gulp.'}, -- cave turnip
-	[27064] = {60, 'Mmmm.'}, -- birthday cake
-	[27616] = {10, 'Slurp.'}, -- bottle of tibian wine
-	[28997] = {15, 'Mmmmm!'}, -- fresh fruit
-	[35057] = {40, 'Mmmmm!'}, -- meringue cake
-	[35060] = {15, 'Slurp.'} -- winterberry liquor
+	[34914] = {40, 'Mmmm.'}, -- meringue cake
+	[34917] = {15, 'Slurp.'}, -- winterberry liquor
+	[36688] = {1, 'Munch.'}, -- red gingerbread heart
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	if item.itemid == 34502 then	
+		if player:getStorageValue(Storage.DreamCourts.TheSevenKeys.Count) == 4 then
+			player:setStorageValue(Storage.DreamCourts.TheSevenKeys.Mushroom, 2)
+			player:setStorageValue(Storage.DreamCourts.TheSevenKeys.Count, player:getStorageValue(Storage.DreamCourts.TheSevenKeys.Count) + 1)
+			item:remove(1)
+			player:say("Munch", TALKTYPE_MONSTER_SAY)
+			return true
+		end
+	end
+	
+	if item.itemid == 34914 then -- skelot cake
+		if player:getStorageValue(item.itemid) < os.stime() then
+			player:setStorageValue(item.itemid, os.stime() + 15*60)
+			player:addHealth(5000)
+			player:addMana(12000)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You feel better.")
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+			item:remove(1)
+			return true
+		else
+			return player:sendCancelMessage("You are exhausted.")
+		end
+	end
+		
 	local food = foods[item.itemid]
 	if not food then
 		return false
 	end
-
+	
+	if player:getStorageValue(Storage.secretLibrary.Darashia.eatenFood) ~= 1 then
+		if player:getPosition():isInRange(Position(32961, 32280, 10), Position(32964, 32286, 10)) then
+			player:say('Fames est optimus coquus', TALKTYPE_MONSTER_SAY)
+			player:setStorageValue(Storage.secretLibrary.Darashia.eatenFood, 1)
+		end
+	end
+	
 	--player:removeCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
 
 	local condition = player:getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT)
@@ -128,15 +156,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, 'You are full.')
 		return true
 	end
-
+	
 	player:feed(food[1] * 12)
 	player:say(food[2], TALKTYPE_MONSTER_SAY)
+	player:sendWaste(item:getId())
 	item:remove(1)
-
-	local client = player:getClient()
-	if client.version > 1140 then
-		player:updateSupplyTracker(item)
-	end
-
 	return true
 end

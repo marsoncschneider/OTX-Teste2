@@ -4,7 +4,7 @@
 	<look type="343" corpse="11281" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -43,7 +43,7 @@
 		<voice sentence="Hissss!" />
 	</voices>
 	<loot>
-		<item name="great health potion" countmax="2" chance="2775" />
+		<item name="gold coin" countmax="2" chance="2775" />
 		<item name="red lantern" chance="100000" />
 		<item name="Zaoan armor" chance="1050" />
 		<item name="Zaoan shoes" chance="3150" />

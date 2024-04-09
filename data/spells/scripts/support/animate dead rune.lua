@@ -10,11 +10,16 @@ function onCastSpell(creature, variant, isHotkey)
 		if corpse then
 			local itemType = corpse:getType()
 			if itemType:isCorpse() and itemType:isMovable() then
-				local monster = Game.createMonster("Skeleton", position)
-				if monster then
-					corpse:remove()
-					monster:setMaster(creature)
-					position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
+				local summonCount = creature:getSummons()
+				if #summonCount < 2 then
+					local monster = Game.createMonster("Skeleton", position)
+					if monster then
+						corpse:remove()
+						monster:setMaster(creature)
+						position:sendMagicEffect(CONST_ME_MAGIC_BLUE)						
+					end
+				else
+					creature:sendCancelMessage("You can only have 2 summons per time.")
 					return true
 				end
 			end

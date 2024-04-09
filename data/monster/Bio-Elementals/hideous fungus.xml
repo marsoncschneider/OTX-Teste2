@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Hideous Fungus" nameDescription="a hideous fungus" race="venom" experience="2900" speed="170">
+<monster name="Hideous Fungus" nameDescription="a hideous fungus" race="venom" experience="2900" speed="170" raceid="891">
 	<health now="4600" max="4600" />
 	<look type="499" corpse="17428" />
 	<targetchange interval="4000" chance="10" />
@@ -73,16 +73,13 @@
 		<item name="green piece of cloth" chance="3003" />
 		<item name="red piece of cloth" chance="1820" />
 		<item name="blue piece of cloth" chance="3700" />
-		<item name="great mana potion" chance="7692" />
-		<item name="great health potion" chance="7220" />
-		<item name="mana potion" chance="9090" />
 		<item name="terra mantle" chance="800" />
 		<item name="terra legs" chance="920" />
 		<item name="terra boots" chance="2000" />
 		<item name="terra amulet" chance="2000" />
 		<item name="mushroom backpack" chance="20" />
 		<item name="mushroom pie" countmax="3" chance="14500" />
-		<item name="muck rod" chance="590" />
+
 		<item name="hideous chunk" chance="14285" />
 		<item name="envenomed arrow" countmax="15" chance="14500" />
 		<item name="mycological bow" chance="60" />

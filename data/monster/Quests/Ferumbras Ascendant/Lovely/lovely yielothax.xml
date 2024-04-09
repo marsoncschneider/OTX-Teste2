@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Lovely Yielothax" nameDescription="a lovely yielothax" race="venom" experience="1250" speed="300">
+<monster name="Lovely Yielothax" nameDescription="a lovely yielothax" race="venom" experience="1250" speed="300" >
 	<health now="1500" max="1500"/>
 	<look type="408" corpse="13752"/>
 	<targetchange interval="5000" chance="8"/>
@@ -66,13 +66,11 @@
 		<item id="13942" chance="320"/><!-- yielocks -->
 		<item id="2148" countmax="227" chance="99800"/><!-- gold coin -->
 		<item id="2789" countmax="3" chance="9930"/><!-- brown mushroom -->
-		<item id="7588" chance="19910"/><!-- strong health potion -->
-		<item id="7589" chance="19920"/><!-- strong mana potion -->
 		<item id="2145" countmax="5" chance="4860"/><!-- small diamond -->
 		<item id="2151" chance="950"/><!-- talon -->
 		<item id="2164" chance="4020"/><!-- might ring -->
 		<item id="13877" chance="270"/><!-- broken ring of ending -->
-		<item id="2189" chance="510"/><!-- wand of cosmic energy -->
+
 		<item id="2438" chance="520"/><!-- epee -->
 		<item id="10221" chance="570"/><!-- shockwave amulet -->
 		<item id="7889" chance="830"/><!-- lightning pendant -->

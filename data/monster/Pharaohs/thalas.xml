@@ -67,6 +67,6 @@
 		<item name="serpent sword" chance="500" />
 		<item name="poison dagger" chance="7000" />
 		<item name="djinn blade" chance="200" />
-		<item name="great health potion" chance="1500" />
+		<item name="gold coin" chance="1500" />
 	</loot>
 </monster>

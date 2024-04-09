@@ -1,3 +1,13 @@
+--[[
+	Notes:
+	npcHandler.topic[cid] = 20 -- last
+	
+	
+	
+	Secret library info:
+	from 22 to 24
+]]
+
 local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
@@ -68,14 +78,14 @@ local function creatureSayCallback(cid, type, msg)
 			player:addExperience(400, true)
 			player:setStorageValue(Storage.SeaOfLightQuest.Questline, 3)
 			player:setStorageValue(Storage.SeaOfLightQuest.Mission1, 3)
-			player:setStorageValue(Storage.SeaOfLightQuest.StudyTimer, os.time() + 1800)
+			player:setStorageValue(Storage.SeaOfLightQuest.StudyTimer, os.stime() + 1800)
 			npcHandler:say('So have you talked to the beggar? What did he tell you? Where are the plans...? Wh...? He did? He is? You\'ve already got the plans? Beautiful!! Amazing! Alright it will take some time to recapitulate these plans.', cid)
 			addEvent(releasePlayer, 1000, cid)
 		elseif cStorage == 3 then
 			local timeStorage = player:getStorageValue(Storage.SeaOfLightQuest.StudyTimer)
-			if timeStorage > os.time() then
+			if timeStorage > os.stime() then
 				npcHandler:say('It will take some time to work out the initial problem of the device. Come back when I\'ve found the component needed to finish it. Alright, B connects to D and another two nails marked with S go... hmmm.', cid)
-			elseif timeStorage > 0 and timeStorage < os.time() then
+			elseif timeStorage > 0 and timeStorage < os.stime() then
 				npcHandler:say('...connects to N942. Alright!! That\'s it! I just finished a prototype device! And it looks like I figured out the initial failure. A very special crystal is needed for the device to work. Aren\'t you as curious as me to know what went wrong?', cid)
 				npcHandler.topic[cid] = 2
 			end
@@ -111,8 +121,14 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say('Do you have the mirror crystal? Unbelievable! Alright I will extract the crystal from the device myself, would you please give me the device with the crystal and step back?', cid)
 			npcHandler.topic[cid] = 7
 		end
+	elseif msgcontains(msg, 'rumours') and player:getStorageValue(Storage.secretLibrary.LiquidDeath.Questline) == 1 then
+			npcHandler:say({
+				"There are rumours of aggressive {fishmen} in northern Tiquanda. We have to find out if this is even remotely connected to the {Njey}. ...",
+				"What's puzzling me is that they were sighted above ground and then retreated into a temple ruin. If we find that ruin, we could find out if there's a relation. ...",
+				"Are you willing to help me?"
+			}, cid)
+			npcHandler.topic[cid] = 22
 	elseif msgcontains(msg, 'yes') then
-
 		if npcHandler.topic[cid] == 1 then
 			player:addExperience(100, true)
 			player:setStorageValue(Storage.SeaOfLightQuest.Questline, 1)
@@ -180,7 +196,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say({"I recently teamed up with a fellow scientist and friend Sinclair, who is also more of an explorer than me, to combine our discoveries in the field of complex phenomena not that easily to describe just by today\'s state of magic. ...","Of course I am talking about ghosts. I know, I know. Hard to believe in those times of highly advanced magic we live in. Yet there are some things, we fail to explain. ...","And that is exactly where we come in! Oh, and you of course. We will not only explain them - we will \'remove\' them. Just tell me whenever you are ready to help us with our research."},cid)
 			npcHandler.topic[cid] = 17
 		elseif npcHandler.topic[cid] == 18 then
-			npcHandler:say('Good. Take this wand - we call it a spirit meter - and go to the graveyard I have marked on your map and take a few measurements on the graves.', cid)
+
 			player:setStorageValue(Storage.spiritHuntersQuest.missionUm, 1)
 			player:addItem(12670, 1)
 			npcHandler.topic[cid] = 0
@@ -190,6 +206,10 @@ local function creatureSayCallback(cid, type, msg)
 			player:addItem(2152, 5)
 			addEvent(releasePlayer, 1000, cid)
 			player:setStorageValue(Storage.spiritHuntersQuest.missionUm, 2)
+			npcHandler.topic[cid] = 0
+		elseif npcHandler.topic[cid] == 22 then
+			npcHandler:say('Excellent, excellent. The rumours pointed to the north of Tiquanda, a sunken temple probably half drowned in water. Return to me if you find anything interesting!', cid)
+			player:setStorageValue(Storage.secretLibrary.LiquidDeath.Questline, 2)
 			npcHandler.topic[cid] = 0
 		end
 
@@ -218,62 +238,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say('Hmpf. *mumbles*', cid)
 		end
 		npcHandler.topic[cid] = 0
-
 	end
-	
-	if msgcontains(msg, 'machine') and player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-		npcHandler:say({
-		'Ah, the machine you found at that island. Well, I built this thing to venture far beneath the very soil we walk on. I suspected something there. Something deep down below. Something evil. Even more so than the dreaded bugs which are crawling my study. ...',
-		'Drilling hole after hole only to get stuck in another hard, unbreakable sediment again and again, I was about to quit this pointless enterprise. ...',
-		'However, the very last day I lingered on that island, I finally fell into a large hollow right under the beach. My drill was shattered and the machine was not mobile anymore. ...',
-		'I am well aware that this may sound laughable now - at this part all of my colleagues burst into laughter anyway - but suddenly there were stairs. Incredibly large stairs that led to the underworld. A world deep under the sea - can you believe this?'}, cid)
-		npcHandler.topic[cid] = 21
-	
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 21 and player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-	if player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-		npcHandler:say({
-		'You do? Well, the end of this story was that I had to leave the place. ...',
-		'I couldnt explore what lies below the stairs as there was an unpredictable stream. Diving into these waters would have been an uncontrollable risk, even with the means to survive without any air. ...',
-		'So I used the portable teleporting device I installed into my machine in case of an emergency and went home. I could only take the most important research documents with me and had to leave most of my equipment in the cave. ...',
-		'Of course I also left my final notes with the coordinates there. And for the life of me I cannot remember where I dug that stupid hole. ...',
-		'When I arrived at home I immediately started looking for a way to manoeuvre in these chaotic conditions once I rediscovered the lost entrance. I never remembered it, but it seems you found it as you indeed have my original notes. ...',
-		'Oh and just in case you want to complete what I have started - feel free to do so. Up to it?'}, cid)
-		npcHandler.topic[cid] = 22
-	end
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 22 and player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-	if player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-		npcHandler:say({
-		'Well, if you really want to delve into this - I could use some help. So you have found my {machine} on that island? And you found the notes with the coordinates? Then you can find the entrance! ...',
-		'Just look for a large staircase with sprawling steps. There is an unpassable stream there that will prevent you from venturing further on. But fear not, you can indeed travel down there - with these small {enhancements} I created. ...',
-		'At first, take this gold for the passage by ship and return to the Gray Island from where I started my expedition many years ago. From there you should find a way to reach the Gray Beach of Quirefang as no ordinary ship can land there. ...',
-		'I will put this under your footgear. Here you go. And this in your nose. There. And there will be no further problems for you down there. Except- ah, well youll find out yourself soon enough, wont you?'}, cid)
-		npcHandler.topic[cid] = 23
-	end
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 23 and player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-	if player:getStorageValue(Storage.LiquidBlackQuest.Visitor) == 3 then
-		npcHandler:say({
-		'Then off you go! Im sorry that I cannot offer you any further help but Im sure you will find support along your way. And - be careful. The sea can appear pitch black down there.'}, cid)
-		player:setStorageValue(Storage.LiquidBlackQuest.Visitor, 4)
-		npcHandler.topic[cid] = 24
-	end
-	end
-	
-	if msgcontains(msg, 'rumours') then
-		npcHandler:say({
-		'There are rumours of aggressive fishmen in northern Tiquanda. We have to find out if this is even remotely connected to the Njey. ...',
-		'What\'s puzzling me is that they were sighted above ground and then retreated into a temple ruin. If we find that ruin, we could find out if there\'s a relation. ...',
-		'Are you willing to help me?'}, cid)
-		npcHandler.topic[cid] = 25
-	
-	elseif msgcontains(msg, 'yes') and npcHandler.topic[cid] == 25 then
-	if npcHandler.topic[cid] == 25 then
-		npcHandler:say({
-		'Excellent, excellent. The rumours pointed to the north of Tiquanda, a sunken temple probably half drowned in water. Return to me if you find anything interesting!'}, cid)
-		player:setStorageValue(Storage.TheSecretLibrary.LiquidDeath, 1)
-		npcHandler.topic[cid] = 26
-	end
-	end
-	
 	return true
 end
 

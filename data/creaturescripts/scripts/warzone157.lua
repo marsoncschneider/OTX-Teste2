@@ -6,7 +6,7 @@ function onDeath(creature, corpse, lasthitkiller, mostdamagekiller, lasthitunjus
 
     local spectators = Game.getSpectators(info.center, false, true, info.minRangeX, info.maxRangeX, info.minRangeY, info.maxRangeY)
     for i = 1, #spectators do
-        spectators[i]:setStorageValue(info.storage, os.time() + info.interval)
+        spectators[i]:setStorageValue(info.storage, os.stime() + info.interval)
         spectators[i]:sendTextMessage(MESSAGE_STATUS_CONSOLE_BLUE, "You have one minute to loot the boss and leave the room.")
     end
 

@@ -89,7 +89,7 @@ function onUse(player, item, fromPosition, itemEx, toPosition)
 						players = storePlayers[i]
 						config.playerPositions[i]:sendMagicEffect(CONST_ME_POFF)
 						players:teleportTo(config.newPos)
-						players:setStorageValue(14325, os.time() + 20*60*60)
+						players:setStorageValue(14325, os.stime() + 20*60*60)
 					end
 					Position(config.newPos):sendMagicEffect(11)
 

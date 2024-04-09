@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Adept of the Cult" nameDescription="an adept of the cult" race="blood" experience="400" speed="95">
+<monster name="Adept of the Cult" nameDescription="an adept of the cult" race="blood" experience="400" speed="95" raceid="254">
 	<health now="430" max="430"/>
 	<look type="194" head="114" body="94" legs="94" feet="57" corpse="20311"/>
 	<targetchange interval="4000" chance="10"/>
@@ -62,7 +62,7 @@
 		<item name="gold coin" countmax="60" chance="65520"/>
 		<item id="2169" chance="420"/><!-- time ring -->
 		<item name="silver amulet" chance="1020"/>
-		<item name="hailstorm rod" chance="220"/>
+
 		<item name="clerical mace" chance="1260"/>
 		<item name="red robe" chance="80"/>
 		<item name="pirate voodoo doll" chance="1730"/>

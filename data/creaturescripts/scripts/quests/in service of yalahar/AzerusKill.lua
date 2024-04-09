@@ -10,7 +10,7 @@ end
 
 function onKill(creature, target)
 	local targetMonster = target:getMonster()
-	if not targetMonster or targetMonster:getName():lower() ~= 'azerus' then
+	if not targetMonster or not isInArray({'azerus', 'azerus2'}, targetMonster:getName():lower()) then
 		return true
 	end
 

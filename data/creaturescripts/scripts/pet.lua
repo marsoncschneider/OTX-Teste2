@@ -12,10 +12,11 @@ local STORAGE_PET = Storage.PetSummon
 
 function onLogin(cid)
 	local player = Player(cid)
+	player:registerEvent("petlogout")
 
 	local vocationid = player:getVocation():getId()
-	local pet
-	local petTimeLeft = player:getStorageValue(STORAGE_PET) - player:getLastLogout()
+	local pet = ""
+	local petTimeLeft = player:getStorageValue(STORAGE_PET)/1000
 
 	if petTimeLeft > 0 then
 		if vocationid == 5 then
@@ -29,25 +30,36 @@ function onLogin(cid)
 		end
 	end
 
-	if pet then
+	if pet ~= "" then
 		position = player:getPosition()
-		summonpet = Game.createMonster(pet, position)
-		player:addSummon(summonpet)
-		player:setStorageValue(STORAGE_PET, os.time() + petTimeLeft)
-		summonpet:registerEvent('petdeath')
+		summonpet = Game.createMonster(pet, position, false, true, cid)
+		if summonpet then
+			player:addSummon(summonpet)
+			player:setPet(summonpet, player:getStorageValue(STORAGE_PET))
+		end
 		position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
 	end
 	return true
 end
 
-
-function onThink(cid, interval, item, position, lastPosition, fromPosition, toPosition)
-	local player = Player(cid)
-
-	if player and player:getStorageValue(STORAGE_PET) <= os.time() and player:getStorageValue(STORAGE_PET) > 0 then
-		doRemoveCreature (getCreatureSummons(cid)[1])
-		player:setStorageValue(STORAGE_PET,0)
+function onLogout(player)
+	local myPet = player:getPet()
+	if not myPet then
+		player:setStorageValue(STORAGE_PET, -1)
+		return true
 	end
+
+	local pet = Monster(myPet:getId())
+	if not pet then
+		player:setStorageValue(STORAGE_PET, -1)
+		return true
+	end
+
+	local decay = pet:getRemoveTime()
+	if decay > 0 then
+		player:setStorageValue(STORAGE_PET, decay)
+	end
+
 	return true
 end
 
@@ -58,7 +70,7 @@ function onDeath(creature, corpse, lasthitkiller, mostdamagekiller, lasthitunjus
 	end
 
 	if table.contains(petNames,creature:getName():lower()) then
-		player:setStorageValue(STORAGE_PET, os.time()) --imeddiately expire creature
+		player:setStorageValue(STORAGE_PET, -1) --imeddiately expire creature
 
 		-- maybe we need to remove creature from the game manually?
 		-- doRemoveCreature (getCreatureSummons(player)[1])

@@ -78,18 +78,18 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
    if item.actionid == 41357 then
 
-        if player:getStorageValue(lionrock.storages.playerCanDoTasks) - os.time() > 0 then
+        if player:getStorageValue(lionrock.storages.playerCanDoTasks) - os.stime() > 0 then
            player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Come back after the server save.")
             return false
         end
 
-        if player:getStorageValue(lionrock.storages.translation1) < 1 or player:getStorageValue(lionrock.storages.translation2) < 1 or player:getStorageValue(lionrock.storages.translation3) < 1 or player:getStorageValue(lionrock.storages.translation4) < 1 then
-           player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You need get old scrolls to receive your reward.")
-            return false
-        end
+        -- if player:getStorageValue(lionrock.storages.translation1) < 1 or player:getStorageValue(lionrock.storages.translation2) < 1 or player:getStorageValue(lionrock.storages.translation3) < 1 or player:getStorageValue(lionrock.storages.translation4) < 1 then
+           -- player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You need get old scrolls to receive your reward.")
+            -- return false
+        -- end
 
         -- Player reward
-        player:setStorageValue(lionrock.storages.playerCanDoTasks, os.time() + 1 * 24 * 60 * 60 )
+        player:setStorageValue(lionrock.storages.playerCanDoTasks, os.stime() + 1 * 24 * 60 * 60 )
         local reward = lionrock.rewards[math.random(#lionrock.rewards)]
         player:addItem(reward.id, 1)
         player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Here is your reward.")

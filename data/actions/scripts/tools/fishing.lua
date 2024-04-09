@@ -37,7 +37,19 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 		return true
 	end
-
+	
+	if targetId == 13550 then
+		if target:getPosition():isInRange(Position(32608, 32647, 7), Position(32612, 32650, 7)) then
+			if player:getStorageValue(71263) > os.time() then
+				player:sendCancelMessage("You must wait for 20 hours before use fishing rod here.")
+				return true
+			else
+				player:addItem(13546, 1) -- Shimmer Swimmer
+				player:say("A Shimmer Swimmer! It is said that this rare creature only appears once each day in the murkiest of waters!", TALKTYPE_MONSTER_SAY)
+				player:setStorageValue(71263, os.time() + 20*60*60)
+			end
+		end
+	end
 
 	-- COMEÇO
 	if targetId == 13549 then

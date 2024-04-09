@@ -7,7 +7,7 @@ local config = {
 --#		[6017] = {value = 25000, newItem = 13159, after = 2993}, -- after being killed
 
 		-- Minotaurs
-		[2830] = {value = 25000, newItem = 5878, after = 2831}, -- minotaur
+		[3090] = {value = 25000, newItem = 5878, after = 2831}, -- minotaur
 --#		[5969] = {value = 25000, newItem = 5878, after = 2831},	-- minotaur, after being killed
 		[2871] = {value = 25000, newItem = 5878, after = 2872}, -- minotaur archer
 --#		[5982] = {value = 25000, newItem = 5878, after = 2872}, -- minotaur archer, after being killed
@@ -96,6 +96,32 @@ local config = {
 	}
 }
 
+local function corpseIsTheMonster(itemid, raceid)
+	if itemid == 0 then
+		return false
+	end
+
+	local monsterType = MonsterType(raceid)
+	if not monsterType then
+		return false
+	end
+	local corpse = monsterType:getCorpseId()
+	if corpse == itemid then
+		return true
+	end
+
+	local itemType = ItemType(corpse)
+	if not itemType then
+		return false
+	end
+	local decayId = itemType:getDecayId()
+	if decayId == -1 then
+		return false
+	end
+
+	return corpseIsTheMonster(decayId, raceid)
+end
+
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local skin = config[item.itemid][target.itemid]
 
@@ -133,7 +159,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		local _skin
 		for i = 1, #skin do
 			_skin = skin[i]
-			if random <= _skin.value then
+			local newValue = 1
+			if player:getCurrentCreature(13) > 0 and corpseIsTheMonster(target.itemid, player:getCurrentCreature(13)) then
+				newValue = 1.2
+			end
+			if random <= _skin.value*newValue then
 				if target.itemid == 11343 then
 					target:getPosition():sendMagicEffect(CONST_ME_ICEAREA)
 					local gobletItem = player:addItem(_skin.newItem, _skin.amount or 1)
@@ -143,7 +173,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 					target:remove()
 					added = true
 				else
-					target:transform(_skin.newItem, _skin.amount or 1)
+					player:addItem(_skin.newItem, _skin.amount or 1)
 					added = true
 				end
 				break

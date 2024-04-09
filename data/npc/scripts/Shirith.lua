@@ -2,18 +2,10 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)
-npcHandler:onCreatureAppear(cid)
-end
-function onCreatureDisappear(cid)
-npcHandler:onCreatureDisappear(cid)
-end
-function onCreatureSay(cid, type, msg)
-npcHandler:onCreatureSay(cid, type, msg)
-end
-function onThink()
-npcHandler:onThink()	
-end
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
 
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
@@ -41,13 +33,12 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
-keywordHandler:addGreetKeyword({"ashari"}, {npcHandler = npcHandler, text = "Greetings, |PLAYERNAME|."})
---Farewell message
-keywordHandler:addFarewellKeyword({"asgha thrazi"}, {npcHandler = npcHandler, text = "Good bye!."})
-
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setMessage(MESSAGE_GREET, "Ashari |PLAYERNAME|.")
-npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye!")
-npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye!")
+npcHandler:setMessage(MESSAGE_WALKAWAY, "Asha Thrazi.")
+npcHandler:setMessage(MESSAGE_FAREWELL, "Asha Thrazi.")
 
-npcHandler:addModule(FocusModule:new())
+local focusModule = FocusModule:new()
+focusModule:addGreetMessage({'hi', 'hello', 'ashari'})
+focusModule:addFarewellMessage({'bye', 'farewell', 'asgha thrazi'})
+npcHandler:addModule(focusModule)

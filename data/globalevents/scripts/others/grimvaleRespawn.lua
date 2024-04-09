@@ -1,9 +1,9 @@
 local config = {
     position = {fromPosition = Position(33330, 31670, 7), toPosition = Position(33350, 31690, 7)}
 }
-local monsters = {'wereboar', 'werebadger'} -- monstros que vão nascer em tal dia...
+local monsters = {'wereboar', 'werebadger'} -- monstros que vï¿½o nascer em tal dia...
 local spawnDay = 13
-local currentDay = os.date("%d")
+local currentDay = os.sdate("%d")
 
 function Game.createRandom(position)
     local tile = Tile(position)
@@ -19,7 +19,7 @@ function Game.createRandom(position)
 	local monster = Game.createMonster(monsterName, position)
 	if monster then
 		monster:setSpawnPosition()
-		monster:remove() -- tem que remover senão nascem 2... mas como o respawn é rápido ninguém percebe
+		monster:remove() -- tem que remover senï¿½o nascem 2... mas como o respawn ï¿½ rï¿½pido ninguï¿½m percebe
 	end
     return true
 end

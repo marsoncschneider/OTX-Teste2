@@ -1,16 +1,18 @@
 local destination = {
-	[64017] = Position(32881, 32474, 9),
+	[64017] = {newPos = Position(32866, 32452, 9)}
 }
+
 function onStepIn(creature, item, position, fromPosition)
 	local player = creature:getPlayer()
 	if not player then
-		return true
+		return
 	end
+
 	local teleport = destination[item.actionid]
-	if teleport then
-		player:teleportTo(teleport)
-		fromPosition:sendMagicEffect(CONST_ME_TELEPORT)
-		teleport:sendMagicEffect(CONST_ME_TELEPORT)
+	if not teleport then
+		return
 	end
-	return true
+		player:teleportTo(teleport.newPos)
+		player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+		return true
 end

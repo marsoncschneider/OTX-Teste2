@@ -1,28 +1,32 @@
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
--- Minotaur Cult
-local posBossMinotaurs = Position(31957, 32468, 9)
-local posAcessMinotaurs = Position(31950, 32501, 8)
+	-- Minotaur Cult
+	local posBossMinotaurs = Position(31957, 32468, 9)
+	local posAcessMinotaurs = Position(31950, 32501, 8)
 
--- MoTA
-local posAcessInvestigation = Position(33273, 32172, 8)
-local posAcessUpDenomitator = Position(33220, 32147, 9)
-local posAcessDownDenominator = Position(33220, 32149, 9)
+	-- MoTA
+	local posAcessInvestigation = Position(33273, 32172, 8)
+	local posAcessUpDenomitator = Position(33220, 32147, 9)
+	local posAcessDownDenominator = Position(33220, 32149, 9)
 
--- Barkless
-local posAcessTrial = Position(32688, 31543, 9)
-local posAcessBoss = Position(32672, 31543, 9)
-local posAcessTar = Position(32747, 31462, 8)
-local posAcessSulphur = Position(32678, 31506, 8)
-local posAcessEnergy = Position(32742, 31408, 8)
-local posAcessIce = Position(32686, 31430, 8)
+	-- Barkless
+	local posAcessTrial = Position(32688, 31543, 9)
+	local posAcessBoss = Position(32672, 31543, 9)
+	local posAcessTar = Position(32747, 31462, 8)
+	local posAcessSulphur = Position(32678, 31506, 8)
+	local posAcessEnergy = Position(32742, 31408, 8)
+	local posAcessIce = Position(32686, 31430, 8)
 
 
--- Life (Sandking)
-local posAcessSand = Position(33295, 32271, 12)
+	-- Life (Sandking)
+	local posAcessSand = Position(33295, 32271, 12)
 
--- Midguided (The Souldespoiler)
-local posAcessSoul = Position(32508, 32370, 9)
+	-- Midguided (The Souldespoiler)
+	local posAcessSoul = Position(32508, 32370, 9)
+	
+	if Tile(item:getPosition()) and Tile(item:getPosition()):getTopCreature() then
+		return true
+	end
 
 	-- Feyrist
 	if item:getPosition() == Position(33452, 32241, 7) then

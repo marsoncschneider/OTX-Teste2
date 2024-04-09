@@ -7,13 +7,11 @@ local config = {
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-
-	if player:getStorageValue(config.storage) >= os.time() then
-		return player:sendCancelMessage("The pile of bones is empty.")
+	if player:getStorageValue(config.storage) >= os.stime() then
+		player:sendCancelMessage("The pile of bones is empty.")
+		return true
 	end
-
 	player:addItem(config.item_id, 1)
-	player:setStorageValue(config.storage, os.time() + config.hours * 3600)
-
-	return player:sendTextMessage(MESSAGE_INFO_DESCR, "You have found a tinder box.")
+	player:setStorageValue(config.storage, os.stime() + config.hours * 60 * 60)
+	return true
 end

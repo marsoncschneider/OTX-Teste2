@@ -5,72 +5,53 @@ NpcSystem.parseParameters(npcHandler)
 function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
 function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
-function onThink()				npcHandler:onThink()					end
+function onThink()		npcHandler:onThink()		end
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then
-		return false
+local voices = { {text = 'Passages to Edron, Thais, Venore, Darashia, Ankrahmun, Liberty Bay, Yalahar and Port Hope.'} }
+npcHandler:addModule(VoiceModule:new(voices))
+
+-- Travel
+local function addTravelKeyword(keyword, cost, destination, text, condition)
+	if condition then
+		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m sorry but I don\'t sail there.'}, condition)
 	end
 
-	local player = Player(cid)
-	if (msg) then
-		msg = msg:lower()
+	if keyword == 'goroma' then
+		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'Never heard about a place like this.'}, function(player) return player:getStorageValue(Storage.TheShatteredIsles.AccessToGoroma) ~= 1 end)
 	end
 
-	if isInArray({"sail", "passage", "wreck", "liberty bay", "ship"}, msg) then
-		if player:getStorageValue(Storage.TheShatteredIsles.AccessToGoroma) ~= 1 then
-			if player:getStorageValue(Storage.TheShatteredIsles.Shipwrecked) < 1 then
-				npcHandler:say('I\'d love to bring you back to Liberty Bay, but as you can see, my ship is ruined. I also hurt my leg and can barely move. Can you help me?', cid)
-				npcHandler.topic[cid] = 1
-			elseif player:getStorageValue(Storage.TheShatteredIsles.Shipwrecked) == 1 then
-				npcHandler:say('Have you brought 30 pieces of wood so that I can repair the ship?', cid)
-				npcHandler.topic[cid] = 3
-			end
-		else
-			npcHandler:say('Do you want to travel back to Liberty Bay?', cid)
-			npcHandler.topic[cid] = 4
-		end
-	elseif msgcontains(msg, 'yes') then
-		if npcHandler.topic[cid] == 1 then
-			npcHandler:say({
-				"Thank you. Luckily the damage my ship has taken looks more severe than it is, so I will only need a few wooden boards. ...",
-				"I saw some lousy trolls running away with some parts of the ship. It might be a good idea to follow them and check if they have some more wood. ...",
-				"We will need 30 pieces of wood, no more, no less. Did you understand everything?"
-			}, cid)
-			npcHandler.topic[cid] = 2
-		elseif npcHandler.topic[cid] == 2 then
-			npcHandler:say('Good! Please return once you have gathered 30 pieces of wood.', cid)
-			player:setStorageValue(Storage.TheShatteredIsles.DefaultStart, 1)
-			player:setStorageValue(Storage.TheShatteredIsles.Shipwrecked, 1)
-			npcHandler.topic[cid] = 0
-		elseif npcHandler.topic[cid] == 3 then
-			if player:removeItem(5901, 30) then
-				npcHandler:say("Excellent! Now we can leave this godforsaken place. Thank you for your help. Should you ever want to return to this island, ask me for a passage to Goroma.", cid)
-				player:setStorageValue(Storage.TheShatteredIsles.Shipwrecked, 2)
-				player:setStorageValue(Storage.TheShatteredIsles.AccessToGoroma, 1)
-				npcHandler.topic[cid] = 0
-			else
-				npcHandler:say("You don't have enough...", cid)
-			end
-		elseif npcHandler.topic[cid] == 4 then
-			player:teleportTo(Position(32285, 32892, 6), false)
-			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-			npcHandler:say('Set the sails!', cid)
-			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-			npcHandler.topic[cid] = 0
-		end
-	end
-	return true
+	local travelKeyword = keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = text or 'Do you seek a passage to ' .. keyword:titleCase() .. ' for |TRAVELCOST|?', cost = cost, discount = 'postman'})
+		travelKeyword:addChildKeyword({'yes'}, StdModule.travel, {npcHandler = npcHandler, premium = false, cost = cost, discount = 'postman', destination = destination})
+		travelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, text = 'We would like to serve you some time.', reset = true})
 end
 
-keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = 'My name is Jack Fate from the Royal Tibia Line.'})
-keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m the captain of this - well, wreck. Argh.'})
-keywordHandler:addKeyword({'captain'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m the captain of this - well, wreck. Argh'})
-keywordHandler:addKeyword({'goroma'}, StdModule.say, {npcHandler = npcHandler, text = 'This is where we are... the volcano island Goroma. There are many rumours about this place.'})
+addTravelKeyword('edron', 170, Position(33173,31764, 6))
+addTravelKeyword('venore', 180, Position(32954,32022, 6))
+addTravelKeyword('port hope', 50, Position(32527,32784, 6))
+addTravelKeyword('darashia', 200, Position(33289,32480, 6))
+addTravelKeyword('ankrahmun', 90, Position(33092,32883, 6))
+addTravelKeyword('yalahar', 275, Position(32816,31272, 6))
+addTravelKeyword('liberty bay', 275, Position(32284,32891, 6))
 
-npcHandler:setMessage(MESSAGE_GREET, "Hello, Sir |PLAYERNAME|. Where can I {sail} you today?")
-npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye.")
+-- Thais
+local travelKeyword = keywordHandler:addKeyword({'thais'}, StdModule.say, {npcHandler = npcHandler, text = 'Do you seek a passage to Thais for |TRAVELCOST|?', cost = 180, discount = 'postman'})
+	local childTravelKeyword = travelKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'I have to warn you - we might get into a tropical storm on that route. I\'m not sure if my ship will withstand it. Do you really want to travel to Thais?'})
+		childTravelKeyword:addChildKeyword({'yes'}, StdModule.travel, {npcHandler = npcHandler, premium = false, cost = 180, discount = 'postman', destination = function(player) return math.random(8) == 1 and Position(32161, 32558, 6) or Position(32310, 32210, 6) end})
+		childTravelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, reset = true, text = 'We would like to serve you some time.'})
+	travelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, reset = true, text = 'We would like to serve you some time.'})
+
+keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(32275, 32892, 6), Position(32276, 32891, 6), Position(32277, 32895, 6)}})
+
+-- Basic
+keywordHandler:addKeyword({'sail'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Thais}, {Venore}, {Darashia}, {Ankrahmun}, {Yalahar}, {Liberty Bay} or {Port Hope}?'})
+keywordHandler:addKeyword({'passage'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Thais}, {Venore}, {Darashia}, {Ankrahmun}, {Yalahar}, {Liberty Bay} or {Port Hope}?'})
+keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = 'My name is Jack Fate from the Royal Tibia Line.'})
+keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m the captain of this sailing ship.'})
+keywordHandler:addKeyword({'captain'}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m the captain of this sailing ship.'})
+keywordHandler:addKeyword({'liberty bay'}, StdModule.say, {npcHandler = npcHandler, text = 'That\'s where we are.'})
+
+npcHandler:setMessage(MESSAGE_GREET, "Welcome on board, Sir |PLAYERNAME|.")
+npcHandler:setMessage(MESSAGE_FAREWELL, "Good bye. Recommend us if you were satisfied with our service.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good bye then.")
 
-npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new())

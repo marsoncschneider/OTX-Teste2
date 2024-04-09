@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Weakened Shlorg" nameDescription="Weakened Shlorg" race="venom" experience="6500" speed="270" script="rewardboss.lua">
+<monster name="Weakened Shlorg" nameDescription="Weakened Shlorg" race="venom" experience="6500" speed="270">
 	<health now="10000" max="10000"/>
 	<look type="565" corpse="21299"/>
 	<targetchange interval="60000" chance="0"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -70,7 +70,7 @@
 		<item id="5911" chance="10000"/><!-- red piece of cloth -->
 		<item id="5914" chance="10000"/><!-- yellow piece of cloth -->
 		<item id="2409" chance="20000"/><!-- serpent sword -->
-		<item id="8912" chance="20000"/><!-- springsprout rod -->
+
 		<item id="8891" chance="10000"/><!-- paladin armor -->
 		<item id="10584" chance="100000"/><!-- boggy dreads -->
 	</loot>

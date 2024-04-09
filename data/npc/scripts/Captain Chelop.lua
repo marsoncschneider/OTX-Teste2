@@ -16,7 +16,6 @@ local travelKeyword = keywordHandler:addKeyword({'thais'}, StdModule.say, {npcHa
 	travelKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, text = 'By direct edict of the honorable Henricus himself... well, you know.', reset = true})
 keywordHandler:addAliasKeyword({'town'})
 
--- Kick
 keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(33495, 32564, 7), Position(33495, 32563, 7), Position(33496, 32562, 7)}})
 
 -- Basic
@@ -24,7 +23,6 @@ keywordHandler:addKeyword({'sail'}, StdModule.say, {npcHandler = npcHandler, tex
 keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = "My name is Chelop and I am a captain of this {inquisition} ship."})
 keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = "Can't you see? I'm captain of the Pesadilla, the proud {inquisition} ship which anchors here."})
 keywordHandler:addKeyword({'inquisition'}, StdModule.say, {npcHandler = npcHandler, text = "By edict of the honorable Henricus himself, we are ordered to give passage to all recruits of the Roshamuul mission for a small fee."})
-keywordHandler:addKeyword({'roshamuul'}, StdModule.say, {npcHandler = npcHandler, text = "This is the island you are currently on, just in case you forgot."})
 
 npcHandler:setMessage(MESSAGE_GREET, "Welcome on board, recruit |PLAYERNAME|. Where can I {sail} you today?")
 npcHandler:setMessage(MESSAGE_FAREWELL, "On behalf of the inquisition, I bid you farewell.")

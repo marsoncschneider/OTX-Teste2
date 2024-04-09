@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Flint" script="Flint.lua" walkinterval="2000" floorchange="0">
+<npc name="Flint" script="Flint.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="134" head="95" body="57" legs="76" feet="39" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="
-			exercise sword,32384,262500,500;
-			exercise axe,32385,262500,500;
-			exercise club,32386,262500,500;
-			exercise bow,32387,262500,500;" />
+
+
+
+
 		<parameter key="shop_sellable" value="
-			Alloy Legs,23539,11000;
+
+
+		   Alloy Legs,23539,11000;
 			axe,2386,7;
 			crest of the deep seas,24261,10000;
 			Battle Axe,2378,80;
@@ -43,6 +45,7 @@
 			Rubber Cap,23536,11000;
 			War Hammer,2391,470;
 			Steel Helmet,2457,293;
+
 			shovel,2554,8;
 			watch,2036,6;
 			wooden hammer,2556,15;" />

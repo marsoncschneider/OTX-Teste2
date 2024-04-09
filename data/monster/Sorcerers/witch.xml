@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Witch" nameDescription="a witch" race="blood" experience="120" speed="102">
+<monster name="Witch" nameDescription="a witch" race="blood" experience="120" speed="102" raceid="54">
 	<health now="300" max="300"/>
 	<look type="54" corpse="20535"/>
 	<targetchange interval="4000" chance="10"/>
@@ -47,7 +47,7 @@
 	<loot>
 		<item name="wolf tooth chain" chance="10120"/>
 		<item name="gold coin" countmax="40" chance="64000"/>
-		<item name="necrotic rod" chance="1140"/>
+
 		<item name="garlic necklace" chance="1000"/>
 		<item name="silver dagger" chance="500"/>
 		<item name="sickle" chance="3910"/>

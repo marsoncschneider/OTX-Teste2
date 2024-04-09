@@ -48,7 +48,6 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 0
 		elseif npcHandler.topic[cid] == 3 then
 			if player:removeItem(6500, 500) then
-				player:addItem(7845, 1)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 				player:setStorageValue(Storage.OutfitQuest.NightmareOutfit, 2)
 				npcHandler:say("You advanced to {Initiate} rank! You are now able to use teleports of second floor of Knightwatch Tower.", cid)
@@ -60,7 +59,6 @@ local function creatureSayCallback(cid, type, msg)
 			if player:removeItem(6500, 1000) then
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 				player:setStorageValue(Storage.OutfitQuest.NightmareOutfit, 3)
-				player:addItem(7846, 1)
 				player:addItem(6391, 1)
 				player:addAchievement('Nightmare Walker')
 				npcHandler:say("You advanced to {Dreamer} rank!", cid)
@@ -85,5 +83,15 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
+local function onTradeRequest(cid)
+	local player = Player(cid)
+	if player:getStorageValue(Storage.OutfitQuest.NightmareOutfit) < 4 then
+		npcHandler:say('You are not allowed yet.', cid)
+		return false
+	end
+	return true
+end
+
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
+npcHandler:addModule(FocusModule:new())
 npcHandler:addModule(FocusModule:new())

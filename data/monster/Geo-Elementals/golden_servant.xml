@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Golden Servant" nameDescription="a golden servant" race="energy" experience="450" speed="105">
+<monster name="Golden Servant" nameDescription="a golden servant" race="energy" experience="450" speed="105" raceid="701">
 	<health now="550" max="550"/>
 	<look type="396" corpse="13489"/>
 	<targetchange interval="4000" chance="10"/>
@@ -55,8 +55,6 @@
 		<item name="halberd" chance="3003"/>
 		<item name="golden armor" chance="10"/>
 		<item name="green mushroom" chance="1450"/>
-		<item name="health potion" chance="4930"/>
-		<item name="mana potion" chance="4950"/>
 		<item name="spellbook of enlightenment" chance="520"/>
 		<item name="gear wheel" chance="940"/>
 		<item name="slime mould" chance="340"/>

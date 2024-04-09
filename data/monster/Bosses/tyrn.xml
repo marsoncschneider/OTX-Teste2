@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Tyrn" nameDescription="Tyrn" race="blood" experience="6900" speed="300" script="rewardboss.lua">
+<monster name="Tyrn" nameDescription="Tyrn" race="blood" experience="6900" speed="300">
 	<health now="12000" max="12000"/>
 	<look type="562" corpse="21287"/>
 	<targetchange interval="2000" chance="5"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -64,12 +64,11 @@
 		<item id="21400" chance="5000"/><!-- silver raid token OK-->
 		<item id="21695" chance="3000"/><!-- sun mirror OK -->
 		<item id="2672" countmax="3" chance="55000"/><!-- OK dragon ham -->
-		<item id="2268" subtype="5" chance="15000"/><!-- OK sudden death rune -->
+
 		<item id="2148" countmax="50" chance="100000"/><!-- OK gold coin -->
 		<item id="2152" countmax="8" chance="60000"/><!-- platinum coin -->
 		<item id="7368" countmax="5" chance="30000"/><!-- assassin star -->
-		<item id="7588" countmax="5" chance="25000"/><!-- strong health potion -->
-		<item id="7589" countmax="5" chance="25000"/><!-- strong mana potion -->
+
 		<item id="10582" chance="100000"/><!-- wyrm scale OK-->
 		<item id="2156" chance="9000"/><!-- red gem -->
 		<item id="2154" chance="9000"/><!-- yellow gem -->

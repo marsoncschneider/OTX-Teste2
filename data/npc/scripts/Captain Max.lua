@@ -13,9 +13,9 @@ npcHandler:addModule(VoiceModule:new(voices))
 
 
 local function addTravelKeyword(keyword, text, cost, destination)
-	if keyword == 'calassa' then
-		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m sorry but we don\'t serve this route.'}, function(player) return player:getStorageValue(Storage.ExplorerSociety.CalassaQuest) < 1 end)
-	end
+	-- if keyword == 'calassa' then
+		-- keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m sorry but we don\'t serve this route.'}, function(player) return player:getStorageValue(Storage.ExplorerSociety.CalassaQuest) < 1 end)
+	-- end
 
 	if keyword == 'yalahar' then
 		keywordHandler:addKeyword({keyword}, StdModule.say, {npcHandler = npcHandler, text = 'I\'m sorry but we don\'t serve this route.'}, function(player) return player:getStorageValue(Storage.TheWayToYalahar.QuestLine) < 1 end)

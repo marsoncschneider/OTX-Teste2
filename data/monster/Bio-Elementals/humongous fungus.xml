@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Humongous Fungus" nameDescription="a humongous fungus" race="blood" experience="2600" speed="130">
+<monster name="Humongous Fungus" nameDescription="a humongous fungus" race="blood" experience="2600" speed="130" raceid="881">
 	<health now="3400" max="3400" />
 	<look type="488" corpse="18382" />
 	<targetchange interval="4000" chance="15" />
@@ -63,14 +63,8 @@
 		<item name="platinum coin" countmax="6" chance="999900" />
 		<item name="mushroom pie" countmax="3" chance="17130" />
 		<item name="brown piece of cloth" chance="15120" />
-		<item name="drill bolt" countmax="15" chance="15120" />
 		<item name="humongous chunk" chance="10470" />
 		<item name="white piece of cloth" chance="10230" />
-		<item name="strong health potion" countmax="2" chance="5040" />
-		<item name="great mana potion" countmax="2" chance="4960" />
-		<item name="great health potion" countmax="2" chance="4950" />
-		<item name="strong mana potion" countmax="2" chance="4930" />
-		<item name="mana potion" countmax="3" chance="4750" />
 		<item name="blue piece of cloth" chance="4440" />
 		<item name="red piece of cloth" chance="2670" />
 		<item name="terra amulet" chance="2180" />
@@ -78,7 +72,7 @@
 		<item name="angelic axe" chance="1420" />
 		<item name="terra legs" chance="1160" />
 		<item name="terra mantle" chance="870" />
-		<item name="muck rod" chance="640" />
+
 		<item name="mushroom backpack" chance="20" />
 		<item name="mycological bow" chance="140" />
 	</loot>

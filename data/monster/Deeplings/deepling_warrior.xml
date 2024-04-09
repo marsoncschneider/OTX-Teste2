@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Deepling Warrior" nameDescription="a deepling warrior" race="blood" experience="1500" speed="145">
+<monster name="Deepling Warrior" nameDescription="a deepling warrior" race="blood" experience="1500" speed="145" raceid="769">
 	<health now="1600" max="1600"/>
 	<look type="441" corpse="15175"/>
 	<targetchange interval="4000" chance="10"/>
@@ -48,8 +48,8 @@
 		<item name="small emerald" chance="2854"/>
 		<item name="life ring" chance="2941"/>
 		<item name="fish fin" chance="961"/>
-		<item name="great mana potion" chance="9090"/>
-		<item name="great health potion" chance="11111"/>
+		<item name="gold coin" chance="9090"/>
+		<item name="gold coin" chance="11111"/>
 		<item name="heavy trident" chance="1030"/>
 		<item name="eye of a deepling" chance="574"/>
 		<item name="deepling warts" chance="10000"/>
@@ -58,6 +58,5 @@
 		<item name="deepling ridge" chance="11111"/>
 		<item name="warrior's shield" chance="684"/>
 		<item name="deepling filet" chance="14285"/>
-		<item name="vortex bolt" countmax="5" chance="3571"/>
 	</loot>
 </monster>

@@ -1,176 +1,161 @@
-if not Quests then
+if not Game.getStorageValue(RELOAD_TYPE_QUESTS) or Game.getStorageValue(RELOAD_TYPE_QUESTS) ~= 1 then
+	Game.setStorageValue(RELOAD_TYPE_QUESTS, 1)
 	Quests = {
 		[1] = {
 			name = "The Explorer Society", startstorageid = Storage.ExplorerSociety.QuestLine, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Joining the Explorers", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 1, endvalue = 4,
+					name = "Joining the Explorers", storageid = Storage.ExplorerSociety.Mission01, startvalue = 1, endvalue = 4,
 					states = {
 						[1] = "The mission should be simple to fulfil. You have to seek out Uzgod in Kazordoon and get the pickaxe for us. Or just find dwarven pickaxe on your own...",
 						[2] = "Get into Dwacatra and bring family brooch back to Uzgod.",
 						[3] = "Bring the pickaxe back to the Explorer Society representative.",
+						[4] = "Completed."
 					},
-
 				},
-
 				[2] = {
-					name = "The Ice Delivery", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 5, endvalue = 7,
+					name = "The Ice Delivery", storageid = Storage.ExplorerSociety.Mission02, startvalue = 1, endvalue = 3,
 					states = {
-						[5] = "Take this ice pick and use it on a block of ice in the caves beneath Folda. Get some ice and bring it here as fast as you can. If the ice melt away, report on your ice delivery mission anyway.",
-						[6] = "You have 10 minutes before the icicle defrosts. Run back to the Explorer Society representative!",
+						[1] = "Take this ice pick and use it on a block of ice in the caves beneath Folda. Get some ice and bring it here as fast as you can. If the ice melt away, report on your ice delivery mission anyway.",
+						[2] = "You have 10 minutes before the icicle defrosts. Run back to the Explorer Society representative!",
+						[3] = "Completed."
 					},
-
 				},
-
 				[3] = {
-					name = "The Butterfly Hunt", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 8, endvalue = 16,
+					name = "The Butterfly Hunt", storageid = Storage.ExplorerSociety.Mission03, startvalue = 1, endvalue = 9,
 					states = {
-						[8] = "This preparation kit will allow you to collect a PURPLE butterfly you have killed. Just use it on the fresh corpse of a PURPLE butterfly.",
-						[9] = "Return the prepared butterfly to Explorer Society representative.",
-						[10] = "Ask for another butterfly hunt.",
-						[11] = "This preparation kit will allow you to collect a BLUE butterfly you have killed. Just use it on the fresh corpse of a BLUE butterfly.",
-						[12] = "Return the prepared butterfly to Explorer Society representative.",
-						[13] = "Ask for another butterfly hunt.",
-						[14] = "This preparation kit will allow you to collect a RED butterfly you have killed. Just use it on the fresh corpse of a RED butterfly.",
-						[15] = "Return the prepared butterfly to Explorer Society representative.",
+						[1] = "This preparation kit will allow you to collect a PURPLE butterfly you have killed. Just use it on the fresh corpse of a PURPLE butterfly.",
+						[2] = "Return the prepared butterfly to Explorer Society representative.",
+						[3] = "Ask for another butterfly hunt.",
+						[4] = "This preparation kit will allow you to collect a BLUE butterfly you have killed. Just use it on the fresh corpse of a BLUE butterfly.",
+						[5] = "Return the prepared butterfly to Explorer Society representative.",
+						[6] = "Ask for another butterfly hunt.",
+						[7] = "This preparation kit will allow you to collect a RED butterfly you have killed. Just use it on the fresh corpse of a RED butterfly.",
+						[8] = "Return the prepared butterfly to Explorer Society representative.",
+						[9] = "Completed."
 					},
-
 				},
-
 				[4] = {
-					name = "The Plant Collection", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 17, endvalue = 26,
+					name = "The Plant Collection", storageid = Storage.ExplorerSociety.Mission04, startvalue = 1, endvalue = 10,
 					states = {
-						[17] = "Take botanist's container. Use it on a jungle bells plant to collect a sample.",
-						[18] = "Report about your plant collection to Explorer Society representative.",
-						[19] = "Ask for plant collection when you are ready to continue.",
-						[20] = "Use botanist's container on a witches cauldron to collect a sample.",
-						[21] = "Report about your plant collection to Explorer Society representative.",
-						[22] = "Ask for plant collection when you are ready to continue.",
-						[23] = "Use this botanist's container on a giant jungle rose to obtain a sample.",
-						[24] = "Report about your plant collection to Explorer Society representative.",
+						[1] = "Take botanist's container. Use it on a jungle bells plant to collect a sample.",
+						[2] = "Report about your plant collection to Explorer Society representative.",
+						[3] = "Ask for plant collection when you are ready to continue.",
+						[4] = "Use botanist's container on a witches cauldron to collect a sample.",
+						[5] = "Report about your plant collection to Explorer Society representative.",
+						[6] = "Ask for plant collection when you are ready to continue.",
+						[7] = "Use this botanist's container on a giant jungle rose to obtain a sample.",
+						[8] = "Report about your plant collection to Explorer Society representative.",
+						[9] = "Completed...",
+						[10] = "Completed."
 					},
-
 				},
-
 				[5] = {
-					name = "The Lizard Urn", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 27, endvalue = 29,
+					name = "The Lizard Urn", storageid = Storage.ExplorerSociety.Mission05, startvalue = 1, endvalue = 3,
 					states = {
-						[27] = "In the south-east of Tiquanda is a small settlement of the lizard people. Beneath the newly constructed temple there, the lizards hide the urn. Acquire an ancient urn which is some sort of relic to the lizard people of Tiquanda.",
-						[28] = "Bring the Funeral Urn back to the Explorer Society.",
+						[1] = "In the south-east of Tiquanda is a small settlement of the lizard people. Beneath the newly constructed temple there, the lizards hide the urn. Acquire an ancient urn which is some sort of relic to the lizard people of Tiquanda.",
+						[2] = "Bring the Funeral Urn back to the Explorer Society.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[6] = {
-					name = "The Bonelord Secret", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 30, endvalue = 32,
+					name = "The Bonelord Secret", storageid = Storage.ExplorerSociety.Mission06, startvalue = 1, endvalue = 3,
 					states = {
-						[30] = "Travel to the city of Darashia and then head north-east for the pyramid. If any documents are left, you probably find them in the catacombs beneath.",
-						[31] = "Bring the Wrinkled Parchment back to the Explorer Society representative.",
+						[1] = "Travel to the city of Darashia and then head north-east for the pyramid. If any documents are left, you probably find them in the catacombs beneath.",
+						[2] = "Bring the Wrinkled Parchment back to the Explorer Society representative.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[7] = {
-					name = "The Orc Powder", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 33, endvalue = 35,
+					name = "The Orc Powder", storageid = Storage.ExplorerSociety.Mission07, startvalue = 1, endvalue = 3,
 					states = {
-						[33] = "As far as we can tell, the orcs maintain some sort of training facility in some hill in the north-east of their city. There you should find lots of their war wolves and hopefully also some of the orcish powder.",
-						[34] = "Bring the Strange Powder to the Explorer Society representative to complete your mission.",
+						[1] = "As far as we can tell, the orcs maintain some sort of training facility in some hill in the north-east of their city. There you should find lots of their war wolves and hopefully also some of the orcish powder.",
+						[2] = "Bring the Strange Powder to the Explorer Society representative to complete your mission.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[8] = {
-					name = "The Elven Poetry", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 36, endvalue = 38,
+					name = "The Elven Poetry", storageid = Storage.ExplorerSociety.Mission08, startvalue = 1, endvalue = 3,
 					states = {
-						[36] = "This mission is easy but nonetheless vital. Travel Hellgate beneath Ab'Dendriel and get the book.",
-						[37] = "Bring back an elven poetry book to the Explorer Society representative.",
+						[1] = "This mission is easy but nonetheless vital. Travel Hellgate beneath Ab'Dendriel and get the book.",
+						[2] = "Bring back an elven poetry book to the Explorer Society representative.",
+						[3] = "Completed."
 					},
 
 				},
-
 				[9] = {
-					name = "The Memory Stone", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 39, endvalue = 41,
+					name = "The Memory Stone", storageid = Storage.ExplorerSociety.Mission09, startvalue = 1, endvalue = 3,
 					states = {
-						[39] = "In the ruins of north-western Edron you should be able to find a memory stone. ",
-						[40] = "Bring back a memory stone to the Explorer Society representative.",
+						[1] = "In the ruins of north-western Edron you should be able to find a memory stone. ",
+						[2] = "Bring back a memory stone to the Explorer Society representative.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[10] = {
-					name = "The Rune Writings", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 42, endvalue = 47,
+					name = "The Rune Writings", storageid = Storage.ExplorerSociety.Mission10, startvalue = 1, endvalue = 3,
 					states = {
-						[42] = "Somewhere under the ape infested city of Banuta, one can find dungeons that were once inhabited by lizards. Look there for an atypical structure that would rather fit to Ankrahmun and its Ankrahmun Tombs. Copy the runes you will find on this structure.",
-						[43] = "Report back to the Explorer Society representative.",
+						[1] = "Somewhere under the ape infested city of Banuta, one can find dungeons that were once inhabited by lizards. Look there for an atypical structure that would rather fit to Ankrahmun and its Ankrahmun Tombs. Copy the runes you will find on this structure.",
+						[2] = "Report back to the Explorer Society representative.",
+						[3] = "Completed.",
 					},
-
 				},
-
 				[11] = {
-					name = "The Ectoplasm", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 45, endvalue = 47,
+					name = "The Ectoplasm", storageid = Storage.ExplorerSociety.Mission11, startvalue = 1, endvalue = 3,
 					states = {
-						[45] = "Take ectoplasm container and use it on a ghost that was recently slain.",
-						[46] = "Return back to the Explorer Society representative with the collected ectoplasm.",
+						[1] = "Take ectoplasm container and use it on a ghost that was recently slain.",
+						[2] = "Return back to the Explorer Society representative with the collected ectoplasm.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[12] = {
-					name = "The Spectral Dress", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 48, endvalue = 50,
+					name = "The Spectral Dress", storageid = Storage.ExplorerSociety.Mission12, startvalue = 1, endvalue = 3,
 					states = {
-						[48] = "The queen of the banshees lives in the so called Ghostlands, south west of Carlin. Try to get a spectral dress from her.",
-						[49] = "Report to the Explorer Society with the spectral dress.",
+						[1] = "The queen of the banshees lives in the so called Ghostlands, south west of Carlin. Try to get a spectral dress from her.",
+						[2] = "Report to the Explorer Society with the spectral dress.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[13] = {
-					name = "The Spectral Stone", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 51, endvalue = 55,
+					name = "The Spectral Stone", storageid = Storage.ExplorerSociety.Mission13, startvalue = 1, endvalue = 5,
 					states = {
-						[51] = "Please travel to our second base and ask them to mail us their latest research reports. Then return here and ask about new missions.",
-						[52] = "Tell our fellow explorer that the papers are in the mail already.",
-						[53] = "Take the spectral essence and use it on the strange carving in this building as well as on the corresponding tile in our second base.",
-						[54] = "Good! Now use the spectral essence on the strange carving in our second base.",
+						[1] = "Please travel to our second base and ask them to mail us their latest research reports. Then return here and ask about new missions.",
+						[2] = "Tell our fellow explorer that the papers are in the mail already.",
+						[3] = "Take the spectral essence and use it on the strange carving in this building as well as on the corresponding tile in our second base.",
+						[4] = "Good! Now use the spectral essence on the strange carving in our second base.",
+						[5] = "Completed."
 					},
-
 				},
-
 				[14] = {
-					name = "The Astral Portals", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 56, endvalue = 56,
+					name = "The Astral Portals", storageid = Storage.ExplorerSociety.Mission14, startvalue = 1, endvalue = 1,
 					states = {
-						[56] = "Both carvings are now charged and harmonised. You are able to travel in zero time from one base to the other, but you need to have an orichalcum pearl in your possession to use it as power source.",
+						[1] = "Both carvings are now charged and harmonised. You are able to travel in zero time from one base to the other, but you need to have an orichalcum pearl in your possession to use it as power source.",
 					},
-
 				},
 
 				[15] = {
-					name = "The Island of Dragons", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 57, endvalue = 58,
+					name = "The Island of Dragons", storageid = Storage.ExplorerSociety.Mission15, startvalue = 1, endvalue = 3,
 					states = {
-						[57] = "Travel to Okolnir and try to find a proof for the existence of dragon lords there in the old times. I think old Buddel might be able to bring you there.",
-						[58] = "Report back to Lurik with the dragon scale.",
+						[1] = "Travel to Okolnir and try to find a proof for the existence of dragon lords there in the old times. I think old Buddel might be able to bring you there.",
+						[2] = "Report back to Lurik with the dragon scale.",
+						[3] = "Completed."
 					},
-
 				},
-
 				[16] = {
-					name = "The Ice Music", storageid = Storage.ExplorerSociety.QuestLine, startvalue = 60, endvalue = 61,
+					name = "The Ice Music", storageid = Storage.ExplorerSociety.Mission16, startvalue = 1, endvalue = 3,
 					states = {
-						[60] = "There is a cave on Hrodmir, north of the southernmost barbarian camp Krimhorn. In this cave, there are a waterfall and a lot of stalagmites. Take the resonance crystal and use it on the stalagmites in the cave to record the sound of the wind.",
-						[61] = "Report back to Lurik.",
-						[62] = "Now you may use the Astral Bridge from Liberty Bay to Svargrond.",
+						[1] = "There is a cave on Hrodmir, north of the southernmost barbarian camp Krimhorn. In this cave, there are a waterfall and a lot of stalagmites. Take the resonance crystal and use it on the stalagmites in the cave to record the sound of the wind.",
+						[2] = "Report back to Lurik.",
+						[3] = "Now you may use the Astral Bridge from Liberty Bay to Svargrond.",
 					},
-
 				},
-
 				[17] = {
-					name = "The Undersea Kingdom", storageid = Storage.ExplorerSociety.CalassaQuest, startvalue = 1, endvalue = 2,
+					name = "The Undersea Kingdom", storageid = Storage.ExplorerSociety.Mission17, startvalue = 1, endvalue = 3,
 					states = {
 						[1] = "Captain Max will bring you to Calassa whenever you are ready. Please try to retrieve the missing logbook which must be in one of the sunken shipwrecks.",
 						[2] = "Report about your Calassa mission to Berenice in Liberty Bay.",
+						[3] = "Completed."
 					},
-
 				},
-
 			},
 		},
 
@@ -793,15 +778,15 @@ if not Quests then
 			name = "Killing in the Name of...", startstorageid = 100157, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Paw and Fur: Member", storageid = 2500, startvalue = 0, endvalue = 10, description = function(player)return string.format("You are member of the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
+					name = "Paw and Fur: Member", storageid = 2500, startvalue = 0, endvalue = 9, description = function(player)return string.format("You are member of the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
 				},
 
 				[2] = {
-					name = "Paw and Fur: Ranger", storageid = 2500, startvalue = 11, endvalue = 40, description = function(player)return string.format("You are Ranger of the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
+					name = "Paw and Fur: Ranger", storageid = 2500, startvalue = 20, endvalue = 39, description = function(player)return string.format("You are Ranger of the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
 				},
 
 				[3] = {
-					name = "Paw and Fur: Big Game Hunter", storageid = 2500, startvalue = 41, endvalue = 69, description = function(player)return string.format("You are Big Game Hunter in the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
+					name = "Paw and Fur: Big Game Hunter", storageid = 2500, startvalue = 40, endvalue = 69, description = function(player)return string.format("You are Big Game Hunter in the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
 				},
 
 				[4] = {
@@ -831,325 +816,435 @@ if not Quests then
 				},
 
 				[8] = {
-					name = "Paw and Fur: The Snapper", storageid = 34100, startvalue = 1, endvalue = 2, description = "Grizzly told you about the Snapper, a crocodile that already killed many citizens of Port Hope. Try find its hideout and kill it.",
+					name = "Paw and Fur: The Snapper", storageid = 35000, startvalue = 1, endvalue = 2, description = "Grizzly told you about the Snapper, a crocodile that already killed many citizens of Port Hope. Try find its hideout and kill it.",
 				},
 
 				[9] = {
-					name = "Paw and Fur: Hide", storageid = 34101, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Hide", storageid = 35001, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[10] = {
-					name = "Paw and Fur: Deathbine", storageid = 34102, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Deathbine", storageid = 35002, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[11] = {
-					name = "Paw and Fur: The Bloodtusk", storageid = 34103, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: The Bloodtusk", storageid = 35003, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[12] = {
-					name = "Paw and Fur: Shardhead", storageid = 34104, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Shardhead", storageid = 35004, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[13] = {
-					name = "Paw and Fur: Esmerelda", storageid = 34105, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Esmerelda", storageid = 35005, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[14] = {
-					name = "Paw and Fur: Fleshcrawler", storageid = 34106, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Fleshcrawler", storageid = 35006, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[15] = {
-					name = "Paw and Fur: Ribstride", storageid = 34107, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Ribstride", storageid = 35007, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[16] = {
-					name = "Paw and Fur: Bloodweb", storageid = 34108, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Bloodweb", storageid = 35008, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
-
+				
 				[17] = {
-					name = "Paw and Fur: Thul", storageid = 34109, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Thul", storageid = 35009, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[18] = {
-					name = "Paw and Fur: The Old Widow", storageid = 34110, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: The Old Widow", storageid = 35010, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[19] = {
-					name = "Paw and Fur: Hemming", storageid = 34111, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Hemming", storageid = 35011, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[20] = {
-					name = "Paw and Fur: Tormentor", storageid = 34112, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Tormentor", storageid = 35012, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[21] = {
-					name = "Paw and Fur: Flameborn", storageid = 34113, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Flameborn", storageid = 35013, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[22] = {
-					name = "Paw and Fur: Fazzrah", storageid = 34114, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Fazzrah", storageid = 35014, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[23] = {
-					name = "Paw and Fur: Tromphonyte", storageid = 34115, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Tromphonyte", storageid = 35015, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[24] = {
-					name = "Paw and Fur: Sulphur Scuttler", storageid = 34116, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Sulphur Scuttler", storageid = 35016, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[25] = {
-					name = "Paw and Fur: Bruise Payne", storageid = 34117, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: The Many", storageid = 35018, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
-				
+
 				[26] = {
-					name = "Paw and Fur: The Many", storageid = 34118, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: The Noxious Spawn", storageid = 35019, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[27] = {
-					name = "Paw and Fur: The Noxious Spawn", storageid = 34119, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Gorgo", storageid = 35020, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[28] = {
-					name = "Paw and Fur: Gorgo", storageid = 34120, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Stonecracker", storageid = 35021, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[29] = {
-					name = "Paw and Fur: Stonecracker", storageid = 34121, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Leviathan", storageid = 35022, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[30] = {
-					name = "Paw and Fur: Leviathan", storageid = 34122, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Kerberos", storageid = 35023, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[31] = {
-					name = "Paw and Fur: Kerberos", storageid = 34123, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Ethershreck", storageid = 35024, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[32] = {
-					name = "Paw and Fur: Ethershreck", storageid = 34124, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Paiz the Pauperizer", storageid = 35025, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[33] = {
-					name = "Paw and Fur: Paiz the Pauperizer", storageid = 34125, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Bretzecutioner", storageid = 35026, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[34] = {
-					name = "Paw and Fur: Bretzecutioner", storageid = 34126, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
+					name = "Paw and Fur: Zanakeph", storageid = 35027, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
 				},
 
 				[35] = {
-					name = "Paw and Fur: Zanakeph", storageid = 34127, startvalue = 1, endvalue = 2, description = "Try find its hideout and kill it.",
-				},
-
-				[36] = {
 					name = "Edron City - Elite Hunting: Trolls", storageid = 1501, startvalue = 0, endvalue = 100, description = function(player)return string.format("You already hunted %d/100 Trolls.", (math.max(player:getStorageValue(1501), 0))) end,
 				},
 
-				[37] = {
+				[36] = {
 					name = "Edron City - Elite Hunting: Goblins", storageid = 1502, startvalue = 0, endvalue = 150, description = function(player)return string.format("You already hunted %d/150 Goblins.", (math.max(player:getStorageValue(1502), 0))) end,
 				},
 
+				[37] = {
+					name = "Paw and Fur: Minotaurs", storageid = 65002, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 Minotaurs.", (math.max(player:getStorageValue(65002), 0))) end,
+				},
+
 				[38] = {
-					name = "Paw and Fur: Minotaurs", storageid = 65002, startvalue = 0, endvalue = 5000, description = function(player)return string.format("You already hunted %d/5000 Minotaurs.", (math.max(player:getStorageValue(65002), 0))) end,
+					name = "Paw and Fur: Necromancers and Priestess", storageid = 65001, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 Necromancers and Priestess.", (math.max(player:getStorageValue(65001), 0))) end,
 				},
 
 				[39] = {
-					name = "Paw and Fur: Necromancers and Priestess", storageid = 65001, startvalue = 0, endvalue = 4000, description = function(player)return string.format("You already hunted %d/4000 Necromancers and Priestess.", (math.max(player:getStorageValue(65001), 0))) end,
-				},
-
-				[40] = {
 					name = "Paw and Fur: Crocodiles", storageid = 65003, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 crocodiles.", (math.max(player:getStorageValue(65003), 0))) end,
 				},
 
-				[41] = {
+				[40] = {
 					name = "Paw and Fur: Badgers", storageid = 65004, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 badgers.", (math.max(player:getStorageValue(65004), 0))) end,
 				},
 
-				[42] = {
+				[41] = {
 					name = "Paw and Fur: Tarantulas", storageid = 65005, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 tarantulas.", (math.max(player:getStorageValue(65005), 0))) end,
 				},
 
-				[43] = {
+				[42] = {
 					name = "Paw and Fur: Carniphilas", storageid = 65006, startvalue = 0, endvalue = 150, description = function(player)return string.format("You already hunted %d/150 carniphilas.", (math.max(player:getStorageValue(65006), 0))) end,
 				},
 
-				[44] = {
+				[43] = {
 					name = "Paw and Fur: Stone Golems", storageid = 65007, startvalue = 0, endvalue = 200, description = function(player)return string.format("You already hunted %d/200 stone golems.", (math.max(player:getStorageValue(65007), 0))) end,
 				},
 
-				[45] = {
+				[44] = {
 					name = "Paw and Fur: Mammoths", storageid = 65008, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 mammoths.", (math.max(player:getStorageValue(65008), 0))) end,
 				},
 
-				[46] = {
+				[45] = {
 					name = "Paw and Fur: Gnarlhounds", storageid = 65009, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 gnarlhounds.", (math.max(player:getStorageValue(65009), 0))) end,
 				},
 
-				[47] = {
+				[46] = {
 					name = "Paw and Fur: Terramites", storageid = 65010, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 terramites.", (math.max(player:getStorageValue(65010), 0))) end,
 				},
 
-				[48] = {
+				[47] = {
 					name = "Paw and Fur: Apes", storageid = 65011, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 apes.", (math.max(player:getStorageValue(65011), 0))) end,
 				},
 
-				[49] = {
+				[48] = {
 					name = "Paw and Fur: Thornback Tortoises", storageid = 65012, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 thornback tortoises.", (math.max(player:getStorageValue(65012), 0))) end,
 				},
 
-				[50] = {
+				[49] = {
 					name = "Paw and Fur: Gargoyles", storageid = 65013, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 gargoyles.", (math.max(player:getStorageValue(65013), 0))) end,
 				},
 
-				[51] = {
+				[50] = {
 					name = "Paw and Fur: Ice Golems", storageid = 65014, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 ice golems.", (math.max(player:getStorageValue(65014), 0))) end,
 				},
 
-				[52] = {
+				[51] = {
 					name = "Paw and Fur: Quara Scouts", storageid = 65015, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 quara scouts.", (math.max(player:getStorageValue(65015), 0))) end,
 				},
 
-				[53] = {
+				[52] = {
 					name = "Paw and Fur: Mutated Rats", storageid = 65016, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 mutated rats.", (math.max(player:getStorageValue(65016), 0))) end,
 				},
 
-				[54] = {
+				[53] = {
 					name = "Paw and Fur: Ancient Scarabs", storageid = 65017, startvalue = 0, endvalue = 250, description = function(player)return string.format("You already hunted %d/250 ancient scarabs.", (math.max(player:getStorageValue(65017), 0))) end,
 				},
 
-				[55] = {
+				[54] = {
 					name = "Paw and Fur: Wyverns", storageid = 65018, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 wyverns.", (math.max(player:getStorageValue(65018), 0))) end,
 				},
 
-				[56] = {
+				[55] = {
 					name = "Paw and Fur: Lancer Beetles", storageid = 65019, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 lancer beetles.", (math.max(player:getStorageValue(65019), 0))) end,
 				},
 
-				[57] = {
+				[56] = {
 					name = "Paw and Fur: Wailing Widows", storageid = 65020, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 wailing widows.", (math.max(player:getStorageValue(65020), 0))) end,
 				},
 
-				[58] = {
+				[57] = {
 					name = "Paw and Fur: Killer Caimans", storageid = 65021, startvalue = 0, endvalue = 250, description = function(player)return string.format("You already hunted %d/250 killer caimans.", (math.max(player:getStorageValue(65021), 0))) end,
 				},
 
-				[59] = {
+				[58] = {
 					name = "Paw and Fur: Bonebeasts", storageid = 65022, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 bonebeasts.", (math.max(player:getStorageValue(65022), 0))) end,
 				},
 
-				[60] = {
+				[59] = {
 					name = "Paw and Fur: Crystal Spiders", storageid = 65023, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 crystal spiders.", (math.max(player:getStorageValue(65023), 0))) end,
 				},
 
-				[61] = {
+				[60] = {
 					name = "Paw and Fur: Mutated Tigers", storageid = 65024, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 mutated tigers.", (math.max(player:getStorageValue(65024), 0))) end,
 				},
 
+				[61] = {
+					name = "Paw and Fur: Underwater Quara", storageid = 65025, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 underwater quara.", (math.max(player:getStorageValue(65025), 0))) end,
+				},
+
 				[62] = {
-					name = "Paw and Fur: Underwater Quara", storageid = 65025, startvalue = 0, endvalue = 600, description = function(player)return string.format("You already hunted %d/600 underwater quara.", (math.max(player:getStorageValue(65025), 0))) end,
+					name = "Paw and Fur: Giant Spiders", storageid = 65026, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 giant spiders.", (math.max(player:getStorageValue(65026), 0))) end,
 				},
 
 				[63] = {
-					name = "Paw and Fur: Giant Spiders", storageid = 65026, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 giant spiders.", (math.max(player:getStorageValue(65026), 0))) end,
-				},
-
-				[64] = {
 					name = "Paw and Fur: Werewolves", storageid = 65027, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 werewolves.", (math.max(player:getStorageValue(65027), 0))) end,
 				},
 
-				[65] = {
+				[64] = {
 					name = "Paw and Fur: Nightmares", storageid = 65028, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 nightmares.", (math.max(player:getStorageValue(65028), 0))) end,
 				},
 
+				[65] = {
+					name = "Paw and Fur: Hellspawns", storageid = 65029, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 hellspawns.", (math.max(player:getStorageValue(65029), 0))) end,
+				},
+
 				[66] = {
-					name = "Paw and Fur: Hellspawns", storageid = 65029, startvalue = 0, endvalue = 600, description = function(player)return string.format("You already hunted %d/600 hellspawns.", (math.max(player:getStorageValue(65029), 0))) end,
+					name = "Paw and Fur: High Class Lizards", storageid = 65030, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 high class lizards.", (math.max(player:getStorageValue(65030), 0))) end,
 				},
 
 				[67] = {
-					name = "Paw and Fur: High Class Lizards", storageid = 65030, startvalue = 0, endvalue = 800, description = function(player)return string.format("You already hunted %d/800 high class lizards.", (math.max(player:getStorageValue(65030), 0))) end,
+					name = "Paw and Fur: Stampors", storageid = 65031, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 stampors.", (math.max(player:getStorageValue(65031), 0))) end,
 				},
 
 				[68] = {
-					name = "Paw and Fur: Stampors", storageid = 65031, startvalue = 0, endvalue = 600, description = function(player)return string.format("You already hunted %d/600 stampors.", (math.max(player:getStorageValue(65031), 0))) end,
+					name = "Paw and Fur: Brimstone Bugs", storageid = 65032, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 brimstone bugs.", (math.max(player:getStorageValue(65032), 0))) end,
 				},
 
 				[69] = {
-					name = "Paw and Fur: Brimstone Bugs", storageid = 65032, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 brimstone bugs.", (math.max(player:getStorageValue(65032), 0))) end,
-				},
-
-				[70] = {
 					name = "Paw and Fur: Mutated Bats", storageid = 65033, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 mutated bats.", (math.max(player:getStorageValue(65033), 0))) end,
 				},
 
+				[70] = {
+					name = "Paw and Fur: Hydras", storageid = 65034, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 hydras.", (math.max(player:getStorageValue(65034), 0))) end,
+				},
+
 				[71] = {
-					name = "Paw and Fur: Hydras", storageid = 65034, startvalue = 0, endvalue = 650, description = function(player)return string.format("You already hunted %d/650 hydras.", (math.max(player:getStorageValue(65034), 0))) end,
+					name = "Paw and Fur: Serpent Spawns", storageid = 65035, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 serpent spawns.", (math.max(player:getStorageValue(65035), 0))) end,
 				},
 
 				[72] = {
-					name = "Paw and Fur: Serpent Spawns", storageid = 65035, startvalue = 0, endvalue = 800, description = function(player)return string.format("You already hunted %d/800 serpent spawns.", (math.max(player:getStorageValue(65035), 0))) end,
+					name = "Paw and Fur: Medusas", storageid = 65036, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/450 medusas.", (math.max(player:getStorageValue(65036), 0))) end,
 				},
 
 				[73] = {
-					name = "Paw and Fur: Medusas", storageid = 65036, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 medusas.", (math.max(player:getStorageValue(65036), 0))) end,
+					name = "Paw and Fur: Behemoths", storageid = 65037, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 behemoths.", (math.max(player:getStorageValue(65037), 0))) end,
 				},
 
 				[74] = {
-					name = "Paw and Fur: Behemoths", storageid = 65037, startvalue = 0, endvalue = 700, description = function(player)return string.format("You already hunted %d/700 behemoths.", (math.max(player:getStorageValue(65037), 0))) end,
+					name = "Paw and Fur: Sea Serpents and Young Sea Serpents", storageid = 65038, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 sea serpents and young sea serpents.", (math.max(player:getStorageValue(65038), 0))) end,
 				},
 
 				[75] = {
-					name = "Paw and Fur: Sea Serpents and Young Sea Serpents", storageid = 65038, startvalue = 0, endvalue = 900, description = function(player)return string.format("You already hunted %d/900 sea serpents and young sea serpents.", (math.max(player:getStorageValue(65038), 0))) end,
-				},
-
-				[76] = {
 					name = "Paw and Fur: Hellhounds", storageid = 65039, startvalue = 0, endvalue = 250, description = function(player)return string.format("You already hunted %d/250 hellhounds.", (math.max(player:getStorageValue(65039), 0))) end,
 				},
 
+				[76] = {
+					name = "Paw and Fur: Ghastly Dragons", storageid = 65040, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 ghastly dragons.", (math.max(player:getStorageValue(65040), 0))) end,
+				},
+
 				[77] = {
-					name = "Paw and Fur: Ghastly Dragons", storageid = 65040, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 ghastly dragons.", (math.max(player:getStorageValue(65040), 0))) end,
+					name = "Paw and Fur: Drakens", storageid = 65041, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 drakens.", (math.max(player:getStorageValue(65041), 0))) end,
 				},
 
 				[78] = {
-					name = "Paw and Fur: Drakens", storageid = 65041, startvalue = 0, endvalue = 900, description = function(player)return string.format("You already hunted %d/900 drakens.", (math.max(player:getStorageValue(65041), 0))) end,
+					name = "Paw and Fur: Destroyers", storageid = 65042, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 destroyers.", (math.max(player:getStorageValue(65042), 0))) end,
 				},
 
 				[79] = {
-					name = "Paw and Fur: Destroyers", storageid = 65042, startvalue = 0, endvalue = 650, description = function(player)return string.format("You already hunted %d/650 destroyers.", (math.max(player:getStorageValue(65042), 0))) end,
-				},
-
-				[80] = {
 					name = "Paw and Fur: Undead Dragons", storageid = 65043, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 undead dragons.", (math.max(player:getStorageValue(65043), 0))) end,
 				},
 
+				[80] = {
+					name = "Paw and Fur: Demons", storageid = 65044, startvalue = 0, endvalue = 666, description = function(player)return string.format("You already hunted %d/666 demons.", (math.max(player:getStorageValue(65044), 0))) end,
+				},
+
 				[81] = {
-					name = "Paw and Fur: Demons", storageid = 65044, startvalue = 0, endvalue = 6666, description = function(player)return string.format("You already hunted %d/6666 demons.", (math.max(player:getStorageValue(65044), 0))) end,
+					name = "Paw and Fur: Green Djinns or Efreets", storageid = 65045, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 green djinns or efreets.", (math.max(player:getStorageValue(65045), 0))) end,
 				},
 
 				[82] = {
-					name = "Paw and Fur: Green Djinns or Efreets", storageid = 65045, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 green djinns or efreets.", (math.max(player:getStorageValue(65045), 0))) end,
+					name = "Paw and Fur: Blue Djinns or Marids", storageid = 65046, startvalue = 0, endvalue = 450, description = function(player)return string.format("You already hunted %d/450 blue djinns or marids.", (math.max(player:getStorageValue(65046), 0))) end,
 				},
 
 				[83] = {
-					name = "Paw and Fur: Blue Djinns or Marids", storageid = 65046, startvalue = 0, endvalue = 500, description = function(player)return string.format("You already hunted %d/500 blue djinns or marids.", (math.max(player:getStorageValue(65046), 0))) end,
+					name = "Paw and Fur: Pirates", storageid = 65047, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 pirates.", (math.max(player:getStorageValue(65047), 0))) end,
 				},
 
 				[84] = {
-					name = "Paw and Fur: Pirates", storageid = 65047, startvalue = 0, endvalue = 3000, description = function(player)return string.format("You already hunted %d/3000 pirates.", (math.max(player:getStorageValue(65047), 0))) end,
+					name = "Paw and Fur: Pirates Second", storageid = 65048, startvalue = 0, endvalue = 300, description = function(player)return string.format("You already hunted %d/300 pirates.", (math.max(player:getStorageValue(65048), 0))) end,
 				},
 
 				[85] = {
-					name = "Paw and Fur: Pirates Second", storageid = 65048, startvalue = 0, endvalue = 3000, description = function(player)return string.format("You already hunted %d/3000 pirates.", (math.max(player:getStorageValue(65048), 0))) end,
+					name = "Turmoil of War", storageid = 65049, startvalue = 0, endvalue = 450, description = function(player)return string.format("Budrik asked you to kill 450 minotaurs for him. You already killed %d minotaurs.", (math.max(player:getStorageValue(65049), 0))) end,
 				},
 
 				[86] = {
-					name = "Turmoil of War", storageid = 65049, startvalue = 0, endvalue = 5000, description = function(player)return string.format("Budrik asked you to kill 5000 minotaurs for him. You already killed %d minotaurs.", (math.max(player:getStorageValue(65049), 0))) end,
+					name = "Paw and Fur: Necromancers and Priestess", storageid = 65050, startvalue = 0, endvalue = 400, description = function(player)return string.format("You already hunted %d/400 necromancers and priestess.", (math.max(player:getStorageValue(65050), 0))) end,
 				},
-
+				
 				[87] = {
-					name = "Paw and Fur: Necromancers and Priestess", storageid = 65050, startvalue = 0, endvalue = 4000, description = function(player)return string.format("You already hunted %d/4000 necromancers and priestess.", (math.max(player:getStorageValue(65050), 0))) end,
+					name = "Paw and Fur: Bruise Payne", storageid = 35017, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "Try find its hideout and kill it.",
+						[2] = "You succesfully killed this monster. Talk with Grizzly Adams and get another task.",
+					},
+				},				
+				[88] = {
+					name = "Paw and Fur: Huntsman", storageid = 2500, startvalue = 10, endvalue = 19, description = function(player)return string.format("You are huntsman of the Paw and Fur hunting elite. You currently have %d Paw and Fur points.", (math.max(player:getStorageValue(2500), 0))) end,
 				},
-
 			},
 		},
 
@@ -1262,15 +1357,14 @@ if not Quests then
 				},
 
 				[9] = {
-					name = "Mage &amp; Summoner Outfit Quest (Wand)", storageid = Storage.OutfitQuest.MageSummoner.AddonWand, startvalue = 1, endvalue = 7,
+					name = "Mage &amp; Summoner Outfit Quest (Wand)", storageid = Storage.OutfitQuest.MageSummoner.AddonWand, startvalue = 1, endvalue = 6,
 					states = {
 						[1] = "You found Angelina in a Prison. She told you a secret: Lynda in Thais can create a blessed wand. Greet her from Angelina, maybe she will aid you.",
 						[2] = "Lynda send you to bring her a sample of all five wands and five rods (Snakebite, Moonlight, Necrotic, Terra, Hailstorm, Vortex, Dragonbreath, Decay, Cosmic Energy and Inferno)",
 						[3] = "Bring Lynda 10 ounces of magic sulphur",
 						[4] = "Bring Lynda the Necromancer's soul stone",
 						[5] = "Bring Lynda 20 ankhs now to complete the ritual.",
-						[6] = "You need to wait 3 hours for the ritual to be completed",
-						[7] = "You got the Outfit!",
+						[6] = "You got the Outfit!",
 					},
 
 				},
@@ -1776,7 +1870,7 @@ if not Quests then
 				},
 
 				[3] = {
-					name = "Efreet Mission 3: The Sleeping Lamp", storageid = Storage.DjinnWar.EfreetFaction.Mission03, startvalue = 1, endvalue = 3,
+					name = "Efreet Mission 3: The Sleeping Lamp", storageid = Storage.DjinnWar.EfreetFaction.Mission02, startvalue = 1, endvalue = 3,
 					states = {
 						[1] = "Malor asked you to find Fa'hradin's sleeping lamp in the orc fortress at Ulderek's Rock. Then, sneak into Ashta'daramai and exchange Gabel's sleeping lamp with Fa'hradin's lamp.",
 						[2] = "You successfully exchanged the lamps. Malor will be happy to hear about this.",
@@ -2235,7 +2329,7 @@ if not Quests then
 			name = "The Postman Missions", startstorageid = Storage.postman.Mission01, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Mission 01 - Check Postal Routes", storageid = Storage.postman.Mission01, startvalue = 1, endvalue = 6,
+					name = "Mission 1 - Check Postal Routes", storageid = Storage.postman.Mission01, startvalue = 1, endvalue = 6,
 					states = {
 						[1] = "Kevin wants you to travel with Captain Bluebear to Carlin.",
 						[2] = "Kevin wants you to travel with Uzon in Femor Hills to Edron.",
@@ -2248,7 +2342,7 @@ if not Quests then
 				},
 
 				[2] = {
-					name = "Mission 02 - Fix Mailbox", storageid = Storage.postman.Mission02, startvalue = 1, endvalue = 3,
+					name = "Mission 2 - Fix Mailbox", storageid = Storage.postman.Mission02, startvalue = 1, endvalue = 3,
 					states = {
 						[1] = "Kevin wants you to fix one of their Mailboxes located on Folda with a crowbar.",
 						[2] = "You have fixed the mailbox, report back to Kevin!",
@@ -2258,7 +2352,7 @@ if not Quests then
 				},
 
 				[3] = {
-					name = "Mission 03 - Bill Delivery", storageid = Storage.postman.Mission03, startvalue = 1, endvalue = 3,
+					name = "Mission 3 - Bill Delivery", storageid = Storage.postman.Mission03, startvalue = 1, endvalue = 3,
 					states = {
 						[1] = "Kevin wants you to deliver a bill to the stage magician David Brassacres. He's hiding from his creditors somewhere in Venore.",
 						[2] = "You have delivered the bill to the stage magician David Brassacres, report back to Kevin!",
@@ -2268,7 +2362,7 @@ if not Quests then
 				},
 
 				[4] = {
-					name = "Mission 04 - Aggressive Dogs", storageid = Storage.postman.Mission04, startvalue = 1, endvalue = 2,
+					name = "Mission 4 - Aggressive Dogs", storageid = Storage.postman.Mission04, startvalue = 1, endvalue = 2,
 					states = {
 						[1] = "Kevin has asked you to deliver 20 Bones to him.",
 						[2] = "You have delivered 20 Bones to Kevin.",
@@ -2277,7 +2371,7 @@ if not Quests then
 				},
 
 				[5] = {
-					name = "Mission 05 - Present Delivery", storageid = Storage.postman.Mission05, startvalue = 1, endvalue = 4,
+					name = "Mission 5 - Present Delivery", storageid = Storage.postman.Mission05, startvalue = 1, endvalue = 4,
 					states = {
 						[1] = "Kevin has asked you to retrieve the present behind the door on the lower right side of his room and deliver it to Dermot in Fibula.",
 						[2] = "Deliver the present to Dermot in Fibula.",
@@ -2288,13 +2382,13 @@ if not Quests then
 				},
 
 				[6] = {
-					name = "Mission 06 - New Uniforms", storageid = Storage.postman.Mission06, startvalue = 1, endvalue = 13,
+					name = "Mission 6 - New Uniforms", storageid = Storage.postman.Mission06, startvalue = 1, endvalue = 13,
 					states = {
 						[1] = "Kevin has asked you to travel to Venore and negotiate with Hugo for new uniforms.",
 						[2] = "Hugo said that his dog ate the last dress pattern they used and he has no clue where Kevin Postner got it from, go ask Kevin.",
 						[3] = "Kevin wants you to ask the great Technomancer Talphion in Kazordoon for the technical details.",
 						[4] = "Talphion will send a copy to Kevin, report back to Kevin.",
-						[5] = "Kevin wants you to ask Queen Eloise of Carlin for the perfect colours.",
+						[5] = "Kevin wants you tk ask Queen Eloise of Carlin for the perfect colours.",
 						[6] = "Queen Eloise said she will send some color samples via mail to Kevin, report back to Kevin.",
 						[7] = "Kevin has asked you to go to Noodles and find out what he dislikes the most: mouldy cheese, a piece of fur or a banana skin.",
 						[8] = "Noodles seems to like banana skin, check if he likes dirty fur.",
@@ -2308,7 +2402,7 @@ if not Quests then
 				},
 
 				[7] = {
-					name = "Mission 07 - Measurements", storageid = Storage.postman.Mission07, startvalue = 1, endvalue = 8,
+					name = "Mission 7 - Measurements", storageid = Storage.postman.Mission07, startvalue = 1, endvalue = 8,
 					states = {
 						[1] = "Kevin wants you to bring him the measurements of Benjamin, Lokur, Dove, Liane, Chrystal and Olrik.",
 						[2] = "You have received the measurements from 1 of 6 post officers.",
@@ -2323,7 +2417,7 @@ if not Quests then
 				},
 
 				[8] = {
-					name = "Mission 08 - Missing Courier", storageid = Storage.postman.Mission08, startvalue = 1, endvalue = 3,
+					name = "Mission 8 - Missing Courier", storageid = Storage.postman.Mission08, startvalue = 1, endvalue = 3,
 					states = {
 						[1] = "Kevin wants you to find the missing courier Waldo or at least his posthorn.",
 						[2] = "You have found Waldos posthorn.",
@@ -2333,7 +2427,7 @@ if not Quests then
 				},
 
 				[9] = {
-					name = "Mission 09 - Dear Santa", storageid = Storage.postman.Mission09, startvalue = 1, endvalue = 4,
+					name = "Mission 9 - Dear Santa", storageid = Storage.postman.Mission09, startvalue = 1, endvalue = 4,
 					states = {
 						[1] = "Kevin wants you to deliver som letters to Santa Claus on Vega.",
 						[2] = "You have retrieved the letters, deliver them to Santa Claus on Vega.",
@@ -2528,7 +2622,7 @@ if not Quests then
 		},
 
 		[29] = {
-			name = "The Travelling Trader Quest", startstorageid = Storage.TravellingTrader.Mission01, startstoragevalue = 1,
+			name = "The Travelling Trader Quest", startstorageid = Storage.TravellingTrader.Questline, startstoragevalue = 1,
 			missions = {
 				[1] = {
 					name = "Mission 1: Trophy", storageid = Storage.TravellingTrader.Mission01, startvalue = 1, endvalue = 2,
@@ -2672,7 +2766,7 @@ if not Quests then
 			name = "The White Raven Monastery", startstorageid = Storage.WhiteRavenMonasteryQuest.QuestLog, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Access to the Isle of Kings", storageid = Storage.WhiteRavenMonasteryQuest.Passage, endvalue = 1,
+					name = "Access to the Isle of Kings", storageid = Storage.WhiteRavenMonasteryQuest.Passage, startvalue = 1, endvalue = 1,
 					states = {
 						[1] = "You are a friend of Dalbrect. Since you returned his family brooch he will sail you to the Isle of Kings unless you do something stupid.",
 					},
@@ -2695,7 +2789,7 @@ if not Quests then
 			name = "Tibia Tales", startstorageid = Storage.TibiaTales.DefaultStart, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "To Appease the Mighty", storageid = Storage.TibiaTales.ToAppeaseTheMightyQuest, stargtvalue = 0, endvalue = 4,
+					name = "To Appease the Mighty", storageid = Storage.TibiaTales.ToAppeaseTheMightyQuest, startvalue = 0, endvalue = 4,
 					states = {
 						[1] = "Kazzan sent you to talk with Ubaid and Umar to offer an appeasement treaty to the Djinn races. Talk to Umar first.",
 						[2] = "Umar said he won't be part of Kazzan's plans. Now you need to try with Ubaid.",
@@ -3157,35 +3251,51 @@ if not Quests then
 				},
 			},
 		},
-		
 		[39] = {
-			name = "The First Dragon", startstorageid = Storage.FirstDragon.Questline, startstoragevalue = 1,
+			name = "The First Dragon", startstorageid = Storage.TheFirstDragon.tamorilTasks, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Power", storageid = Storage.FirstDragon.DragonCounter, startvalue = 0, endvalue = 200, description = function(player)
-						return ("You already hunted %d/200 dragons."):format(player:getStorageValue(Storage.FirstDragon.DragonCounter))
+					name = "Power", storageid = Storage.TheFirstDragon.tamorilTasksPower, startvalue = 0, endvalue = 1, description = 
+					function(player)
+						local value1 = math.max(player:getStorageValue(Storage.TheFirstDragon.dragonTaskCount), 0)
+						return string.format("You already hunted %d/200 dragons.", value1)
 					end,
 				},
-				
 				[2] = {
-					name = "Treasure", storageid = Storage.FirstDragon.ChestCounter, startvalue = 0, endvalue = 20, description = "Treasure is the favorite of the dragon lords. Find and take Kalyassa's treasures spread accross the world.",
+					name = "Knowledge", storageid = Storage.TheFirstDragon.tamorilTasksKnowledge, startvalue = 0, endvalue = 3, description = 
+					function(player)
+						return string.format("You learned that frost dragon's incitement is the thirst for knowledge, perhaps if you bring some to Gelidrazah's you'll meet him.\n\nKnowledge: %d/3", math.max(player:getStorageValue(Storage.TheFirstDragon.tamorilTasksKnowledge), 0))
+					end,
 				},
+
 				[3] = {
-					name = "Knowledge", storageid = Storage.FirstDragon.GelidrazahAccess, startvalue = 0, endvalue = 1, description = "You learned that frost dragon's incitement is the thirst for knowledge, perhaps if you bring some to Gelidrazah's you'll meet him.",
+					name = "Life", storageid = Storage.TheFirstDragon.tamorilTasksLife, startvalue = 0, endvalue = 3, description = 
+					function(player)
+						return string.format("Undead dragons aspires for life. No better way to see life as it grows around the world, is there?\n\nLife: %d/3", math.max(player:getStorageValue(Storage.TheFirstDragon.tamorilTasksLife), 0))
+					end,
 				},
+
 				[4] = {
-					name = "Life", storageid = Storage.FirstDragon.SecretsCounter, startvalue = 0, endvalue = 3, description = "Undead dragons aspires for life. No better way to see life as it grows around the world, is there?",
+					name = "Treasure", storageid = Storage.TheFirstDragon.tamorilTasksTreasure, startvalue = 0, endvalue = 5, description =
+				function(player)
+                    return string.format("Treasure is the favorite of the dragon lords. Find and take Kalyassa's treasures spread accross the world.\n\nTreasure: %d/5", math.max(player:getStorageValue(Storage.TheFirstDragon.tamorilTasksTreasure), 0))
+                end,
 				},
+
+				[5] = {
+					name = "The First Dragon", storageid = Storage.TheFirstDragon.theFirstDragonKilled, startvalue = 0, endvalue = 1, description = "You survived! In the end the First Dragon proved to be a decent collocutor and even offered you some presents.",
+				},
+
 			},
 		},
-
 		[40] = {
 			name = "Cults of Tibia", startstorageid = Storage.CultsOfTibia.Questline, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "The Strengthtening of the Minotaurs", storageid = Storage.CultsOfTibia.Minotaurs.jamesfrancisTask, startvalue = 0, endvalue = 50, description = function(player)
-                    return ("James asked you to enter the cave for hunting 50 empowered minotaurs. Then he will be able to continue his research.\nMinotaurs killed: %d/50"):format(player:getStorageValue(Storage.CultsOfTibia.Minotaurs.jamesfrancisTask))
-                end,
+					name = "The Strengthtening of the Minotaurs", storageid = Storage.CultsOfTibia.Minotaurs.jamesfrancisTask, startvalue = 0, endvalue = 50, description =
+					function(player)
+						return ("James asked you to enter the cave for hunting 50 empowered minotaurs. Then he will be able to continue his research.\nMinotaurs killed: %d/50"):format(player:getStorageValue(Storage.CultsOfTibia.Minotaurs.jamesfrancisTask))
+					end,
 				},
 
 				[2] = {
@@ -3215,7 +3325,7 @@ if not Quests then
 						[10] = "After you told Gareth about the fake painting, he asked you to go to Angelo to get a new picture.",
 						[11] = "Angelo was not willing to give you a new picture. However, they havent found any artefact in the sandy cave yet. Report to Gareth about your failure.",
 						[12] = "Even though you weren't successful in getting a replacement for the fake picture, Gareth gave you access to the last floor of the museum. This area is for patrons only.",
-						[13] = "NÃO SEI O QUE TEM AQUI",
+						[13] = "Parte 13",
 						[14] = "The Denomintator opened the door for you after you answered his questions to the wanted number. In the end he mentioned the Druid of Conor. Maybe you should pay him a visit.",
 						[15] = "In the end you told the Druid of Crunor about your experiences in the MoTA.",
 					},
@@ -3240,7 +3350,7 @@ if not Quests then
 				[5] = {
 					name = "Misguided", storageid = Storage.CultsOfTibia.Misguided.Mission, startvalue = 1, endvalue = 5,
 					states = {
-						[1] = "ASD",
+						[1] = "Parte 1",
 						[2] = "Below a ruin in the vicinity of the outlaw camp east of Thais a strange figure in ragged clothes hinted at something weird going on in a cave. He seemed too confused to decide whether to stop you.",
 						[3] = function(player)return("While rubbish, the amulet you equipe emits a strange aura of splendour. You feel an urge to fulfill the amulets hunger for especific deaths... \nExorcisms: %d/5 "):format(math.max(player:getStorageValue(Storage.CultsOfTibia.Misguided.Exorcisms), 0))
 						end,
@@ -3253,8 +3363,8 @@ if not Quests then
 				[6] = {
 					name = "The Orc Idol", storageid = Storage.CultsOfTibia.Orcs.Mission, startvalue = 1, endvalue = 3,
 					states = {
-						[1] = "ASD",
-						[2] = "ASD",
+						[1] = "Parte 1",
+						[2] = "Parte 2",
 						[3] = "You returned to Gerimor after facing the being the orcs worshipped. Whatever it was, it did not find the orcs by accident. A far more powerful force seems to have strategically place it here.",
 					},
 
@@ -3263,8 +3373,8 @@ if not Quests then
 				[7] = {
 					name = "The Secret of the Sandy Cave", storageid = Storage.CultsOfTibia.Life.Mission, startvalue = 1, endvalue = 10,
 					states = {
-						[1] = "ASD",
-						[2] = "ASD",
+						[1] = "Parte 1",
+						[2] = "Parte 2",
 						[3] = "In the cave you haven't found one of the missing scientists. However, you have faced a lots of strange mummies and a green oasis at the end.",
 						[4] = "After you informed Angelo about your experiences in the cave, he asked you to go back to analyse the water of the oasis. For that reason you got an analysis tool.",
 						[5] = "You have analysed the water with the help of the analysis tool from Angelo.",
@@ -3357,14 +3467,37 @@ if not Quests then
 			name = "Threatened Dreams", startstorageid = Storage.ThreatenedDreams.Start, startstoragevalue = 1,
 			missions = {
 				[1] = {
-					name = "Mission 01: Troubled Animals", storageid = Storage.ThreatenedDreams.TroubledMission01, startvalue = 1, endvalue = 4,
+					name = "Mission 03: A Dream Come True", storageid = Storage.ThreatenedDreams.Dream.Questline, startvalue = 1, endvalue = 3,
 					states = {
-						[1] = "STATE 1",
-						[2] = "STATE 2",
-						[3] = "STATE 3",
-						[4] = "STATE 4",
-						[5] = "STATE 5",
+						[1] = function(player)return ("The fae queen asked for your help: Feyrist is threatened by intruders from Roshamuul. Kill 200 nightmare monsters and Kroazur.\n - You killed %d weakened frazzlemaws and %d enfeebled silencers."):format(math.max(player:getStorageValue(Storage.ThreatenedDreams.Dream.frazzlemawKilled), 0), math.max(player:getStorageValue(Storage.ThreatenedDreams.Dream.silencerKilled), 0))
+						end,
+						[2] = "Maelyrra asked you to retrieve an artefact for her: the moon mirror. It was stolen by the tainted fae who inhabit the caves underneath Feyrist. She also asked you to free some captured fairies.",
+						[3] = "You found the moon mirror and freed the captured fairies. Maelyrra was very happy but it seems she has another problem. Perhaps you should offer your assistance once more.",
 					},
+				},
+				[2] = {
+					name = "Mission 04: An Unlikely Couple", storageid = Storage.ThreatenedDreams.Couple.Questline, startvalue = 1, endvalue = 4,
+					states = {
+						[1] = "The barrier that protects Feyrist from the outside world is weakened. To strengthen it again you need to find the starlight vial and the sun catcher. Ask Aurita and Taegen for these items.",
+						[2] = "Gather sunlight, starlight and moon rays. You have to do this with the sun catcher on the beach, with the starlight vial high in the mountains and with the moon mirror on a glade in the forest.",
+						[3] = "You may now repair the barrier. Charge the five moon sculptures of Feyrist with moon rays, the five dreambird trees with starlight and the five sun mosics with sunlight.",
+						[4] = "You repaired tha magical barrier that protects Feyrist from the outside world. The fae's secret realm is safe again.",
+					},
+				},
+				-- [3] = {
+					-- name = "Quest da Arita", storageid = Storage.ThreatenedDreams.Arita.Questline, startvalue = 1, endvalue = 4,
+					-- states = {
+						-- [1] = "Help Arita and Taegen and find a spell to transform Aurita's fishtail into legs temporarily. A fairy in a small fae village in the southwest of Feyrist might know more.",
+						-- [2] = "You have succesfully created the magical music notes for the mermaid Arita. Talk to the faun Taegen, he also needs your help.",
+						-- [3] = "The faun Taegen wants to spend some time with his lover, the mermaid Aurita. He wants to visit her home and thus must be able to breathe under water. Therefore he needs the rare raven herb.",
+						-- [4] = "You found the rare raven herb and gave it to Taegen. Now he will create a sun catcher for you. You may also ask Aurita for the starlight vial now.",
+					-- },
+				-- },
+				[4] = {
+					name = "The Swan Feather Cloak	", storageid = Storage.ThreatenedDreams.Valindara.Questline, startvalue = 1, endvalue = 1,
+					states = {
+						[1] = "You asked Valindara to craft you a swan feather cloak and brought her 100 feathers. Now she is sewing the cloak. It won't allow you to change shape into a swan but it will be usefull otherwise.",
+						},
 				},
 			},
 		},
@@ -3378,7 +3511,120 @@ if not Quests then
 				},
 			},
 		},
+		[44] = {
+			name = "The Dream Courts", startstorageid = Storage.DreamCourts.Main.Questline, startstoragevalue = 1,
+			missions = {
+				[1] = {
+					name = "The Dream Courts", storageid = Storage.DreamCourts.WardStones.Questline, startvalue = 1, endvalue = 3,
+					states = {
+					[1] = function(player)return string.format("You already got %d/8 energized ward stones.", math.max(player:getStorageValue(Storage.DreamCourts.WardStones.Count), 0))
+					end,
+					[2] = "You must kill the Nightmare Beast.",
+					[3] = "By defeating the dreadful Nightmare Beast you did the Winter Court and the Summer Court alike a great favor. From now on, the dream elves will regard you as a friend.",
+					},
+				},
+				[2] = {
+					name = "Unsafe Release", storageid = Storage.DreamCourts.UnsafeRelease.Questline, startvalue = 1, endvalue = 3,
+					states = {
+					[1] = "Texto da primeira missão",
+					[2] = "Texto da segunda missão",
+					[3] = "Andre was happy to hear that the compass works as intendend. From now on it is possible that he will charge your compass again. It can be used to give acess to mystical chests once a day.",
+					},
+				},
+				[3] = {
+					name = "Haunted House", storageid = Storage.DreamCourts.HauntedHouse.Questline, startvalue = 1, endvalue = 6,
+					states = {
+					[1] = function(player)return string.format("A tormented soul trusted you with the secret of this house: join the passages to the three dungeons it connects to reveal a hidden portal within!\n\nCellar %d/1\nTemple %d/1\nTomb %d/1", math.max(player:getStorageValue(Storage.DreamCourts.HauntedHouse.Cellar), 0), math.max(player:getStorageValue(Storage.DreamCourts.HauntedHouse.Temple), 0), math.max(player:getStorageValue(Storage.DreamCourts.HauntedHouse.Tomb), 0))
+					end,
+					[2] = "aqui vc tem que ir pra a burried catedral",
+					[3] = "aqui vc tem que fazer o puzzle dos livros",
+					[4] = "aqui vc tem que matar o boss",
+					[5] = "aqui vc tem que pegar a ultima pedra",
+					[6] = "Activating the ward stone after defeating the Faceless Bane has gained you acess to the deepest mysteries of the dream courts.",
+					},
+				},
+				[4] = {
+					name = "The Seven Keys", storageid = Storage.DreamCourts.TheSevenKeys.Questline, startvalue = 1, endvalue = 2,
+					states = {
+					[1] = function(player)return string.format("You already got %d/7 secret keys.", math.max(player:getStorageValue(Storage.DreamCourts.TheSevenKeys.Count), 0))
+					end,
+					[2] = "You found the seven keys to unlock the Seven Dream Doors in the Labyrinth of Summer's and Winter's Dreams.",
+					},
+				},
+			},
+		},
+		[45] = {
+		name = "The Secret Library", startstorageid = Storage.secretLibrary.Questlog, startstoragevalue = 1,
+			missions = {
+				[1] = {
+					name = "High and Dry", storageid = Storage.secretLibrary.SmallIslands.Questline, startvalue = 1, endvalue = 3,
+					states = {
+						[1] = "Dedoras asked for you to talk to Charles, he knows about a small island.",
+						[2] = "You got stucked on this island. You must discover how to leave.",
+						[3] = "You successfully built a raft and used the starts to navigate your way through the waves. At least you found something of interest on the deserted island.",
+						
+					},
+				},
+				[2] = {
+					name = "Liquid Death", storageid = Storage.secretLibrary.LiquidDeath.Questline, startvalue = 1, endvalue = 7,
+					states = {
+						[1] = "Dedoras has sent you to Spectulus in the Edron Academy. Rumors of strange fishmen in the Tiquanda region may be connected to some of the research the scholar conducted.",
+						[2] = "Spectulus asked you to check out the rumors of strange fishmen in the jungles of northern Tiquanda. A small sunken temple is said to be overrun by strange fish-like creatures.",
+						[3] = "You found a sunken temple deep in the Tiquanda jungle. Spectulus will help you enter the vortex at the entrance. Find out what happened there and take care of the fish-like aggressors...",
+						[4] = "Parte IV",
+						[5] = "Parte V",
+						[6] = "Parte VI",
+						[7] = "Brokul has been defeated and now you can talk with Spectulus or Dedoras what you found about the fishmen.",
+					},
+				},
+				[3] = {
+					name = "Asuri - The Lament", storageid = Storage.secretLibrary.Asuras.Questline, startvalue = 1, endvalue = 6,
+					states = {
+						[1] = "Go to Asuri Palace in Port Hope.",
+						[2] = "You were able to assemble an instrument with the objects found. That should work for something.",
+						[3] = "You must talk with the dead girl's mother, Gail, at Port Hope.",
+						[4] = "With a heavy heart you used a piece of ebony as well as the skull and hair of an unfortunate maiden to create a bone fiddle. By playing the Peacock Ballad you should be able to open the viollet portal.",
+						[5] = "You may enter the viollet portal. Check if there is something useful there.",
+						[6] = "In a secret room of the Asura Palace you discovered an old writing desk that contains an ancient map. This must be a hint to the secret library you are searching for.",
+					},
+				},
+				[4] = {
+					name = "The Order of the Falcon", storageid = Storage.secretLibrary.FalconBastion.Questline, startvalue = 1, endvalue = 2,
+					states = {
+						[1] = "It is said that an ancient order of knights once resided in Edron. The knights disappeared a long time ago but their abandoned outpost is still there. The place may yet hold some surprises.",
+						[2] = "You defeated Grand Master Oberon in mortal combat. The Falcon Order may have lost its glory a long time ago but you are just getting started.",
+					},
+				},
+				[5] = {
+					name = "The Path of Defiances", storageid = Storage.secretLibrary.Darashia.Questline, startvalue = 1, endvalue = 8,
+					states = {
+						[1] = "Go to Darashia and find out about the mysterious statue.",
+						[2] = "After you have been swallowed by a sand vortex you have entered a hidden desert area. A voice of unknown origin has informed you that you will have to face some challenges.", -- entrou
+						[3] = "Parte III", -- passou do labirinto
+						[4] = "Parte IV", -- abriu primeiro bau
+						[5] = "Parte V", -- abriu segundo bau
+						[6] = "Parte VI", -- fez puzzle
+						[7] = "Parte VII", -- abriu terceiro bau
+						[8] = "You have found a book page in a chest. It seems to contain very useful information, but you are not capable to read it. At this point you have to speak with an expert.", -- entrou na sala do quarto bau
+					},
+				},
+				[6] = {
+					name = "The Veiled Hoard of Zathroth", storageid = Storage.secretLibrary.MoTA.Questline, startvalue = 1, endvalue = 7,
+					states = {
+						[1] = "Dedoras told you where to search for leads to the Veiled Hoard: the museum in Thais, a fishmen temple in Tiquanda, an order fortress in Edron, the Asuri Palace and a deserted isle.",
+						[2] = "You talked with Gareth and now you may pass trougth the door.",
+						[3] = "Parte III",
+						[4] = "Parte IV",
+						[5] = "Parte V",
+						[6] = "You successfully entered the Veiled Hoard of Zathroth. However, countless secret and vast knowledge still lie ahead.",
+						[7] = "You have reported Gareth about the enigmatic inscription you have found in the chamber of doom. He was able to decipher it for you and referred to Dedoras in Cormaya for further assistance.",
+					},
+				},
+			}
+		},
 	}
+
+	print(">> Loaded ".. #Quests .." quests")
 end
 
 if not LastQuestlogUpdate then
@@ -3579,11 +3825,44 @@ function Player.getMissionDescription(self, questId, missionId)
 	return "An error has occurred, please contact a gamemaster."
 end
 
+if not PlayerQuestTracker then
+	PlayerQuestTracker = {}
+end
+
+function Player.manageQuestTracker(self, questid, remove)
+	if not PlayerQuestTracker[self:getGuid()] then
+		PlayerQuestTracker[self:getGuid()] = {}
+	end
+	if not Game.isValidQuest(questid) then
+		return
+	end
+
+	if remove then
+		table.remove(PlayerQuestTracker[self:getGuid()], questid)
+	else
+		table.insert(PlayerQuestTracker[self:getGuid()], questid)
+	end
+
+end
+
+function Player.getTrackerList(self)
+	return PlayerQuestTracker[self:getGuid()]
+end
+
 function Player.sendQuestTracker(self)
+	local questlist = self:getTrackerList() or {}
+	local tamanho = #questlist or 0
 	local msg = NetworkMessage()
-	msg:addByte(0xD0) -- byte quest tracker
-	msg:addByte(1) -- send quests of quest log ??
-	msg:addU16(1) -- unknown
+	msg:addByte(0xD0)
+	-- msg:addByte(tamanho > 0 and 0x01 or 0x00) -- show
+	msg:addByte(0x01) -- show
+		msg:addByte(0x4) -- unknow
+		msg:addByte(1) -- number of quests
+
+			msg:addU16(0x16) -- quest id
+				msg:addString("quest.name") -- quest name
+					msg:addString("quest.mission") -- mission name
+					msg:addString("quest.description") -- description
 	msg:sendToPlayer(self)
 	msg:delete()
 end
@@ -3623,7 +3902,7 @@ function Player.sendQuestLine(self, questId)
 				end
 			end
 		end
-		if (self:getClient().os == CLIENTOS_NEW_WINDOWS) then
+		if self:getClient().version > 1100 then
 			self:sendQuestTracker()
 		end
 

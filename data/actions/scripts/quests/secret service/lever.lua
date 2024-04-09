@@ -22,8 +22,14 @@ local monsters = {
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if item.itemid == 1945 then
-		for i = 1, #monsters do
-			Game.createMonster(monsters[i].monster, monsters[i].monsterPos)
+		if player:getStorageValue(71628) < os.stime() then
+			for i = 1, #monsters do
+				Game.createMonster(monsters[i].monster, monsters[i].monsterPos)
+			end
+			player:setStorageValue(71628, os.stime() + 15*60)
+		else 
+			player:sendCancelMessage("You must wait for 15 minutes before pull this lever again.")
+			return true
 		end
 	end
 

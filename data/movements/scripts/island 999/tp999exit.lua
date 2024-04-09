@@ -1,15 +1,11 @@
 function onStepIn(creature, item, position, fromPosition)
-	local player = creature:getPlayer()
-	if not player then
-		return false
-	end
+
+    local player = creature:getPlayer()
+	local storage666 = 666
 
 	if player:getLevel() >= 999 then
-        local exitPosition = Position(32883, 32527, 11)
-        player:teleportTo(exitPosition)
-        fromPosition:sendMagicEffect(CONST_ME_TELEPORT)
-        exitPosition:sendMagicEffect(CONST_ME_TELEPORT)
+            player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+			player:teleportTo({x = 32883, y = 32527, z = 11})
     end
-
     return true
 end

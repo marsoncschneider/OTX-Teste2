@@ -68,6 +68,6 @@
 		<item name="ornamented ankh" chance="100000" />
 		<item name="skull staff" chance="500" />
 		<item name="pharaoh sword" chance="300" />
-		<item name="great mana potion" chance="7000" />
+		<item name="gold coin" chance="7000" />
 	</loot>
 </monster>

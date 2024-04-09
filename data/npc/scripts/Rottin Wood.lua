@@ -15,7 +15,7 @@ function creatureSayCallback(cid, type, msg)
 
 
 	if(msgcontains(msg, "mission") or msgcontains(msg, "task")) then
-		if(getPlayerStorageValue(cid, 41600) < 1) and getPlayerStorageValue(cid, 43600) <= os.time() then
+		if(getPlayerStorageValue(cid, 41600) < 1) and getPlayerStorageValue(cid, 43600) <= os.stime() then
 			npcHandler:say("Oh, you want some work? You can help us, alright. Did you know that the people of the city think those rabbit feet are actually lucky charms?", cid)
 			npcHandler.topic[cid] = 1
 		elseif(getPlayerStorageValue(cid, 41600) == 1) then
@@ -23,7 +23,7 @@ function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 3
 
 
-			elseif getPlayerStorageValue(cid, 43600) > os.time() then
+			elseif getPlayerStorageValue(cid, 43600) > os.stime() then
 			npcHandler:say("You need wait some hours to take other mission again or you are still on a mission.", cid)
 
 	------------------------ FINISH MISSION 01 ------------------------
@@ -51,7 +51,7 @@ function creatureSayCallback(cid, type, msg)
 				setPlayerStorageValue(cid, 41650, - 1) -- reset storage
 				setPlayerStorageValue(cid, 41660, - 1) -- reset storage
 				-----------------------------------------------------
-				setPlayerStorageValue(cid, 43600, os.time() + 20 * 60 * 60) -- set time to start mission again
+				setPlayerStorageValue(cid, 43600, os.stime() + 20 * 60 * 60) -- set time to start mission again
 				setPlayerStorageValue(cid, 42620, 2) -- quest log
 			------------------- ITEM RANDOM --------------------
 			items = {

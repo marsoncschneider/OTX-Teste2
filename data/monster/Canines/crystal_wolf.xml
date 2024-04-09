@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Crystal Wolf" nameDescription="a crystal wolf" race="undead" experience="275" speed="160">
+<monster name="Crystal Wolf" nameDescription="a crystal wolf" race="undead" experience="275" speed="160" raceid="740">
 	<health now="750" max="750"/>
 	<look type="391" corpse="13584"/>
 	<targetchange interval="4000" chance="10"/>
@@ -46,7 +46,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="52" chance="56000"/>
-		<item name="hailstorm rod" chance="7400"/>
+
 		<item name="meat" countmax="4" chance="52000"/>
 		<item name="wolf paw" chance="3700"/>
 		<item name="shiver arrow" countmax="10" chance="11000"/>

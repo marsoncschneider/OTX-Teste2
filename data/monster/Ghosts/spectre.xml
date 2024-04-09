@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Spectre" nameDescription="a spectre" race="undead" experience="2100" speed="140">
+<monster name="Spectre" nameDescription="a spectre" race="undead" experience="2100" speed="140" raceid="286">
 	<health now="1350" max="1350"/>
 	<look type="235" head="20" corpse="6348"/>
 	<targetchange interval="4000" chance="10"/>
@@ -30,11 +30,8 @@
 		</attack>
 	</attacks>
 	<defenses armor="35" defense="35">
-		<!-- <defense name="healing" interval="2000" chance="25" min="100" max="250"> -->
-			<!-- <attribute key="areaEffect" value="blueshimmer" /> -->
-		<!-- </defense> -->
-		<defense name="healing" interval="2000" chance="20" min="100" max="700">
-			<attribute key="areaEffect" value="blueshimmer"/>
+		<defense name="healing" interval="2000" chance="25" min="100" max="250">
+			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 		<defense name="speed" interval="2000" chance="15" speedchange="290" duration="5000">
 			<attribute key="areaEffect" value="redshimmer"/>
@@ -71,14 +68,14 @@
 		<item name="gold coin" countmax="97" chance="33000"/>
 		<item name="platinum coin" countmax="7" chance="3850"/>
 		<item name="stealth ring" chance="190"/>
-		<item name="wand of cosmic energy" chance="9800"/>
+
 		<item name="blank rune" countmax="2" chance="30310"/>
 		<item name="white piece of cloth" chance="3800"/>
 		<item name="soul orb" chance="6005"/>
 		<item id="6300" chance="280"/><!-- death ring -->
 		<item name="demonic essence" chance="6270"/>
 		<item name="relic sword" chance="700"/>
-		<item name="great mana potion" chance="920"/>
+		<item name="gold coin" chance="920"/>
 		<item name="shiny stone" chance="1000"/>
 	</loot>
 </monster>

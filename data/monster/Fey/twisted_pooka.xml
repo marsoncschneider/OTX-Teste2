@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Twisted Pooka" nameDescription="a twisted pooka" race="blood" experience="600" speed="115" manacost="450">
+<monster name="Twisted Pooka" nameDescription="a twisted pooka" race="blood" experience="600" speed="115" manacost="450" raceid="1436">
 	<health now="700" max="700"/>
 	<look type="978" corpse="29114"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
-		<flag respawntype="night"/>
+		<flag respawntype="nightandcave"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -61,7 +61,7 @@
 		<item name="gold coin" countmax="100" chance="30000"/>
 		<item name="stealth ring" chance="492"/>
 		<item id="2684" countmax="3" chance="55000"/>
-		<item name="strong health potion" chance="719"/>
+		<item name="gold coin" chance="719"/>
 		<item name="orange mushroom" chance="10000"/>
 		<item name="fairy wings" chance="30100"/>
 		<item name="orange mushroom" chance="5155"/>

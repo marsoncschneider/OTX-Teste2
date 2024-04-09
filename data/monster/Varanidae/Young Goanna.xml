@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Young Goanna" nameDescription="a young goanna" race="blood" experience="6100" speed="190">
+<monster name="Young Goanna" nameDescription="a young goanna" race="blood" experience="6100" speed="190" raceid="1817" >
 	<health now="6200" max="6200"/>
-	<look type="1196" corpse="36244"/>
+	<look type="1196" corpse="36123"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -39,15 +39,15 @@
 	<loot>
 		<item name="Platinum Coin" countmax="3" chance="100000"/>
 		<item name="Envenomed Arrow" countmax="35" chance="68000"/>
-		<item name="Terra Rod" chance="10900"/>
+
 		<item name="Goanna Meat" chance="9800"/>
-		<item name="Snakebite Rod" chance="9000"/>
+
 		<item name="Blue Goanna Scale" chance="7900"/>
 		<item name="Goanna Claw" chance="4300"/>
 		<item name="Serpent Sword" chance="4000"/>
 		<item name="Leaf Star" countmax="3" chance="3800"/>
 		<item name="Silver Amulet" chance="3800"/>
-		<item name="Springsprout Rod" chance="2700"/>
+
 		<item name="Scared Frog" chance="2100"/>
 		<item name="Terra Amulet" chance="1100"/>
 		<item name="Lizard Heart" chance="800"/>

@@ -4,7 +4,7 @@
 	<look type="381" corpse="13312" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -50,8 +50,6 @@
 		<item id="9970" countmax="5" chance="100000" />		<!-- small topaz -->
 		<item id="13299" chance="100000" />					<!-- stampor horn -->
 		<item id="13300" countmax="2" chance="100000" />		<!-- stampor talon -->
-		<item id="7588" countmax="2" chance="100000" />		<!-- strong health potion -->
-		<item id="7589" countmax="2" chance="100000" />		<!-- strong mana potion -->
 		<item id="7452" chance="50000" />					<!-- spiked squelcher -->
 	</loot>
 </monster>

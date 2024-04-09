@@ -25,7 +25,8 @@ local itemsTable = {
 	["santa teddy"] = {itemId = 11255, count = 500},
 	["maxxen santa"] = {itemId = 24321, count = 250},
 	["present bag"] = {itemId = 6497, count = 1},
-	["ferumbras' teddy santa"] = {itemId = 25535, count = 250}
+	["ferumbras' teddy santa"] = {itemId = 25535, count = 250},
+	["santa leech"] = {itemId = 37472, count = 250}
 }
 
 local function creatureSayCallback(cid, type, msg)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Minotaur Cult Zealot" nameDescription="a minotaur cult zealot" race="blood" experience="1350" speed="250">
+<monster name="Minotaur Cult Zealot" nameDescription="a minotaur cult zealot" race="blood" experience="1350" speed="250" raceid="1510">
 	<health now="1800" max="1800" />
 	<look type="29" corpse="5983" />
 	<targetchange interval="4000" chance="10" />
@@ -39,11 +39,10 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="150" chance="100000" />
-		<item name="snakebite rod" chance="11670" />
+
 		<item name="taurus mace" chance="5360" />
 		<item name="cultish robe" chance="9200" />
 		<item name="purple robe" chance="16230" />
-		<item name="strong mana potion" countmax="3" chance="10660" />
 		<item name="small ruby" countmax="2" chance="2030" />
 		<item name="small topaz" countmax="2" chance="2680" />
 		<item name="yellow gem" chance="220" />

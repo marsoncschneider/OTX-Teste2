@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Lizard Legionnaire" nameDescription="a lizard legionnaire" race="blood" experience="1100" speed="133">
+<monster name="Lizard Legionnaire" nameDescription="a lizard legionnaire" race="blood" experience="1100" speed="133" raceid="624">
 	<health now="1400" max="1400"/>
 	<look type="338" corpse="11276"/>
 	<targetchange interval="4000" chance="10"/>
@@ -41,7 +41,7 @@
 		<item name="gold coin" countmax="65" chance="54000"/>
 		<item name="lizard leather" chance="970"/>
 		<item name="lizard scale" countmax="3" chance="980"/>
-		<item name="strong health potion" chance="3880"/>
+		<item name="gold coin" chance="3880"/>
 		<item name="red lantern" chance="530"/>
 		<item name="bunch of ripe rice" chance="1950"/>
 		<item name="Zaoan armor" chance="70"/>

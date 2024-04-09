@@ -40,10 +40,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			local lyreProgress = player:getStorageValue(Storage.Diapason.Lyre)
 			if lyreProgress < 7
 					and player:getStorageValue(Storage.Diapason.Edala) ~= 1
-					and player:getStorageValue(Storage.Diapason.LyreTimer) < os.time() then
+					and player:getStorageValue(Storage.Diapason.LyreTimer) < os.stime() then
 				player:setStorageValue(Storage.Diapason.Lyre, math.max(0, lyreProgress) + 1)
 				player:setStorageValue(Storage.Diapason.Edala, 1)
-				player:setStorageValue(Storage.Diapason.LyreTimer, os.time() + 86400)
+				player:setStorageValue(Storage.Diapason.LyreTimer, os.stime() + 86400)
 			end
 		end
 	end

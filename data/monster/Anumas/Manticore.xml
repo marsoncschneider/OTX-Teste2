@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Manticore" nameDescription="a manticore" race="blood" experience="5100" speed="150">
 	<health now="6700" max="6700"/>
-	<look type="1189" head="116" body="97" legs="113" feet="20" corpse="36225"/>
+	<look type="1189" head="116" body="97" legs="113" feet="20" corpse="36104"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -43,16 +43,14 @@
 	</immunities>
 	<loot>
 		<item name="platinum coin" countmax="3" chance="100000"/>
-		<item name="flaming arrow" countmax="11" chance="4090"/>
-		<item name="royal star" countmax="4" chance="1120"/>
 		<item name="manticore tail" chance="8550"/>
 		<item name="manticore ear" chance="6690"/>
 		<item name="magma legs" chance="740"/>
 		<item name="magma monocle" chance="1860"/>
 		<item name="magma boots" chance="370"/>
 		<item name="magma coat" chance="2970"/>
-		<item name="wand of everblazing" chance="1120"/>
-		<item name="wand of dragonbreath" chance="740"/>
-		<item name="wand of draconia" chance="370"/>
+
+
+
 	</loot>
 </monster>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Askarak Demon" nameDescription="an askarak demon" race="venom" experience="900" speed="115">
+<monster name="Askarak Demon" nameDescription="an askarak demon" race="venom" experience="900" speed="115" raceid="727">
 	<health now="1500" max="1500"/>
 	<look type="420" corpse="13815"/>
 	<targetchange interval="4000" chance="10"/>
@@ -62,9 +62,7 @@
 		<item name="magic sulphur" chance="102"/>
 		<item name="assassin star" countmax="5" chance="4761"/>
 		<item name="mastermind potion" chance="431"/>
-		<item name="strong health potion" chance="5263"/>
-		<item name="strong mana potion" chance="5263"/>
 		<item name="terra legs" chance="123"/>
-		<item name="springsprout rod" chance="512"/>
+
 	</loot>
 </monster>

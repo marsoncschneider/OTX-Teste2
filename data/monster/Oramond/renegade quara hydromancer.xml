@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Renegade Quara Hydromancer" nameDescription="a renegade quara hydromancer" race="blood" experience="1800" speed="245" manacost="330">
+<monster name="Renegade Quara Hydromancer" nameDescription="a renegade quara hydromancer" race="blood" experience="1800" speed="245" manacost="330" raceid="1098">
 	<health now="2000" max="2000"/>
 	<look type="47" corpse="6066"/>
 	<targetchange interval="2000" chance="0"/>
@@ -49,7 +49,7 @@
 		<item id="18415" chance="3571"/> <!-- green crystal shard -->
 		<item id="8870" chance="3571"/> <!-- spirit cloak -->
 		<item id="5914" chance="1428"/> <!-- yellow piece of cloth -->
-		<item id="2189" chance="1428"/> <!-- wand of cosmic energy -->
+
 		<item id="2143" chance="719"/> <!-- white pearl -->
 		<item id="2144" chance="719"/> <!-- black pearl -->
 		<item id="5895" chance="719"/> <!-- fish fin -->

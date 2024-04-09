@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Lizard High Guard" nameDescription="a lizard high guard" race="blood" experience="1450" speed="119">
+<monster name="Lizard High Guard" nameDescription="a lizard high guard" race="blood" experience="1450" speed="119" raceid="625">
 	<health now="1800" max="1800"/>
 	<look type="337" corpse="11272"/>
 	<targetchange interval="4000" chance="10"/>
@@ -49,8 +49,8 @@
 		<item name="tower shield" chance="1040"/>
 		<item name="lizard leather" chance="1000"/>
 		<item name="lizard scale" chance="970"/>
-		<item name="strong health potion" chance="11925"/>
-		<item name="great health potion" chance="7070"/>
+		<item name="gold coin" chance="11925"/>
+		<item name="gold coin" chance="7070"/>
 		<item name="red lantern" chance="1220"/>
 		<item name="bunch of ripe rice" chance="4950"/>
 		<item name="Zaoan armor" chance="80"/>

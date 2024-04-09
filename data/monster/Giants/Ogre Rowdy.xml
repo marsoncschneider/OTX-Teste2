@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Ogre Rowdy" nameDescription="an ogre rowdy" race="blood" experience="4200" speed="210">
+<monster name="Ogre Rowdy" nameDescription="an ogre rowdy" race="blood" experience="4200" speed="210" raceid="1821" >
 	<health now="4500" max="4500"/>
-	<look type="1213" corpse="36366"/>
+	<look type="1213" corpse="36245"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -42,14 +42,13 @@
 	</immunities>
 	<loot>
 		<item name="platinum coin" countmax="3" chance="100000"/>
-		<item name="flaming arrow" countmax="19" chance="22040"/>
 		<item name="ogre ear stud" chance="12900"/>
 		<item name="ogre nose ring" chance="20970"/>
 		<item name="skull fetish" chance="12900"/>
-		<item name="wand of inferno" chance="8600"/>
+
 		<item name="jalapeno pepper" countmax="3" chance="3760"/>
-		<item name="wand of draconia" chance="2150"/>
-		<item name="wand of everblazing" chance="1080"/>
+
+
 		<item name="ogre choppa" chance="540"/>
 	</loot>
 </monster>

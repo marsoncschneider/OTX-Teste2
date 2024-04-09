@@ -19,7 +19,7 @@ local voices = {
 	{ text = 'A story of a knight untold, on Rowana the dice she rolled. She lured players from afar. Who could resist a shining star? She promised gold and many items, then stole their heart with cunning kindness.' },
 	{ text = 'Do you think it\'s just a game? Don\'t you fear the dragon\'s flame? If you are as brave as bright, if you do not stray from fight, you may want to hear tonight, the tale of Guardia\'s lonely knight.' },
 	{ text = 'For a knight from Yanara 10,000 gold were a lot. So he ventured with a team into the desert to win that pot. He solved all the riddles, strongly willed. But on his journey home he sadly was killed.' },
-	{ text = 'A great mage from Celesta went dungeon down deep, he was very brave but his wand was cheap. Among white skeletons one of them was red. Last what he saw were the words: \'You are dead!\'' },
+
 	{ text = 'A young sorcerer born and raised on Astera when dragons were scary, it was that kind of era. Walking all the way to the city of Venore, he stole from the dwarven bridge nothing less than an iron ore.' },
 	{ text = 'A druid from Eternia just bought his first boots of haste, to finally have his leather boots replaced. Catching a backpack of fish was now his dream, but he ended up swinging his new boots upstream.' },
 	{ text = 'A sorcerer from Efidia took his horse and got it saddled, and set out for battle. His horse lost control and threw him into a hole. Now his team lost all hope, because he forgot to bring a rope.' },

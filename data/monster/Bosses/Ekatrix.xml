@@ -49,6 +49,6 @@
 		<item name="cookie" countmax="10" chance="25000"/>
 		<item name="star herb" chance="8333"/>
 		<item name="bag of apple slices" chance="4170"/>
-		<item name="necrotic rod" chance="4170"/>
+
 	</loot>
 </monster>

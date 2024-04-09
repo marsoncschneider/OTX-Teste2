@@ -39,7 +39,7 @@ end
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	if item.itemid == 9827 then
-		if getGlobalStorageValue(18081) >= os.time() then
+		if getGlobalStorageValue(18081) >= os.stime() then
 			doPlayerSendTextMessage(player, 19, "You need to wait 15 minutes to use again.")
 			return true
 		end
@@ -53,7 +53,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 			end
 			spec:remove()
 		end
-		setGlobalStorageValue(18081, os.time()+15*60)
+		setGlobalStorageValue(18081, os.stime()+15*60)
 		player:say("Everyone in this place will be teleported into Glooth Fairy\'s hideout in one minute. No way back!!!", TALKTYPE_MONSTER_SAY)
 		addEvent(PrepareEnter,60*1000)
 

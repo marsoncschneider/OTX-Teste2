@@ -46,7 +46,7 @@ local config = {
 }
 
 local yasirEnabled = true
-local yasirChance = 33
+local yasirChance = 100
 
 local function spawnYasir(position)
 	local npc = Game.createNpc('Yasir', position)
@@ -91,7 +91,7 @@ function onStartup()
 				end
 			end
 
-			Game.loadMap('data/world/yasir/' .. randTown.mapName .. '.otbm')
+			Game.loadMap('data/world/worldchanges/yasir/' .. randTown.mapName .. '.otbm')
 			addEvent(spawnYasir, 5000, randTown.yasirPosition)
 		else
 			print('>> Yasir: not this time.')

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Askarak Prince" nameDescription="an askarak prince" race="venom" experience="1700" speed="125">
+<monster name="Askarak Prince" nameDescription="an askarak prince" race="venom" experience="1700" speed="125" raceid="729">
 	<health now="2600" max="2600"/>
 	<look type="419" corpse="13957"/>
 	<targetchange interval="4000" chance="10"/>
@@ -57,10 +57,8 @@
 		<item name="brown mushroom" countmax="5" chance="6666"/>
 		<item name="magic sulphur" chance="740"/>
 		<item name="mastermind potion" chance="1315"/>
-		<item name="strong health potion" chance="14285"/>
-		<item name="strong mana potion" chance="14285"/>
 		<item name="terra mantle" chance="840"/>
-		<item name="springsprout rod" chance="950"/>
+
 		<item name="demonic finger" chance="420"/>
 	</loot>
 </monster>

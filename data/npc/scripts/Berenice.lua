@@ -18,7 +18,7 @@ local function creatureSayCallback(cid, type, msg)
 		if player:getStorageValue(Storage.ExplorerSociety.CalassaQuest) == 2 then
 			npcHandler:say("OH! So you have safely returned from Calassa! Congratulations, were you able to retrieve the logbook?", cid)
 			npcHandler.topic[cid] = 5
-		elseif player:getStorageValue(Storage.ExplorerSociety.TheOrcPowder) > 34 and player:getStorageValue(Storage.ExplorerSociety.QuestLine) > 34 then
+		elseif player:getStorageValue(Storage.ExplorerSociety.TheOrcPowder) > 34 and player:getStorageValue(Storage.ExplorerSociety.Mission07) > 2 then
 			npcHandler:say("The most important mission we currently have is an expedition to {Calassa}.", cid)
 			npcHandler.topic[cid] = 1
 		end

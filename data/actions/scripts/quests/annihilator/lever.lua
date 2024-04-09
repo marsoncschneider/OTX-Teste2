@@ -1,26 +1,26 @@
 local config = {
-	requiredLevel = 100,
+	requiredLevel = 60,
 	daily = false,
-	centerDemonRoomPosition = Position(33221, 31659, 13),
+	centerDemonRoomPosition = Position(193, 118, 10),
 	playerPositions = {
-		Position(33225, 31671, 13),
-		Position(33224, 31671, 13),
-		Position(33223, 31671, 13),
-		Position(33222, 31671, 13)
+		Position(194, 118, 9),
+		Position(193, 118, 9),
+		Position(192, 118, 9),
+		Position(191, 118, 9)
 	},
 	newPositions = {
-		Position(33222, 31659, 13),
-		Position(33221, 31659, 13),
-		Position(33220, 31659, 13),
-		Position(33219, 31659, 13)
+		Position(193, 118, 10),
+		Position(192, 118, 10),
+		Position(191, 118, 10),
+		Position(190, 118, 10)
 	},
 	demonPositions = {
-		Position(33219, 31657, 13),
-		Position(33221, 31657, 13),
-		Position(33223, 31659, 13),
-		Position(33224, 31659, 13),
-		Position(33220, 31661, 13),
-		Position(33222, 31661, 13)
+		Position(190, 116, 10),
+		Position(192, 116, 10),
+		Position(191, 120, 10),
+		Position(191, 120, 10),
+		Position(194, 118, 10),
+		Position(195, 118, 10)
 	}
 }
 
@@ -56,7 +56,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 
 		for i = 1, #config.demonPositions do
-			Game.createMonster("Angry Demon", config.demonPositions[i])
+			Game.createMonster("Demon", config.demonPositions[i])
 		end
 
 		local players

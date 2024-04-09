@@ -18,7 +18,7 @@ local config = {
 		["sorcerer"] = {
 			text = "A SORCERER! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
 			vocationId = 1,
-			--equipment spellbook, wand of vortex, magician's robe, mage hat, studded legs, leather boots, scarf
+
 			{{2175, 1}, {2190, 1}, {8819, 1}, {8820, 1}, {2468, 1}, {2643, 1}, {2661, 1}},
 			--container rope, shovel, mana potion
 			{{2120, 1}, {2554, 1}, {7620, 1}}
@@ -27,7 +27,7 @@ local config = {
 		["druid"] = {
 			text = "A DRUID! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
 			vocationId = 2,
-			--equipment spellbook, snakebite rod, magician's robe, mage hat, studded legs, leather boots scarf
+
 			{{2175, 1}, {2182, 1}, {8819, 1}, {8820, 1}, {2468, 1}, {2643, 1}, {2661, 1}},
 			--container rope, shovel, mana potion
 			{{2120, 1}, {2554, 1}, {7620, 1}}
@@ -113,6 +113,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("SO BE IT!", cid)
 			player:setVocation(Vocation(vocation[cid]))
 			player:setTown(Town(town[cid]))
+			player:sendBasicData()
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 			player:teleportTo(destination)
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)

@@ -26,14 +26,14 @@ local chances = math.random(10)
 
 if item.actionid == 50006 then
 	if(item.itemid == 13500) then
-		if getPlayerStorageValue(cid, 324329) <= os.time() then
+		if getPlayerStorageValue(cid, 324329) <= os.stime() then
 			if chances == 1 then
 			doTransformItem(item.uid, 13495)
 			setGlobalStorageValue(56530, 1)
 		else
 			player:say(config["randomText"][math.random(#config["randomText"])], TALKTYPE_ORANGE_1)
 			player:getPosition():sendMagicEffect(CONST_ME_POFF)
-			setPlayerStorageValue(cid, 324329, os.time()+exaustedSeconds*1800)
+			setPlayerStorageValue(cid, 324329, os.stime()+exaustedSeconds*1800)
 		end
 	else
 			doPlayerSendCancel(cid, "You need wait 30 minutes to use again.")
@@ -43,14 +43,14 @@ if item.actionid == 50006 then
 elseif item.actionid == 50007 then
 	if(item.itemid == 13500) then
 		if(getGlobalStorageValue(56530) == 1) then
-			if getPlayerStorageValue(cid, 324330) <= os.time() then
+			if getPlayerStorageValue(cid, 324330) <= os.stime() then
 				if chances == 1 then
 				doTransformItem(item.uid, 13495)
 				setGlobalStorageValue(56530, 2)
 			else
 				player:say(config["randomText"][math.random(#config["randomText"])], TALKTYPE_ORANGE_1)
 				player:getPosition():sendMagicEffect(CONST_ME_POFF)
-				setPlayerStorageValue(cid, 324330, os.time()+exaustedSeconds*1800)
+				setPlayerStorageValue(cid, 324330, os.stime()+exaustedSeconds*1800)
 				end
 			else
 				doPlayerSendCancel(cid, "You need wait 30 minutes to use again.")
@@ -63,14 +63,14 @@ elseif item.actionid == 50007 then
 elseif item.actionid == 50008 then
 	if(item.itemid == 13500) then
 		if(getGlobalStorageValue(56530) == 2) then
-			if getPlayerStorageValue(cid, 324331) <= os.time() then
+			if getPlayerStorageValue(cid, 324331) <= os.stime() then
 				if chances == 1 then
 				doTransformItem(item.uid, 13495)
 				setGlobalStorageValue(56530, 3)
 			else
 				player:say(config["randomText"][math.random(#config["randomText"])], TALKTYPE_ORANGE_1)
 				player:getPosition():sendMagicEffect(CONST_ME_POFF)
-				setPlayerStorageValue(cid, 324331, os.time()+exaustedSeconds*1800)
+				setPlayerStorageValue(cid, 324331, os.stime()+exaustedSeconds*1800)
 				end
 			else
 				doPlayerSendCancel(cid, "You need wait 30 minutes to use again.")
@@ -84,14 +84,14 @@ elseif item.actionid == 50008 then
 elseif item.actionid == 50009 then
 	if(item.itemid == 13500) then
 		if(getGlobalStorageValue(56530) == 3) then
-			if getPlayerStorageValue(cid, 324332) <= os.time() then
+			if getPlayerStorageValue(cid, 324332) <= os.stime() then
 				if chances == 1 then
 				doTransformItem(item.uid, 13495)
 				setGlobalStorageValue(56530, 4)
 			else
 				player:say(config["randomText"][math.random(#config["randomText"])], TALKTYPE_ORANGE_1)
 				player:getPosition():sendMagicEffect(CONST_ME_POFF)
-				setPlayerStorageValue(cid, 324332, os.time()+exaustedSeconds*1800)
+				setPlayerStorageValue(cid, 324332, os.stime()+exaustedSeconds*1800)
 				end
 			else
 				doPlayerSendCancel(cid, "You need wait 30 minutes to use again.")

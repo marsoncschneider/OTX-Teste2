@@ -7,8 +7,8 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()		npcHandler:onThink()		end
 
-local voices = { {text = 'Come into my tavern and share some stories!'} }
-npcHandler:addModule(VoiceModule:new(voices))
+-- local voices = { {text = 'Come into my tavern and share some stories!'} }
+-- npcHandler:addModule(VoiceModule:new(voices))
 
 -- Basic
 keywordHandler:addKeyword({'hut'}, StdModule.say, {npcHandler = npcHandler, text = "I hope you like it. Would you like some {food}?"})

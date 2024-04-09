@@ -31,9 +31,9 @@ end
 
 combat2:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
-local function spellDamage(cid, target, var)
+local function spellDamage(cid, alvo, var)
 	local creature = Creature(cid)
-	local target = Creature(target)
+	local target = Creature(alvo)
 	if not creature or not target then
 		return
 	end

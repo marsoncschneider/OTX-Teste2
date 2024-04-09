@@ -1,135 +1,142 @@
-local keywordHandler = KeywordHandler:new()
+ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)
-npcHandler:onCreatureAppear(cid)
-end
-function onCreatureDisappear(cid)
-npcHandler:onCreatureDisappear(cid)
-end
-function onCreatureSay(cid, type, msg)
-npcHandler:onCreatureSay(cid, type, msg)
-end
-function onThink()
-npcHandler:onThink()	
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
+
+-- Storage IDs -- 
+local goldenOutfit = Storage.goldenOutfit
+local goldenFirstAddon = Storage.goldenFirstAddon
+local goldenSecondAddon = Storage.goldenSecondAddon 
+		
+local valoroutfit = 500000000
+local valorprimeiroaddon = 250000000
+local valorsedundoaddon = 250000000
+
+newaddon    = 'Here you are, enjoy your brand new addon!' 
+newoutfit    = 'Take this armor as a token of great gratitude. Let us forever remember this day, my friend!' 
+noitems        = 'You do not have all the required items.' 
+noitems2    = 'You do not have all the required items or you do not have the first addon, which by the way, is a requirement for this addon.' 
+already        = 'It seems you already have this addon, don\'t you try to mock me son!' 
+newaddonprimeiro        = 'Take this boots as a token of great gratitude. Let us forever remember this day, my friend!' 
+newaddonsegundo        = 'Take this helmet as a token of great gratitude. Let us forever remember this day, my friend!' 
+      
+
+-- Golden Outfits  -- 
+function goldenoutfit(cid, message, keywords, parameters, node) 
+
+    if(not npcHandler:isFocused(cid)) then 
+        return false 
+    end 
+     
+    local player_gold     = getPlayerItemCount(cid,2148) 
+    local player_plat     = getPlayerItemCount(cid,2152)*100 
+    local player_crys     = getPlayerItemCount(cid,2160)*10000 
+    local player_money     = player_gold + player_plat + player_crys 
+
+    if isPremium(cid) then  
+		local player = Player(cid)
+		if not player:hasOutfit(1211) and not player:hasOutfit(1210) then 
+			if  player:removeMoneyNpc(valoroutfit) then  
+				selfSay(newoutfit, cid)  
+				doSendMagicEffect(getCreaturePosition(cid), 13) 
+				doPlayerAddOutfit(cid, 1211)  --- female
+				doPlayerAddOutfit(cid, 1210)  --- male
+				setPlayerStorageValue(cid,goldenOutfit,1) 
+			else 
+				selfSay(noitems, cid) 
+			end 
+		else 
+			selfSay(already, cid) 
+		end 
+    end 
 end
 
-local function creatureSayCallback(cid, type, msg)
-	if not npcHandler:isFocused(cid) then 
-		return false 
+ -- Golden Outfits [primeiro addon]  -- 
+function primeiroaddon(cid, message, keywords, parameters, node) 
+
+
+    if(not npcHandler:isFocused(cid)) then 
+        return false 
+    end 
+     
+    local player_gold     = getPlayerItemCount(cid,2148) 
+    local player_plat     = getPlayerItemCount(cid,2152)*100 
+    local player_crys     = getPlayerItemCount(cid,2160)*10000 
+    local player_money     = player_gold + player_plat + player_crys 
+	
+    if isPremium(cid) then
+		local player = Player(cid)
+		if not player:hasOutfit(1211, 1) and not player:hasOutfit(1210, 1) then 
+			if  player:removeMoneyNpc(valorprimeiroaddon) then  
+				selfSay(newaddonprimeiro, cid)  
+				doSendMagicEffect(getCreaturePosition(cid), 13) 
+				doPlayerAddOutfit(cid, 1211,1)  --- female
+				doPlayerAddOutfit(cid, 1210,1)  --- male
+				setPlayerStorageValue(cid,goldenFirstAddon,1) 
+			else 
+				selfSay(noitems, cid) 
+			end 
+		else 
+			selfSay(already, cid) 
+		end 
 	end
-	local player = Player(cid)
-	if(msgcontains(msg, "outfit")) or (msgcontains(msg, "addon")) then
-		selfSay("In exchange for a truly generous donation, I will offer a special outfit. Do you want to make a donation?", cid)
-		npcHandler.topic[cid] = 1
-	elseif(msgcontains(msg, "yes")) then
-		-- vamos tratar todas condições para YES aqui
-		if npcHandler.topic[cid] == 1 then
-			-- para o primeiro Yes, o npc deve explicar como obter o outfit
-			selfSay("Excellent! Now, let me explain. If you donate 1.000.000.000 gold pieces, you will be entitled to wear a unique outfit. ...", cid)
-			selfSay("You will be entitled to wear the {armor} for 500.000.000 gold pieces, {helmet} for an additional 250.000.000 and the {boots} for another 250.000.000 gold pieces. ...", cid)
-			selfSay("What will it be?", cid)
-			npcHandler.topic[cid] = 2
-		-- O NPC só vai oferecer os addons se o player já tiver escolhido.
-		elseif npcHandler.topic[cid] == 2 then
-			-- caso o player repita o yes, resetamos o tópico para começar de novo?
-			selfSay("In that case, return to me once you made up your mind.", cid)
-			npcHandler.topic[cid] = 0
-		-- Inicio do outfit
-		elseif npcHandler.topic[cid] == 3 then -- ARMOR/OUTFIT
-			if player:getStorageValue(Storage.OutfitQuest.GoldenOutfit) < 1 then
-				if player:getMoney() + player:getBankBalance() >= 500000000 then
-					local inbox = player:getSlotItem(CONST_SLOT_STORE_INBOX)
-					if inbox and inbox:getEmptySlots() > 0 then
-						local decoKit = inbox:addItem(26054, 1)
-						local decoItemName = ItemType(36345):getName()
-							decoKit:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "You bought this item in the Store.\nUnwrap it in your own house to create a " .. decoItemName .. ".")
-							decoKit:setActionId(36345)
-							selfSay("Take this armor as a token of great gratitude. Let us forever remember this day, my friend!", cid)
-							player:removeMoneyNpc(500000000)
-							player:addOutfit(1211)
-							player:addOutfit(1210)
-							player:getPosition():sendMagicEffect(171)
-							player:setStorageValue(Storage.OutfitQuest.GoldenOutfit, 1)
-					else
-						selfSay("Please make sure you have free slots in your store inbox.", cid)
-					end				
-				else
-					selfSay("You do not have enough money to donate that amount.", cid)
-				end
-			else
-				selfSay("You alread have that addon.", cid)
-			end
-			npcHandler.topic[cid] = 2
-		-- Fim do outfit
-		-- Inicio do helmet
-		elseif npcHandler.topic[cid] == 4 then
-			if player:getStorageValue(Storage.OutfitQuest.GoldenOutfit) == 1 then
-				if player:getStorageValue(Storage.OutfitQuest.GoldenOutfit) < 2 then
-					if player:getMoney() + player:getBankBalance() >= 250000000 then
-						selfSay("Take this helmet as a token of great gratitude. Let us forever remember this day, my friend. ", cid)
-						player:removeMoneyNpc(250000000)
-						player:addOutfitAddon(1210, 1)
-						player:addOutfitAddon(1211, 1)
-						player:getPosition():sendMagicEffect(171)
-						player:setStorageValue(Storage.OutfitQuest.GoldenOutfit, 2)
-						npcHandler.topic[cid] = 2
-					else
-						selfSay("You do not have enough money to donate that amount.", cid)
-						npcHandler.topic[cid] = 2
-					end
-				else
-					selfSay("You alread have that outfit.", cid)
-					npcHandler.topic[cid] = 2
-				end
-			else
-				selfSay("You need to donate {armor} outfit first.", cid)
-				npcHandler.topic[cid] = 2
-			end
-			npcHandler.topic[cid] = 2
-		-- Fim do helmet
-		-- Inicio da boots
-		elseif npcHandler.topic[cid] == 5 then
-			if player:getStorageValue(Storage.OutfitQuest.GoldenOutfit) == 2 then
-				if player:getStorageValue(Storage.OutfitQuest.GoldenOutfit) < 3 then
-					if player:getMoney() + player:getBankBalance() >= 250000000 then
-						selfSay("Take this boots as a token of great gratitude. Let us forever remember this day, my friend. ", cid)
-						player:removeMoneyNpc(250000000)
-						player:addOutfitAddon(1210, 2)
-						player:addOutfitAddon(1211, 2)
-						player:getPosition():sendMagicEffect(171)
-						player:setStorageValue(Storage.OutfitQuest.GoldenOutfit, 3)
-						npcHandler.topic[cid] = 2
-					else
-						selfSay("You do not have enough money to donate that amount.", cid)
-						npcHandler.topic[cid] = 2
-					end
-				else
-					selfSay("You alread have that outfit.", cid)
-					npcHandler.topic[cid] = 2
-				end
-			else
-				selfSay("You need to donate {helmet} addon first.", cid)
-				npcHandler.topic[cid] = 2
-			end
-			-- Fim da boots
-			npcHandler.topic[cid] = 2
-	end
-	--inicio das opções armor/helmet/boots
-	-- caso o player não diga YES, dirá alguma das seguintes palavras:
-	elseif(msgcontains(msg, "armor")) and npcHandler.topic[cid] == 2 then
-		selfSay("So you wold like to donate 500.000.000 gold pieces which in return will entitle you to wear a unique armor?", cid)
-		npcHandler.topic[cid] = 3 -- alterando o tópico para que no próximo YES ele faça o outfit
-	elseif(msgcontains(msg, "helmet")) and npcHandler.topic[cid] == 2 then
-		selfSay("So you would like to donate 250.000.000 gold pieces which in return will entitle you to wear unique helmet?", cid)
-		npcHandler.topic[cid] = 4 -- alterando o tópico para que no próximo YES ele faça o helmet
-	elseif(msgcontains(msg, "boots")) and npcHandler.topic[cid] == 2 then
-		selfSay("So you would like to donate 250.000.000 gold pieces which in return will entitle you to wear a unique boots?", cid)
-		npcHandler.topic[cid] = 5 -- alterando o tópico para que no próximo YES ele faça a boots
-	end
-	-- fim das opções armor/helmet/boots
 end
+
+ -- Golden Outfits [segundo addon]  -- 
+function segundoaddon(cid, message, keywords, parameters, node) 
+
+    if(not npcHandler:isFocused(cid)) then 
+        return false 
+    end 
+     
+    local player_gold     = getPlayerItemCount(cid,2148) 
+    local player_plat     = getPlayerItemCount(cid,2152)*100 
+    local player_crys     = getPlayerItemCount(cid,2160)*10000 
+    local player_money     = player_gold + player_plat + player_crys 
+
+    if isPremium(cid) then  
+		local player = Player(cid)
+		if not player:hasOutfit(1211, 2) and not player:hasOutfit(1210, 2) then 
+			if  player:removeMoneyNpc(valorsedundoaddon) then  
+				selfSay(newaddonsegundo, cid)  
+				doSendMagicEffect(getCreaturePosition(cid), 13) 
+				doPlayerAddOutfit(cid, 1211, 2)  --- female
+				doPlayerAddOutfit(cid, 1210, 2)  --- male
+				setPlayerStorageValue(cid,goldenSecondAddon, 1) 
+			else 
+				selfSay(noitems, cid) 
+			end 
+		else 
+			selfSay(already, cid) 
+		end 
+    end
+end
+
+   
+local node2 = 
+keywordHandler:addKeyword({'outfit'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'In exchange for a truly generous donation I will offer a special outfit. Do you want to make a donation?\nExcellent! Now, let me explain.\n If you donate 1.000.000.000 gold pieces, you will be entitled to wear a unique outfit...\nYou will be entitled to wear the {armor} for 500.000.000 gold pieces, {boots} for an additional 250.000.000 and the {helmet} for another 250.000.000 gold pieces. ...\nWhat will it be?'})
+node2:addChildKeyword({'armor'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'So you wold like to donate 500.000.000 gold pieces which in return will entitle you to wear a unique armor?', reset = false})
+node2:addChildKeyword({'yes'}, goldenoutfit, {}) 
+node2:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then, come back when you are ready.', reset = true})
+
+local node3 = 
+keywordHandler:addKeyword({'helmet'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'So you wold like to donate 250.000.000 gold pieces which in return will entitle you to wear a unique helmet?'})
+node3:addChildKeyword({'yes'}, segundoaddon, {})   
+node3:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then, come back when you are ready.', reset = true})
+ 
+	 
+local node4 = 
+keywordHandler:addKeyword({'boots'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'So you wold like to donate 250.000.000 gold pieces which in return will entitle you to wear a unique boots?'})
+node4:addChildKeyword({'yes'}, primeiroaddon, {}) 
+node4:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'Alright then, come back when you are ready.', reset = true})
+
+	 
+
+	 
 
 -- Promotion
 local node1 = keywordHandler:addKeyword({'promot'}, StdModule.say, {npcHandler = npcHandler, onlyFocus = true, text = 'I can promote you for 20000 gold coins. Do you want me to promote you?'})
@@ -140,10 +147,6 @@ keywordHandler:addKeyword({'uniforms'}, StdModule.say, {npcHandler = npcHandler,
 	function(player) return player:getStorageValue(Storage.postman.Mission06) == 5 end,
 	function(player) player:setStorageValue(Storage.postman.Mission06, 6) end
 )
-
--- Greeting
-keywordHandler:addGreetKeyword({'hail queen'}, {npcHandler = npcHandler, text = 'I greet thee, my loyal {subject}.'})
-keywordHandler:addGreetKeyword({'salutations queen'}, {npcHandler = npcHandler, text = 'I greet thee, my loyal {subject}.'})
 
 keywordHandler:addKeyword({'uniforms'}, StdModule.say, {npcHandler = npcHandler, text = 'The uniforms of our guards and soldiers are of unparraleled quality of course.'})
 
@@ -209,9 +212,10 @@ keywordHandler:addKeyword({'reward'}, StdModule.say, {npcHandler = npcHandler, t
 keywordHandler:addKeyword({'tbi'}, StdModule.say, {npcHandler = npcHandler, text = 'A dusgusting organisation, which could be only created by men.'})
 keywordHandler:addKeyword({'eremo'}, StdModule.say, {npcHandler = npcHandler, text = 'It is said that he lives on a small island near Edron. Maybe the people there know more about him.'})
 
+npcHandler:setMessage(MESSAGE_GREET, 'I greet thee, my loyal {subject}.')
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Farewell, |PLAYERNAME|!')
 
-npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
-
-npcHandler:addModule(FocusModule:new())
+local focusModule = FocusModule:new()
+focusModule:addGreetMessage('hail queen')
+focusModule:addGreetMessage('salutations queen')
+npcHandler:addModule(focusModule)

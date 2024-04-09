@@ -1,6 +1,6 @@
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
-	if player:getStorageValue(14333) > os.time() then
+	if player:getStorageValue(14333) > os.stime() then
 		player:setStorageValue(14333, -1)
 		player:sendTextMessage(19, "You access to World Devourer was released!")
 		item:transform(26343)

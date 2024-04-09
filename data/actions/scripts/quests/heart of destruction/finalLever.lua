@@ -404,7 +404,7 @@ function onUse(player, item, fromPosition, itemEx, toPosition)
 						teamHunger = storeHunger[i]
 						config.hungerPositions[i]:sendMagicEffect(CONST_ME_POFF)
 						teamHunger:teleportTo(config.hungerNewPos)
-						teamHunger:setStorageValue(14333, os.time() + 7*24*60*60)
+						teamHunger:setStorageValue(14333, os.stime() + 7*24*60*60)
 						teamHunger:setStorageValue(14334, 1) --storage Hunger
 						teamHunger:registerEvent("DevourerStorage")
 					end
@@ -413,7 +413,7 @@ function onUse(player, item, fromPosition, itemEx, toPosition)
 						teamDestruction = storeDestruction[i]
 						config.destructionPositions[i]:sendMagicEffect(CONST_ME_POFF)
 						teamDestruction:teleportTo(config.destructionNewPos)
-						teamDestruction:setStorageValue(14333, os.time() + 7*24*60*60)
+						teamDestruction:setStorageValue(14333, os.stime() + 7*24*60*60)
 						teamDestruction:setStorageValue(14335, 1) --storage Destruction
 						teamDestruction:registerEvent("DevourerStorage")
 					end
@@ -422,7 +422,7 @@ function onUse(player, item, fromPosition, itemEx, toPosition)
 						teamRage = storeRage[i]
 						config.ragePositions[i]:sendMagicEffect(CONST_ME_POFF)
 						teamRage:teleportTo(config.rageNewPos)
-						teamRage:setStorageValue(14333, os.time() + 7*24*60*60)
+						teamRage:setStorageValue(14333, os.stime() + 7*24*60*60)
 						teamRage:setStorageValue(14336, 1) --storage Rage
 						teamRage:registerEvent("DevourerStorage")
 					end

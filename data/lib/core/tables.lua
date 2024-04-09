@@ -103,3 +103,26 @@ end
 function table.unserialize(str)
 	return loadstring("return " .. str)()
 end
+
+function table.mean(table)
+	local value, count = 0, 0
+	for i, v in pairs(table) do
+		if type(v) == "number" then
+			value = v + value
+			count = count + 1
+		end
+	end
+
+	return value/count
+end
+
+-- usar para tabelas com index string ou id aleatorio
+function table.realcount(table)
+	local count = 0
+	for i, v in pairs(table) do
+		count = count + 1
+	end
+
+	return count
+end
+

@@ -75,7 +75,7 @@ function onThink(creature)
 			spawnSandMonster("Sand Brood", 10)
 		end
 	elseif str == 4 then
-		local tm = os.time()
+		local tm = os.stime()
 		if ((maxhealth*0.50) > creature:getHealth() ) then
 			creature:say("THE SANDKING VANISHES INTO THE SAND AND HIS BROOD EMERGES!",TALKTYPE_MONSTER_SAY)
 			creature:remove()

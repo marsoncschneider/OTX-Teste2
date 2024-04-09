@@ -4,9 +4,11 @@ combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_MORTAREA)
 combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, CONST_ANI_SUDDENDEATH)
 
 function onGetFormulaValues(player, level, maglevel)
-	local min = (level / 5) + (maglevel * 4.3) + 32
-	local max = (level / 5) + (maglevel * 7.4) + 48
-	return -min, -max
+	local min = (level / 5) + (maglevel * 8.4) + 30
+	local max = (level / 5) + (maglevel * 9.4) + 40
+	local percentADD =  1.1
+
+	return player:getSpellDamage(-min*percentADD, -max*percentADD)
 end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")

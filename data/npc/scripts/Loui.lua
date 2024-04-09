@@ -32,7 +32,7 @@ keywordHandler:addKeyword({'rookgaard'}, StdModule.say, {npcHandler = npcHandler
 keywordHandler:addKeyword({'blueberr'}, StdModule.say, {npcHandler = npcHandler, text = 'Was it...? Yes, I might have looked for blueberries as I foolishly entered this unholy {hole}.'})
 keywordHandler:addKeyword({'monster'}, StdModule.say, {npcHandler = npcHandler, text = 'There must be an army of them, just down this {hole}.'})
 keywordHandler:addKeyword({'rabbit'}, StdModule.say, {npcHandler = npcHandler, text = 'Then, they must be magic wielding beasts using creature illusion! Good thing you escaped.'})
-keywordHandler:addKeyword({'life'}, StdModule.say, {npcHandler = npcHandler, text = 'The gods blessed Tibia with abundant forms of life.'})
+keywordHandler:addKeyword({'life'}, StdModule.say, {npcHandler = npcHandler, text = 'The gods blessed Tibia with ablank runent forms of life.'})
 keywordHandler:addKeyword({'story'}, StdModule.say, {npcHandler = npcHandler, text = 'The good thing is that those horrible rats stay mostly in town. The bad thing is that they do so because of bigger {monsters} that would devour them outside.'})
 
 keywordHandler:addKeyword({'quest'}, StdModule.say, {npcHandler = npcHandler, text = 'I have no quests but to stay away from that {hole} and I recommend you to do the same.'})

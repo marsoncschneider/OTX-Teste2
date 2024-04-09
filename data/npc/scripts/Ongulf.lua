@@ -39,7 +39,7 @@ local function creatureSayCallback(cid, type, msg)
 				"The survey ships of the technomancers were once again sent out to find new, promising resources. ...",
 				"Sadly some of the ships never returned and others only found minor deposits of ore, not worth the effort. But one of the ships made some groundbreaking discovery - a cave that had a connection to the surface. ...",
 				"As far as the explorers could tell, the area had been unknown to dwarfhood and mankind so far. ...",
-				"What was more, the said cave system had an abundance of rare ores. The imperial mining guild agreed to fund a new project and to name it 'project far far away'. ...",
+				"What was more, the said cave system had an ablank runence of rare ores. The imperial mining guild agreed to fund a new project and to name it 'project far far away'. ...",
 				"Don't look at me, I'm not the one who came up with that name! Those technomancers are such an imaginative bunch. But where have we been? Oh, yes, the new project! ...",
 				"Well, some ships were sent to establish a first base. ...",
 				"It became painfully obvious that the number of workers needed there could not easily be supplied by the ships alone. Also such a base would require an amount of money, expertise and manpower that the guild could not provide. ...",

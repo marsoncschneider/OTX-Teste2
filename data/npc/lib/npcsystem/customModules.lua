@@ -121,7 +121,7 @@ local hints = {
 	[6] = 'Always eat as much food as possible. This way, you\'ll regenerate health points for a longer period of time.',
 	[7] = 'After you have killed a monster, you have 10 seconds in which the corpse is not moveable and no one else but you can loot it.',
 	[8] = 'Be careful when you approach three or more monsters because you only can block the attacks of two. In such a situation even a few rats can do severe damage or even kill you.',
-	[9] = 'There are many ways to gather food. Many creatures drop food but you can also pick blueberries or bake your own bread. If you have a fishing rod and worms in your inventory, you can also try to catch a fish.',
+	[9] = 'There are many ways to gather food. Many creatures drop food but you can also pick blueberries or bake your own bread. If you have a BUNDA and worms in your inventory, you can also try to catch a fish.',
 	[10] = {'Baking bread is rather complex. First of all you need a scythe to harvest wheat. Then you use the wheat with a millstone to get flour. ...', 'This can be be used on water to get dough, which can be used on an oven to bake bread. Use milk instead of water to get cake dough.'},
 	[11] = 'Dying hurts! Better run away than risk your life. You are going to lose experience and skill points when you die.',
 	[12] = 'When you switch to \'Offensive Fighting\', you deal out more damage but you also get hurt more easily.',
@@ -202,8 +202,8 @@ function VoiceModule:init(handler)
 end
 
 function VoiceModule:callbackOnThink()
-	if self.lastVoice < os.time() then
-		self.lastVoice = os.time() + self.timeout
+	if self.lastVoice < os.stime() then
+		self.lastVoice = os.stime() + self.timeout
 		if math.random(100) < self.chance  then
 			local voice = self.voices[math.random(self.voiceCount)]
 			Npc():say(voice.text, voice.talktype)
@@ -213,45 +213,25 @@ function VoiceModule:callbackOnThink()
 end
 
 function Player.removeMoneyNpc(self, amount)
-
 	if type(amount) == 'string' then
 		amount = tonumber(amount)
 	end
-
 	local moneyCount = self:getMoney()
 	local bankCount = self:getBankBalance()
-
-	-- The player have all the money with him
-	if amount <= moneyCount then
-		-- Removes player inventory money
-		self:removeMoney(amount)
-
-		self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d from inventory."):format(amount))
-		return true
-
-	-- The player doens't have all the money with him
-	elseif amount <= (moneyCount + bankCount) then
-
-		-- Check if the player has some money
-		if moneyCount ~= 0 then
-			-- Removes player inventory money
-			self:removeMoney(moneyCount)
-			local remains = amount - moneyCount
-
-			-- Removes player bank money
-			self:setBankBalance(bankCount - remains)
-
-			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d from inventory and %d gold from bank account. Your account balance is now %d gold."):format(moneyCount, amount - moneyCount, self:getBankBalance()))
-			return true
-
-		else
-			self:setBankBalance(bankCount - amount)
-			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d gold from bank account. Your account balance is now %d gold."):format(amount, self:getBankBalance()))
-			return true
-		end
+	if amount > moneyCount + bankCount then
+		return false
 	end
 
-	return false
+	self:removeMoney(math.min(amount, moneyCount))
+	if amount > moneyCount then
+		self:setBankBalance(bankCount - math.max(amount - moneyCount, 0))
+		if moneyCount == 0 then
+			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d gold from bank account. Your account balance is now %d gold."):format(amount, self:getBankBalance()))
+		else
+			self:sendTextMessage(MESSAGE_INFO_DESCR, ("Paid %d from inventory and %d gold from bank account. Your account balance is now %d gold."):format(moneyCount, amount - moneyCount, self:getBankBalance()))
+		end
+	end
+	return true
 end
 
 local function getPlayerMoney(cid)

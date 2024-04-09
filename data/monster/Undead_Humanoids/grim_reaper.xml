@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Grim Reaper" nameDescription="a grim reaper" race="undead" experience="5500" speed="160">
+<monster name="Grim Reaper" nameDescription="a grim reaper" race="undead" experience="5500" speed="160" raceid="465">
 	<health now="3900" max="3900"/>
 	<look type="300" corpse="8955"/>
 	<targetchange interval="5000" chance="20"/>
@@ -71,11 +71,11 @@
 		<item name="demonic essence" chance="10600"/>
 		<item name="concentrated demonic blood" chance="35000"/>
 		<item name="nightmare blade" chance="880"/>
-		<item name="great mana potion" chance="10000"/>
+		<item name="gold coin" chance="10000"/>
 		<item name="glacier kilt" chance="330"/>
-		<item name="ultimate health potion" chance="9600"/>
+		<item name="gold coin" chance="9600"/>
 		<item name="skullcracker armor" chance="270"/>
-		<item name="underworld rod" chance="910"/>
+
 		<item id="9810" chance="2500"/><!-- rusty armor (rare) -->
 		<item name="mystical hourglass" chance="5300"/>
 	</loot>

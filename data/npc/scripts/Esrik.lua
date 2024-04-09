@@ -9,10 +9,10 @@ function onThink()				npcHandler:onThink()					end
 
 local function getTable(player)
 	local itemsList = {
-		{name="exercise sword", id=32384, buy=262500},
-		{name="exercise axe", id=32385, buy=262500},
-		{name="exercise club", id=32386, buy=262500},
-		{name="exercise bow", id=32387, buy=262500},
+
+
+
+
 		{name="axe", id=2386, buy=20, sell=7},
 		{name="battle axe", id=2378, buy=235, sell=80},
 		{name="battle hammer", id=2417, buy=350, sell=120},
@@ -155,11 +155,28 @@ local function onBuy(cid, item, subType, amount, ignoreCap, inBackpacks)
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You don\'t have enough cap.')
 	end
 	if not player:removeMoneyNpc(items[item].buyPrice * amount) then
-		selfSay("You don't have enough money.", cid)
-	else
-		player:addItem(items[item].itemId, amount)
-		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Bought '..amount..'x '..items[item].realName..' for '..items[item].buyPrice * amount..' gold coins.')
-	end
+			selfSay("You don't have enough money.", cid)
+		else
+			local itemType = ItemType(items[item].itemId)
+			if itemType:isStackable() then
+				local item_ = player:addItem(items[item].itemId, amount)
+				if item_ then
+					if items[item].type and items[item].type == 'chargable' then
+						item_:setAttribute(ITEM_ATTRIBUTE_CHARGES, items[item].charges)
+					end
+				end
+			else
+				for i = 1, amount do
+					local it = player:addItem(itemType:getId(), subType)
+					if it then
+						if items[item].type and items[item].type == 'chargable' then
+							it:setAttribute(ITEM_ATTRIBUTE_CHARGES, items[item].charges)
+						end
+					end
+				end
+			end
+			return player:sendTextMessage(MESSAGE_INFO_DESCR, 'Bought '..amount..'x '..items[item].realName..' for '..items[item].buyPrice * amount..' gold coins.')
+		end
 	return true
 end
 

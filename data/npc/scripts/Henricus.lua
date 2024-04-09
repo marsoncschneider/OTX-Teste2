@@ -14,7 +14,13 @@ local function creatureSayCallback(cid, type, msg)
 		return false
 	end
 	local player = Player(cid)
-	local totalBlessPrice = getBlessingsCost(player:getLevel()) * 5 * 1.1
+	local blessingsTable = {}
+	for i = 2, 6 do
+		if not player:hasBlessing(i) then
+			blessingsTable[#blessingsTable + 1] = i
+		end
+	end
+	local totalBlessPrice = getBlessingsCost(player:getLevel()) * #blessingsTable * 1.1	
 
 	if msgcontains(msg, "inquisitor") then
 		npcHandler:say("The churches of the gods entrusted me with the enormous and responsible task to lead the inquisition. I leave the field work to inquisitors who I recruit from fitting people that cross my way.", cid)
@@ -24,13 +30,13 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 2
 		end
 	elseif msgcontains(msg, "blessing") or msgcontains(msg, "bless") then
-		if player:getStorageValue(Storage.TheInquisition.Questline) == 25 then --if quest is done
+		-- if player:getStorageValue(Storage.TheInquisition.Questline) == 25 then --if quest is done
 			npcHandler:say("Do you want to receive the blessing of the inquisition - which means all five available blessings - for " .. totalBlessPrice .. " gold?", cid)
 			npcHandler.topic[cid] = 7
-		else
-			npcHandler:say("You cannot get this blessing unless you have completed The Inquisition Quest.", cid)
-			npcHandler.topic[cid] = 0
-		end
+		-- else
+			-- npcHandler:say("You cannot get this blessing unless you have completed The Inquisition Quest.", cid)
+			-- npcHandler.topic[cid] = 0
+		-- end
     elseif msgcontains(msg, "flask") or msgcontains(msg, "special flask") then
         if player:getStorageValue(Storage.TheInquisition.Questline) >= 12 then -- give player the ability to purchase the flask.
         npcHandler:say("Do you want to buy the special flask of holy water for " .. flaskCost .. " gold?" , cid)
@@ -200,14 +206,14 @@ local function creatureSayCallback(cid, type, msg)
             else
 			npcHandler:say("Come back when you have enough money.", cid)
 		end              
-           npcHandler.topic[cid] = 0			
+           npcHandler.topic[cid] = 0
 		elseif npcHandler.topic[cid] == 7 then
-			if player:getBlessings() == 5 then
+			if #blessingsTable < 1 then
 				npcHandler:say("You already have been blessed!", cid)
 			elseif player:removeMoneyNpc(totalBlessPrice) then
 				npcHandler:say("You have been blessed by all of five gods!, |PLAYERNAME|.", cid)
-				for b = 1, 5 do
-					player:addBlessing(b)
+				for i = 1, #blessingsTable do
+					player:addBlessing(blessingsTable[i], 1)
 				end
 				player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 			else

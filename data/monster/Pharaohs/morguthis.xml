@@ -77,6 +77,6 @@
 		<item name="ravager's axe" chance="300" />
 		<item name="steel boots" chance="500" />
 		<item name="assassin star" countmax="3" chance="500" />
-		<item name="great health potion" chance="1500" />
+		<item name="gold coin" chance="1500" />
 	</loot>
 </monster>

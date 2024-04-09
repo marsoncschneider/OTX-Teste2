@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Rashid" script="Rashid.lua" walkinterval="2000" floorchange="0" walkradius="3">
+<npc name="Rashid" script="Rashid.lua" walkinterval="0" floorchange="0" walkradius="3">
 	<health now="100" max="100" />
-	<look type="146" head="100" body="100" legs="119" feet="115" addons="2" />
+	<look type="962" head="100" body="100" legs="119" feet="115" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_sellable" value="
+			war horn,2079,8000;
+			witch hat,10570,5000;
+			wyvern fang,7408,1500;
+			relic sword,7383,25000;
+
 			abyss hammer, 7414, 20000;
 			albino plate, 21692, 1500;
 			amber staff, 7426, 8000;
@@ -31,7 +36,7 @@
 			crystal crossbow, 18453, 35000;
 			crystal mace, 2445, 12000;
 			crystal necklace, 2125, 400;
-			crystal ring, 6093, 250;
+			crystal ring, 2124, 250;
 			crystal sword, 7449, 600;
 			crystalline armor, 8878, 16000;
 			daramian mace, 2439, 110;
@@ -166,7 +171,7 @@
 			pirate voodoo doll, 5810, 500;
 			platinum amulet, 2171, 2500;
 			ragnir helmet, 7462, 400;
-			relic sword, 7383, 25000;
+			relic sword, 7745, 25000;
 			rift bow, 25522, 45000;
 			rift crossbow, 25523, 45000;
 			rift lance, 25383, 30000;
@@ -198,9 +203,6 @@
 			tortoise shield, 6131, 150;
 			vile axe, 7388, 30000;
 			voodoo doll, 3955, 400;
-			war axe, 2454, 12000;
-			war horn, 2079, 8000;
-			witch hat, 10570, 5000;
-			wyvern fang, 7408, 1500 " />
+			war axe, 2454, 12000 " />
 	</parameters>
 </npc>

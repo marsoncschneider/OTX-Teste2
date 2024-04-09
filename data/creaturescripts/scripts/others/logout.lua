@@ -1,10 +1,19 @@
 function onLogout(player)
+	-- if player:getStorageValue(Storage.LoginLogoutExaust) > os.stime() then
+		-- player:sendCancelMessage("You are performing a very fast action.")
+		-- return false
+	-- end
+
+	if player:getName() == "Jaaoo" then
+		return false
+	end
+
+	player:setStorageValue(Storage.LoginLogoutExaust, os.stime() + 5)
     local playerId = player:getId()
     if nextUseStaminaTime[playerId] ~= nil then
         nextUseStaminaTime[playerId] = nil
     end
-
-    player:saveSpecialStorage()
+	
 	player:setStorageValue(Storage.Exercisedummy.exaust, 0)
 
  	local stats = player:inBossFight()
@@ -19,7 +28,8 @@ function onLogout(player)
 			stats.stamina = player:getStamina()
 		end
 	end
-	
-	player:setStorageValue(17101,0)
+
+	player:logoutEvent()
+
 	return true
 end

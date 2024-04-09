@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Ahmet" script="Ahmet.lua" walkinterval="2000" floorchange="0">
+<npc name="Ahmet" script="Ahmet.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="130" head="57" body="116" legs="97" feet="114" addons="0" />
 	<parameters>
@@ -14,12 +14,10 @@
 			crowbar, 2416, 260;
 			cup, 2013, 2, 0;
 			document, 1952, 12;
-			fishing rod, 2580, 40;
+			BUNDA, 2580, 40;
 			golden backpack, 2004, 10;
 			golden bag, 1997, 4;
-			hand auger, 36169, 25;
 			machete, 2420, 6;
-			net, 36324, 50;
 			parchment, 1951, 8;
 			pick, 2553, 50;
 			plate, 2035, 6;
@@ -36,7 +34,7 @@
 		<parameter key="shop_sellable" value="
 			closed trap, 2578, 75;
 	        crowbar, 2416, 50;
-            fishing rod, 2580, 40;
+            BUNDA, 2580, 40;
 			machete, 2420, 6;
 			pick, 2553, 15;
 			rope,2120,15;

@@ -30,10 +30,10 @@ local function changeMap(mapName)
 	cleanMMap(Position(32512, 32364, 10), Position(32526, 32474, 10))
 	if mapName:lower() == "ouro" then
 		Game.setStorageValue("cultsMap", "ouro")
-		Game.loadMap('data/world/worldchanges/ouro.otbm')
+		Game.loadMap('data/world/worldchanges/cults_of_tibia/ouro.otbm')
 	else
 		Game.setStorageValue("cultsMap", "folhas")
-		Game.loadMap('data/world/worldchanges/folhas.otbm')
+		Game.loadMap('data/world/worldchanges/cults_of_tibia/folhas.otbm')
 		addEvent(changeMap, 15000, "ouro")
 	end
 end

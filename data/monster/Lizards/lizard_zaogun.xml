@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Lizard Zaogun" nameDescription="a lizard zaogun" race="blood" experience="1700" speed="138">
+<monster name="Lizard Zaogun" nameDescription="a lizard zaogun" race="blood" experience="1700" speed="138" raceid="616">
 	<health now="2955" max="2955"/>
 	<look type="343" corpse="11284"/>
 	<targetchange interval="4000" chance="10"/>
@@ -54,8 +54,8 @@
 		<item name="tower shield" chance="1000"/>
 		<item name="lizard leather" chance="14360"/>
 		<item name="lizard scale" chance="12520"/>
-		<item name="strong health potion" chance="1900"/>
-		<item name="great health potion" countmax="3" chance="7000"/>
+		<item name="gold coin" chance="1900"/>
+		<item name="gold coin" countmax="3" chance="7000"/>
 		<item name="red lantern" chance="2170"/>
 		<item name="Zaoan armor" chance="530"/>
 		<item name="Zaoan shoes" chance="1000"/>

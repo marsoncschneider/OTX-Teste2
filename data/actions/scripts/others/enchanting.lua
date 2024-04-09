@@ -42,6 +42,13 @@ local enchantedItems = {
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	if item.itemid == 7759 and target.itemid == 23942 then
+		item:remove(1)	
+		player:addItem(34497, 1)
+		target:getPosition():sendMagicEffect(CONST_ME_PURPLESMOKE)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You grind an enchanted sapphire into fine shimmering dust.")
+		return true
+	end
 
 	if isInArray({33268, 33269}, toPosition.x) and toPosition.y == 31830 and toPosition.z == 10 and player:getStorageValue(Storage.ElementalSphere.QuestLine) > 0 then
 		if not isInArray(spheres[item.itemid], player:getVocation():getId()) then

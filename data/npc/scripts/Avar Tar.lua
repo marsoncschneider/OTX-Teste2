@@ -20,7 +20,7 @@ local function creatureSayCallback(cid, type, msg)
 				'I\'m tired of all these young unskilled wannabe heroes. Every Tibian can show his skills or actions by wearing a special outfit. To prove oneself worthy of the demon outfit, this is how it goes: ...',
 				'The base outfit will be granted for completing the annihilator quest, which isn\'t much of a challenge nowadays, in my opinion. Anyway ...',
 				'The shield however will only be granted to those adventurers who have finished the demon helmet quest. ...',
-				'Well, the helmet is for those who really are tenacious and have hunted down all 6666 demons and finished the demon oak as well. ...',
+				'Well, the helmet is for those who really are tenacious and have hunted down all 666 demons and finished the demon oak as well. ...',
 				'Are you interested?'
 			}, cid)
 			npcHandler.topic[cid] = 1

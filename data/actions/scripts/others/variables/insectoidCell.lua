@@ -20,7 +20,7 @@ local insectoidcell = {
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
      local config = insectoidcell[item.actionid]
-     if player:getStorageValue(config.storage) > os.time() then
+     if player:getStorageValue(config.storage) > os.stime() then
          return player:sendCancelMessage("The insectoid cell is empty.")
      end
     local info, count = ItemType(config.reward), config.count
@@ -38,7 +38,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:addItem(config.reward)
 		player:sendTextMessage(MESSAGE_INFO_DESCR, text)
 
-         player:setStorageValue(config.storage, os.time() + 7*24*60*60)
+         player:setStorageValue(config.storage, os.stime() + 7*24*60*60)
      end
      return true
 end

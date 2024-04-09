@@ -7,7 +7,7 @@ function onSpeak(player, type, message)
 
 	if type == TALKTYPE_CHANNEL_Y then
 		if playerAccountType >= ACCOUNT_TYPE_GAMEMASTER then
-			type = TALKTYPE_CHANNEL_O
+			type = TALKTYPE_CHANNEL_Y
 		end
 	elseif type == TALKTYPE_CHANNEL_O then
 		if playerAccountType < ACCOUNT_TYPE_GAMEMASTER then

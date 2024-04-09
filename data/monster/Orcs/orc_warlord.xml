@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Orc Warlord" nameDescription="an orc warlord" race="blood" experience="670" speed="117">
+<monster name="Orc Warlord" nameDescription="an orc warlord" race="blood" experience="670" speed="117" raceid="2" >
 	<health now="950" max="950"/>
 	<look type="2" corpse="6008"/>
 	<targetchange interval="4000" chance="10"/>
@@ -63,7 +63,6 @@
 		<item id="2667" countmax="2" chance="10800"/><!-- fish -->
 		<item name="hunting spear" chance="5260"/>
 		<item id="7395" chance="50"/><!-- orc trophy -->
-		<item name="health potion" chance="470"/>
 		<item name="magma boots" chance="280"/>
 		<item name="orc tooth" chance="9640"/>
 		<item name="broken helmet" chance="24350"/>

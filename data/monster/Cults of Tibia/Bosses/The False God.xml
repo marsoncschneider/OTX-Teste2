@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="The False God" nameDescription="The False God" race="blood" experience="75000" speed="230" script="rewardboss.lua">
+<monster name="The False God" nameDescription="The False God" race="blood" experience="75000" speed="230">
 	<health now="300000" max="300000" />
 	<look type="984" corpse="25151" />
 	<targetchange interval="5000" chance="30" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -49,7 +49,7 @@
 		<item name="red piece of cloth" countmax="6" chance="16370" />
 		<item name="yellow gem" chance="29460" />
 		<item name="blue gem" chance="21892" />
-		<item name="underworld rod" chance="117270" />
+
 		<item name="war axe" chance="127270" />
 		<item name="pair of iron fists" chance="9510" />
 		<item name="mysterious remains" chance="100000" />
@@ -60,9 +60,9 @@
 		<item name="small emerald" countmax="10" chance="14700" />
 		<item name="small amethyst" countmax="10" chance="12259" />
 		<item name="energy bar" countmax="3" chance="16872" />
-		<item name="ultimate health potion" countmax="10" chance="27652" />
-		<item name="great mana potion" countmax="10" chance="33721" />
-		<item name="great spirit potion" countmax="5" chance="25690" />
+		<item name="gold coin" countmax="10" chance="27652" />
+		<item name="gold coin" countmax="10" chance="33721" />
+		<item name="gold coin" countmax="5" chance="25690" />
 		<item name="piece of royal steel" chance="15890" />
 		<item name="execowtioner axe" chance="7890" />
 		<item name="maimer" chance="1890" />

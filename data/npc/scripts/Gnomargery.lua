@@ -112,8 +112,8 @@ function creatureSayCallback(cid, type, msg)
 	////PARCEL DELIVERY////
 	/////////////////////]]
 	if msgcontains(msg, 'deliver') then
-		if player:getStorageValue(SPIKE_LOWER_PARCEL_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_PARCEL_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_LOWER_PARCEL_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_PARCEL_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if player:getLevel() < level then
@@ -144,8 +144,8 @@ function creatureSayCallback(cid, type, msg)
 	////UNDERCOVER////
 	////////////////]]
 	if msgcontains(msg, 'undercover') then
-		if player:getStorageValue(SPIKE_LOWER_UNDERCOVER_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_UNDERCOVER_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_LOWER_UNDERCOVER_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_UNDERCOVER_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if player:getLevel() < level then
@@ -175,8 +175,8 @@ function creatureSayCallback(cid, type, msg)
 	////TEMPERATURE/////
 	//////////////////]]
 	if msgcontains(msg, 'temperature') then
-		if player:getStorageValue(SPIKE_LOWER_LAVA_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_LAVA_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_LOWER_LAVA_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_LAVA_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if player:getLevel() < level then
@@ -207,8 +207,8 @@ function creatureSayCallback(cid, type, msg)
 	////KILL/////
 	///////////]]
 	if msgcontains(msg, 'kill') then
-		if player:getStorageValue(SPIKE_LOWER_KILL_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_KILL_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_LOWER_KILL_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_LOWER_KILL_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if player:getLevel() < level then

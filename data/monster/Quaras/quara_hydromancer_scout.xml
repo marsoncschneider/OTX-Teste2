@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Quara Hydromancer Scout" nameDescription="a quara hydromancer scout" race="undead" experience="800" speed="95">
+<monster name="Quara Hydromancer Scout" nameDescription="a quara hydromancer scout" race="undead" experience="800" speed="95" raceid="244">
 	<health now="1100" max="1100"/>
 	<look type="47" corpse="6066"/>
 	<targetchange interval="4000" chance="10"/>
@@ -65,7 +65,7 @@
 		<item name="gold coin" countmax="90" chance="40000"/>
 		<item name="gold coin" countmax="49" chance="49000"/>
 		<item name="small emerald" countmax="2" chance="6000"/>
-		<item name="wand of cosmic energy" chance="890"/>
+
 		<item name="ring of healing" chance="590"/>
 		<item name="obsidian lance" chance="1180"/>
 		<item name="knight armor" chance="890"/>

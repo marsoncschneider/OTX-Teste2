@@ -4,51 +4,6 @@ NpcSystem.parseParameters(npcHandler)
 
 local vocation = {}
 local town = {}
-local config = {
-	towns = {
-		["venore"] = 1,
-		["thais"] = 2,
-		["carlin"] = 4
-	},
-
-	vocations = {
-		["sorcerer"] = {
-			text = "A SORCERER! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
-			vocationId = 1,
-			--equipment spellbook, wand of vortex, magician's robe, mage hat, studded legs, leather boots, scarf
-			{{2175, 1}, {2190, 1}, {8819, 1}, {8820, 1}, {2468, 1}, {2643, 1}, {2661, 1}},
-			--container rope, shovel, mana potion, adventurer's stone
-			{{2120, 1}, {2554, 1}, {7620, 1}, {18559, 1}}
-		},
-
-		["druid"] = {
-			text = "A DRUID! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
-			vocationId = 2,
-			--equipment spellbook, snakebite rod, magician's robe, mage hat, studded legs, leather boots scarf
-			{{2175, 1}, {2182, 1}, {8819, 1}, {8820, 1}, {2468, 1}, {2643, 1}, {2661, 1}},
-			--container rope, shovel, mana potion, adventurer's stone
-			{{2120, 1}, {2554, 1}, {7620, 1}, {18559, 1}}
-		},
-
-		["paladin"] = {
-			text = "A PALADIN! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
-			vocationId = 3,
-			--equipment dwrven shield, 5 spear, ranger's cloak, ranger legs scarf, legion helmet
-			{{2525, 1}, {2389, 5}, {2660, 1}, {8923, 1}, {2643, 1}, {2661, 1}, {2480, 1}},
-			--container rope, shovel, health potion, bow, 50 arrow, adventurer's stone
-			{{2120, 1}, {2554, 1}, {7618, 1}, {2456, 1}, {2544, 50}, {18559, 1}}
-		},
-
-		["knight"] = {
-			text = "A KNIGHT! ARE YOU SURE? THIS DECISION IS IRREVERSIBLE!",
-			vocationId = 4,
-			--equipment dwarven shield, steel axe, brass armor, brass helmet, brass legs scarf
-			{{2525, 1}, {8601, 1}, {2465, 1}, {2460, 1}, {2478, 1}, {2643, 1}, {2661, 1}},
-			--container jagged sword, daramian mace, rope, shovel, health potion, adventurer's stone
-			{{8602, 1}, {2439, 1}, {2120, 1}, {2554, 1}, {7618, 1}, {18559, 1}}
-		}
-	}
-}
 
 function onCreatureAppear(cid) npcHandler:onCreatureAppear(cid) end
 function onCreatureDisappear(cid) npcHandler:onCreatureDisappear(cid) end
@@ -62,7 +17,7 @@ local function greetCallback(cid)
 		npcHandler:say("CHILD! COME BACK WHEN YOU HAVE GROWN UP!", cid)
 		npcHandler:resetNpc(cid)
 		return false
-	elseif level > 10 then
+	elseif level > 20 then
 		npcHandler:say(player:getName() ..", I CAN'T LET YOU LEAVE - YOU ARE TOO STRONG ALREADY! YOU CAN ONLY LEAVE WITH LEVEL 9 OR LOWER.", cid)
 		npcHandler:resetNpc(cid)
 		return false
@@ -75,7 +30,7 @@ local function greetCallback(cid)
 	end
 	return true
 end
-
+		
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
@@ -84,7 +39,11 @@ local function creatureSayCallback(cid, type, msg)
 	local player = Player(cid)
 	if npcHandler.topic[cid] == 0 then
 		if msgcontains(msg, "yes") then
-			npcHandler:say("IN WHICH TOWN DO YOU WANT TO LIVE: {CARLIN}, {THAIS}, OR {VENORE}?", cid)
+			local townOptions = "IN WHICH TOWN DO YOU WANT TO LIVE: {THAIS}, {CARLIN}, OR {VENORE}?"
+			if player:isPremium() then
+				townOptions = townOptions .. " OR {EDRON}, {DARASHIA}"
+			end
+			npcHandler:say(townOptions, cid)
 			npcHandler.topic[cid] = 1
 		end
 	elseif npcHandler.topic[cid] == 1 then
@@ -94,7 +53,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("IN ".. string.upper(msg) .."! AND WHAT PROFESSION HAVE YOU CHOSEN: {KNIGHT}, {PALADIN}, {SORCERER}, OR {DRUID}?", cid)
 			npcHandler.topic[cid] = 2
 		else
-			npcHandler:say("IN WHICH TOWN DO YOU WANT TO LIVE: {CARLIN}, {THAIS}, OR {VENORE}?", cid)
+			npcHandler:say("IN WHICH TOWN DO YOU WANT TO LIVE: {THAIS}, {CARLIN}, OR {VENORE}?", cid)
 		end
 	elseif npcHandler.topic[cid] == 2 then
 		local vocationTable = config.vocations[msg:lower()]
@@ -110,19 +69,11 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say("SO BE IT!", cid)
 			player:setVocation(Vocation(vocation[cid]))
 			player:setTown(Town(town[cid]))
+			player:sendBasicData()
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 			player:teleportTo(Town(town[cid]):getTemplePosition())
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You have received a backpack with starting items for reaching the mainlands.")
-			local targetVocation = config.vocations[Vocation(vocation[cid]):getName():lower()]
-			for i = 1, #targetVocation[1] do
-				player:addItem(targetVocation[1][i][1], targetVocation[1][i][2])
-			end
-			local backpack = player:addItem(1988)
-			for i = 1, #targetVocation[2] do
-				backpack:addItem(targetVocation[2][i][1], targetVocation[2][i][2])
-			end
-		else
+			else
 			npcHandler:say("THEN WHAT? {KNIGHT}, {PALADIN}, {SORCERER}, OR {DRUID}?", cid)
 			npcHandler.topic[cid] = 2
 		end

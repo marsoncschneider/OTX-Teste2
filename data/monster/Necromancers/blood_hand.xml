@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Blood Hand" nameDescription="a blood hand" race="blood" experience="750" speed="96">
+<monster name="Blood Hand" nameDescription="a blood hand" race="blood" experience="750" speed="96" raceid="974">
 	<health now="700" max="700"/>
 	<look type="552" corpse="21257"/>
 	<targetchange interval="4000" chance="10"/>
@@ -57,14 +57,13 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="130" chance="100000"/>
-		<item name="necrotic rod" chance="3000"/>
+
 		<item name="boots of haste" chance="210"/>
 		<item name="skull staff" chance="130"/>
 		<item name="mystic turban" chance="790"/>
 		<item name="white piece of cloth" chance="840"/>
 		<item name="red piece of cloth" chance="500"/>
 		<item name="noble axe" chance="10"/>
-		<item name="strong mana potion" chance="5590"/>
 		<item name="spellbook of enlightenment" chance="790"/>
 		<item name="book of necromantic rituals" chance="9340"/>
 		<item name="red gem" chance="710"/>

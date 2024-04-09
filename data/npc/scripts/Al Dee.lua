@@ -58,7 +58,7 @@ keywordHandler:addKeyword({'profession'}, StdModule.say, {npcHandler = npcHandle
 keywordHandler:addKeyword({'destiny'}, StdModule.say, {npcHandler = npcHandler, text = 'The Island of Destiny can be reached via the {oracle} once you are level 8. This trip will help you choose your {profession}!'})
 
 keywordHandler:addKeyword({'torch'}, StdModule.say, {npcHandler = npcHandler, text = 'No thank you. I can already overstock the market with torches.'})
-keywordHandler:addKeyword({'fishing'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell fishing rods and worms if you want to fish. Simply ask me for a {trade}.'})
+keywordHandler:addKeyword({'fishing'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell BUNDAs and worms if you want to fish. Simply ask me for a {trade}.'})
 keywordHandler:addKeyword({'shovel'}, StdModule.say, {npcHandler = npcHandler, text = 'Yes, I am selling that. Simply ask me for a {trade} to view all my offers.'})
 keywordHandler:addAliasKeyword({'rope'})
 keywordHandler:addAliasKeyword({'backpack'})

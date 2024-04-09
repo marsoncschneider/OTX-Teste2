@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Orc Leader" nameDescription="an orc leader" race="blood" experience="270" speed="115" manacost="640">
+<monster name="Orc Leader" nameDescription="an orc leader" race="blood" experience="270" speed="115" manacost="640" raceid="59">
 	<health now="450" max="450"/>
 	<look type="59" corpse="6001"/>
 	<targetchange interval="4000" chance="10"/>
@@ -53,7 +53,6 @@
 		<item id="2667" chance="29400"/><!-- fish -->
 		<item name="brown mushroom" chance="9650"/>
 		<item name="royal spear" chance="2400"/>
-		<item name="health potion" chance="550"/>
 		<item name="orc tooth" chance="1030"/>
 		<item name="orc leather" chance="19510"/>
 		<item name="skull belt" chance="2008"/>

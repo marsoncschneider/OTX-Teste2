@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Ravennous Hunger" nameDescription="Ravennous Hunger" race="blood" experience="0" speed="280" script="rewardboss.lua">
+<monster name="Ravennous Hunger" nameDescription="Ravennous Hunger" race="blood" experience="0" speed="280">
 	<health now="100000" max="100000"/>
 	<look type="556" corpse="6324"/>
 	<targetchange interval="4000" chance="20"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -43,7 +43,7 @@
 	<loot>
 		<item name="bed of nails" chance="67000" />
 		<item name="small sapphire" countmax="10" chance="21000" />
-		<item name="great spirit potion" countmax="5" chance="33230" />
+		<item name="gold coin" countmax="5" chance="33230" />
 		<item name="yellow gem" chance="12000" />
 		<item id="7633" chance="5000" />
 		<item name="platinum coin" countmax="30" chance="68299" />
@@ -53,7 +53,7 @@
 		<item name="gold token" chance="1532" />
 		<item name="gold coin" countmax="200" chance="100000" />
 		<item name="small emerald" countmax="10" chance="19000" />
-		<item name="great mana potion" countmax="5" chance="31230" />
+		<item name="gold coin" countmax="5" chance="31230" />
 		<item name="red gem" chance="12000" />
 		<item name="oriental shoes" chance="11000" />
 		<item name="torn shirt" chance="42000" />
@@ -62,11 +62,11 @@
 		<item name="wooden spellbook" chance="4500" />
 		<item name="elven legs" chance="16000" />
 		<item name="small diamond" countmax="10" chance="21000" />
-		<item name="ultimate health potion" countmax="5" chance="28230" />
+		<item name="gold coin" countmax="5" chance="28230" />
 		<item name="energy bar" countmax="5" chance="53000" />
 		<item name="green gem" chance="12000" />
 		<item name="broken key ring" chance="4000" />
-		<item name="muck rod" chance="10000" />
+
 		<item name="mysterious remains" chance="100000" />
 		<item name="cobra crown" chance="400" />
 		<item name="silver token" chance="2500" />

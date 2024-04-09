@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Cyclops Drone" nameDescription="a cyclops drone" race="blood" experience="200" speed="99" manacost="525">
+<monster name="Cyclops Drone" nameDescription="a cyclops drone" race="blood" experience="200" speed="99" manacost="525" raceid="391">
 	<health now="325" max="325"/>
 	<look type="280" corpse="7847"/>
 	<targetchange interval="4000" chance="10"/>
@@ -48,7 +48,7 @@
 		<item name="battle shield" chance="1600"/>
 		<item name="meat" countmax="2" chance="50430"/>
 		<item id="7398" chance="120"/><!-- cyclops trophy -->
-		<item name="strong health potion" chance="520"/>
+		<item name="gold coin" chance="520"/>
 		<item name="cyclops toe" chance="6750"/>
 	</loot>
 </monster>

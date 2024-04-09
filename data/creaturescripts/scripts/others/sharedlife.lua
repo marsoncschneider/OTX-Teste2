@@ -4,7 +4,7 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	end
 	if not creature:inSharedLife() then
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
-	end
+	end 
 	local killer = false
 	 -- Monster.onReceivDamageSL(self, damage, tp)
 	if primaryType == COMBAT_HEALING then
@@ -21,8 +21,8 @@ function onHealthChange(creature, attacker, primaryDamage, primaryType, secondar
 	else
 		if(creature:getHealth() - secondaryDamage <= 0)then
 			killer = true
-		end
+		end	
 		creature:onReceivDamageSL(secondaryDamage, "damage", killer)
-	end
+	end	
     return primaryDamage, primaryType, secondaryDamage, secondaryType
 end

@@ -408,7 +408,7 @@ local config = {
 			[3] = 'What a splendid prank! If you are ready for more, ask me about the next mission.'
 		},
 		yes = true,
-		checkStorage = Storage.WhatAFoolishQuest.Contract,
+		checkStorage = Storage.WhatAFoolishQuest.ContractCheck,
 		updateStorages = {
 			{key = Storage.WhatAFoolishQuest.Mission9, value = 5},
 			{key = Storage.WhatAFoolishQuest.Questline, value = 30}
@@ -678,7 +678,7 @@ local function creatureSayCallback(cid, type, msg)
 
 			if targetValue.pie then
 				if player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) > 0
-						and player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) < os.time() then
+						and player:getStorageValue(Storage.WhatAFoolishQuest.PieBoxTimer) < os.stime() then
 					npcHandler:say('Eeeek! What have you done?? These pies are crawling with bugs! Those must be the infamous parcel bugs! Get some new pies at once you wannabe fool, and this time without any bugs!', cid)
 					npcHandler.topic[cid] = 0
 					return true

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Barbarian Brutetamer" nameDescription="a barbarian brutetamer" race="blood" experience="90" speed="89">
+<monster name="Barbarian Brutetamer" nameDescription="a barbarian brutetamer" race="blood" experience="90" speed="89" raceid="332">
 	<health now="145" max="145" />
 	<look type="264" head="78" body="116" legs="95" feet="121" corpse="20339" />
 	<targetchange interval="60000" chance="0" />
@@ -63,6 +63,6 @@
 		<item name="fur boots" chance="170" />
 		<item name="mammoth fur cape" chance="150" />
 		<item name="mammoth fur shorts" chance="90" />
-		<item name="mana potion" chance="580" />
+
 	</loot>
 </monster>

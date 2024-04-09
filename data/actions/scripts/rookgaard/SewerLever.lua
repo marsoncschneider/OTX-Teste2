@@ -26,7 +26,7 @@ function moveToPosition(self, toPosition, pushMove, monsterPosition)
 		local thing = self:getThing(i)
 		if thing then
 			if thing:isItem() then
-				if thing:getId() ~= config.bridgeId then
+				if thing:getId() ~= config.bridgeId and thing:getId() ~= 8893 then
 					thing:moveTo(toPosition)
 				end
 			elseif thing:isCreature() then
@@ -42,11 +42,16 @@ function moveToPosition(self, toPosition, pushMove, monsterPosition)
 end
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	local leverLeft, lever = item.itemid == 1945
+	-- if not item:getPosition():compare(Position(32098, 32204, 8)) and not item:getPosition():compare(Position(32104, 32204, 8))then
+		-- return false
+	-- else
+		-- item:setActionId(50239)
+	-- end
+	local leverLeft, lever = item.itemid == 9825
 	for i = 1, #config.leverPositions do
-		lever = Tile(config.leverPositions[i]):getItemById(leverLeft and 1945 or 1946)
+		lever = Tile(config.leverPositions[i]):getItemById(leverLeft and 9825 or 9826)
 		if lever then
-			lever:transform(leverLeft and 1946 or 1945)
+			lever:transform(leverLeft and 9826 or 9825)
 		end
 	end
 
@@ -55,7 +60,6 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		for i = 1, #config.bridgePositions do
 			bridge = config.bridgePositions[i]
 			tile = Tile(bridge.position)
-
 			tmpItem = tile:getGround()
 			if tmpItem then
 				tmpItem:transform(config.bridgeId)
@@ -72,9 +76,17 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		for i = 1, #config.bridgePositions do
 			bridge = config.bridgePositions[i]
 			tile = Tile(bridge.position)
-
+			if(tile:getThingCount() > 2) then
+				for i = 0, tile:getThingCount() do
+					local it = tile:getThing(i)
+					if it and it:getId() == 8893 then
+						it:remove()
+					end
+				end
+			end
 			moveToPosition(tile, config.relocatePosition, true, config.relocateMonsterPosition)
 			tile:getGround():transform(bridge.groundId)
+			Game.createItem(bridge.groundId, 1, bridge.position)
 			Game.createItem(bridge.itemId, 1, bridge.position)
 		end
 

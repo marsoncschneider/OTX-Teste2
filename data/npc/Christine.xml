@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Christine" script="Christine.lua" walkinterval="2000" floorchange="0">
+<npc name="Christine" script="Christine.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="140" head="2" body="23" legs="2" feet="115" addons="1" />
 
@@ -23,7 +23,7 @@ cake,6278,50;
 Cheese,2696,6;
 Cookie,2687,2;
 Cucumber,8842,3;
-Egg,2695,2;
+Egg,2328,2;
 Fish,2667,5;
 Glooth Sandwich,23514,7;
 Glooth Steak,23517,10;

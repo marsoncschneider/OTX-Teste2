@@ -19,7 +19,11 @@ function onDeath(creature, corpse, lasthitkiller, mostdamagekiller, lasthitunjus
 	if not targetMonster or targetMonster:getName():lower() ~= 'rift invader' then
 		return true
 	end
-	Game.createMonster(name, pos)
+	if Game.getStorageValue(GlobalStorage.FerumbrasAscendantQuest.FerumbrasEssence) < 8 then
+		Game.createMonster(name, pos)
+	else
+		Game.createMonster("Rift Fragment", pos)
+	end
 	for i = 1, #crystals do
 		local crystal = crystals[i]
 		if isInRange(targetMonster:getPosition(), crystal.fromPosition, crystal.toPosition) then
@@ -49,7 +53,9 @@ function onDeath(creature, corpse, lasthitkiller, mostdamagekiller, lasthitunjus
 	end
 	local vortex = Game.createItem(22455, 1, creature:getPosition())
 	addEvent(function()
-	vortex:remove(1)
+		if vortex then
+			vortex:remove(1)
+		end
 	end, 10 * 1000)
 	return true
 end

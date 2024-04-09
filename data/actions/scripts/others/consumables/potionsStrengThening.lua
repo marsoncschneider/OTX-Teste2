@@ -2,16 +2,19 @@ local berserker = Condition(CONDITION_ATTRIBUTES)
 berserker:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 berserker:setParameter(CONDITION_PARAM_SKILL_MELEE, 5)
 berserker:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
+berserker:setParameter(CONDITION_PARAM_SUBID, 101)
 
 local mastermind = Condition(CONDITION_ATTRIBUTES)
 mastermind:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
 mastermind:setParameter(CONDITION_PARAM_STAT_MAGICPOINTS, 3)
 mastermind:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
+mastermind:setParameter(CONDITION_PARAM_SUBID, 102)
 
 local bullseye = Condition(CONDITION_ATTRIBUTES)
 bullseye:setParameter(CONDITION_PARAM_TICKS, 30 * 60 * 1000)
 bullseye:setParameter(CONDITION_PARAM_SKILL_DISTANCE, 5)
 bullseye:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
+bullseye:setParameter(CONDITION_PARAM_SUBID, 103)
 
 local config = {
 	[7439] = berserker,
@@ -37,6 +40,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	player:addCondition(useItem)
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 
+	player:sendWaste(item:getId())
 	item:remove(1)
 	return true
 end

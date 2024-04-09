@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prey>
+	<configs>
+		<config timeToFreeReroll="1200" /> <!-- minutes -->
+		<config preyDuration="7200" /> <!-- seconds -->
+		<config rerollPricePerLevel ="50" />
+	</configs>
+	<bonuses>
+		<bonus type="damageReduction" initialValue="12" step="2" />
+		<bonus type="damageBoost" initialValue="7" step="2" />
+		<bonus type="bonusExperience" initialValue="13" step="3" />
+		<bonus type="improvedLoot" initialValue="13" step="3" />
+	</bonuses>
+	<monsters>
+	
+	
+		<!-- Unknown -->
+		<monster name="Grim Reaper"/>
+		
+
+
+		<!-- Arachnids -->
+		<monster name="Crystal Spider"/>
+		<monster name="Giant Spider"/>
+
+
+		<!-- Barbarians -->
+		<monster name="Barbarian Bloodwalker"/>
+		<monster name="Barbarian Brutetamer"/>
+		<monster name="Barbarian Headsplitter"/>
+		<monster name="Barbarian Skullhunter"/>
+
+
+		<!-- Bonelords -->
+		<monster name="Bonelord"/>
+		<monster name="Braindeath"/>
+		<!-- <monster name="Elder Beholder"/> -->
+		<monster name="Gazer"/>
+		<!-- <monster name="Beholder"/> -->
+		<monster name="Elder Bonelord"/>
+
+
+
+
+		<!-- Demons -->
+		<monster name="Askarak Demon"/>
+		<monster name="Askarak Lord"/>
+		<monster name="Askarak Prince"/>
+		<monster name="Dark Torturer"/>
+		<monster name="Demon"/>
+		<monster name="Destroyer"/>
+		<monster name="Diabolic Imp"/>
+		<monster name="Fire Devil"/>
+		<monster name="Gozzler"/>
+		<monster name="Grave Guard"/>
+		<monster name="Gravedigger"/>
+		<monster name="Hand of Cursed Fate"/>
+		<monster name="Hellhound"/>
+		<monster name="Hellspawn"/>
+		<monster name="Juggernaut"/>
+		<monster name="Nightmare Scion"/>
+		<monster name="Nightmare"/>
+		<monster name="Nightstalker"/>
+		<monster name="Plaguesmith"/>
+		<monster name="Shaburak Demon"/>
+		<monster name="Shaburak Lord"/>
+		<monster name="Shaburak Prince"/>
+		<monster name="Yielothax"/>
+		<monster name="Warlock"/>
+        <monster name="Infernalist"/>
+
+		
+
+		<!-- Djinn -->
+		<monster name="Blue Djinn"/>
+		<monster name="Efreet"/>
+		<monster name="Green Djinn"/>
+		<monster name="Marid"/>
+
+		<!-- Dragons -->
+		<monster name="Dragon Lord"/>
+		<monster name="Dragon Lord Hatchling"/>
+		<monster name="Dragon"/>
+		<monster name="Dragonling"/>
+		<monster name="Dragon Hatchling"/>
+		<monster name="Elder Wyrm"/>
+		<monster name="Frost Dragon"/>
+		<monster name="Frost Dragon Hatchling"/>
+		<monster name="Undead Dragon"/>
+		<monster name="Wyrm"/>
+		<monster name="Ghastly Dragon"/>
+
+
+		<!-- Dwarves -->
+		<monster name="Dwarf Geomancer"/>
+		<monster name="Dwarf Guard"/>
+		<monster name="Dwarf Miner"/>
+		<monster name="Dwarf Soldier"/>
+		<monster name="Dwarf"/>
+
+		<!-- Dworcs -->
+		<monster name="Dworc Fleshhunter"/>
+		<monster name="Dworc Venomsniper"/>
+		<monster name="Dworc Voodoomaster"/>
+
+		<!-- Elves -->
+		<monster name="Elf"/>
+		<monster name="Elf Arcanist"/>
+		<monster name="Elf Scout"/>
+		<monster name="Firestarter"/>
+
+
+
+		<!-- Geo-Elementals -->
+		<monster name="Medusa"/>
+
+
+
+		<!-- Giants -->
+		<monster name="Behemoth"/>
+		<monster name="Cyclops"/>
+		<monster name="Cyclops Drone"/>
+		<monster name="Cyclops Smith"/>
+		<monster name="Frost Giant"/>
+		<monster name="Frost Giantess"/>
+
+
+		<!-- Insects -->
+		<monster name="Ancient Scarab"/>
+		<monster name="Brimstone Bug"/>
+		<monster name="Emerald Damselfly"/>
+		<monster name="Hive Overseer"/>
+		<monster name="Insect Swarm"/>
+		<monster name="Insectoid Scout"/>
+		<monster name="Insectoid Worker"/>
+		<monster name="Kollos"/>
+		<monster name="Ladybug"/>
+		<monster name="Lancer Beetle"/>
+		<monster name="Larva"/>
+		<monster name="Lesser Swarmer"/>
+		<monster name="Parasite"/>
+		<monster name="Sandcrawler"/>
+		<monster name="Scarab"/>
+		<monster name="Spidris Elite"/>
+		<monster name="Spidris"/>
+		<monster name="Spitter"/>
+		<monster name="Swarmer Hatchling"/>
+		<monster name="Swarmer"/>
+		<monster name="Terramite"/>
+		<monster name="Wasp"/>
+		<monster name="Waspoid"/>
+
+		<!-- Lizards -->
+		<monster name="Draken Abomination"/>
+		<monster name="Draken Elite"/>
+		<monster name="Draken Spellweaver"/>
+		<monster name="Draken Warmaster"/>
+		<monster name="Lizard Chosen"/>
+		<monster name="Lizard Dragon Priest"/>
+		<monster name="Lizard High Guard"/>
+		<monster name="Lizard Legionnaire"/>
+		<monster name="Lizard Magistratus"/>
+		<monster name="Lizard Noble"/>
+		<monster name="Lizard Sentinel"/>
+		<monster name="Lizard Snakecharmer"/>
+		<monster name="Lizard Templar"/>
+		<monster name="Lizard Zaogun"/>
+		<monster name="Wyvern"/>
+
+		<!-- Minotaurs -->
+		<monster name="Minotaur Archer"/>
+		<monster name="Minotaur Guard"/>
+		<monster name="Minotaur Mage"/>
+		<monster name="Minotaur Bruiser"/>
+
+
+
+		<!-- Misc Reptiles -->
+		<monster name="Crocodile"/>
+		<monster name="Hydra"/>
+		<monster name="Killer Caiman"/>
+		<monster name="Thornback Tortoise"/>
+		
+		
+		<!-- Asuras -->
+		<monster name="Dawnfire Asura"/>
+		<monster name="Frost Flower Asura"/>
+		<monster name="Midnight Asura"/>
+		<monster name="True Frost Flower Asura"/>
+
+
+		<!-- Mollusks -->
+		<monster name="Calamary"/>
+		<monster name="Slug"/>
+
+	</monsters>
+</prey>

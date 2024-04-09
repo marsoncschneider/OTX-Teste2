@@ -6,10 +6,10 @@ function onStepIn(creature, item, position, fromPosition)
 	if monster:getName():lower() ~= 'feroxa' then
 		return true
 	end
-	if monster:getMaxHealth() == 50000 then
-		doTargetCombatHealth(0, monster, COMBAT_UNDEFINEDDAMAGE, -1000, -1000, CONST_ME_DRAWBLOOD)
+	if FEROXA_STAGE == 2 then
+		creature:addHealth(-1000)
+		item:remove(1)
+		position:sendMagicEffect(CONST_ME_BLOCKHIT)
 	end
-	item:transform(24730)
-	position:sendMagicEffect(CONST_ME_BLOCKHIT)
 	return true
 end

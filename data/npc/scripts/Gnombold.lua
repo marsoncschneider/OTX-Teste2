@@ -110,8 +110,8 @@ function creatureSayCallback(cid, type, msg)
 	////GEOMANTIC CHARGES////
 	///////////////////////]]
 	if msgcontains(msg, 'charges') then
-		if player:getStorageValue(SPIKE_MIDDLE_CHARGE_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_CHARGE_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_MIDDLE_CHARGE_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_CHARGE_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if (player:getLevel() < levels[1]) or (player:getLevel() > levels[2]) then
@@ -142,8 +142,8 @@ function creatureSayCallback(cid, type, msg)
 	////FERTILISE////
 	///////////////]]
 	if msgcontains(msg, 'fertilise') then
-		if player:getStorageValue(SPIKE_MIDDLE_MUSHROOM_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_MUSHROOM_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_MIDDLE_MUSHROOM_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_MUSHROOM_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if (player:getLevel() < levels[1]) or (player:getLevel() > levels[2]) then
@@ -174,8 +174,8 @@ function creatureSayCallback(cid, type, msg)
 	////DESTROY NESTS/////
 	////////////////////]]
 	if msgcontains(msg, 'nests') then
-		if player:getStorageValue(SPIKE_MIDDLE_NEST_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_NEST_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_MIDDLE_NEST_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_NEST_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if (player:getLevel() < levels[1]) or (player:getLevel() > levels[2]) then
@@ -205,8 +205,8 @@ function creatureSayCallback(cid, type, msg)
 	////KILL/////
 	///////////]]
 	if msgcontains(msg, 'kill') then
-		if player:getExhaustion(SPIKE_MIDDLE_KILL_DAILY) >= os.time() then
-			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_KILL_DAILY)-os.time()) .. ' before this task gets available again.', cid)
+		if player:getExhaustion(SPIKE_MIDDLE_KILL_DAILY) > 0 then
+			return npcHandler:say('Sorry, you have to wait ' .. string.diff(player:getStorageValue(SPIKE_MIDDLE_KILL_DAILY)-os.stime()) .. ' before this task gets available again.', cid)
 		end
 
 		if (player:getLevel() < levels[1]) or (player:getLevel() > levels[2]) then

@@ -7,8 +7,8 @@
 	 <!--Single Spawns-->
 	 <areaspawn delay="20000" fromx="32485" fromy="31835" fromz="7" tox="32621" toy="31911" toz="7">
 	    <monster name="Goblin" amount="50" />
-		<monster name="Goblin Scavenger" amount="15" />
-		<monster name="Goblin Assassin" amount="10" />
+		<monster name="Goblin" amount="15" />
+		<monster name="Goblin" amount="10" />
 	 </areaspawn>
-	<singlespawn delay="120000" name="Goblin Leader" x="32607" y="31859" z="7" />
+	<singlespawn delay="120000" name="Goblin" x="32607" y="31859" z="7" />
 </raid>

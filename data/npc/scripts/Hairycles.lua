@@ -178,7 +178,12 @@ local function creatureSayCallback(cid, type, msg)
 				'You go there and take good moss from evil dworcs. Talk with me about mission when having moss.'
 			}, cid)
 		end
-
+	elseif msgcontains(msg, 'cookie') or msgcontains(msg, 'cookies') then
+		if player:getStorageValue(Storage.WhatAFoolishQuest.Questline) == 31
+		and player:getStorageValue(Storage.WhatAFoolishQuest.CookieDelivery.Hairycles) ~= 1 then
+			npcHandler:say('Oh you bring cookie for old Hairycles?', cid)
+			npcHandler.topic[cid] = 19
+		end
 	elseif msgcontains(msg, 'outfit') or msgcontains(msg, 'shamanic') then
 		if questProgress == 18 then
 			if player:getStorageValue(Storage.TheApeCity.ShamanOutfit) ~= 1 then

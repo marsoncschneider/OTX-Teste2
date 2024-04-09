@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Pirate Corsair" nameDescription="a pirate corsair" race="blood" experience="350" speed="119" manacost="775">
+<monster name="Pirate Corsair" nameDescription="a pirate corsair" race="blood" experience="350" speed="119" manacost="775" raceid="250">
 	<health now="675" max="675"/>
 	<look type="98" corpse="20475"/>
 	<targetchange interval="4000" chance="15"/>
@@ -57,7 +57,7 @@
 		<item name="hook" chance="600"/>
 		<item name="eye patch" chance="500"/>
 		<item name="peg leg" chance="600"/>
-		<item name="strong health potion" chance="820"/>
+		<item name="gold coin" chance="820"/>
 		<item name="compass" chance="11050"/>
 		<item name="compass" chance="11020"/>
 	</loot>

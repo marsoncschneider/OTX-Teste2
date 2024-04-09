@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="General Murius" nameDescription="General Murius" race="blood" experience="450" speed="250">
+<monster name="General Murius" nameDescription="General Murius" race="blood" experience="450" speed="250" >
 	<health now="550" max="550"/>
 	<look type="611" corpse="23462"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -57,7 +57,6 @@
 		<item id="2648" chance="40000"/>				<!-- chain legs -->
 		<item id="2387" chance="60000"/>				<!-- double axe -->
 		<item id="7401" chance="40000"/>				<!-- minotaur trophy -->
-		<item id="7363" countmax="7" chance="40000"/>	<!-- piercing bolt -->
 		<item id="2666" countmax="3" chance="20000"/>	<!-- meat -->
 		<item id="2547" countmax="7" chance="20000"/>	<!-- power bolt -->
 		<item id="7588" chance="20000"/>				<!-- strong health potion -->

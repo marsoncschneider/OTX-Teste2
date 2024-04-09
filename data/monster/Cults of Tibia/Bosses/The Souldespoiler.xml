@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Souldespoiler" nameDescription="The Souldespoiler" race="blood" experience="0" speed="250" script="rewardboss.lua">
+<monster name="The Souldespoiler" nameDescription="The Souldespoiler" race="blood" experience="0" speed="250">
 	<health now="50000" max="50000" />
 	<look type="875" head="11" body="0" legs="94" feet="95" addons="0" corpse="26220" />
 	<targetchange interval="6000" chance="30" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -50,7 +50,7 @@
 		<item name="curious matter" countmax="10" chance="8920"/>
 		<item name="spark sphere" countmax="10" chance="21200"/>
 		<item id="7633" chance="26900"/>
-		<item name="wand of defiance" chance="8920"/>
+
 		<item name="rift lance" chance="13200"/>
 		<item name="rift crossbow" chance="7620"/>
 		<item name="haunted blade" chance="9700"/>
@@ -59,11 +59,11 @@
 		<item name="sapphire hammer" chance="14000" />
 		<item name="gold coin" countmax="200" chance="100000" />
 		<item name="platinum coin" countmax="35" chance="29840" />
-		<item name="wand of defiance" chance="8723" />
+
 		<item name="yellow gem" chance="29460" />
 		<item name="blue gem" chance="21892" />
 		<item name="medusa shield" chance="7270" />
-		<item name="underworld rod" chance="9510" />
+
 		<item name="mysterious remains" chance="100000" />
 		<item name="prismatic quartz" countmax="10" chance="13390" />
 		<item name="small diamond" countmax="10" chance="12760" />
@@ -74,9 +74,9 @@
 		<item name="small amethyst" countmax="10" chance="12259" />
 		<item name="odd organ" chance="100000" />
 		<item name="energy bar" countmax="3" chance="16872" />
-		<item name="ultimate health potion" countmax="10" chance="27652" />
-		<item name="great mana potion" countmax="10" chance="33721" />
-		<item name="great spirit potion" countmax="10" chance="25690" />
+		<item name="gold coin" countmax="10" chance="27652" />
+		<item name="gold coin" countmax="10" chance="33721" />
+		<item name="gold coin" countmax="10" chance="25690" />
 		<item name="blade of corruption" chance="3775" />
 		<item name="magma boots" chance="15890" />
 		<item name="spellbook of lost souls" chance="7890" />

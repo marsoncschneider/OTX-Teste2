@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Welter" nameDescription="The Welter" race="blood" experience="11000" speed="256" script="rewardboss.lua">
+<monster name="The Welter" nameDescription="The Welter" race="blood" experience="11000" speed="256">
 	<health now="25000" max="25000"/>
 	<look type="563" corpse="21291"/>
 	<targetchange interval="2000" chance="5"/>
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0"/>
 		<flag rewardboss="1"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -75,14 +75,12 @@
 		<item id="2396" chance="2000"/> <!--  Ice Rapier -->
 		<item id="2146" countmax="2" chance="20000"/> <!-- Small Sapphire -->
 		<item id="2476" chance="3000"/> <!-- Knight Armor -->
-		<item id="7588" countmax="2" chance="20000"/> <!-- Strong Health Potion -->
 		<item id="10219" subtype="5" chance="1000"/> <!-- Sacred Tree Amulet-->
 		<item id="2197" subtype="5" chance="20000"/> <!-- Stone Skin Amulet-->
 		<item id="9971" chance="800"/> <!-- Gold Ingot -->
 		<item id="2498" chance="500"/> <!-- Royal Helmet -->
 		<item id="7632" chance="600"/> <!-- Giant Shimmering Pearl -->
 		<item id="4850" chance="2000"/> <!-- Hydra Egg,-->
-		<item id="7589" countmax="2" chance="20000"/> <!-- Strong Mana Potions-->
 		<item id="2152" countmax="10" chance="20000"/> <!--  Platinum Coin-->
 		<item id="2148" countmax="100" chance="20000"/> <!--  Gold Coins -->
 	</loot>

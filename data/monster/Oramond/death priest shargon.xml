@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Death Priest Shargon" nameDescription="a death priest shargon" race="blood" experience="20000" speed="340">
+<monster name="Death Priest Shargon" nameDescription="a death priest shargon" race="blood" experience="20000" speed="340" >
 	<health now="65000" max="65000"/>
 	<look type="278" corpse="23494" addons="3"/>
 	<targetchange interval="5000" chance="8"/>
@@ -47,7 +47,7 @@
 	<loot>
 		<item id="2148" countmax="99" chance="100000"/><!-- gold coin -->
 		<item id="7591" countmax="3" chance="100000"/><!-- great health potion -->
-		<item id="2185" chance="100000"/><!-- necrotic rod -->
+
 		<item id="2152" countmax="13" chance="100000"/><!-- platinum coin -->
 		<item id="7590" countmax="4" chance="10000"/><!-- great mana potion -->
 		<item id="9971" chance="25000"/><!-- gold ingot -->

@@ -172,11 +172,11 @@ local stakeKeyword = keywordHandler:addKeyword({'stake'}, StdModule.say, {npcHan
 	stakeKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'You don\'t have a wooden stake.', reset = true}, function(player) return player:getItemCount(5941) == 0 end)
 
 	stakeKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'Sorry, but I\'m still exhausted from the last ritual. Please come back later.', reset = true},
-		function(player) return player:getStorageValue(Storage.FriendsandTraders.TheBlessedStakeWaitTime) >= os.time() end)
+		function(player) return player:getStorageValue(Storage.FriendsandTraders.TheBlessedStakeWaitTime) >= os.stime() end)
 
 	stakeKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = '<mumblemumble> Sha Kesh Mar!', reset = true},
 		function(player) return player:getItemCount(5941) > 0 end,
-		function(player) player:setStorageValue(Storage.FriendsandTraders.TheBlessedStakeWaitTime, os.time() + 7 * 86400) player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE) player:removeItem(5941, 1) player:addItem(5942, 1) end
+		function(player) player:setStorageValue(Storage.FriendsandTraders.TheBlessedStakeWaitTime, os.stime() + 7 * 86400) player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE) player:removeItem(5941, 1) player:addItem(5942, 1) end
 	)
 	stakeKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'Maybe another time.', reset = true})
 

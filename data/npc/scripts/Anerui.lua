@@ -2,22 +2,14 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)
-npcHandler:onCreatureAppear(cid)
-end
-function onCreatureDisappear(cid)
-npcHandler:onCreatureDisappear(cid)
-end
-function onCreatureSay(cid, type, msg)
-npcHandler:onCreatureSay(cid, type, msg)
-end
-function onThink()
-npcHandler:onThink()	
-end
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
 
 keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = "I am the mistress of the hunt. At this place you may buy the food our hunts provide."})
 keywordHandler:addKeyword({'hunt'}, StdModule.say, {npcHandler = npcHandler, text = "Hunting is an art, practiced too often by diletantes. Every fool with a bow or a spear considers himself a hunter."})
-keywordHandler:addKeyword({'bow'}, StdModule.say, {npcHandler = npcHandler, text = "Bow, arrow, and spear are the hunters' best friends. In the northeast of the town one of us may sell such tools."})
+keywordHandler:addKeyword({'bow'}, StdModule.say, {npcHandler = npcHandler, text = "Bow, bunda, and spear are the hunters' best friends. In the northeast of the town one of us may sell such tools."})
 keywordHandler:addKeyword({'hunter'}, StdModule.say, {npcHandler = npcHandler, text = "Hunters live a life of freedom and closeness to nature, unlike a simple farmer or bugherder."})
 keywordHandler:addKeyword({'nature'}, StdModule.say, {npcHandler = npcHandler, text = "Nature is not a friend but an unforgiving teacher, and the lessons we have to learn are endless."})
 keywordHandler:addKeyword({'time'}, StdModule.say, {npcHandler = npcHandler, text = "Watch the sky, it will tell you."})
@@ -33,13 +25,11 @@ keywordHandler:addKeyword({'troll'}, StdModule.say, {npcHandler = npcHandler, te
 keywordHandler:addKeyword({'elf'}, StdModule.say, {npcHandler = npcHandler, text = "That is the race to which I belong."})
 keywordHandler:addKeyword({'cenath'}, StdModule.say, {npcHandler = npcHandler, text = "The magic they wield is all that matters to them."})
 
--- Greeting message
-keywordHandler:addGreetKeyword({"ashari"}, {npcHandler = npcHandler, text = "Ashari, |PLAYERNAME|."})
--- Farewell message
-keywordHandler:addFarewellKeyword({"asgha thrazi"}, {npcHandler = npcHandler, text = "Asha Thrazi."})
-
 npcHandler:setMessage(MESSAGE_GREET, "Ashari |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Asha Thrazi.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Asha Thrazi.")
 
-npcHandler:addModule(FocusModule:new())
+local focusModule = FocusModule:new()
+focusModule:addGreetMessage({'hi', 'hello', 'ashari'})
+focusModule:addFarewellMessage({'bye', 'farewell', 'asgha thrazi'})
+npcHandler:addModule(focusModule)

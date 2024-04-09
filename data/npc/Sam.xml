@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Sam" script="Sam.lua" walkinterval="2000" floorchange="0">
+<npc name="Sam" script="Sam.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
-	<look type="131" head="38" body="113" legs="67" feet="95" addons="0" />
+	<look type="970" head="38" body="113" legs="67" feet="95" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="
@@ -23,10 +23,10 @@
 			dagger,2379,5;
 			doublet,2485,16;
 			dwarven shield,2525,500;
-			exercise sword,32384,262500,500;
-			exercise axe,32385,262500,500;
-			exercise club,32386,262500,500;
-			exercise bow,32387,262500,500;
+
+
+
+
 			hand axe,2380,8;
 			iron helmet,2459,390;
 			jacket,2650,12;

@@ -42,8 +42,8 @@ local function creatureSayCallback(cid, type, msg)
 			end
 	elseif msgcontains(msg, "purest") and npcHandler.topic[cid] == 2 then
 			npcHandler:say({"Purification is but one of the difficult steps on your way to the other side. The {trial} of tar, sulphur and ice."}, cid)
-			npcHandler.topic[cid] = 2
-			playerTopic[cid] = 2
+			npcHandler.topic[cid] = 3
+			playerTopic[cid] = 3
 	elseif msgcontains(msg, "trial") and npcHandler.topic[cid] == 3 then
 			npcHandler:say({"The trial consists of three steps. The trial of tar, where you will suffer unbearable heat and embrace the stigma of misfortune. ...",
 							"The trial of sulphur, where you will bathe in burning sulphur and embrace the stigma of vanity. Then, there is the trial of purification. The truest of us will be purified to face judgement from the {Penitent}.",

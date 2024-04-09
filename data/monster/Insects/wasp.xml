@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Wasp" nameDescription="a wasp" race="venom" experience="24" speed="160" manacost="280">
+<monster name="Wasp" nameDescription="a wasp" race="venom" experience="24" speed="160" manacost="280" raceid="44">
 	<health now="35" max="35"/>
-	<look type="44" corpse="5989"/>
+	<look type="923" corpse="5989"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="1"/>

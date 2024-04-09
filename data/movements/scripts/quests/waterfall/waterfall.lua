@@ -29,6 +29,5 @@ function onStepIn(creature, item, position, fromPosition)
 		player:teleportTo(config.caveExitPosition)
 		player:setDirection(DIRECTION_EAST)
 	end
-
 	return true
 end

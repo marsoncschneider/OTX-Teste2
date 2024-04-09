@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Zuma Magehide" script="Zuma Magehide.lua" walkinterval="2000" floorchange="0">
+<npc name="Zuma Magehide" script="Zuma Magehide.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="138" head="58" body="19" legs="0" feet="132" addons="3" />
 	<parameters>
@@ -14,7 +14,7 @@
 			garlic necklace, 2199, 100, 150;
 			elven amulet, 2198, 500,50;
 			stone skin amulet, 2197,5000,5;
-			magic light wand, 2162, 120 " />
+
 
 	</parameters>
 </npc>

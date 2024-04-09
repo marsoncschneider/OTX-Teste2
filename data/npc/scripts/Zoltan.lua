@@ -7,6 +7,8 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
+local ferumbrasPerm = 81273
+
 -- Female Summoner and Male Mage Hat Addon (needs to be rewritten)
 local hatKeyword = keywordHandler:addKeyword({'proof'}, StdModule.say, {npcHandler = npcHandler, text = '... I cannot believe my eyes. You retrieved this hat from Ferumbras\' remains? That is incredible. If you give it to me, I will grant you the right to wear this hat as addon. What do you say?'},
 		function(player) return not player:hasOutfit(player:getSex() == PLAYERSEX_FEMALE and 141 or 130, 2) end
@@ -20,7 +22,33 @@ local hatKeyword = keywordHandler:addKeyword({'proof'}, StdModule.say, {npcHandl
 			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
 		end
 	)
-	-- hatKeyword:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, text = ''})
+	
+	
+local permissionKeyword = keywordHandler:addKeyword({'permission'}, StdModule.say, {npcHandler = npcHandler, text = 'The attuning to our seals is a costly process and it will grant you access to the citadel ONLY ONCE. Each time you want to enter, you will need a new attuning. Are you willing to pay 500 gold pieces to become attuned to the seal of the citadel?'})
+	permissionKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'You already have the permission.'}, function(player) return player:getStorageValue(ferumbrasPerm) >= 1 end)
+	permissionKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'You do not have enough gold.'}, function(player) return not player:removeMoneyNpc(500) end)
+	permissionKeyword:addChildKeyword({'yes'}, StdModule.say, {npcHandler = npcHandler, text = 'SO BE IT!'}, nil,
+		function(player)
+			player:removeMoneyNpc(500)
+			player:setStorageValue(ferumbrasPerm, 1)
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
+		end
+	)
+
+local permissionKeyword = keywordHandler:addKeyword({'permission'}, StdModule.say, {npcHandler = npcHandler,
+	text = {
+		'The attuning to our seals is a costly process and it will grant you access to the citadel ONLY ONCE. Each time you want to enter, you will need a new attuning. Are you willing to pay 500 gold pieces to become attuned to the seal of the citadel?'
+	}},
+	function(player) return player:getStorageValue(Storage.OutfitQuest.MageSummoner.AddonHatCloak) == 10 end,
+	function(player)
+		player:addOutfitAddon(138, 2)
+		player:addOutfitAddon(133, 2)
+		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		player:setStorageValue(Storage.OutfitQuest.MageSummoner.AddonHatCloak, 11)
+		player:setStorageValue(Storage.OutfitQuest.MageSummoner.MissionHatCloak, 0)
+		player:setStorageValue(Storage.OutfitQuest.Ref, math.min(0, player:getStorageValue(Storage.OutfitQuest.Ref) - 1))
+	end
+)
 
 keywordHandler:addKeyword({'myra'}, StdModule.say, {npcHandler = npcHandler,
 	text = {

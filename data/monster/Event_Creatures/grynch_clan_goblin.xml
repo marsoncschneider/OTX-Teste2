@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Grynch Clan Goblin" nameDescription="Grynch Clan Goblin" race="blood" experience="4" speed="100">
+<monster name="Grynch Clan Goblin" nameDescription="Grynch Clan Goblin" race="blood" experience="4" speed="100" raceid="393">
 	<health now="80" max="80"/>
 	<look type="61" corpse="6002"/>
 	<targetchange interval="5000" chance="0"/>
@@ -62,7 +62,7 @@
 		<item name="piggy bank" chance="1000"/>
 		<item name="gold coin" countmax="22" chance="22500"/>
 		<item name="scarab coin" countmax="2" chance="500"/>
-		<item id="2163" chance="4000"/><!-- magic light wand -->
+		<item id="2163" chance="4000"/><!-- magic light  -->
 		<item name="blank rune" chance="5000"/>
 		<item id="2551" chance="1500"/><!-- broom -->
 		<item id="2560" chance="1000"/><!-- mirror -->
@@ -84,6 +84,6 @@
 		<item name="christmas present bag" chance="7000"/>
 		<item name="gingerbreadman" countmax="2" chance="4000"/>
 		<item name="walnut" countmax="5" chance="3500"/>
-		<item name="peanut" countmax="100" chance="3500"/>
+		<item id="7910" countmax="100" chance="3500"/> <!-- peanut -->
 	</loot>
 </monster>

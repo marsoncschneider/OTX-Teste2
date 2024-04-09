@@ -1,8 +1,3 @@
-------------
--- Alternative to no-magic style.
--- Description here
-----
-
 ---- string of mending id "22542"-----
 local ITEMS = {
     [13877] = { -----Broken Ring Id "13877" Ring of ending "22516"
@@ -10,12 +5,6 @@ local ITEMS = {
     }
 }
 
----- onUse [opt]
--- @param cid Player ID
--- @param item Item ID
--- @param fromPosition Current Position
--- @param[opt] itemEx Item change
--- @param[opt] toPosition Nem position
 function onUse(cid, item, fromPosition, itemEx, toPosition)
     local cadena = ITEMS[itemEx.itemid]
     if cadena == nil then

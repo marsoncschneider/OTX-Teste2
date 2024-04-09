@@ -12,6 +12,10 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		end
 	end
 	if item.itemid == 9825 then
+		if Game.getStorageValue(GlobalStorage.FerumbrasAscendantQuest.RazzagornTimer) >= 1 then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You need to wait a while, recently someone challenge Razzagorn.")
+			return true
+		end
 		local specs, spec = Game.getSpectators(config.centerRoom, false, false, 15, 15, 15, 15)
 		for i = 1, #specs do
 			spec = specs[i]
@@ -27,9 +31,11 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 				playerTile:getPosition():sendMagicEffect(CONST_ME_POFF)
 				playerTile:teleportTo(config.newPosition)
 				playerTile:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+				playerTile:setStorageValue(Storage.FerumbrasAscension.RazzagornTimer, os.stime() + 60 * 60 * 2 * 24)
 			end
 		end
-		addEvent(clearForgotten, 30 * 60 * 1000, Position(33408, 32454, 14), Position(33440, 32480, 14), Position(33319, 32318, 13))
+		Game.setStorageValue(GlobalStorage.FerumbrasAscendantQuest.RazzagornTimer, 1)
+		addEvent(clearForgotten, 30 * 60 * 1000, Position(33408, 32454, 14), Position(33440, 32480, 14), Position(33319, 32318, 13), GlobalStorage.FerumbrasAscendantQuest.RazzagornTimer)
 		item:transform(9826)
 	elseif item.itemid == 9826 then
 		item:transform(9825)

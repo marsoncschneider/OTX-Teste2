@@ -36,7 +36,7 @@ function onStepIn(player, item, position, fromPosition)
 			player:teleportTo(normalVortex)
 		elseif bossVortex then
 			if player:getStorageValue(bossVortex.storage) >= 1 then
-				if player:getStorageValue(bossVortex.storageTime) < os.time() then
+				if player:getStorageValue(bossVortex.storageTime) < os.stime() then
 					player:teleportTo(bossVortex.position)
 				else
 					player:teleportTo(fromPosition)
@@ -48,7 +48,7 @@ function onStepIn(player, item, position, fromPosition)
 			end
 		elseif uBosses then
 			if player:getStorageValue(uBosses.storage1) >= 1 and player:getStorageValue(uBosses.storage2) >= 1 and player:getStorageValue(uBosses.storage3) >= 1 then
-				if player:getStorageValue(uBosses.storageTime) < os.time() then
+				if player:getStorageValue(uBosses.storageTime) < os.stime() then
 					player:teleportTo(uBosses.position)
 				else
 					player:teleportTo(fromPosition)
@@ -60,7 +60,7 @@ function onStepIn(player, item, position, fromPosition)
 			end
 		elseif item.actionid == 14351 then
 			if player:getStorageValue(14330) >= 1 and player:getStorageValue(14332) >= 1 then
-				if player:getStorageValue(14333) < os.time() then
+				if player:getStorageValue(14333) < os.stime() then
 					player:teleportTo(Position(32272, 31384, 14))
 				else
 					player:teleportTo(fromPosition)

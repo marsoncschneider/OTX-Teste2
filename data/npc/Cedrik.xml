@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Cedrik" script="Cedrik.lua" walkinterval="2000" floorchange="0">
+<npc name="Cedrik" script="Cedrik.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="134" head="116" body="57" legs="97" feet="59" addons="0" />
-<voices>
-<voice text="Support your local weapon dealer!" interval2="100" margin="1" yell="no" />
-</voices>
+	<voices>
+		<voice text="Support your local weapon dealer!" interval2="100" margin="1" yell="no" />
+	</voices>
 	<parameters>
 		<parameter key="module_keywords" value="1" />
 		<parameter key="keywords" value="wares;" />
@@ -33,19 +33,19 @@
 			coat,2651,8;
 			crossbow,2455,500;
 			crowbar,2416,260;
-			crystalline arrow.,18304,20;
+
 			dagger,2379,5;
 			doublet,2485,16;
-			drill bolt,18436,12;
+
 			dwarven shield,2525,500;
-			earth arrow,7850,5;
-			envenomed arrow,18437,12;
-			exercise sword,32384,262500,500;
-			exercise axe,32385,262500,500;
-			exercise club,32386,262500,500;
-			exercise bow,32387,262500,500;
-			flaming arrow,7840,5;
-			flash arrow,7838,5;
+
+
+
+
+
+
+
+
 			hand axe,2380,8;
 			iron helmet,2459,390;
 			jacket,2650,12;
@@ -56,19 +56,19 @@
 			longsword,2397,160;
 			mace,2398,90;
 			morning star,2394,430;
-			onyx arrow,7365,7;
-			piercing bolt,7363,5;
+
+
 			plate armor,2463,1200;
 			plate shield,2510,125;
 			power bolt,2547,7;
-			prismatic bolt,18435,20;
+
 			rapier,2384,15;
 			sabre,2385,35;
 			scale armor,2483,260;
-			shiver arrow,7839,5;
+
 			short sword,2406,26;
 			sickle,2405,7;
-			sniper arrow,7364,5;
+
 			soldier helmet,2481,110;
 			spear,2389,9;
 			spike sword,2383,8000;
@@ -79,13 +79,13 @@
 			studded legs,2468,50;
 			studded shield,2526,50;
 			sword,2376,85;
-			tarsal arrow,15648,6;
+
 			throwing knife,2410,25;
 			throwing star,2399,42;
 			two handed sword,2377,950;
 			viking helmet,2473,265;
 			viking shield,2531,260;
-			vortex bolt,15649,6;
+
 			war hammer,2391,10000;
 			wooden shield,2512,15" />
 		<parameter key="shop_sellable" value="

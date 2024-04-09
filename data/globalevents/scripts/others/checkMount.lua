@@ -9,7 +9,7 @@ function onThink(interval)
 	local player, outfit
 	for i = 1, #players do
 		player = players[i]
-		if player:getStorageValue(Storage.RentedHorseTimer) < 1 or player:getStorageValue(Storage.RentedHorseTimer) >= os.time() then
+		if player:getStorageValue(Storage.RentedHorseTimer) < 1 or player:getStorageValue(Storage.RentedHorseTimer) >= os.stime() then
 			break
 		end
 

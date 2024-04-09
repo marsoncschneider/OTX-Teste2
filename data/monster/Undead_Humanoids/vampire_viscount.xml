@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Vampire Viscount" nameDescription="a vampire viscount" race="blood" experience="800" speed="110">
+<monster name="Vampire Viscount" nameDescription="a vampire viscount" race="blood" experience="800" speed="110" raceid="958">
 	<health now="1200" max="1200"/>
 	<look type="555" corpse="21278"/>
 	<targetchange interval="4000" chance="10"/>
@@ -58,8 +58,6 @@
 		<item name="ice rapier" chance="810"/>
 		<item name="vampire shield" chance="200"/>
 		<item name="red piece of cloth" chance="70"/>
-		<item name="strong health potion" chance="7100"/>
-		<item name="strong mana potion" chance="8180"/>
 		<item name="vampire teeth" chance="7200"/>
 		<item name="blood preservation" chance="2910"/>
 		<item name="tooth file" chance="6560"/>

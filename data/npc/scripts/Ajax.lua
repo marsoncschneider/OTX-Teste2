@@ -11,7 +11,7 @@ local function greetCallback(cid)
 	local player = Player(cid)
 	if player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) == 1 or player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) > 3 then
 		npcHandler:setMessage(MESSAGE_GREET, "Whatcha do in my place?")
-	elseif player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) == 2 and player:getStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer) < os.time() then
+	elseif player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) == 2 and player:getStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer) < os.stime() then
 		npcHandler:setMessage(MESSAGE_GREET, "You back. You know, you right. Brother is right. Fist not always good. Tell him that!")
 		player:setStorageValue(Storage.OutfitQuest.BarbarianAddon, 3)
 	end
@@ -83,7 +83,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler.topic[cid] = 11
 		end
 	elseif msgcontains(msg, "axe") then
-		if player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) == 16 and player:getStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer) < os.time() then
+		if player:getStorageValue(Storage.OutfitQuest.BarbarianAddon) == 16 and player:getStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer) < os.stime() then
 			npcHandler:say("Axe is done! For you. Take. Wear like me.", cid)
 			player:setStorageValue(Storage.OutfitQuest.BarbarianAddon, 17)
 			player:addOutfitAddon(147, 1)
@@ -102,7 +102,7 @@ local function creatureSayCallback(cid, type, msg)
 			condition:addDamage(10, 2000, -10)
 			player:addCondition(condition)
 			player:setStorageValue(Storage.OutfitQuest.BarbarianAddon, 2)
-			player:setStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer, os.time() + 60 * 60) -- 1 hour
+			player:setStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer, os.stime() + 60 * 60) -- 1 hour
 			npcHandler:releaseFocus(cid)
 			npcHandler:resetNpc(cid)
 		elseif npcHandler.topic[cid] == 6 then
@@ -138,7 +138,7 @@ local function creatureSayCallback(cid, type, msg)
 			if player:removeItem(5876, 50) then
 				npcHandler:say("Ah! All stuff there. I will start making axes now. Come later and ask me for axe.", cid)
 				player:setStorageValue(Storage.OutfitQuest.BarbarianAddon, 16)
-				player:setStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer, os.time() + 2 * 60 * 60) -- 2 hours
+				player:setStorageValue(Storage.OutfitQuest.BarbarianAddonWaitTimer, os.stime() + 2 * 60 * 60) -- 2 hours
 				npcHandler.topic[cid] = 0
 			end
 		end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Beatrice" script="Beatrice.lua" walkinterval="2000" floorchange="0">
+<npc name="Beatrice" script="Beatrice.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="136" head="96" body="103" legs="69" feet="95" addons="0" />
 	<parameters>
@@ -14,11 +14,9 @@
 			candlestick,2047,2;
 			closed trap,2578,280;
 			crowbar,2416,260;
-			fishing rod,2580,150;
-			hand auger, 36169, 25;
+			BUNDA,2580,150;
 			lamp,2044,8;
 			machete,2420,35;
-			net, 36324, 50;
 			pick,2553,50;
 			present,1990,10;
 			rope,2120,50;
@@ -31,7 +29,7 @@
 		<parameter key="shop_sellable" value="
 			closed trap,2578,75;
 			crowbar,2416,50;
-			fishing rod,2580,40;
+			BUNDA,2580,40;
 			inkwell,2600,8;
 			machete,2420,6;
 			mirror,2560,10;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Terrorsleep" nameDescription="a terrorsleep" race="blood" experience="6900" speed="180">
+<monster name="Terrorsleep" nameDescription="a terrorsleep" race="blood" experience="6900" speed="180" raceid="1016">
 	<health now="7200" max="7200"/>
 	<look type="593" corpse="22497"/>
 	<targetchange interval="4000" chance="10"/>
@@ -74,8 +74,8 @@
 		<item name="knight armor" chance="4000"/>
 		<item name="white piece of cloth" chance="4520"/>
 		<item name="red piece of cloth" chance="1130"/>
-		<item name="great mana potion" countmax="2" chance="36000"/>
-		<item name="ultimate health potion" chance="26000"/>
+		<item name="gold coin" countmax="2" chance="36000"/>
+		<item name="gold coin" chance="26000"/>
 		<item name="small topaz" countmax="2" chance="17000"/>
 		<item name="blue crystal shard" chance="6000"/>
 		<item name="blue crystal splinter" chance="13000"/>

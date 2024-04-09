@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Bonifacius" script="Bonifacius.lua" walkinterval="2000" floorchange="0">
+<npc name="Bonifacius" script="Bonifacius.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="128" head="59" body="82" legs="97" feet="95" addons="0" />
 	<parameters>
@@ -16,7 +16,7 @@
 			pumpkin,2683,10;
 			cheese,2696,5;
 			cookie,2687,2;
-			egg,2695,2;
+			egg,2328,2;
 			meat,2666,5;
 			salmon,2668,4;
 			roll,2690,2;" />

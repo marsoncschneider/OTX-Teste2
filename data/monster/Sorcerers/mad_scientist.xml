@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Mad Scientist" nameDescription="a mad scientist" race="blood" experience="205" speed="90">
+<monster name="Mad Scientist" nameDescription="a mad scientist" race="blood" experience="205" speed="90" raceid="528">
 	<health now="325" max="325"/>
 	<look type="133" head="97" body="0" legs="38" feet="97" addons="1" corpse="20439"/>
 	<targetchange interval="4000" chance="10"/>
@@ -65,8 +65,6 @@
 		<item name="cookie" countmax="5" chance="1200"/>
 		<item name="white mushroom" countmax="3" chance="8000"/>
 		<item name="mastermind potion" chance="130"/>
-		<item name="health potion" chance="19000"/>
-		<item name="mana potion" chance="19000"/>
 		<item name="small enchanted amethyst" chance="470"/>
 	</loot>
 </monster>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Quara Hydromancer" nameDescription="a quara hydromancer" race="blood" experience="800" speed="245">
+<monster name="Quara Hydromancer" nameDescription="a quara hydromancer" race="blood" experience="800" speed="245" raceid="243">
 	<health now="1100" max="1100"/>
 	<look type="47" corpse="6066"/>
 	<targetchange interval="4000" chance="10"/>
@@ -67,12 +67,12 @@
 		<item name="gold coin" countmax="50" chance="50000"/>
 		<item name="gold coin" countmax="60" chance="50000"/>
 		<item name="small emerald" countmax="2" chance="5111"/>
-		<item name="wand of cosmic energy" chance="900"/>
+
 		<item name="ring of healing" chance="1008"/>
 		<item name="knight armor" chance="200"/>
 		<item name="shrimp" countmax="5" chance="4545"/>
 		<item name="fish fin" chance="1280"/>
-		<item name="great mana potion" chance="3100"/>
+		<item name="gold coin" chance="3100"/>
 		<item name="quara eye" chance="15930"/>
 	</loot>
 </monster>

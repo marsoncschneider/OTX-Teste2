@@ -50,6 +50,6 @@
 		<item name="gold coin" countmax="90" chance="27000" />
 		<item name="gold coin" countmax="87" chance="27000" />
 		<item name="iced soil" chance="9000" />
-		<item name="northwind rod" chance="750" />
+
 	</loot>
 </monster>

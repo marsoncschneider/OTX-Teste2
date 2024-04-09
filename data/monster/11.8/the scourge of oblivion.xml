@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Scourge Of Oblivion" nameDescription="The Scourge Of Oblivion" race="energy" experience="50000" speed="450" script="rewardboss.lua">
+<monster name="The Scourge Of Oblivion" nameDescription="The Scourge Of Oblivion" race="energy" experience="50000" speed="450">
 	<health now="800000" max="800000"/>
 	<look type="875" head="79" body="79" legs="60" feet="79" addons="3" corpse="26217"/>
 	<targetchange interval="2000" chance="25"/>
@@ -103,29 +103,25 @@
 		<item name="Spark Sphere" chance="100000"/>
 		<item name="Plasmatic Lightning" chance="100000"/>
 		<item name="Emerald Bangle" chance="100000"/>
-		<item name="Royal Star" countmax="100" chance="66666"/>
 		<item name="Small Amethyst" countmax="12" chance="66666"/>
 		<item name="Silver Token" countmax="12" chance="66666"/>
 		<item name="Mastermind Potion" countmax="10" chance="66666"/>
-		<item name="Ultimate Mana Potion" countmax="6" chance="66666"/>
 		<item name="Giant Emerald" chance="66666"/>
 		<item name="Red Gem" chance="66666"/>
 		<item name="Small Ruby" countmax="12" chance="33333"/>
 		<item name="Bullseye Potion" countmax="10" chance="33333"/>
 		<item name="Gold Token" countmax="8" chance="33333"/>
-		<item name="Supreme Health Potion" countmax="6" chance="33333"/>
 		<item name="Blue Crystal Shard" countmax="3" chance="33333"/>
 		<item name="Giant Sapphire" chance="33333"/>
 		<item name="Green Gem" chance="33333"/>
-		<item name="Collar of Blue Plasma" chance="33333"/>
+		<item id="26198" chance="33333"/> <!-- Collar of Blue Plasma -->
 		<item name="Huge Chunk of Crude Iron" chance="33333"/>
 		<item name="Magic Sulphur" chance="33333"/>
 		<item name="Ring of the Sky" chance="33333"/>
-		<item name="Ultimate Spirit Potion" countmax="20" chance="15000"/>
 		<item name="Small Diamond" countmax="12" chance="15000"/>
 		<item name="Small Emerald" countmax="12" chance="15000"/>
 		<item name="Rift Shield" chance="5000"/>
-		<item name="Giant Shimmering Pearl" chance="5000"/>
+		<item id="7632" chance="5000"/> <!-- Giant Shimmering Pearl -->
 		<item name="Arcane Staff" chance="5000"/>
 		<item name="Skullcracker Armor" chance="5000"/>
 		<item name="Chaos Mace" chance="5000"/>

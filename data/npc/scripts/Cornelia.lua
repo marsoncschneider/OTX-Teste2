@@ -21,12 +21,12 @@ local function creatureSayCallback(cid, type, msg)
 	if isInArray({"addon", "armor"}, msg) then
 		if player:getStorageValue(Storage.OutfitQuest.WarriorShoulderAddon) == 5 then
 			player:setStorageValue(Storage.OutfitQuest.WarriorShoulderAddon, 6)
-			player:setStorageValue(Storage.OutfitQuest.WarriorShoulderTimer, os.time() + (player:getSex() == PLAYERSEX_FEMALE and 3600 or 7200))
+			player:setStorageValue(Storage.OutfitQuest.WarriorShoulderTimer, os.stime() + (player:getSex() == PLAYERSEX_FEMALE and 3600 or 7200))
 			npcHandler:say('Ah, you must be the hero Trisha talked about. I\'ll prepare the shoulder spikes for you. Please give me some time to finish.', cid)
 		elseif player:getStorageValue(Storage.OutfitQuest.WarriorShoulderAddon) == 6 then
-			if player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) > os.time() then
+			if player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) > os.stime() then
 				npcHandler:say('I\'m not done yet. Please be as patient as you are courageous.', cid)
-			elseif player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) > 0 and player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) < os.time() then
+			elseif player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) > 0 and player:getStorageValue(Storage.OutfitQuest.WarriorShoulderTimer) < os.stime() then
 				player:addOutfitAddon(142, 1)
 				player:addOutfitAddon(134, 1)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)

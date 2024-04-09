@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Quara Predator Scout" nameDescription="a quara predator scout" race="blood" experience="400" speed="85">
+<monster name="Quara Predator Scout" nameDescription="a quara predator scout" race="blood" experience="400" speed="85" raceid="238">
 	<health now="890" max="890"/>
 	<look type="20" corpse="6067"/>
 	<targetchange interval="4000" chance="10"/>
@@ -46,7 +46,7 @@
 		<item name="scale armor" chance="8000"/>
 		<item name="shrimp" countmax="5" chance="4700"/>
 		<item name="fish fin" chance="980"/>
-		<item name="northwind rod" chance="800"/>
+
 		<item name="quara bone" chance="10150"/>
 	</loot>
 </monster>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Hellhound" nameDescription="a hellhound" race="blood" experience="6800" speed="180">
+<monster name="Hellhound" nameDescription="a hellhound" race="blood" experience="6800" speed="180" raceid="294">
 	<health now="7500" max="7500"/>
 	<look type="240" corpse="6332"/>
 	<targetchange interval="4000" chance="10"/>
@@ -101,7 +101,7 @@
 		<item id="9970" countmax="3" chance="10000"/>	<!-- small topaz -->
 		<item id="5944" chance="20000"/> <!-- soul orb -->
 		<item id="8473" chance="16000"/> <!-- ultimate health potion -->
-		<item id="2187" chance="7000"/> <!-- wand of inferno -->
+
 		<item id="2154" chance="4500"/> <!-- yellow gem -->
 		<item id="5914" chance="6000"/> <!-- yellow piece of cloth -->
 	</loot>

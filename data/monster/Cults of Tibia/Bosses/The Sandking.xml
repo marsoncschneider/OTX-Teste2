@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="The Sandking" nameDescription="The Sandking" race="venom" experience="0" speed="250" script="rewardboss.lua">
+<monster name="The Sandking" nameDescription="The Sandking" race="venom" experience="0" speed="250">
 	<health now="50000" max="50000" />
 	<look type="1013" corpse="25151" />
 	<targetchange interval="5000" chance="30" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -46,8 +46,8 @@
 		<item name="small diamond" countmax="10" chance="21000" />
 		<item name="green gem" chance="12000" />
 		<item name="luminous orb" chance="35000" />
-		<item name="great mana potion" countmax="10" chance="31230" />
-		<item name="ultimate health potion" countmax="10" chance="28230" />
+		<item name="gold coin" countmax="10" chance="31230" />
+		<item name="gold coin" countmax="10" chance="28230" />
 		<item name="cobra crown" chance="400" />
 		<item name="silver token" chance="2500" />
 		<item name="gold token" chance="1532" />
@@ -57,7 +57,7 @@
 		<item name="magic sulphur" chance="18920"/>
 		<item id="7440" chance="2000"/>
 		<item id="22396" countmax="2" chance="2000"/> <!-- cluster of solace -->
-		<item name="Hailstorm Rod" chance="3470" />
+
 		<item id="2153" chance="1000"/><!-- violet gem -->
 		<item name="ring of healing" chance="20000" />
 		<item id="2147" countmax="10" chance="7360"/><!-- small ruby -->

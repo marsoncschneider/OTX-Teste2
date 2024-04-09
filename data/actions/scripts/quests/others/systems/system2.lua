@@ -238,6 +238,12 @@ local config = {
 		},
 		storage = Storage.QuestChests.SilverBrooch
 	},
+	[9196] = {
+		items = {
+			{itemId = 2088, actionId = 5010}
+		},
+		storage = Storage.QuestChests.BlackKnightTreeKey
+	},
 	[9226] = {
 		items = {
 			{itemId = 2503}
@@ -372,7 +378,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
-	if (useItem.time and player:getStorageValue(useItem.storage) > os.time())
+	if (useItem.time and player:getStorageValue(useItem.storage) > os.stime())
 			or player:getStorageValue(useItem.storage) ~= (useItem.formerValue or -1) then
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'The ' .. ItemType(item.itemid):getName() .. ' is empty.')
 		return true
@@ -473,7 +479,7 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You have found ' .. result .. '.')
 	if useItem.time then
-		player:setStorageValue(useItem.storage, os.time() + 86400)
+		player:setStorageValue(useItem.storage, os.stime() + 86400)
 	else
 		player:setStorageValue(useItem.storage, useItem.newValue or 1)
 	end

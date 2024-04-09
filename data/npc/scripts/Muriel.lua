@@ -29,7 +29,6 @@ local function creatureSayCallback(cid, type, msg)
 			addEvent(releasePlayer, 1000, cid)
 			return true
 		end
-
 		if player:getStorageValue(Storage.TibiaTales.IntoTheBonePit) == -1 then
 			npcHandler:say({
 				'Indeed, there is something you can do for me. You must know I am researching for a new spell against the undead. ...',
@@ -59,6 +58,17 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say('I am very glad you helped me, but I am very busy at the moment.', cid)
 			addEvent(releasePlayer, 1000, cid)
 		end
+	elseif msgcontains(msg, 'addons') then
+		if player:hasOutfit(931) or player:hasOutfit(929) then
+			npcHandler:say({
+				'Are you interested in one or two addons to a beautiful festive outfit?'
+			}, cid)
+			npcHandler.topic[cid] = 2			
+		else
+			npcHandler:say({
+				'I can not help you.'
+			}, cid)
+		end
 	elseif msgcontains(msg, 'yes') then
 		if npcHandler.topic[cid] == 1 then
 			player:addItem(4863, 1)
@@ -68,11 +78,51 @@ local function creatureSayCallback(cid, type, msg)
 				'If you lose it, you can buy a new one from the explorer\'s society in North Port or Port Hope. Ask me about the mission when you come back.'
 			}, cid)
 			addEvent(releasePlayer, 1000, cid)
+		elseif npcHandler.topic[cid] == 2 then
+			npcHandler:say({
+				'I provide two addons. For the first one I need you to bring me three porcelain masks. For the second addon you need fifty colourful ostrich feathers. Do you want one of these addons?'
+			}, cid)
+			npcHandler.topic[cid] = 3
+		elseif npcHandler.topic[cid] == 3 then
+			npcHandler:say({
+				'What do you have for me: the porcelain {masks} or the colourful {feathers}?'
+			}, cid)
+			npcHandler.topic[cid] = 4
 		end
 	elseif msgcontains(msg, 'no') then
 		if npcHandler.topic[cid] == 1 then
 			npcHandler:say('Ohh, then I need to find another adventurer who wants to earn a great reward. Bye!', cid)
 			addEvent(releasePlayer, 1000, cid)
+		end
+	elseif npcHandler.topic[cid] == 4 then
+		if msgcontains(msg, 'masks') then
+			if not player:hasOutfit(931, 1) or player:hasOutfit(929, 1) then
+				if player:getItemCount(27756) >= 3 then
+					npcHandler:say('Very good! You gained the first addon to the festive outfit.', cid)
+					player:removeItem(27756, 3)
+					player:addOutfitAddon(931, 1)
+					player:addOutfitAddon(929, 1)
+				else
+					npcHandler:say('You don\'t have enought items.', cid)
+				end
+			else
+				npcHandler:say('You already have this addon.', cid)
+			end
+		elseif msgcontains(msg, 'feathers') then
+			if not player:hasOutfit(931, 2) or player:hasOutfit(929, 2) then
+				if player:getItemCount(27757) >= 50 then
+					npcHandler:say('Very good! You gained the second addon to the festive outfit.', cid)
+					player:removeItem(27757, 50)
+					player:addOutfitAddon(931, 2)
+					player:addOutfitAddon(929, 2)
+				else
+					npcHandler:say('You don\'t have enought items.', cid)
+				end
+			else
+				npcHandler:say('You already have this addon.', cid)
+			end
+		else
+			npcHandler:say('I don\'t understand.', cid)
 		end
 	end
 	return true

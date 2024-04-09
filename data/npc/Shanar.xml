@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Shanar" script="Shanar.lua" walkinterval="2000" floorchange="0">
+<npc name="Shanar" script="Shanar.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
 	<look type="159" head="0" body="94" legs="105" feet="76" />
 	<parameters>
@@ -18,10 +18,10 @@
 			chain helmet,2458,52;
 			chain legs,2648,80;
 			club,2382,5;
-			exercise sword,32384,262500,500;
-			exercise axe,32385,262500,500;
-			exercise club,32386,262500,500;
-			exercise bow,32387,262500,500;
+
+
+
+
 			leather helmet,2461,12;
 			leather armor,2467,35;
 			steel shield,2509,240;

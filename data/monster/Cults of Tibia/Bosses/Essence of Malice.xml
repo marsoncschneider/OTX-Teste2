@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Essence Of Malice" nameDescription="Essence Of Malice" race="undead" experience="4600" speed="320" script="rewardboss.lua">
+<monster name="Essence Of Malice" nameDescription="Essence Of Malice" race="undead" experience="4600" speed="320">
 	<health now="25000" max="25000" />
 	<look type="351" corpse="11362" />
 	<targetchange interval="4000" chance="5" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -65,7 +65,7 @@
 		<item name="odd organ" chance="100000" />
 		<item name="energy bar" countmax="3" chance="16872" />
 		<item id="26186" chance="8762" />
-		<item name="ultimate health potion" countmax="10" chance="27652" />
+		<item name="gold coin" countmax="10" chance="27652" />
 		<item name="blade of corruption" chance="3775" />
 	</loot>
 </monster>

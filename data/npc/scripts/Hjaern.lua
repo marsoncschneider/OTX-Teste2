@@ -87,7 +87,7 @@ local function creatureSayCallback(cid, type, msg)
 		npcHandler.topic[cid] = 0
 		end
 	elseif msgcontains(msg, "shard") then
-		if player:getStorageValue(Storage.TheIceIslands.Questline) == 40 then
+		if player:getStorageValue(Storage.TheIceIslands.Mission12) == 6 and player:getStorageValue(Storage.TheIceIslands.Questline) < 40 then
 			npcHandler:say("Do you bring frostheart shards for our spell?", cid)
 			npcHandler.topic[cid] = 3
 		elseif player:getStorageValue(Storage.TheIceIslands.Questline) == 42 then
@@ -151,12 +151,16 @@ local function creatureSayCallback(cid, type, msg)
 				npcHandler:say("Excellent, you collected 5 of them. If you have collected 5 or more, talk to me about your {reward}. ", cid)
 				player:setStorageValue(Storage.TheIceIslands.Questline, 41)
 				npcHandler.topic[cid] = 0
+			else 
+				npcHandler:say("You do not have enough shards.", cid)
 			end
 		elseif npcHandler.topic[cid] == 4 then
 			if player:removeItem(7290, 10) then
 				npcHandler:say("Excellent, you collected 10 of them. If you have collected 15 or more, talk to me about your {reward}. ", cid)
 				player:setStorageValue(Storage.TheIceIslands.Questline, 43)
 				npcHandler.topic[cid] = 0
+			else 
+				npcHandler:say("You do not have enough shards.", cid)
 			end
 		elseif npcHandler.topic[cid] == 5 then
 			if player:getItemCount(7290) > 0 then

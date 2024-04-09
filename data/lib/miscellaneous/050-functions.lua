@@ -1,3 +1,31 @@
+function kickPlayersAfterTime(players, fromPos, toPos, exit)
+	for _, pid in pairs(players) do
+		local player = Player(pid)
+		if player and player:getPosition():isInRange(fromPos, toPos) then
+			player:teleportTo(exit)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, 'You were kicked by exceding time inside the boss room.')
+		end
+	end
+end
+
+function string.explode (str , seperator, plain )
+	assert ( type ( seperator ) == "string" and seperator ~= "" , "Invalid seperator (need string of length >= 1)" )
+	 
+	local t , nexti = { } , 1
+	local pos = 1
+	while true do
+		local st , sp = str:find ( seperator , pos , plain )
+			if not st then break end -- No more seperators found
+				if pos ~= st then
+					t [ nexti ] = str:sub ( pos , st - 1 ) -- Attach chars left of current divider
+					nexti = nexti + 1
+				end
+				pos = sp + 1 -- Jump past current divider
+			end
+	t [ nexti ] = str:sub ( pos ) -- Attach chars right of last divider
+	return t
+end
+
 function getAccountNumberByPlayerName(name)
 	local player = Player(name)
 	if player ~= nil then
@@ -43,7 +71,10 @@ function roomIsOccupied(centerPosition, rangeX, rangeY)
 	if #spectators ~= 0 then
 		return true
 	end
-
+	local monsters = Game.getSpectators(centerPosition, false, false, rangeX, rangeX, rangeY, rangeY)
+	for _, monster in pairs(monsters) do
+		if monster then monster:remove() end
+	end
 	return false
 end
 
@@ -98,8 +129,8 @@ function getMoneyWeight(money)
 end
 
 function getRealDate()
-	local month = tonumber(os.date("%m", os.time()))
-	local day = tonumber(os.date("%d", os.time()))
+	local month = tonumber(os.sdate("%m", os.stime()))
+	local day = tonumber(os.sdate("%d", os.stime()))
 
 	if month < 10 then
 		month = '0' .. month
@@ -111,8 +142,8 @@ function getRealDate()
 end
 
 function getRealTime()
-	local hours = tonumber(os.date("%H", os.time()))
-	local minutes = tonumber(os.date("%M", os.time()))
+	local hours = tonumber(os.sdate("%H", os.stime()))
+	local minutes = tonumber(os.sdate("%M", os.stime()))
 
 	if hours < 10 then
 		hours = '0' .. hours
@@ -202,7 +233,7 @@ function placeSpawnRandom(fromPositon, toPosition, monsterName, ammount, hasCall
 	end
 		if ammount and ammount > 0 then
 			local summoned = 0
-			local tm = os.time()
+			local tm = os.stime()
 			repeat
 				local tile = false
 				-- repeat

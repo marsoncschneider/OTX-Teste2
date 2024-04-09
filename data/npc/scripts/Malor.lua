@@ -2,18 +2,10 @@ local keywordHandler = KeywordHandler:new()
 local npcHandler = NpcHandler:new(keywordHandler)
 NpcSystem.parseParameters(npcHandler)
 
-function onCreatureAppear(cid)
-npcHandler:onCreatureAppear(cid)
-end
-function onCreatureDisappear(cid)
-npcHandler:onCreatureDisappear(cid)
-end
-function onCreatureSay(cid, type, msg)
-npcHandler:onCreatureSay(cid, type, msg)
-end
-function onThink()
-npcHandler:onThink()	
-end
+function onCreatureAppear(cid)			npcHandler:onCreatureAppear(cid)			end
+function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
+function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
+function onThink()				npcHandler:onThink()					end
 
 local function releasePlayer(cid)
 	if not Player(cid) then
@@ -97,13 +89,14 @@ local function creatureSayCallback(cid, type, msg)
 	return true
 end
 
--- Greeting
-keywordHandler:addGreetKeyword({"djanni'hah"}, {npcHandler = npcHandler, text = "Greetings, human |PLAYERNAME|. My patience with your kind is limited, so speak quickly and choose your words well."})
-
-npcHandler:setMessage(MESSAGE_FAREWELL, "Farewell, human. When I have taken my rightful place I shall remember those who served me well. Even if they are only humans.")
+npcHandler:setMessage(MESSAGE_GREET, 'Greetings, human |PLAYERNAME|. My patience with your kind is limited, so speak quickly and choose your words well.')
+npcHandler:setMessage(MESSAGE_FAREWELL, 'Farewell, human. When I have taken my rightful place I shall remember those who served me well. Even if they are only humans.')
 npcHandler:setMessage(MESSAGE_WALKAWAY, 'Farewell, human.')
 
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
-npcHandler:setCallback(CALLBACK_GREET, greetCallback)
 
-npcHandler:addModule(FocusModule:new())
+local focusModule = FocusModule:new()
+focusModule:addGreetMessage('hi')
+focusModule:addGreetMessage('hello')
+focusModule:addGreetMessage('djanni\'hah')
+npcHandler:addModule(focusModule)

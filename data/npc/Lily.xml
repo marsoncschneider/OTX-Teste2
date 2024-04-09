@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Lily" script="Lily.lua" walkinterval="2000" floorchange="0">
+<npc name="Lily" script="Lily.lua" walkinterval="0" floorchange="0">
 	<health now="100" max="100" />
-	<look type="138" head="78" body="101" legs="86" feet="115" addons="0" />
+	<look type="969" head="78" body="101" legs="86" feet="115" addons="0" />
 	<parameters>
 		<parameter key="module_shop" value="1" />
 		<parameter key="shop_buyable" value="antidote potion,8474,50;small health potion,8704,20;" />

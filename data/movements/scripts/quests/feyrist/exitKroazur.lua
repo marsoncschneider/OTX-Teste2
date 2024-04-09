@@ -1,5 +1,5 @@
 local config = {
-	[24901] = {backPos = Position(33619, 32306, 9)}
+	[8076] = {backPos = Position(33619, 32306, 9)}
 }
 
 function onStepIn(creature, item, position, fromPosition)

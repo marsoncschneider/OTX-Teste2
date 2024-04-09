@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Thornback Tortoise" nameDescription="a thornback tortoise" race="blood" experience="150" speed="200" manacost="490">
+<monster name="Thornback Tortoise" nameDescription="a thornback tortoise" race="blood" experience="150" speed="100" manacost="490" raceid="259">
 	<health now="300" max="300" />
 	<look type="198" corpse="6073" />
 	<targetchange interval="5000" chance="0" />
@@ -39,7 +39,6 @@
 		<item name="brown mushroom" chance="700" />
 		<item name="tortoise egg" countmax="3" chance="790" />
 		<item name="turtle shell" chance="800" />
-		<item name="health potion" chance="1600" />
 		<item name="thorn" chance="15980" />
 	</loot>
 </monster>

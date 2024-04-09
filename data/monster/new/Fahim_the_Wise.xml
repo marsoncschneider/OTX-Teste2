@@ -4,7 +4,7 @@
 	<look type="104" corpse="6033" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -70,7 +70,6 @@
 		<item name="noble turban" chance="66670" />
 		<item name="royal spear" countmax="3" chance="57140" />
 		<item name="shiny stone" chance="47620" />
-		<item name="strong mana potion" countmax="3" chance="42860" />
 		<item name="blueberry" countmax="22" chance="40480" />
 		<item name="mystic turban" chance="33330" />
 		<item name="small sapphire" countmax="2" chance="14290" />
@@ -78,7 +77,7 @@
 		<item name="magma monocle" chance="4760" />
 		<item name="blue gem" chance="2380" />
 		<item name="small oil lamp" chance="580" />
-		<item name="wooden flute" chance="480" />
+		<item id="2374" chance="480" /> <!-- wooden flute -->
 		<item name="heavy machete" chance="380" />
 	</loot>
 </monster>

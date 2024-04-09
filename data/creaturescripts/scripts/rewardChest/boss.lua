@@ -18,7 +18,7 @@ local function insertItems(buffer, info, parent, items)
 			end
 			info.running = info.running + 1
 			table.insert(buffer, "(")
-			pushSeparated(buffer, ",", info.playerGuid, parent, info.running, item:getId(), item:getSubType(), db.escapeString(serializeAttributes(item)))
+			pushSeparated(buffer, ",", info.playerGuid, parent, info.running, item:getId(), item:getSubType(), db.escapeString(item:serializeAttributes()))
 			table.insert(buffer, ")")
 
 			if item:isContainer() then
@@ -111,7 +111,7 @@ function onDeath(creature, corpse, killer, mostDamageKiller, lastHitUnjustified,
 	local monsterType = creature:getType()
 	if monsterType:isRewardBoss() then -- Make sure it is a boss
 		local bossId = creature:getId()
-		local timestamp = os.time()
+		local timestamp = os.stime()
 
 		local totalDamageOut, totalDamageIn, totalHealing = 0.1, 0.1, 0.1 -- avoid dividing by zero
 
@@ -176,12 +176,12 @@ function onDeath(creature, corpse, killer, mostDamageKiller, lastHitUnjustified,
 				local lootMessage = {"The following items are available in your reward chest: "}
 
 				if --[[stamina > 840]]true then
-					reward:getContentDescription(lootMessage)
+					reward:getContentDescription(lootMessage, con.player:getClient().version)
 				else
 					table.insert(lootMessage, 'nothing (due to low stamina)')
 				end
 				table.insert(lootMessage, ".")
-				con.player:sendTextMessage(MESSAGE_INFO_DESCR, table.concat(lootMessage))
+				con.player:sendTextMessage(MESSAGE_LOOT, table.concat(lootMessage))
 			elseif con.score ~= 0 then
 				insertRewardItems(con.guid, timestamp, playerLoot)
 			end

@@ -8,8 +8,8 @@ function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)
 function onThink()				npcHandler:onThink()					end
 
 -- Blood of the Mountain
-local blessKeyword = keywordHandler:addKeyword({'blood'}, StdModule.say, {npcHandler = npcHandler, text = 'Would you like to receive that protection for a sacrifice of |BLESSCOST| gold, child?'})
-	blessKeyword:addChildKeyword({'yes'}, StdModule.bless, {npcHandler = npcHandler, text = 'So receive the Blood of the Mountain, pilgrim.', cost = '|BLESSCOST|', bless = 7})
+local blessKeyword = keywordHandler:addKeyword({'enhanced'}, StdModule.say, {npcHandler = npcHandler, text = 'Would you like to receive that protection for a sacrifice of |BLESSCOST| gold, child?'})
+	blessKeyword:addChildKeyword({'yes'}, StdModule.bless, {npcHandler = npcHandler, text = 'So receive the Blood of the Mountain, pilgrim.', cost = '|BLESSCOST|', bless = BLOOD_OF_THE_MOUNTAIN })
 	blessKeyword:addChildKeyword({''}, StdModule.say, {npcHandler = npcHandler, text = 'Fine. You are free to decline my offer.', reset = true})
 
 -- Healing

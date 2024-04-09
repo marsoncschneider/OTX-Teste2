@@ -73,6 +73,10 @@ local grizzlyAdamsConfig = {
 			{id=7396, buy=0, sell=20000, name='behemoth trophy'},
 			{id=7393, buy=0, sell=40000, name='demon trophy'},
 			{id=7399, buy=0, sell=10000, name='dragon lord trophy'},
+			{id=11338, buy=0, sell=3000, name='disgusting trophy'},
+			{id=24757, buy=0, sell=9000, name='werebadger trophy'},
+			{id=24758, buy=0, sell=10000, name='wereboar trophy'},
+			{id=24759, buy=0, sell=11000, name='werebear trophy'},
 			-- BUY OFFERS
 			{id=10518, buy=1000, sell=0, name='demon backpack'},
 		},
@@ -124,7 +128,7 @@ local function onBuy(cid, item, subType, amount, ignoreCap, inBackpacks)
 	if not ignoreCap and player:getFreeCapacity() < ItemType(items[item].id):getWeight(amount) then
 		return player:sendTextMessage(MESSAGE_INFO_DESCR, 'You don\'t have enough cap.')
 	end
-	if not player:removeMoneyNpc(items[item].buy * amount) then
+	if not doPlayerRemoveMoney(cid, items[item].buy * amount) then
 		selfSay("You don't have enough money.", cid)
 	else
 		player:addItem(items[item].id, amount)
@@ -240,44 +244,73 @@ local function creatureSayCallback(cid, type, msg)
 		local started = player:getStartedTasks()
 		local finishedAtLeastOne = false
 		local finished = 0
+		local str, _str, str_ = '', '', ''
 		if started and #started > 0 then
 			local id, reward
 			for i = 1, #started do
 				id = started[i]
-				if player:getStorageValue(KILLSSTORAGE_BASE + id) >= tasks[id].killsRequired then
-					for j = 1, #tasks[id].rewards do
-						reward = tasks[id].rewards[j]
-						local deny = false
-						if reward.storage then
-							if player:getStorageValue(reward.storage[1]) >= reward.storage[2] then
-								deny = true
+				local killedBoss = true
+				if tasks[id].bossStorage then
+					if player:getStorageValue(tasks[id].bossStorage) == 1 then
+						killedBoss = false
+						str_ = string.format('\nBefore deliver %s\'s task, you must kill its boss: %s', tasks[id].raceName, tasks[id].bossName)
+					elseif player:getStorageValue(tasks[id].bossStorage) >= 2 then
+						killedBoss = true
+						str_ = string.format('You killed %s! Now you may start another task of %s.', tasks[id].bossName, tasks[id].raceName)
+						npcHandler:say(str_, cid)
+						player:setStorageValue(tasks[id].bossStorage, 0)
+					end
+				end
+				if killedBoss then
+					if player:getStorageValue(KILLSSTORAGE_BASE + id) >= tasks[id].killsRequired then
+						for j = 1, #tasks[id].rewards do
+							reward = tasks[id].rewards[j]
+							local deny = false
+							if reward.storage then
+								if player:getStorageValue(reward.storage[1]) >= reward.storage[2] then
+									deny = true
+								end
+							end
+							if isInArray({REWARD_MONEY, 'money'}, reward.type:lower()) and not deny then
+								player:addMoney(reward.value[1])
+							elseif isInArray({REWARD_EXP, 'exp', 'experience'}, reward.type:lower()) and not deny then
+								player:addExperience(reward.value[1], true)
+							elseif isInArray({REWARD_ACHIEVEMENT, 'achievement', 'ach'}, reward.type:lower()) and not deny then
+								player:addAchievement(reward.value[1])
+							elseif isInArray({REWARD_STORAGE, 'storage', 'stor'}, reward.type:lower()) and not deny then
+								player:setStorageValue(reward.value[1], reward.value[2])
+							elseif isInArray({REWARD_POINT, 'points', 'point'}, reward.type:lower()) and not deny then
+								player:setStorageValue(POINTSSTORAGE, getPlayerTasksPoints(cid) + reward.value[1])
+								if player:getLevel() >= 130 then
+									if player:getStorageValue(POINTSSTORAGE) < 20 then
+										player:setStorageValue(POINTSSTORAGE, getPlayerTasksPoints(cid) + 3)
+									elseif player:getStorageValue(POINTSSTORAGE) >= 20 and player:getStorageValue(POINTSSTORAGE) < 40 then
+										player:setStorageValue(POINTSSTORAGE, getPlayerTasksPoints(cid) + 2)
+									elseif player:getStorageValue(POINTSSTORAGE) >= 70 then
+										player:setStorageValue(POINTSSTORAGE, getPlayerTasksPoints(cid) + 1)
+									end
+								end
+							elseif isInArray({REWARD_ITEM, 'item', 'items', 'object'}, reward.type:lower()) and not deny then
+								player:addItem(reward.value[1], reward.value[2])
+							end
+							
+							if tasks[id].bossName then
+								player:setStorageValue(tasks[id].bossStorage, 1)
+								_str = '\nNow you\'re able to enter the teleport and kill '.. tasks[id].raceName ..'\'s boss: '.. tasks[id].bossName ..'!'
+							end
+							
+							if reward.storage then
+								player:setStorageValue(reward.storage[1], reward.storage[2])
 							end
 						end
-						if isInArray({REWARD_MONEY, 'money'}, reward.type:lower()) and not deny then
-							player:addMoney(reward.value[1])
-						elseif isInArray({REWARD_EXP, 'exp', 'experience'}, reward.type:lower()) and not deny then
-							player:addExperience(reward.value[1], true)
-						elseif isInArray({REWARD_ACHIEVEMENT, 'achievement', 'ach'}, reward.type:lower()) and not deny then
-							player:addAchievement(reward.value[1])
-						elseif isInArray({REWARD_STORAGE, 'storage', 'stor'}, reward.type:lower()) and not deny then
-							player:setStorageValue(reward.value[1], reward.value[2])
-						elseif isInArray({REWARD_POINT, 'points', 'point'}, reward.type:lower()) and not deny then
-							player:setStorageValue(POINTSSTORAGE, getPlayerTasksPoints(cid) + reward.value[1])
-						elseif isInArray({REWARD_ITEM, 'item', 'items', 'object'}, reward.type:lower()) and not deny then
-							player:addItem(reward.value[1], reward.value[2])
-						end
 
-						if reward.storage then
-							player:setStorageValue(reward.storage[1], reward.storage[2])
-						end
+						player:setStorageValue(QUESTSTORAGE_BASE + id, (tasks[id].norepeatable and 2 or 0))
+						player:setStorageValue(KILLSSTORAGE_BASE + id, -1)
+						player:setStorageValue(REPEATSTORAGE_BASE + id, math.max(player:getStorageValue(REPEATSTORAGE_BASE + id), 0))
+						player:setStorageValue(REPEATSTORAGE_BASE + id, player:getStorageValue(REPEATSTORAGE_BASE + id) + 1)
+						finishedAtLeastOne = true
+						finished = finished + 1
 					end
-
-					player:setStorageValue(QUESTSTORAGE_BASE + id, (tasks[id].norepeatable and 2 or 0))
-					player:setStorageValue(KILLSSTORAGE_BASE + id, -1)
-					player:setStorageValue(REPEATSTORAGE_BASE + id, math.max(player:getStorageValue(REPEATSTORAGE_BASE + id), 0))
-					player:setStorageValue(REPEATSTORAGE_BASE + id, player:getStorageValue(REPEATSTORAGE_BASE + id) + 1)
-					finishedAtLeastOne = true
-					finished = finished + 1
 				end
 			end
 			if not finishedAtLeastOne then
@@ -298,10 +331,12 @@ local function creatureSayCallback(cid, type, msg)
 						end
 						text = text .. '{' .. (tasks[id].name or tasks[id].raceName) .. '}' .. sep
 					end
-					npcHandler:say('The current task' .. (#started > 1 and 's' or '') .. ' that you started ' .. (#started > 1 and 'are' or 'is') .. ' ' .. text, cid)
+					npcHandler:say('The current task' .. (#started > 1 and 's' or '') .. ' that you started ' .. (#started > 1 and 'are' or 'is') .. ' ' .. text .. str_, cid)
 				end
 			else
-				npcHandler:say('Awesome! you finished ' .. (finished > 1 and 'various' or 'a') .. ' task' .. (finished > 1 and 's' or '') .. '. Talk to me again if you want to start a {task}.', cid)
+				str = 'Awesome! You finished ' .. (finished > 1 and 'various' or 'a') .. ' task' .. (finished > 1 and 's' or '') .. '. Talk to me again if you want to start a {task}.'
+				str = string.format(str .. '%s', _str)
+				npcHandler:say(str, cid)
 			end
 		else
 			npcHandler:say('You haven\'t started any task yet.', cid)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Dawnfly" nameDescription="a dawnfly" race="venom" experience="35" speed="100">
+<monster name="Dawnfly" nameDescription="a dawnfly" race="venom" experience="35" speed="100" >
 	<health now="90" max="90"/>
 	<look type="528" corpse="23825"/>
 	<targetchange interval="5000" chance="8"/>
@@ -34,8 +34,6 @@
 		<item id="19738" chance="11940"/> <!-- damselfly wing -->
 		<item id="19743" chance="10130"/> <!-- damselfly eye -->
 		<item id="2148" countmax="12" chance="100000"/> <!-- gold coin -->
-		<item id="7618" chance="3630"/> <!-- health potion -->
-		<item id="7620" chance="3800"/> <!-- mana potion -->
 		<item id="2545" countmax="8" chance="14500"/><!-- poison arrows -->
 	</loot>
 </monster>

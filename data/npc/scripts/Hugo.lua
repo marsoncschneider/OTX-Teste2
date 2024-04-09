@@ -98,9 +98,9 @@ local function creatureSayCallback(cid, type, msg)
 		elseif player:getStorageValue(Storage.OutfitQuest.BeggarOutfit) > 0 and player:getStorageValue(Storage.OutfitQuest.BeggarOutfit) < 5 then
 			npcHandler:say('I am so excited! This poor man\'s look will be an outfit like the world has never seen before.', cid)
 		elseif player:getStorageValue(Storage.OutfitQuest.BeggarOutfit) == 5 then
-			if player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) > os.time() then
+			if player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) > os.stime() then
 				npcHandler:say('Sorry, but I am not done with the outfit yet. Venore wasn\'t built in a day.', cid)
-			elseif player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) > 0 and player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) < os.time() then
+			elseif player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) > 0 and player:getStorageValue(Storage.OutfitQuest.BeggarOutfitTimer) < os.stime() then
 				npcHandler:say('Eureka! Alas, the poor man\'s outfit is finished, but... to be honest... it turned out much less appealing than I expected. However, you can have it if you want, okay?', cid)
 				npcHandler.topic[cid] = 5
 			end
@@ -141,7 +141,7 @@ local function creatureSayCallback(cid, type, msg)
 
 			player:setStorageValue(Storage.OutfitQuest.BeggarOutfit, player:getStorageValue(Storage.OutfitQuest.BeggarOutfit) + 1)
 			if targetMessage.lastItem then
-				player:setStorageValue(Storage.OutfitQuest.BeggarOutfitTimer, os.time() + 86400)
+				player:setStorageValue(Storage.OutfitQuest.BeggarOutfitTimer, os.stime() + 86400)
 			end
 			npcHandler:say(targetMessage.messages.success, cid)
 			npcHandler.topic[cid] = 0

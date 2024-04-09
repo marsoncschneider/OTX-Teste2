@@ -27,7 +27,7 @@ local function creatureSayCallback(cid, type, msg)
 			npcHandler:say('Ah, right, almost forgot about the backpack! Have you brought me 100 pieces of minotaur leather as requested?', cid)
 			npcHandler.topic[cid] = 3
 		elseif addonProgress == 2 then
-			if player:getStorageValue(Storage.OutfitQuest.Citizen.AddonBackpackTimer) < os.time() then
+			if player:getStorageValue(Storage.OutfitQuest.Citizen.AddonBackpackTimer) < os.stime() then
 				npcHandler:say('Just in time! Your backpack is finished. Here you go, I hope you like it.', cid)
 				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
 				player:setStorageValue(Storage.OutfitQuest.Ref, math.min(0, player:getStorageValue(Storage.OutfitQuest.Ref) - 1))
@@ -74,7 +74,7 @@ local function creatureSayCallback(cid, type, msg)
 
 				player:setStorageValue(Storage.OutfitQuest.Citizen.MissionBackpack, 2)
 				player:setStorageValue(Storage.OutfitQuest.Citizen.AddonBackpack, 2)
-				player:setStorageValue(Storage.OutfitQuest.Citizen.AddonBackpackTimer, os.time() + 2 * 60 * 60)
+				player:setStorageValue(Storage.OutfitQuest.Citizen.AddonBackpackTimer, os.stime() + 2 * 60 * 60)
 			end
 		else
 			npcHandler:say('I know, it\'s quite some work... don\'t lose heart, just keep killing minotaurs and you\'ll eventually get lucky. Would you rather like to buy a normal backpack for 10 gold?', cid)
@@ -85,7 +85,7 @@ end
 
 keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I am selling equipment for adventurers. If you need anything, let me know.'})
 keywordHandler:addKeyword({'dog'}, StdModule.say, {npcHandler = npcHandler, text = 'This is Ruffy my dog, please don\'t do him any harm.'})
-keywordHandler:addKeyword({'offer'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell torches, fishing rods, worms, ropes, water hoses, backpacks, apples, and maps.'})
+keywordHandler:addKeyword({'offer'}, StdModule.say, {npcHandler = npcHandler, text = 'I sell torches, BUNDAs, worms, ropes, water hoses, backpacks, apples, and maps.'})
 keywordHandler:addKeyword({'name'}, StdModule.say, {npcHandler = npcHandler, text = 'I am Lubo, the owner of this shop.'})
 keywordHandler:addKeyword({'maps'}, StdModule.say, {npcHandler = npcHandler, text = 'Oh! I\'m sorry, I sold the last one just five minutes ago.'})
 keywordHandler:addKeyword({'hat'}, StdModule.say, {npcHandler = npcHandler, text = 'My hat? Hanna made this one for me.'})

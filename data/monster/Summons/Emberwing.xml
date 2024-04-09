@@ -4,7 +4,7 @@
 	<look type="992" corpse="0" />
 	<targetchange interval="4000" chance="20" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag pet="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -14,24 +14,24 @@
 		<flag pushable="1" />
 		<flag canpushitems="0" />
 		<flag canpushcreatures="1" />
-		<flag staticattack="98" />
+		<flag staticattack="60" />
 		<flag targetdistance="2" />
 		<flag runonhealth="9000" />
 	</flags>
 	<attacks>
 		<attack name="holy" interval="200" chance="25" min="-100" max="-190" />
-		<attack name="Divine Caldera" interval="500" chance="15" length="10" spread="10" target="1" min="-200" max="-500">
+<!-- 		<attack name="Divine Caldera" interval="500" chance="15" length="10" spread="10" target="1" min="-200" max="-500">
 			<attribute key="areaEffect" value="exevo mas san" />
-		</attack>
+		</attack> -->
 		<attack name="Great Fireball" interval="500" chance="16" radius="7" min="-50" max="-500">
 			<attribute key="areaEffect" value="firearea" />
 		</attack>
-		<attack name="Divine Caldera" interval="2000" chance="30" target="1" radius="4" min="-100" max="-240">
+<!-- 		<attack name="Divine Caldera" interval="2000" chance="30" target="1" radius="4" min="-100" max="-240">
 			<attribute key="areaEffect" value="exevo mas san" />
-		</attack>
+		</attack> -->
 	</attacks>
 	<defenses armor="55" defense="95">
-		<defense name="healing" interval="3000" chance="35" min="80" max="400">
+		<defense name="healing" interval="2000" chance="100" min="80" max="1200">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 	</defenses>

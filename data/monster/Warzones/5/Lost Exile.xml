@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Lost Exile" nameDescription="a lost exile" race="blood" experience="1800" speed="170">
+<monster name="Lost Exile" nameDescription="a lost exile" race="blood" experience="1800" speed="170" raceid="1529">
 	<health now="1600" max="1600" />
 	<look type="537" corpse="33430" />
 	<targetchange interval="5000" chance="10" />
@@ -59,8 +59,8 @@
 	<!--Sempre-->
 		<item name="gold coin" countmax="200" chance="100000" />
 		<item name="platinum coin" countmax="2" chance="60240" />
-		<item name="strong health potion" countmax="2" chance="10950" />
-		<item name="great mana potion" countmax="2" chance="8330" />
+		<item name="gold coin" countmax="2" chance="10950" />
+		<item name="gold coin" countmax="2" chance="8330" />
 		<item name="brown mushroom" countmax="2" chance="16900" />
 		<item id="13757" chance="13100" /> <!--coal-->
 		<item name="holy ash" chance="13100" />
@@ -73,20 +73,29 @@
 		<item name="bonecarving knife" chance="8100" />
 		<item name="basalt figurine" chance="8100" />
 		<item name="bone fetish" chance="8881" />
+
 			<!--semi raro-->
 			<item name="dwarven ring" chance="1043" />
+
 				<!--raro-->
 				<item name="guardian shield" chance="1430" />
-				<item name="buckle" chance="1900" />
+				<item id="20109" chance="1900" /> <!-- buckle -->
 				<item name="clay lump" chance="710" />
 				<item name="knight axe" chance="950" />
 				<item name="terra boots" chance="240" />
 				<item name="suspicious device" chance="250" />
+
 					<!--muito raro-->
 					<item name="tower shield" chance="240" />
 					<item name="terra legs" chance="240" />
 					<item name="fire axe" chance="710" />
 					<item name="skull staff" chance="480" />
 					<item name="spiked squelcher" chance="240" />
+
+
+
+
+
+
 	</loot>
 </monster>

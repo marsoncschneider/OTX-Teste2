@@ -8,7 +8,7 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()		npcHandler:onThink()		end
 
-local voices = { {text = 'Passages to Edron, Darashia, Oramond, Thais and Venore.'} }
+local voices = { {text = 'Passages to Edron, Darashia, Thais and Venore.'} }
 npcHandler:addModule(VoiceModule:new(voices))
 
 -- Travel
@@ -20,10 +20,8 @@ end
 
 addTravelKeyword('venore', 120, Position(32954, 32022, 6)) -- {x = 32954, y = 32022, z = 6}
 addTravelKeyword('edron', 110, Position(33176, 31765, 6)) -- {x = 33176, y = 31765, z = 6}
-addTravelKeyword('oramond', 70, Position(33479, 31985, 7)) -- {x = 33479, y = 31985, z = 7}
 addTravelKeyword('darashia', 120, Position(33289, 32481, 6)) -- {x = 33289, y = 32481, z = 6}
 addTravelKeyword('thais', 130, Position(32310, 32210, 6)) --
-addTravelKeyword('issavi', 130, Position(33957, 31515, 0))
 
 -- Darashia
 local travelNode = keywordHandler:addKeyword({'darashia'}, StdModule.say, {npcHandler = npcHandler, text = 'Do you seek a passage to Darashia for |TRAVELCOST|?', cost = 0, discount = 'postman'})
@@ -32,12 +30,11 @@ local travelNode = keywordHandler:addKeyword({'darashia'}, StdModule.say, {npcHa
 		childTravelNode:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, reset = true, text = 'We would like to serve you some time.'})
 	travelNode:addChildKeyword({'no'}, StdModule.say, {npcHandler = npcHandler, reset = true, text = 'We would like to serve you some time.'})
 
--- Kick
-keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(33498, 31711, 6)}})
+keywordHandler:addKeyword({'kick'}, StdModule.kick, {npcHandler = npcHandler, destination = {Position(32952, 32031, 6), Position(32955, 32031, 6), Position(32957, 32032, 6)}})
 
 -- Basic
-keywordHandler:addKeyword({'sail'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Darashia}, {Oramond} or {Venore}?'})
-keywordHandler:addKeyword({'passage'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Darashia}, {Oramond} or {Venore}?'})
+keywordHandler:addKeyword({'sail'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Darashia} or {Venore}?'})
+keywordHandler:addKeyword({'passage'}, StdModule.say, {npcHandler = npcHandler, text = 'Where do you want to go? To {Edron}, {Darashia} or {Venore}?'})
 keywordHandler:addKeyword({'job'}, StdModule.say, {npcHandler = npcHandler, text = 'I am the captain of this ship.'})
 keywordHandler:addKeyword({'captain'}, StdModule.say, {npcHandler = npcHandler, text = 'I am the captain of this ship.'})
 keywordHandler:addKeyword({'venore'}, StdModule.say, {npcHandler = npcHandler, text = 'This is Venore. Where do you want to go?'})

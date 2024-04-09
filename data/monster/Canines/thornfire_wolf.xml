@@ -49,7 +49,6 @@
 		<item name="gold coin" countmax="53" chance="64000"/>
 		<item name="meat" chance="34000"/>
 		<item name="wolf paw" chance="7900"/>
-		<item name="flaming arrow" countmax="8" chance="15000"/>
 		<item name="fiery heart" chance="7900"/>
 	</loot>
 </monster>

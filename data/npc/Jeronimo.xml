@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<npc name="Jeronimo" script="jeronimo.lua" walkinterval="2000" floorchange="0">
+<npc name="Jeronimo" script="jeronimo.lua" walkinterval="0" floorchange="0">
   <health now="150" max="150" />
   <look type="132" head="57" body="59" legs="3" feet="1" addons="3" />
   <parameters>

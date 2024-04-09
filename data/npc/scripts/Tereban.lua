@@ -117,7 +117,7 @@ function creatureSayCallback(cid, type, msg)
 		if msgcontains(msg, 'mission') then
 			if player:getStorageValue(Storage.FathersBurdenQuest.Status) == 1 then
 				if player:getStorageValue(Storage.FathersBurdenQuest.Progress) ~= 8 then
-					npcHandler:say('Well, I need the parts of a sorcerer\'s robe, a paladin\'s bow, a knight\'s shield, and a druid\'s rod. If you cannot find one of them, ask me about it and I might provide you with some minor hints.', cid)
+
 					return true
 				end
 
@@ -156,7 +156,7 @@ function creatureSayCallback(cid, type, msg)
 		end
 	elseif npcHandler.topic[cid] == 1 then
 		if msgcontains(msg, 'yes') then
-			npcHandler:say('I am relieved someone as capable as you will handle the task. Well, I need the parts of a sorcerer\'s robe, a paladin\'s bow, a knight\'s shield, and a druid\'s wand.', cid)
+
 			player:setStorageValue(Storage.FathersBurdenQuest.QuestLog, 1)
 			player:setStorageValue(Storage.FathersBurdenQuest.Progress, 0)
 			player:setStorageValue(Storage.FathersBurdenQuest.Status, 1)

@@ -7,6 +7,9 @@ function onCreatureDisappear(cid)		npcHandler:onCreatureDisappear(cid)			end
 function onCreatureSay(cid, type, msg)		npcHandler:onCreatureSay(cid, type, msg)		end
 function onThink()				npcHandler:onThink()					end
 
+local voices = { {text = 'If you need runes, this is the market stall for you!'}, {text = 'I\'m selling magic equipment. Come and have a look.'}}
+npcHandler:addModule(VoiceModule:new(voices))
+
 local function creatureSayCallback(cid, type, msg)
 	if not npcHandler:isFocused(cid) then
 		return false
@@ -14,7 +17,7 @@ local function creatureSayCallback(cid, type, msg)
 	local player = Player(cid)
 	local items = {[1] = 2190, [2] = 2182}
 	local itemId = items[player:getVocation():getBase():getId()]
-	if msgcontains(msg, 'first rod') or msgcontains(msg, 'first wand') then
+
 		if player:isMage() then
 			if player:getStorageValue(Storage.firstMageWeapon) == -1 then
 				npcHandler:say('So you ask me for a {' .. ItemType(itemId):getName() .. '} to begin your adventure?', cid)

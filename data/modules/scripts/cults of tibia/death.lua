@@ -1,4 +1,5 @@
 function onRecvbyte(player, msg, byte)
+	-- print(msg:getByte())
 	if player then
 		local storageDeathFake = player:getStorageValue(Storage.CultsOfTibia.Barkless.Death)
 		if storageDeathFake == 1 then

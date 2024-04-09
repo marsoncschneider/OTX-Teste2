@@ -48,25 +48,29 @@ local function creatureSayCallback(cid, type, msg)
 			}, cid)
 			npcHandler.topic[cid] = 7
 		elseif player:getStorageValue(Storage.KillingInTheNameOf.LugriNecromancers) == 1 then
-			if player:getStorageValue(Storage.KillingInTheNameOf.LugriNecromancerCount) >= 4000 then
+			if player:getStorageValue(Storage.KillingInTheNameOf.LugriNecromancerCount) >= 400 then
 				npcHandler:say({
-					"You've slain a mere {4000 necromancers and priestesses}. Still, you've shown some dedication. Maybe that means you can kill one of those so-called 'leaders' too. ...",
+					"You've slain a mere 400 {necromancers and priestesses}. Still, you've shown some dedication. Maybe that means you can kill one of those so-called 'leaders' too. ...",
 					"Deep under Drefia, a necromancer called Necropharus is hiding in the Halls of Sacrifice. I'll place a spell on you with which you will be able to pass his weak protective gate. ...",
 					"Know that this will be your only chance to enter his room. If you leave it or die, you won't be able to return. We'll see if you really dare enter those halls."
 				}, cid)
 				player:setStorageValue(17521, 1)
 				player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancers, 2)
 			else
-				npcHandler:say("Come back when you have slain {4000 necromancers and priestesses!}", cid)
+				npcHandler:say("Come back when you have slain {400 necromancers and priestesses!}", cid)
 			end
 		elseif player:getStorageValue(Storage.KillingInTheNameOf.LugriNecromancers) == 2 then
-			npcHandler:say({
-				"So you had the guts to enter that room. Well, it's all fake magic anyway and no real threat. ...",
-				"What are you looking at me for? Waiting for something? I told you that there was no reward. Despite being allowed to stand before me without being squashed like a bug. Get out of my sight!"
-			}, cid)
-			player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancers, 3)
+			if player:getStorageValue(17521) > 1 then
+				npcHandler:say({
+					"So you had the guts to enter that room. Well, it's all fake magic anyway and no real threat. ...",
+					"What are you looking at me for? Waiting for something? I told you that there was no reward. Despite being allowed to stand before me without being squashed like a bug. Get out of my sight!"
+				}, cid)
+				player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancers, 3)
+			else
+				npcHandler:say("Come back when you have slain Necropharus.", cid)
+			end
 		elseif player:getStorageValue(Storage.KillingInTheNameOf.LugriNecromancers) == 3 then
-			npcHandler:say("You can't live without serving, can you? Although you are quite annoying, you're still somewhat useful. Continue killing Necromancers and Priestesses for me. 1000 are enough this time. What do you say?", cid)
+			npcHandler:say("You can't live without serving, can you? Although you are quite annoying, you're still somewhat useful. Continue killing Necromancers and Priestesses for me. 400 are enough this time. What do you say?", cid)
 			npcHandler.topic[cid] = 8
 		end
 	elseif msgcontains(msg, "yes") then
@@ -127,7 +131,8 @@ local function creatureSayCallback(cid, type, msg)
 			player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancerCount, 0)
 		elseif npcHandler.topic[cid] == 8 then
 			npcHandler:say("Good. Then go.", cid)
-			player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancers, 4)
+			player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancers, 1)
+			player:setStorageValue(Storage.KillingInTheNameOf.LugriNecromancerCount, 0)
 		end
 	elseif msgcontains(msg, "no") then
 		if npcHandler.topic[cid] > 1 then

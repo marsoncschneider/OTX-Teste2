@@ -77,6 +77,6 @@
 		<item name="gold coin" countmax="60" chance="50000"/>
 		<item name="might ring" chance="1000"/>
 		<item name="crown armor" chance="80000"/>
-		<item name="great mana potion" chance="1500"/>
+		<item name="gold coin" chance="1500"/>
 	</loot>
 </monster>

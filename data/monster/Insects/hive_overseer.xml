@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Hive Overseer" nameDescription="a hive overseer" race="venom" experience="5500" speed="115">
+<monster name="Hive Overseer" nameDescription="a hive overseer" race="venom" experience="5500" speed="115" raceid="801">
 	<health now="7500" max="7500"/>
 	<look type="458" corpse="15354"/>
 	<targetchange interval="4000" chance="10"/>
@@ -55,9 +55,9 @@
 		<item name="gold coin" countmax="98" chance="58000"/>
 		<item name="platinum coin" countmax="6" chance="84000"/>
 		<item name="steel boots" chance="550"/>
-		<item name="great mana potion" chance="18000"/>
+		<item name="gold coin" chance="18000"/>
 		<item id="7632" chance="6000"/><!-- giant shimmering pearl -->
-		<item name="ultimate health potion" chance="12000"/>
+		<item name="gold coin" chance="12000"/>
 		<item name="gold ingot" chance="29000"/>
 		<item name="kollos shell" chance="28000"/>
 		<item name="compound eye" chance="16000"/>

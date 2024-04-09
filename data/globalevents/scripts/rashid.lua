@@ -12,7 +12,7 @@ function onStartup()
       [7] = {x = 33166, y = 31810, z = 6} --Saturday // Sabado
    }
 
-   local day = os.date("*t").wday
+   local day = os.sdate("*t").wday
    if days[day] then
       doCreateNpc("Rashid", days[day])
    else

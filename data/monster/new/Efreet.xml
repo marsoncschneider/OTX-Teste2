@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Efreet" nameDescription="an efreet" race="blood" experience="410" speed="117">
+<monster name="Efreet" nameDescription="an efreet" race="blood" experience="410" speed="117" raceid="103">
 	<health now="550" max="550" />
 	<look type="103" corpse="7349" />
 	<flags>
-		<!-- <flag preyable="0"/> -->
+		<flag preyable="0" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -60,7 +60,6 @@
 		<loot>
 		<item name="gold coin" countmax="130" chance="97420" />
 		<item name="royal spear" countmax="3" chance="15240" />
-		<item name="strong mana potion" chance="10340" />
 		<item name="pear" chance="9240" />
 		<item name="jewelled belt" chance="8000" />
 		<item name="small emerald" chance="7240" />
@@ -69,7 +68,7 @@
 		<item name="green tapestry" chance="2150" />
 		<item name="noble turban" chance="1050" />
 		<item name="magma monocle" chance="360" />
-		<item name="wand of inferno" chance="360" />
+
 		<item name="mystic turban" chance="170" />
 		<item name="small oil lamp" chance="170" />
 		<item name="green gem" chance="170" />

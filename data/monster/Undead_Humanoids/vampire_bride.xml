@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Vampire Bride" nameDescription="a vampire bride" race="blood" experience="1050" speed="100">
+<monster name="Vampire Bride" nameDescription="a vampire bride" race="blood" experience="1050" speed="100" raceid="483">
 	<health now="1200" max="1200"/>
 	<look type="312" corpse="9660"/>
 	<targetchange interval="4000" chance="10"/>
@@ -65,10 +65,8 @@
 		<item name="small diamond" countmax="2" chance="1020"/>
 		<item name="gold coin" countmax="149" chance="90000"/>
 		<item name="platinum coin" chance="9910"/>
-		<item name="moonlight rod" chance="5500"/>
+
 		<item name="boots of haste" chance="220"/>
-		<item name="strong health potion" chance="5000"/>
-		<item name="strong mana potion" chance="10210"/>
 		<item id="7733" chance="200"/><!-- flower bouquet -->
 		<item name="hibiscus dress" chance="1030"/>
 		<item name="blood goblet" chance="60"/>
@@ -76,6 +74,6 @@
 		<item id="9837" chance="970"/><!-- velvet tapestry -->
 		<item name="vampire teeth" chance="10000"/>
 		<item name="blood preservation" chance="4950"/>
-		<item name="leather whip" chance="20"/>
+		<item name="leather whip" chance="60"/>
 	</loot>
 </monster>

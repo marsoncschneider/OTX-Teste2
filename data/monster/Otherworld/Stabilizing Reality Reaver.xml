@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Stabilizing Reality Reaver" nameDescription="a stabilizing reality reaver" race="energy" experience="1950" speed="155">
+<monster name="Stabilizing Reality Reaver" nameDescription="a stabilizing reality reaver" race="energy" experience="1950" speed="155" raceid="1266">
 	<health now="2500" max="2500"/>
 	<look type="879" corpse="26068"/>
 	<targetchange interval="2000" chance="25"/>
@@ -68,6 +68,6 @@
 		<item id="18418" countmax="2" chance="2700"/><!-- blue crystal splinter -->
 		<item id="18413" chance="1900"/><!-- blue crystal shard -->
 		<item id="2156" chance="1500"/><!-- red gem -->
-		<item id="8920" chance="1100"/><!-- wand of starstorm -->
+
 	</loot>
 </monster>

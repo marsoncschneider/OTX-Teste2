@@ -14,14 +14,14 @@ if isInArray(pools, itemEx.itemid) then
         itemEx = Tile(toPosition):getGround()
     end
     if(isInArray(config.swampId, itemEx.itemid)) then
-        if (getPlayerStorageValue(cid, 32901) <= os.time()) then
+        if (getPlayerStorageValue(cid, 32901) <= os.stime()) then
         if math.random(0,500) > 255 then
             local posGain = math.random(1, #config.itemGain)
             local quantGain = math.random(1,config.itemGain[posGain].quantGain)
             doPlayerAddItem(cid, config.itemGain[posGain].itemId, quantGain)
             doSendMagicEffect(toPosition, 8)
             doCreatureSay(cid,  "You dug up ".. quantGain .." ".. getItemName(config.itemGain[posGain].itemId) ..".", TALKTYPE_ORANGE_1)
-            setPlayerStorageValue(cid, 32901, os.time()+exhausth)
+            setPlayerStorageValue(cid, 32901, os.stime()+exhausth)
         end
     else
             doPlayerSendCancel(cid, "You are exhausted, use again in 1 hour.")

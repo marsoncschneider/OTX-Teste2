@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Bonebeast" nameDescription="a bonebeast" race="undead" experience="580" speed="109">
+<monster name="Bonebeast" nameDescription="a bonebeast" race="undead" experience="580" speed="109" raceid="101">
 	<health now="515" max="515"/>
 	<look type="101" corpse="6030"/>
 	<targetchange interval="4000" chance="10"/>
@@ -67,7 +67,6 @@
 		<item name="bone shield" chance="2000"/>
 		<item name="green mushroom" chance="1350"/>
 		<item name="hardened bone" chance="960"/>
-		<item name="health potion" chance="540"/>
 		<item name="bonebeast trophy" chance="120"/>
 		<item name="bony tail" chance="9780"/>
 	</loot>

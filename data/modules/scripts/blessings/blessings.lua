@@ -9,23 +9,6 @@ BlessingsDialog = {
 	},
 }
 
-
---[=====[
---
--- Table structure `blessings_history`
---
-
-CREATE TABLE IF NOT EXISTS `blessings_history` (
-  `id` int(11) NOT NULL,
-  `player_id` int(11) NOT NULL,
-  `blessing` tinyint(4) NOT NULL,
-  `loss` tinyint(1) NOT NULL,
-  `timestamp` int(11) NOT NULL,
-  CONSTRAINT `blessings_history_pk` PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---]=====]
-
 local Client = {
 	OpenWindow = 0xCF
 }
@@ -36,7 +19,7 @@ local Server = {
 
 function onRecvbyte(player, msg, byte)
 	if (byte == Client.OpenWindow) then
-		if (player:getClient().os ~= CLIENTOS_NEW_WINDOWS and player:getClient().os ~= CLIENTOS_FLASH) then
+		if (player:getClient().version <= 1100 and player:getClient().os ~= CLIENTOS_FLASH) then
 			player:sendCancelMessage("Only work with Flash Client & 11.0")
 			return false
 		end
@@ -46,6 +29,7 @@ function onRecvbyte(player, msg, byte)
 end
 
 function sendBlessingsDialog(player)
+	local version = player:getClient().version
 	local msg = NetworkMessage()
 	msg:addByte(Server.BlessingsInfo)
 	msg:addByte(8) -- total blessings
@@ -59,6 +43,9 @@ function sendBlessingsDialog(player)
 		end
 		c = c + 1
 		bless = bless * 2
+		if version >= 1220 then
+			msg:addByte(0) -- quantas vezes comprou do store
+		end
 	end
 
 	msg:addByte(2) -- BYTE PREMIUM (only work with premium days)
@@ -83,7 +70,7 @@ function sendBlessingsDialog(player)
 	local historyAmount = 1
 	msg:addByte(historyAmount) -- History log count
 	for i = 1, historyAmount do
-		msg:addU32(os.time()) -- timestamp
+		msg:addU32(os.stime()) -- timestamp
 		msg:addByte(0) -- Color message (1 - Red | 0 = White loss)
 		msg:addString("Blessing Purchased") -- History message
 	end
