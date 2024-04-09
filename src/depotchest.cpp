@@ -1,6 +1,4 @@
 /**
- * @file depotchest.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -30,9 +28,10 @@ DepotChest::DepotChest(uint16_t type) :
 	maxDepotItems = 2000;
 	maxSize = 32;
 	pagination = true;
+	islocker = true;
 }
 
-ReturnValue DepotChest::queryAdd(int32_t index, const Thing& thing, uint32_t amount,
+ReturnValue DepotChest::queryAdd(int32_t index, const Thing& thing, uint32_t count,
 		uint32_t flags, Creature* actor/* = nullptr*/) const
 {
 	const Item* item = thing.getItem();
@@ -44,7 +43,7 @@ ReturnValue DepotChest::queryAdd(int32_t index, const Thing& thing, uint32_t amo
 	if (!skipLimit) {
 		int32_t addCount = 0;
 
-		if ((item->isStackable() && item->getItemCount() != amount)) {
+		if ((item->isStackable() && item->getItemCount() != count)) {
 			addCount = 1;
 		}
 
@@ -56,8 +55,8 @@ ReturnValue DepotChest::queryAdd(int32_t index, const Thing& thing, uint32_t amo
 			}
 		}
 
-		if (Cylinder* localParent = getRealParent()) {
-			if (localParent->getContainer()->getItemHoldingCount() + addCount > maxDepotItems) {
+		if (Cylinder* parent = getRealParent()) {
+			if (parent->getContainer()->getItemHoldingCount() + addCount > maxDepotItems) {
 				return RETURNVALUE_DEPOTISFULL;
 			}
 		}
@@ -66,22 +65,22 @@ ReturnValue DepotChest::queryAdd(int32_t index, const Thing& thing, uint32_t amo
 		}
 	}
 
-	return Container::queryAdd(index, thing, amount, flags, actor);
+	return Container::queryAdd(index, thing, count, flags, actor);
 }
 
 void DepotChest::postAddNotification(Thing* thing, const Cylinder* oldParent, int32_t index, cylinderlink_t)
 {
-	Cylinder* localParent = getParent();
-	if (localParent != nullptr) {
-		localParent->postAddNotification(thing, oldParent, index, LINK_PARENT);
+	Cylinder* parent = getParent();
+	if (parent != nullptr) {
+		parent->postAddNotification(thing, oldParent, index, LINK_PARENT);
 	}
 }
 
 void DepotChest::postRemoveNotification(Thing* thing, const Cylinder* newParent, int32_t index, cylinderlink_t)
 {
-	Cylinder* localParent = getParent();
-	if (localParent != nullptr) {
-		localParent->postRemoveNotification(thing, newParent, index, LINK_PARENT);
+	Cylinder* parent = getParent();
+	if (parent != nullptr) {
+		parent->postRemoveNotification(thing, newParent, index, LINK_PARENT);
 	}
 }
 

@@ -1,6 +1,4 @@
 ﻿/**
- * @file items.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,13 +17,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_ITEMS_H_
-#define OT_SRC_ITEMS_H_
+#ifndef FS_ITEMS_H_4E2221634ABA45FE85BA50F710669B3C
+#define FS_ITEMS_H_4E2221634ABA45FE85BA50F710669B3C
 
 #include "const.h"
 #include "enums.h"
 #include "itemloader.h"
 #include "position.h"
+
+// #include "protobuf/appearances.pb.h"
+
+// struct Appearance {
+// 	bool cumulative = false;
+// 	bool liquidcontainer = false;
+// 	bool liquidpool = false;
+// 	bool isAnimation = false;
+// 	bool isContainer = false;
+// 	bool isCorpse = false;
+// 	bool isPlayerCorpse = false;
+// };
 
 enum SlotPositionBits : uint32_t {
 	SLOTP_WHEREEVER = 0xFFFFFFFF,
@@ -56,9 +66,34 @@ enum ItemTypes_t {
 	ITEM_TYPE_BED,
 	ITEM_TYPE_KEY,
 	ITEM_TYPE_RUNE,
- 	ITEM_TYPE_SUPPLY,
 	ITEM_TYPE_REWARDCHEST,
 	ITEM_TYPE_CARPET,
+	ITEM_TYPE_CREATUREPRODUCT,
+	ITEM_TYPE_FOOD,
+	ITEM_TYPE_VALUABLE,
+	ITEM_TYPE_POTION,
+
+	ITEM_TYPE_ARMOR,
+	ITEM_TYPE_AMULET,
+	ITEM_TYPE_BOOTS,
+	ITEM_TYPE_DECORATION,
+	ITEM_TYPE_HELMET,
+	ITEM_TYPE_LEGS,
+	ITEM_TYPE_OTHER,
+	ITEM_TYPE_RING,
+	ITEM_TYPE_SHIELD,
+	ITEM_TYPE_TOOLS,
+	ITEM_TYPE_AMMO,
+	ITEM_TYPE_AXE,
+	ITEM_TYPE_CLUB,
+	ITEM_TYPE_DISTANCE,
+	ITEM_TYPE_SWORD,
+	ITEM_TYPE_WAND,
+
+	ITEM_TYPE_RETRIEVE,
+	ITEM_TYPE_GOLD,
+	ITEM_TYPE_UNASSIGNED,
+
 	ITEM_TYPE_LAST,
 };
 
@@ -302,6 +337,7 @@ class Items
 		void clear();
 
 		FILELOADER_ERRORS loadFromOtb(const std::string& file);
+		// bool loadFromProtobuf(const std::string& file);
 
 		const ItemType& operator[](size_t id) const {
 			return getItemType(id);
@@ -329,10 +365,14 @@ class Items
 		}
 
 		NameMap nameToItems;
+		// std::map<uint16_t, Appearance> appearancesMap;
 
 	protected:
+		ItemTypes_t getLootType(const std::string& strValue);
+
 		std::map<uint16_t, uint16_t> reverseItemMap;
 		std::vector<ItemType> items;
 		InventoryVector inventory;
+		// tibia::protobuf::appearances::Appearances appearances;
 };
 #endif

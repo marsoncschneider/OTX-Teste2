@@ -1,6 +1,4 @@
 /**
- * @file depotchest.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_DEPOTCHEST_H_
-#define OT_SRC_DEPOTCHEST_H_
+#ifndef FS_DEPOTCHEST_H_6538526014684E3DBC92CC12815B6766
+#define FS_DEPOTCHEST_H_6538526014684E3DBC92CC12815B6766
 
 #include "container.h"
 

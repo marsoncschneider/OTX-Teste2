@@ -1,6 +1,4 @@
 /**
- * @file vocation.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_VOCATION_H_
-#define OT_SRC_VOCATION_H_
+#ifndef FS_VOCATION_H_ADCAA356C0DB44CEBA994A0D678EC92D
+#define FS_VOCATION_H_ADCAA356C0DB44CEBA994A0D678EC92D
 
 #include "enums.h"
 #include "item.h"
@@ -28,7 +26,7 @@
 class Vocation
 {
 	public:
-		explicit Vocation(uint16_t initId) : id(initId) {}
+		explicit Vocation(uint16_t id) : id(id) {}
 
 		const std::string& getVocName() const {
 			return name;

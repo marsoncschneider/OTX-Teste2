@@ -1,6 +1,4 @@
 /**
- * @file weapons.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_WEAPONS_H_
-#define OT_SRC_WEAPONS_H_
+#ifndef FS_WEAPONS_H_69D1993478AA42948E24C0B90B8F5BF5
+#define FS_WEAPONS_H_69D1993478AA42948E24C0B90B8F5BF5
 
 #include "luascript.h"
 #include "player.h"

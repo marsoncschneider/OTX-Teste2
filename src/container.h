@@ -1,6 +1,4 @@
 /**
- * @file container.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_CONTAINER_H_
-#define OT_SRC_CONTAINER_H_
+#ifndef FS_CONTAINER_H_5590165FD8A2451B98D71F13CD3ED8DC
+#define FS_CONTAINER_H_5590165FD8A2451B98D71F13CD3ED8DC
 
 #include <queue>
 
@@ -54,7 +52,7 @@ class Container : public Item, public Cylinder
 {
 	public:
 		explicit Container(uint16_t type);
-		Container(uint16_t type, uint16_t size, bool unlocked = true, bool pagination = false);
+		Container(uint16_t type, uint16_t size, bool unlocked = true, bool pagination = false, bool islocker = false);
 		explicit Container(Tile* type);
 		~Container();
 
@@ -132,6 +130,9 @@ class Container : public Item, public Cylinder
 		bool isUnlocked() const {
 			return unlocked;
 		}
+		bool isLocker() const {
+			return islocker;
+		}
 		bool hasPagination() const {
 			return pagination;
 		}
@@ -187,9 +188,11 @@ class Container : public Item, public Cylinder
 
 		bool unlocked;
 		bool pagination;
+		bool islocker = false;
 
 		friend class ContainerIterator;
 		friend class IOMapSerialize;
+		friend class IOLoginData;
 };
 
 #endif

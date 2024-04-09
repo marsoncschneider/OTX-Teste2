@@ -1,6 +1,4 @@
 /**
- * @file raids.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -29,9 +27,11 @@
 #include "configmanager.h"
 #include "scheduler.h"
 #include "monster.h"
+#include "events.h"
 
 extern Game g_game;
 extern ConfigManager g_config;
+extern Events* g_events;
 
 Raids::Raids()
 {
@@ -397,6 +397,14 @@ bool SingleSpawnEvent::executeEvent()
 		std::cout << "[Error] Raids: Cant place monster " << monsterName << std::endl;
 		return false;
 	}
+
+	if (!g_events->eventMonsterOnSpawn(monster, position, false, true)) {
+		g_game.removeCreature(monster);
+		return false;
+	}
+
+	monster->isRaid(true);
+
 	return true;
 }
 
@@ -537,8 +545,11 @@ bool AreaSpawnEvent::executeEvent()
 			for (int32_t tries = 0; tries < MAXIMUM_TRIES_PER_MONSTER; tries++) {
 				Tile* tile = g_game.map.getTile(uniform_random(fromPos.x, toPos.x), uniform_random(fromPos.y, toPos.y), uniform_random(fromPos.z, toPos.z));
 				if (tile && !tile->isMoveableBlocking() && !tile->hasFlag(TILESTATE_PROTECTIONZONE) && tile->getTopCreature() == nullptr && g_game.placeCreature(monster, tile->getPosition(), false, true)) {
-					success = true;
-					break;
+					if (g_events->eventMonsterOnSpawn(monster, tile->getPosition(), false, true)) {
+						monster->isRaid(true);
+						success = true;
+						break;
+					}
 				}
 			}
 

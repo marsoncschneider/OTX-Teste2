@@ -1,6 +1,4 @@
 /**
- * @file actions.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -380,6 +378,10 @@ ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_
 			openContainer = container;
 		}
 		
+		if (item->getID() == ITEM_SUPPLY_STASH) {
+			return RETURNVALUE_THISISIMPOSSIBLE;	
+		}
+
 		//reward chest
 		if (container->getRewardChest()) {
 			RewardChest* myRewardChest = player->getRewardChest();
@@ -408,13 +410,17 @@ ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_
 		uint32_t corpseOwner = container->getCorpseOwner();
 		if (container->isRewardCorpse()) {
 			//only players who participated in the fight can open the corpse
-			if (player->getGroup()->id >= 4 || player->getAccountType() >= 3)
+			if (player->getGroup()->id == 4 || player->getGroup()->id == 5)
 				return RETURNVALUE_YOUCANTOPENCORPSEADM;
 			if (!player->getReward(container->getIntAttr(ITEM_ATTRIBUTE_DATE), false)) {
 				return RETURNVALUE_YOUARENOTTHEOWNER;
 			}
 		} else if (corpseOwner != 0 && !player->canOpenCorpse(corpseOwner)) {
 			return RETURNVALUE_YOUARENOTTHEOWNER;
+		}
+
+		if (corpseOwner != 0 && player->canOpenCorpse(corpseOwner) && player->getProtocolVersion() <= 1149) {
+			g_game.playerQuickLoot(player->getID(), pos, container->getClientID(), STACKPOS_USEITEM, item);
 		}
 
 		//open/close container
@@ -448,10 +454,21 @@ ReturnValue Actions::internalUseItem(Player* player, const Position& pos, uint8_
 
 bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* item, bool isHotkey)
 {
-	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+	const ItemType& it = Item::items[item->getID()];
+	if (it.isRune() || it.type == ITEM_TYPE_POTION) {
+		if (player->walkExhausted()) {
+			player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
+			return false;
+		}
+
+		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+	} else {
+		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+	}
 
 	if (isHotkey) {
-		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
+		uint16_t subType = item->getSubType();
+		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), subType != item->getItemCount() ? subType : -1));
 	}
 
 	ReturnValue ret = internalUseItem(player, pos, index, item, isHotkey);
@@ -465,7 +482,16 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 bool Actions::useItemEx(Player* player, const Position& fromPos, const Position& toPos,
                         uint8_t toStackPos, Item* item, bool isHotkey, Creature* creature/* = nullptr*/)
 {
-	player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+	const ItemType& it = Item::items[item->getID()];
+	if (it.isRune() || it.type == ITEM_TYPE_POTION) {
+		if (player->walkExhausted()) {
+			player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
+			return false;
+		}
+		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+	} else {
+		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+	}
 
 	Action* action = getAction(item);
 	if (!action) {
@@ -480,7 +506,8 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 	}
 
 	if (isHotkey) {
-		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), -1));
+		uint16_t subType = item->getSubType();
+		showUseHotkeyMessage(player, item, player->getItemTypeCount(item->getID(), subType != item->getItemCount() ? subType : -1));
 	}
 
 	if (action->function) {
@@ -567,10 +594,10 @@ bool useImbueShrine(Player* player, Item*, const Position&, Thing* target, const
 		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You have to pick up the item to imbue it.");
 		return false;
 	}
-	
+
 	if (!(toPos.y & 0x40)) {
-		player->sendImbuementWindow(target->getItem());
-		return true;
+		player->sendTextMessage(MESSAGE_EVENT_ADVANCE, "You cannot imbue an equipped item.");
+		return false;
 	}
 
 	player->sendImbuementWindow(target->getItem());
@@ -586,6 +613,8 @@ bool Action::loadFunction(const pugi::xml_attribute& attr, bool isScripted)
 		function = enterMarket;
 	} else if (strcasecmp(functionName, "imbuement") == 0) {
 		function = useImbueShrine;
+	} else if (strcasecmp(functionName, "supply") == 0) {
+		// nada
 	} else {
 		if (!isScripted) {
 			std::cout << "[Warning - Action::loadFunction] Function \"" << functionName << "\" does not exist." << std::endl;

@@ -1,6 +1,4 @@
 /**
- * @file waitlist.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -33,8 +31,8 @@ namespace {
 
 struct Wait
 {
-	constexpr Wait(std::size_t initTimeout, uint32_t initPlayerGUID) :
-			timeout(initTimeout), playerGUID(initPlayerGUID) {}
+	constexpr Wait(std::size_t timeout, uint32_t playerGUID) :
+			timeout(timeout), playerGUID(playerGUID) {}
 
 	std::size_t timeout;
 	uint32_t playerGUID;

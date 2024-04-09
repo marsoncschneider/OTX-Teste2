@@ -1,6 +1,4 @@
 /**
- * @file item.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -172,22 +170,22 @@ Item* Item::CreateItem(PropStream& propStream)
 	return Item::CreateItem(id, 0);
 }
 
-Item::Item(const uint16_t itemId, uint16_t itemCount /*= 0*/) :
-	id(itemId)
+Item::Item(const uint16_t type, uint16_t count /*= 0*/) :
+	id(type)
 {
 	const ItemType& it = items[id];
 
 	if (it.isFluidContainer() || it.isSplash()) {
-		setFluidType(itemCount);
+		setFluidType(count);
 	} else if (it.stackable) {
-		if (itemCount != 0) {
-			setItemCount(itemCount);
+		if (count != 0) {
+			setItemCount(count);
 		} else if (it.charges != 0) {
 			setItemCount(it.charges);
 		}
 	} else if (it.charges != 0) {
-		if (itemCount != 0) {
-			setCharges(itemCount);
+		if (count != 0) {
+			setCharges(count);
 		} else {
 			setCharges(it.charges);
 		}
@@ -210,9 +208,7 @@ Item* Item::clone() const
 	if (attributes) {
 		item->attributes.reset(new ItemAttributes(*attributes));
 		if (item->getDuration() > 0) {
-			item->incrementReferenceCounter();
-			item->setDecaying(DECAYING_TRUE);
-			g_game.toDecayItems.push_front(item);
+			item->startDecaying();
 		}
 	}
 
@@ -225,12 +221,14 @@ bool Item::equals(const Item* otherItem) const
 		return false;
 	}
 
+	const auto& otherAttributes = otherItem->attributes;
 	if (!attributes) {
-		return !otherItem->attributes;
+		return !otherAttributes || (otherAttributes->attributeBits == 0);
+	} else if (!otherAttributes) {
+		return (attributes->attributeBits == 0);
 	}
 
-	const auto& otherAttributes = otherItem->attributes;
-	if (!otherAttributes || attributes->attributeBits != otherAttributes->attributeBits) {
+	if (attributes->attributeBits != otherAttributes->attributeBits) {
 		return false;
 	}
 
@@ -299,6 +297,7 @@ void Item::setID(uint16_t newid)
 		setDecaying(DECAYING_FALSE);
 		setDuration(newDuration);
 	}
+
 }
 
 Cylinder* Item::getTopParent()
@@ -404,12 +403,12 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 	switch (attr) {
 		case ATTR_COUNT:
 		case ATTR_RUNE_CHARGES: {
-			uint8_t charges;
-			if (!propStream.read<uint8_t>(charges)) {
+			uint8_t count;
+			if (!propStream.read<uint8_t>(count)) {
 				return ATTR_READ_ERROR;
 			}
 
-			setSubType(charges);
+			setSubType(count);
 			break;
 		}
 
@@ -576,22 +575,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 		}
 
 		case ATTR_IMBUINGSLOTS: {
-			int32_t imbuingSlots;
-			if (!propStream.read<int32_t>(imbuingSlots)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_IMBUINGSLOTS, imbuingSlots);
-			break;
-		}
-
-		case ATTR_OPENCONTAINER: {
-			int32_t openContainer;
-			if (!propStream.read<int32_t>(openContainer)) {
-				return ATTR_READ_ERROR;
-			}
-
-			setIntAttr(ITEM_ATTRIBUTE_OPENCONTAINER, openContainer);
 			break;
 		}
 
@@ -602,6 +585,16 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			}
 
 			setIntAttr(ITEM_ATTRIBUTE_ARMOR, armor);
+			break;
+		}
+
+		case ATTR_WRAPID: {
+			uint16_t wrapId;
+			if (!propStream.read<uint16_t>(wrapId)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_WRAPID, wrapId);
 			break;
 		}
 
@@ -632,6 +625,26 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			}
 
 			setStrAttr(ITEM_ATTRIBUTE_SPECIAL, special);
+			break;
+		}
+
+		case ATTR_DECAYTO: {
+			int32_t decayTo;
+			if (!propStream.read<int32_t>(decayTo)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_DECAYTO, decayTo);
+			break;
+		}
+
+		case ATTR_QUICKLOOTCONTAINER: {
+			uint32_t flags;
+			if (!propStream.read<uint32_t>(flags)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_QUICKLOOTCONTAINER, flags);
 			break;
 		}
 
@@ -704,6 +717,25 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 
 				setCustomAttribute(key, val);
 			}
+			break;
+		}
+
+		case ATTR_OPENED: {
+			uint8_t opened;
+			if (!propStream.read<uint8_t>(opened)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_OPENED, opened);
+			break;
+		}
+		case ATTR_IMBUED: {
+			uint8_t imbued;
+			if (!propStream.read<uint8_t>(imbued)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_IMBUED, imbued);
 			break;
 		}
 
@@ -826,13 +858,7 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_IMBUINGSLOTS)) {
-		propWriteStream.write<uint8_t>(ATTR_IMBUINGSLOTS);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_IMBUINGSLOTS));
-	}
-
-	if (hasAttribute(ITEM_ATTRIBUTE_OPENCONTAINER)) {
-		propWriteStream.write<uint8_t>(ATTR_OPENCONTAINER);
-		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_OPENCONTAINER));
+		// removido
 	}
 
 	if (hasAttribute(ITEM_ATTRIBUTE_ARMOR)) {
@@ -855,10 +881,35 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.writeString(getStrAttr(ITEM_ATTRIBUTE_SPECIAL));
 	}
 
+	if (hasAttribute(ITEM_ATTRIBUTE_OPENED)) {
+		propWriteStream.write<uint8_t>(ATTR_OPENED);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_OPENED));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_IMBUED)) {
+		propWriteStream.write<uint8_t>(ATTR_IMBUED);
+		propWriteStream.write<uint8_t>(getIntAttr(ITEM_ATTRIBUTE_IMBUED));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_DECAYTO)) {
+		propWriteStream.write<uint8_t>(ATTR_DECAYTO);
+		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_DECAYTO));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_QUICKLOOTCONTAINER)) {
+		propWriteStream.write<uint8_t>(ATTR_QUICKLOOTCONTAINER);
+		propWriteStream.write<uint32_t>(getQuicklootAttr());
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_WRAPID)) {
+		propWriteStream.write<uint8_t>(ATTR_WRAPID);
+		propWriteStream.write<uint16_t>(getIntAttr(ITEM_ATTRIBUTE_WRAPID));
+	}
+
 	if (hasAttribute(ITEM_ATTRIBUTE_CUSTOM)) {
 		const ItemAttributes::CustomAttributeMap* customAttrMap = attributes->getCustomAttributeMap();
 		propWriteStream.write<uint8_t>(ATTR_CUSTOM_ATTRIBUTES);
-		propWriteStream.write<uint64_t>(customAttrMap->size());
+		propWriteStream.write<uint64_t>(static_cast<uint64_t>(customAttrMap->size()));
 		for (const auto &entry : *customAttrMap) {
 			// Serializing key type and value
 			propWriteStream.writeString(entry.first);
@@ -902,7 +953,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 								 const Item* item /*= nullptr*/, int32_t subType /*= -1*/, bool addArticle /*= true*/)
 {
 	const std::string* text = nullptr;
-
+	std::string marcador = (lookDistance == -2 ? "\n{info}" : "");
 	std::ostringstream s;
 	s << getNameDescription(it, item, subType, addArticle);
 
@@ -1624,7 +1675,7 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 	}
 
 	if (it.wieldInfo != 0) {
-		s << std::endl << "It can only be wielded properly by ";
+		s << std::endl << marcador << "It can only be wielded properly by ";
 
 		if (it.wieldInfo & WIELDINFO_PREMIUM) {
 			s << "premium ";
@@ -1653,26 +1704,61 @@ std::string Item::getDescription(const ItemType& it, int32_t lookDistance,
 		s << '.';
 	}
 
+	if (it.imbuingSlots > 0) {
+		s << std::endl << marcador << "Imbuements: (";
+		if (item) {
+			Item* thisItem = const_cast<Item*>(item);
+			Imbuement* imbuement = nullptr;
+			BaseImbue* base = nullptr;
+			for (uint8_t slot = 0; slot < it.imbuingSlots; slot++) {
+				if (slot > 0) {
+					s << ", ";
+				}
+				uint32_t info = thisItem->getImbuement(slot);
+				if (info >> 8 != 0) {
+					imbuement = g_imbuements.getImbuement(info & 0xFF);
+					base = g_imbuements.getBaseByID(imbuement->getBaseID());
+					s << base->name << " " << imbuement->getName() << " ";
+
+					uint32_t hours = (info >> 8) / 3600;
+					uint32_t minutes = ((info >> 8) / 60) % 60;
+
+					s << hours << ":" << &"0"[minutes > 9] << minutes << "h";
+				} else {
+					s << "Empty Slot";
+				}
+			}
+		} else {
+			for (uint8_t slot = 0; slot < it.imbuingSlots; slot++) {
+				if (slot > 0) {
+					s << ", ";
+				}
+				s << "Empty Slot";
+			}
+		}
+		s << ").";
+	}
+
 	if (lookDistance <= 1) {
 		if (item) {
 			const uint32_t weight = item->getWeight();
 			if (weight != 0 && it.pickupable) {
-				s << std::endl << getWeightDescription(it, weight, item->getItemCount());
+				s << std::endl << marcador << getWeightDescription(it, weight, item->getItemCount());
 			}
 		} else if (it.weight != 0 && it.pickupable) {
-			s << std::endl << getWeightDescription(it, it.weight);
+			s << std::endl << marcador << getWeightDescription(it, it.weight);
 		}
 	}
 
 	if (item) {
 		const std::string& specialDescription = item->getSpecialDescription();
 		if (!specialDescription.empty()) {
-			s << std::endl << specialDescription;
+			s << std::endl << marcador << specialDescription;
 		} else if (lookDistance <= 1 && !it.description.empty()) {
-			s << std::endl << it.description;
+			s << std::endl << marcador << it.description;
 		}
 	} else if (lookDistance <= 1 && !it.description.empty()) {
-		s << std::endl << it.description;
+		s << std::endl << marcador << it.description;
 	}
 
 	if (it.allowDistRead && it.id >= 7369 && it.id <= 7371) {
@@ -1769,9 +1855,9 @@ std::string Item::getWeightDescription() const
 	return getWeightDescription(weight);
 }
 
-void Item::setUniqueId(uint16_t n)
+void Item::setUniqueId(uint16_t n, bool force /* = false*/)
 {
-	if (hasAttribute(ITEM_ATTRIBUTE_UNIQUEID)) {
+	if (hasAttribute(ITEM_ATTRIBUTE_UNIQUEID) && !force) {
 		return;
 	}
 
@@ -1782,12 +1868,22 @@ void Item::setUniqueId(uint16_t n)
 
 bool Item::canDecay() const
 {
-	if (isRemoved()) {
+	const Item* item = dynamic_cast<const Item*>(this);
+	if (!item || item == nullptr) {
 		return false;
 	}
 
+	Cylinder* dynamicParent = dynamic_cast<Cylinder*>(parent);
+	if (dynamicParent == nullptr) {
+		return false;
+	}
+
+	if (isRemoved()) {
+		return false;
+	}	
+
 	const ItemType& it = Item::items[id];
-	if (it.decayTo < 0 || it.decayTime == 0) {
+	if (getDecayTo() < 0 || it.decayTime == 0) {
 		return false;
 	}
 
@@ -1871,6 +1967,7 @@ void ItemAttributes::removeAttribute(itemAttrTypes type)
 				break;
 			}
 			prev_it = it;
+
 		}
 	}
 	attributeBits &= ~type;
@@ -1945,6 +2042,22 @@ bool Item::hasMarketAttributes() const
 		return true;
 	}
 
+	if (items[id].imbuingSlots > 0) {
+		Item* item = const_cast<Item*>(this);
+		for (uint8_t slot = 0; slot < items[id].imbuingSlots; slot++) {
+			uint32_t info = item->getImbuement(slot);
+			if (info >> 8 != 0) {
+				return false;
+			}
+		}
+
+		// // desativado para parar o choro
+		// if (item->hasAttribute(ITEM_ATTRIBUTE_IMBUED)) {
+		// 	return false;
+		// }
+
+	}
+
 	for (const auto& attr : attributes->getList()) {
 		if (attr.type == ITEM_ATTRIBUTE_CHARGES) {
 			uint16_t charges = static_cast<uint16_t>(attr.value.integer);
@@ -1960,17 +2073,6 @@ bool Item::hasMarketAttributes() const
 			return false;
 		}
 	}
-
-	if (items[id].imbuingSlots > 0) {
-		for (uint8_t slot = 0; slot < items[id].imbuingSlots; slot++) {
-			Item* item = const_cast<Item*>(this);
-			uint32_t info = item->getImbuement(slot);
-			if (info >> 8 != 0) {
-				return false;
-			}
-		}
-	}
-
 	return true;
 }
 

@@ -1,6 +1,4 @@
 /**
- * @file monsters.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_MONSTERS_H_
-#define OT_SRC_MONSTERS_H_
+#ifndef FS_MONSTERS_H_776E8327BCE2450EB7C4A260785E6C0D
+#define FS_MONSTERS_H_776E8327BCE2450EB7C4A260785E6C0D
 
 #include "creature.h"
 
@@ -46,6 +44,7 @@ struct LootBlock {
 	int32_t shootRange;
 	int32_t hitChance;
 	bool unique;
+	bool raid;
 
 	std::vector<LootBlock> childLoot;
 	LootBlock() {
@@ -62,6 +61,7 @@ struct LootBlock {
 		shootRange = -1;
 		hitChance = -1;
 		unique = false;
+		raid = false;
 	}
 };
 
@@ -141,6 +141,8 @@ class MonsterType
 
 		uint64_t experience = 0;
 
+		uint16_t raceid = 0;
+
 		uint32_t manaCost = 0;
 		uint32_t yellChance = 0;
 		uint32_t yellSpeedTicks = 0;
@@ -178,6 +180,7 @@ class MonsterType
 		bool isPet = false;
 		bool isPassive = false;
 		bool isRewardBoss = false;
+		bool isPreyable = true;
 		bool canWalkOnEnergy = true;
 		bool canWalkOnFire = true;
 		bool canWalkOnPoison = true;
@@ -192,6 +195,8 @@ class MonsterType
 		MonsterType(const MonsterType&) = delete;
 		MonsterType& operator=(const MonsterType&) = delete;
 
+		bool loadCallback(LuaScriptInterface* scriptInterface);
+
 		std::string name;
 		std::string nameDescription;
 
@@ -199,7 +204,7 @@ class MonsterType
 
 		bool canSpawn(const Position& pos);
 
-		//void loadLoot(MonsterType* monsterType, LootBlock lootblock); (from tfs)
+		void loadLoot(MonsterType* monsterType, LootBlock lootblock);
 };
 
 class MonsterSpell
@@ -260,23 +265,26 @@ class Monsters
 		bool reload();
 
 		MonsterType* getMonsterType(const std::string& name);
+		MonsterType* getMonsterTypeByRace(uint16_t raceid);
 		void addMonsterType(const std::string& name, MonsterType* mType);
 		bool deserializeSpell(MonsterSpell* spell, spellBlock_t& sb, const std::string& description = "");
+
+		std::vector<std::string> getPreyMonsters();
 		
 		std::unique_ptr<LuaScriptInterface> scriptInterface;
-		bool loadCallback(LuaScriptInterface* scriptInterface, MonsterType* mType);
+		std::map<std::string, MonsterType> monsters;
+		std::map<uint16_t, std::string> raceidMonsters;
 
 	private:
 		ConditionDamage* getDamageCondition(ConditionType_t conditionType,
 											int32_t maxDamage, int32_t minDamage, int32_t startDamage, uint32_t tickInterval);
 		bool deserializeSpell(const pugi::xml_node& node, spellBlock_t& sb, const std::string& description = "");
 
-		MonsterType* loadMonster(const std::string& file, const std::string& monsterName, bool reloading = false);
+		MonsterType* loadMonster(const std::string& file, const std::string& monsterName, bool reloading = false, uint16_t raceid = 0);
 
 		void loadLootContainer(const pugi::xml_node& node, LootBlock&);
 		bool loadLootItem(const pugi::xml_node& node, LootBlock&);
 
-		std::map<std::string, MonsterType> monsters;
 		std::map<std::string, std::string> unloadedMonsters;
 
 		bool loaded = false;

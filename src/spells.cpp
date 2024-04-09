@@ -1,6 +1,4 @@
 /**
- * @file spells.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -45,7 +43,7 @@ Spells::~Spells()
 	clear(false);
 }
 
-TalkActionResult_t Spells::playerSaySpell(Player* player, std::string& words)
+TalkActionResult_t Spells::playerSaySpell(Player* player, std::string& words, bool called)
 {
 	std::string str_words = words;
 
@@ -86,13 +84,15 @@ TalkActionResult_t Spells::playerSaySpell(Player* player, std::string& words)
 		}
 	}
 
-	if (instantSpell->playerCastInstant(player, param)) {
-		words = instantSpell->getWords();
-
-		if (instantSpell->getHasParam() && !param.empty()) {
-			words += " \"" + param + "\"";
-		}
-
+	if (called) {
+		if (instantSpell->playerCastInstant(player, param)) {
+			words = instantSpell->getWords();
+			if (instantSpell->getHasParam() && !param.empty()) {
+				words += " \"" + param + "\"";
+			}
+			return TALKACTION_BREAK;
+		}		
+	} else {
 		return TALKACTION_BREAK;
 	}
 
@@ -303,11 +303,11 @@ Position Spells::getCasterPosition(Creature* creature, Direction dir)
 	return getNextPosition(dir, creature->getPosition());
 }
 
-CombatSpell::CombatSpell(Combat* initCombat, bool initNeedTarget, bool initNeedDirection) :
+CombatSpell::CombatSpell(Combat* combat, bool needTarget, bool needDirection) :
 	Event(&g_spells->getScriptInterface()),
-	combat(initCombat),
-	needDirection(initNeedDirection),
-	needTarget(initNeedTarget)
+	combat(combat),
+	needDirection(needDirection),
+	needTarget(needTarget)
 {}
 
 CombatSpell::~CombatSpell()
@@ -468,6 +468,8 @@ bool Spell::configureSpell(const pugi::xml_node& node)
 			group = SPELLGROUP_SUPPORT;
 		} else if (tmpStr == "special" || tmpStr == "4") {
 			group = SPELLGROUP_SPECIAL;
+		} else if (tmpStr == "ultimate" || tmpStr == "6") {
+			group = SPELLGROUP_ULTIMATE;
 		} else {
 			std::cout << "[Warning - Spell::configureSpell] Unknown group: " << attr.as_string() << std::endl;
 		}
@@ -489,6 +491,8 @@ bool Spell::configureSpell(const pugi::xml_node& node)
 			secondaryGroup = SPELLGROUP_SUPPORT;
 		} else if (tmpStr == "special" || tmpStr == "4") {
 			secondaryGroup = SPELLGROUP_SPECIAL;
+		} else if (tmpStr == "ultimate" || tmpStr == "6") {
+			secondaryGroup = SPELLGROUP_ULTIMATE;
 		} else {
 			std::cout << "[Warning - Spell::configureSpell] Unknown secondarygroup: " << attr.as_string() << std::endl;
 		}
@@ -1047,7 +1051,7 @@ bool InstantSpell::canThrowSpell(const Creature* creature, const Creature* targe
 	const Position& fromPos = creature->getPosition();
 	const Position& toPos = target->getPosition();
 	if (fromPos.z != toPos.z ||
-	        (range == -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight)) ||
+			(range == -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight)) ||
 	        (range != -1 && !g_game.canThrowObjectTo(fromPos, toPos, checkLineOfSight, range, range))) {
 		return false;
 	}
@@ -1209,6 +1213,19 @@ ReturnValue RuneSpell::canExecuteAction(const Player* player, const Position& to
 	return RETURNVALUE_NOERROR;
 }
 
+bool RuneSpell::canUseRune(const Player* player, bool ignoreLevel /* =false*/) {
+	if (player->hasFlag(PlayerFlag_CannotUseSpells)) {
+		return false;
+	}
+	if (player->hasFlag(PlayerFlag_IgnoreSpellCheck)) {
+		return true;
+	}
+
+	return (player->getLevel() >= getLevel() || ignoreLevel) &&
+		   player->getBaseMagicLevel() >= getMagicLevel() &&
+		   (vocSpellMap.empty() || vocSpellMap.find(player->getVocationId()) != vocSpellMap.end());
+}
+
 bool RuneSpell::executeUse(Player* player, Item* item, const Position&, Thing* target, const Position& toPosition, bool isHotkey)
 {
 	if (!playerRuneSpellCheck(player, toPosition)) {
@@ -1245,10 +1262,26 @@ bool RuneSpell::executeUse(Player* player, Item* item, const Position&, Thing* t
 	}
 
 	postCastSpell(player);
+	target = g_game.getCreatureByID(var.number);
+	if (target && getAggressive()) {
+		player->onAttackedCreature(target->getCreature(), false);
+	}
+
 	if (hasCharges && item && g_config.getBoolean(ConfigManager::REMOVE_RUNE_CHARGES)) {
+		int32_t stgValue = 0;
+		player->getStorageValue(PSTRG_BLESS_RUNA, stgValue);
 		int32_t newCount = std::max<int32_t>(0, item->getItemCount() - 1);
-		g_game.transformItem(item, item->getID(), newCount);
-		player->updateSupplyTracker(item);
+
+		if (g_config.getBoolean(ConfigManager::BLESS_RUNE)) {
+			if (stgValue < OS_TIME(nullptr) && uniform_random(0, 100) <= 30) {
+				std::ostringstream ss;
+				ss << "You used a " << item->getName();
+				player->sendTextMessage(MESSAGE_INFO_DESCR, ss.str());
+				g_game.transformItem(item, item->getID(), newCount);
+			}
+		} else {
+			g_game.transformItem(item, item->getID(), newCount);			
+		}
 	}
 	return true;
 }

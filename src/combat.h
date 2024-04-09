@@ -1,6 +1,4 @@
 /**
- * @file combat.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,13 +17,14 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_COMBAT_H_
-#define OT_SRC_COMBAT_H_
+#ifndef FS_COMBAT_H_B02CE79230FC43708699EE91FCC8F7CC
+#define FS_COMBAT_H_B02CE79230FC43708699EE91FCC8F7CC
 
 #include "thing.h"
 #include "condition.h"
 #include "map.h"
 #include "baseevents.h"
+#include "monster.h"
 
 class Condition;
 class Creature;
@@ -37,8 +36,8 @@ struct Position;
 class ValueCallback final : public CallBack
 {
 	public:
-		explicit ValueCallback(formulaType_t initType): type(initType) {}
-		void getMinMaxValues(Player* player, CombatDamage& damage, bool useCharges) const;
+		explicit ValueCallback(formulaType_t type): type(type) {}
+		void getMinMaxValues(Player* player, CombatDamage& damage) const;
 
 	protected:
 		formulaType_t type;
@@ -85,12 +84,10 @@ struct CombatParams {
 	bool useCharges = false;
 };
 
-using CombatFunction = std::function<void(Creature*, Creature*, const CombatParams&, CombatDamage*)>;
-
 class MatrixArea
 {
 	public:
-		MatrixArea(uint32_t initRows, uint32_t initCols): centerX(0), centerY(0), rows(initRows), cols(initCols) {
+		MatrixArea(uint32_t rows, uint32_t cols): centerX(0), centerY(0), rows(rows), cols(cols) {
 			data_ = new bool*[rows];
 
 			for (uint32_t row = 0; row < rows; ++row) {
@@ -250,18 +247,6 @@ class Combat
 		Combat(const Combat&) = delete;
 		Combat& operator=(const Combat&) = delete;
 
-		static void doCombatHealth(Creature* caster, Creature* target, CombatDamage& damage, const CombatParams& params);
-		static void doCombatHealth(Creature* caster, const Position& position, const AreaCombat* area, CombatDamage& damage, const CombatParams& params);
-
-		static void doCombatMana(Creature* caster, Creature* target, CombatDamage& damage, const CombatParams& params);
-		static void doCombatMana(Creature* caster, const Position& position, const AreaCombat* area, CombatDamage& damage, const CombatParams& params);
-
-		static void doCombatCondition(Creature* caster, Creature* target, const CombatParams& params);
-		static void doCombatCondition(Creature* caster, const Position& position, const AreaCombat* area, const CombatParams& params);
-
-		static void doCombatDispel(Creature* caster, Creature* target, const CombatParams& params);
-		static void doCombatDispel(Creature* caster, const Position& position, const AreaCombat* area, const CombatParams& params);
-
 		static void getCombatArea(const Position& centerPos, const Position& targetPos, const AreaCombat* area, std::forward_list<Tile*>& list);
 
 		static bool isInPvpZone(const Creature* attacker, const Creature* target);
@@ -279,18 +264,27 @@ class Combat
 		void doCombat(Creature* caster, Creature* target) const;
 		void doCombat(Creature* caster, const Position& pos) const;
 
+		static void doTargetCombat(Creature* caster, Creature* target, CombatDamage& damage, const CombatParams& params);
+		static void doAreaCombat(Creature* caster, const Position& position, const AreaCombat* area, CombatDamage& damage, const CombatParams& params);
+
+		static void checkCriticalHit(Player* caster, CombatDamage& damage);
+		static void checkLeech(Player* caster, CombatDamage& damage, uint8_t affecteds = 1);
+
 		bool setCallback(CallBackParam_t key);
 		CallBack* getCallback(CallBackParam_t key);
 
 		bool setParam(CombatParam_t param, uint32_t value);
-		void setArea(AreaCombat* newArea) {
-			this->area.reset(newArea);
+		void setArea(AreaCombat* area) {
+			this->area.reset(area);
 		}
 		bool hasArea() const {
 			return area != nullptr;
 		}
 		void addCondition(const Condition* condition) {
 			params.conditionList.emplace_front(condition);
+		}
+		void clearConditions() {
+			params.conditionList.clear();
 		}
 		void setPlayerCombatValues(formulaType_t formulaType, double mina, double minb, double maxa, double maxb);
 		void postCombatEffects(Creature* caster, const Position& pos) const {
@@ -302,16 +296,6 @@ class Combat
 		}
 
 	protected:
-		static void doCombatDefault(Creature* caster, Creature* target, const CombatParams& params);
-
-		static void CombatFunc(Creature* caster, const Position& pos, const AreaCombat* area, const CombatParams& params, CombatFunction func, CombatDamage* data);
-
-		static void CombatHealthFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
-		static void CombatManaFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* damage);
-		static void CombatConditionFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
-		static void CombatDispelFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
-		static void CombatNullFunc(Creature* caster, Creature* target, const CombatParams& params, CombatDamage* data);
-
 		static void combatTileEffects(const SpectatorHashSet& spectators, Creature* caster, Tile* tile, const CombatParams& params);
 		CombatDamage getCombatDamage(Creature* creature, Creature* target) const;
 

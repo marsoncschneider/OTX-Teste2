@@ -1,6 +1,4 @@
 /**
- * @file databasemanager.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -73,6 +71,7 @@ bool DatabaseManager::isDatabaseSetup()
 
 int32_t DatabaseManager::getDatabaseVersion()
 {
+
 	if (!tableExists("server_config")) {
 		Database& db = Database::getInstance();
 		db.executeQuery("CREATE TABLE `server_config` (`config` VARCHAR(50) NOT NULL, `value` VARCHAR(256) NOT NULL DEFAULT '', UNIQUE(`config`)) ENGINE = InnoDB");

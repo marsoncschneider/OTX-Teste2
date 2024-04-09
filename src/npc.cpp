@@ -1,6 +1,4 @@
 /**
- * @file npc.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -28,7 +26,7 @@
 extern Game g_game;
 extern LuaEnvironment g_luaEnvironment;
 
-uint32_t Npc::npcAutoID = 0x80000000;
+uint32_t Npc::npcAutoID = 0xF0000000;
 NpcScriptInterface* Npc::scriptInterface = nullptr;
 
 void Npcs::reload()
@@ -55,9 +53,9 @@ Npc* Npc::createNpc(const std::string& name)
 	return npc.release();
 }
 
-Npc::Npc(const std::string& initName) :
+Npc::Npc(const std::string& name) :
 	Creature(),
-	filename("data/npc/" + initName + ".xml"),
+	filename("data/npc/" + name + ".xml"),
 	npcEventHandler(nullptr),
 	masterRadius(-1),
 	loaded(false)
@@ -100,6 +98,7 @@ bool Npc::load()
 void Npc::reset()
 {
 	loaded = false;
+	isIdle = true;
 	walkTicks = 1500;
 	floorChange = false;
 	attackable = false;
@@ -161,8 +160,6 @@ bool Npc::loadFromXml()
 
 	if ((attr = npcNode.attribute("walkradius"))) {
 		masterRadius = pugi::cast<int32_t>(attr.value());
-	} else {
-		masterRadius = 2;
 	}
 
 	if ((attr = npcNode.attribute("ignoreheight"))) {
@@ -438,16 +435,16 @@ bool Npc::canWalkTo(const Position& fromPos, Direction dir) const
 		return false;
 	}
 
-	Tile* toTile = g_game.map.getTile(toPos);
-	if (!toTile || toTile->queryAdd(0, *this, 1, 0) != RETURNVALUE_NOERROR) {
+	Tile* tile = g_game.map.getTile(toPos);
+	if (!tile || tile->queryAdd(0, *this, 1, 0) != RETURNVALUE_NOERROR) {
 		return false;
 	}
 
-	if (!floorChange && (toTile->hasFlag(TILESTATE_FLOORCHANGE) || toTile->getTeleportItem())) {
+	if (!floorChange && (tile->hasFlag(TILESTATE_FLOORCHANGE) || tile->getTeleportItem())) {
 		return false;
 	}
 
-	if (!ignoreHeight && toTile->hasHeight(1)) {
+	if (!ignoreHeight && tile->hasHeight(1)) {
 		return false;
 	}
 
@@ -1085,8 +1082,8 @@ int NpcScriptInterface::luaNpcCloseShopWindow(lua_State* L)
 	return 1;
 }
 
-NpcEventsHandler::NpcEventsHandler(const std::string& file, Npc* npcEvent) :
-	npc(npcEvent), scriptInterface(npcEvent->getScriptInterface())
+NpcEventsHandler::NpcEventsHandler(const std::string& file, Npc* npc) :
+	npc(npc), scriptInterface(npc->getScriptInterface())
 {
 	loaded = scriptInterface->loadFile("data/npc/scripts/" + file, npc) == 0;
 	if (!loaded) {

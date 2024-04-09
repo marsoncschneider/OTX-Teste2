@@ -1,6 +1,4 @@
 /**
- * @file ioguild.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_IOGUILD_H_
-#define OT_SRC_IOGUILD_H_
+#ifndef FS_IOGUILD_H_EF9ACEBA0B844C388B70FF52E69F1AFF
+#define FS_IOGUILD_H_EF9ACEBA0B844C388B70FF52E69F1AFF
 
 class Guild;
 
@@ -32,6 +30,11 @@ class IOGuild
 		static Guild* loadGuild(uint32_t guildId);
 		static uint32_t getGuildIdByName(const std::string& name);
 		static void getWarList(uint32_t guildId, GuildWarVector& guildWarVector);
+
+		static void setPoints(uint32_t guildId, uint32_t newPoints);
+		static void setLevel(uint32_t guildId, uint32_t newlevel);
+		
+		static void setBalance(uint32_t guildId, uint64_t amount);
 };
 
 #endif

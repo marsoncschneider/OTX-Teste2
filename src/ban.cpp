@@ -1,6 +1,4 @@
 /**
- * @file ban.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -25,6 +23,9 @@
 #include "database.h"
 #include "databasetasks.h"
 #include "tools.h"
+#include "configmanager.h"
+
+extern ConfigManager g_config;
 
 bool Ban::acceptConnection(uint32_t clientip)
 {
@@ -62,7 +63,7 @@ bool Ban::acceptConnection(uint32_t clientip)
 
 bool IOBan::isAccountBanned(uint32_t accountId, BanInfo& banInfo)
 {
-	Database& db = Database::getInstance();
+	Database& db = Database::getInstance();	
 
 	std::ostringstream query;
 	query << "SELECT `reason`, `expires_at`, `banned_at`, `banned_by`, (SELECT `name` FROM `players` WHERE `id` = `banned_by`) AS `name` FROM `account_bans` WHERE `account_id` = " << accountId;
@@ -73,7 +74,7 @@ bool IOBan::isAccountBanned(uint32_t accountId, BanInfo& banInfo)
 	}
 
 	int64_t expiresAt = result->getNumber<int64_t>("expires_at");
-	if (expiresAt != 0 && time(nullptr) > expiresAt) {
+	if (expiresAt != 0 && OS_TIME(nullptr) > expiresAt) {
 		// Move the ban to history if it has expired
 		query.str(std::string());
 		query << "INSERT INTO `account_ban_history` (`account_id`, `reason`, `banned_at`, `expired_at`, `banned_by`) VALUES (" << accountId << ',' << db.escapeString(result->getString("reason")) << ',' << result->getNumber<time_t>("banned_at") << ',' << expiresAt << ',' << result->getNumber<uint32_t>("banned_by") << ')';
@@ -108,7 +109,7 @@ bool IOBan::isIpBanned(uint32_t clientip, BanInfo& banInfo)
 	}
 
 	int64_t expiresAt = result->getNumber<int64_t>("expires_at");
-	if (expiresAt != 0 && time(nullptr) > expiresAt) {
+	if (expiresAt != 0 && OS_TIME(nullptr) > expiresAt) {
 		query.str(std::string());
 		query << "DELETE FROM `ip_bans` WHERE `ip` = " << clientip;
 		g_databaseTasks.addTask(query.str());

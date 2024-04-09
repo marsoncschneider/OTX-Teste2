@@ -1,6 +1,4 @@
 /**
- * @file talkaction.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -112,6 +110,7 @@ TalkActionResult_t TalkActions::playerSaySpell(Player* player, SpeakClasses type
 					}
 				}
 			}
+
 		}
 
 		if (it->second.executeSay(player, param, type)) {

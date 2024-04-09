@@ -1,6 +1,4 @@
 /**
- * @file globalevent.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -140,7 +138,7 @@ void GlobalEvents::startup() const
 
 void GlobalEvents::timer()
 {
-	time_t now = time(nullptr);
+	time_t now = OS_TIME(nullptr);
 
 	int64_t nextScheduledTime = std::numeric_limits<int64_t>::max();
 
@@ -286,7 +284,7 @@ bool GlobalEvent::configureEvent(const pugi::xml_node& node)
 			}
 		}
 
-		time_t current_time = time(nullptr);
+		time_t current_time = OS_TIME(nullptr);
 		tm* timeinfo = localtime(&current_time);
 		timeinfo->tm_hour = hour;
 		timeinfo->tm_min = min;

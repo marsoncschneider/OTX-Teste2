@@ -1,6 +1,4 @@
 /**
- * @file spawn.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_SPAWN_H_
-#define OT_SRC_SPAWN_H_
+#ifndef FS_SPAWN_H_1A86089E080846A9AE53ED12E7AE863B
+#define FS_SPAWN_H_1A86089E080846A9AE53ED12E7AE863B
 
 #include "tile.h"
 #include "position.h"
@@ -40,7 +38,7 @@ struct spawnBlock_t {
 class Spawn
 {
 	public:
-		Spawn(Position initPos, int32_t initRadius) : centerPos(std::move(initPos)), radius(initRadius) {}
+		Spawn(Position pos, int32_t radius) : centerPos(std::move(pos)), radius(radius) {}
 		~Spawn();
 
 		// non-copyable
@@ -50,9 +48,7 @@ class Spawn
 		bool addMonster(const std::string& name, const Position& pos, Direction dir, uint32_t interval);
 		void removeMonster(Monster* monster);
 
-		uint32_t getInterval() const {
-			return interval;
-		}
+		uint32_t getInterval() const;
 		void startup();
 
 		void startSpawnCheck();
@@ -98,12 +94,15 @@ class Spawns
 			return spawnList;
 		}
 
+		bool loadCustomSpawnXml(const std::string& _filename, const Position& relativePosition = Position());
 	private:
 		std::forward_list<Npc*> npcList;
 		std::forward_list<Spawn> spawnList;
 		std::string filename;
 		bool loaded = false;
 		bool started = false;
+
+		std::forward_list<Spawn> customSpawnList;
 };
 
 static constexpr int32_t NONBLOCKABLE_SPAWN_INTERVAL = 1400;

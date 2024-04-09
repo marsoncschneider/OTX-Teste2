@@ -1,7 +1,5 @@
 /**
- * @file rewardchest.h
- * 
- * The Forgotten Server - a free and open-source MMORPG server emulator
+* The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_REWARDCHEST_H_
-#define OT_SRC_REWARDCHEST_H_
+#ifndef FS_REWARDCHEST_H
+#define FS_REWARDCHEST_H
 
 #include "container.h"
 

@@ -1,6 +1,4 @@
 /**
- * @file mounts.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -47,7 +45,8 @@ bool Mounts::loadFromXml()
 			pugi::cast<uint16_t>(mountNode.attribute("clientid").value()),
 			mountNode.attribute("name").as_string(),
 			pugi::cast<int32_t>(mountNode.attribute("speed").value()),
-			mountNode.attribute("premium").as_bool()
+			mountNode.attribute("premium").as_bool(),
+			mountNode.attribute("vip").as_bool(false)
 		);
 	}
 	mounts.shrink_to_fit();

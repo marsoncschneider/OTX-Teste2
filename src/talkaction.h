@@ -1,6 +1,4 @@
 /**
- * @file talkaction.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_TALKACTION_H_
-#define OT_SRC_TALKACTION_H_
+#ifndef FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
+#define FS_TALKACTION_H_E6AABAC0F89843469526ADF310F3131C
 
 #include "luascript.h"
 #include "baseevents.h"

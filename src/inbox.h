@@ -1,6 +1,4 @@
 /**
- * @file inbox.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_INBOX_H_
-#define OT_SRC_INBOX_H_
+#ifndef FS_INBOX_H_C3EF10190329447883B9C3479234EE5C
+#define FS_INBOX_H_C3EF10190329447883B9C3479234EE5C
 
 #include "container.h"
 

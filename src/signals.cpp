@@ -1,6 +1,4 @@
 /**
- * @file signals.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -32,11 +30,13 @@
 #include "movement.h"
 #include "weapons.h"
 #include "raids.h"
+#include "quests.h"
 #include "mounts.h"
 #include "globalevent.h"
 #include "monster.h"
 #include "events.h"
-
+#include "modules.h"
+#include "imbuements.h"
 
 extern Dispatcher g_dispatcher;
 
@@ -53,6 +53,7 @@ extern GlobalEvents* g_globalEvents;
 extern Events* g_events;
 extern Chat* g_chat;
 extern LuaEnvironment g_luaEnvironment;
+extern Modules* g_modules;
 
 using ErrorCode = boost::system::error_code;
 
@@ -157,6 +158,9 @@ void Signals::sighupHandler()
 	g_weapons->loadDefaults();
 	std::cout << "Reloaded weapons." << std::endl;
 
+	g_game.quests.reload();
+	std::cout << "Reloaded quests." << std::endl;
+
 	g_game.mounts.reload();
 	std::cout << "Reloaded mounts." << std::endl;
 
@@ -171,6 +175,9 @@ void Signals::sighupHandler()
 
 	g_luaEnvironment.loadFile("data/global.lua");
 	std::cout << "Reloaded global.lua." << std::endl;
+
+	g_modules->reload();
+	std::cout << "Reloaded modules." << std::endl;
 
 	lua_gc(g_luaEnvironment.getLuaState(), LUA_GCCOLLECT, 0);
 }

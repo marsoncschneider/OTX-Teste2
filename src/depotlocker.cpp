@@ -1,6 +1,4 @@
 /**
- * @file depotlocker.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -24,7 +22,10 @@
 #include "depotlocker.h"
 
 DepotLocker::DepotLocker(uint16_t type) :
-	Container(type, 3), depotId(0) {}
+	Container(type, 4), depotId(0) 
+	{
+		islocker = true;
+	}
 
 Attr_ReadValue DepotLocker::readAttr(AttrTypes_t attr, PropStream& propStream)
 {

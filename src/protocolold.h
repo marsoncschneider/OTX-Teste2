@@ -1,6 +1,4 @@
 /**
- * @file protocolold.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_PROTOCOLOLD_H_
-#define OT_SRC_PROTOCOLOLD_H_
+#ifndef FS_PROTOCOLOLD_H_5487B862FE144AE0904D098A3238E161
+#define FS_PROTOCOLOLD_H_5487B862FE144AE0904D098A3238E161
 
 #include "protocol.h"
 
@@ -38,7 +36,7 @@ class ProtocolOld final : public Protocol
 			return "old login protocol";
 		}
 
-		explicit ProtocolOld(Connection_ptr initConnection) : Protocol(initConnection) {}
+		explicit ProtocolOld(Connection_ptr connection) : Protocol(connection) {}
 
 		void onRecvFirstMessage(NetworkMessage& msg) final;
 

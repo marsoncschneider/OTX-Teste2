@@ -1,6 +1,4 @@
 /**
- * @file outfit.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -62,7 +60,8 @@ bool Outfits::loadFromXml()
 			outfitNode.attribute("name").as_string(),
 			pugi::cast<uint16_t>(lookTypeAttribute.value()),
 			outfitNode.attribute("premium").as_bool(),
-			outfitNode.attribute("unlocked").as_bool(true)
+			outfitNode.attribute("unlocked").as_bool(true),
+			outfitNode.attribute("vip").as_bool(false)
 		);
 	}
 	return true;

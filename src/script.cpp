@@ -1,6 +1,4 @@
 /**
- * @file script.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -74,7 +72,7 @@ bool Scripts::loadScripts(std::string folderName, bool isLib, bool reload)
 		const std::string scriptFile = it->string();
 		if (!isLib) {
 			if (redir.empty() || redir != it->parent_path().string()) {
-				auto p = it->relative_path();
+				auto p = fs::path(it->relative_path());
 				if (g_config.getBoolean(ConfigManager::SCRIPTS_CONSOLE_LOGS)) {
 					std::cout << ">> [" << p.parent_path().filename() << "]" << std::endl;
 				}

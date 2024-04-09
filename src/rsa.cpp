@@ -1,6 +1,4 @@
 /**
- * @file rsa.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -33,16 +31,12 @@ static CryptoPP::AutoSeededRandomPool prng;
 
 void RSA::decrypt(char* msg) const
 {
-	try
-	{
-		CryptoPP::Integer m{reinterpret_cast<uint8_t *>(msg), 128};
+	try {
+		CryptoPP::Integer m{reinterpret_cast<uint8_t*>(msg), 128};
 		auto c = pk.CalculateInverse(prng, m);
-		c.Encode(reinterpret_cast<uint8_t *>(msg), 128);
-	}
-	catch (const CryptoPP::Exception &e)
-	{
-		std::cout << "[RSA::decrypt - Exception]" << e.GetWhat() << std::endl;
-		return;
+		c.Encode(reinterpret_cast<uint8_t*>(msg), 128);
+	} catch (const CryptoPP::Exception& e) {
+		std::cout << e.what() << '\n';
 	}
 }
 
@@ -56,7 +50,11 @@ void RSA::loadPEM(const std::string& filename)
 	std::ostringstream oss;
 	for (std::string line; std::getline(file, line); oss << line);
 	std::string key = oss.str();
-
+    
+	// fixes "Missing RSA private key footer." error
+	key.erase(0, key.find_first_not_of(" \t\f\v\n\r"));
+	key.erase(key.find_last_not_of(" \t\f\v\n\r") + 1);
+	
 	if (key.substr(0, header.size()) != header) {
 		throw std::runtime_error("Missing RSA private key header.");
 	}

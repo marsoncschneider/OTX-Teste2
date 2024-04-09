@@ -1,6 +1,4 @@
 /**
- * @file creatureevent.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_CREATUREEVENT_H_
-#define OT_SRC_CREATUREEVENT_H_
+#ifndef FS_CREATUREEVENT_H_73FCAF4608CB41399D53C919316646A9
+#define FS_CREATUREEVENT_H_73FCAF4608CB41399D53C919316646A9
 
 #include "luascript.h"
 #include "baseevents.h"

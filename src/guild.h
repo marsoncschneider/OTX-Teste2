@@ -1,6 +1,4 @@
 /**
- * @file guild.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_GUILD_H_
-#define OT_SRC_GUILD_H_
+#ifndef FS_GUILD_H_C00F0A1D732E4BA88FF62ACBE74D76BC
+#define FS_GUILD_H_C00F0A1D732E4BA88FF62ACBE74D76BC
 
 class Player;
 
@@ -29,15 +27,15 @@ struct GuildRank {
 	std::string name;
 	uint8_t level;
 
-	GuildRank(uint32_t initId, std::string initName, uint8_t initLevel) :
-		id(initId), name(std::move(initName)), level(initLevel) {}
+	GuildRank(uint32_t id, std::string name, uint8_t level) :
+		id(id), name(std::move(name)), level(level) {}
 };
 
 using GuildRank_ptr = std::shared_ptr<GuildRank>;
 class Guild
 {
 	public:
-		Guild(uint32_t initId, std::string initName) : name(std::move(initName)), id(initId) {}
+		Guild(uint32_t id, std::string name) : name(std::move(name)), id(id) {}
 
 		void addMember(Player* player);
 		void removeMember(Player* player);
@@ -54,6 +52,27 @@ class Guild
 		uint32_t getMemberCount() const {
 			return memberCount;
 		}
+		
+		uint64_t getBalance() const {
+			return balance;
+		}
+		void setBalance(uint64_t _balance);
+
+		uint32_t getLevel() const {
+			return level;
+		}
+		uint32_t getPoints() const {
+			return points;
+		}
+
+		uint32_t getPrivateWarRival() const {
+			return privateWarRival;
+		}
+		
+		void setPrivateWarRival(uint32_t rival);
+		void setPoints(uint32_t _points);
+		void setLevel(uint32_t _level);
+
 		void setMemberCount(uint32_t count) {
 			memberCount = count;
 		}
@@ -70,8 +89,8 @@ class Guild
 		const std::string& getMotd() const {
 			return motd;
 		}
-		void setMotd(const std::string& newMotd) {
-			this->motd = newMotd;
+		void setMotd(const std::string& motd) {
+			this->motd = motd;
 		}
 
 	private:
@@ -79,8 +98,13 @@ class Guild
 		std::vector<GuildRank_ptr> ranks;
 		std::string name;
 		std::string motd;
+		uint32_t points = 0;
+		uint32_t level = 1;
+		uint64_t balance = 0;
 		uint32_t id;
 		uint32_t memberCount = 0;
+		uint32_t privateWarRival = 0;
+
 };
 
 #endif

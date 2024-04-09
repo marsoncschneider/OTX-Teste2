@@ -1,6 +1,4 @@
 /**
- * @file otserv.cpp
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -26,10 +24,17 @@
 #include "game.h"
 
 #include "iomarket.h"
+#include "bestiary.h"
+#include "charm.h"
+#include "imbuements.h"
+#include "prey.h"
+#include "store.h"
 
 #include "configmanager.h"
 #include "scriptmanager.h"
 #include "rsa.h"
+#include "protocolcheck.h"
+#include "protocolspectator.h"
 #include "protocolold.h"
 #include "protocollogin.h"
 #include "protocolstatus.h"
@@ -49,6 +54,11 @@ Monsters g_monsters;
 Vocations g_vocations;
 extern Scripts* g_scripts;
 RSA g_RSA;
+Prey g_prey;
+Store g_store;
+Imbuements g_imbuements;
+Bestiaries g_bestiaries;
+Charms g_charms;
 
 std::mutex g_loaderLock;
 std::condition_variable g_loaderSignal;
@@ -72,10 +82,6 @@ void badAllocationHandler()
 
 int main(int argc, char* argv[])
 {
-#ifdef DEBUG_LOG
-	spdlog::set_pattern("[%Y-%d-%m %H:%M:%S.%e] [file %@] [func %!] [thread %t] [%l] %v ");
-	SPDLOG_DEBUG("[OTSERV] SPDLOG LOG DEBUG ENABLED");
-#endif
 	// Setup bad allocation handler
 	std::set_new_handler(badAllocationHandler);
 
@@ -89,7 +95,6 @@ int main(int argc, char* argv[])
 	g_loaderSignal.wait(g_loaderUniqueLock);
 
 	if (serviceManager.is_running()) {
-
 		std::cout << ">> " << g_config.getString(ConfigManager::SERVER_NAME) << " Server Online!" << std::endl << std::endl;
 		serviceManager.run();
 	} else {
@@ -102,19 +107,21 @@ int main(int argc, char* argv[])
 	g_scheduler.join();
 	g_databaseTasks.join();
 	g_dispatcher.join();
+	std::cout << ">> Saving player items." << std::endl;
 	return 0;
 }
 
 void mainLoader(int argc, char* argv[], ServiceManager* services)
 {
+	uint64_t starttime = OTSYS_TIME(true);
 	//dispatcher thread
 	g_game.setGameState(GAME_STATE_STARTUP);
 
-	srand(static_cast<unsigned int>(OTSYS_TIME()));
+	srand(static_cast<unsigned int>(OTSYS_TIME(true)));
 #ifdef _WIN32
 	SetConsoleTitle(STATUS_SERVER_NAME);
 #endif
-	std::cout << "The " << STATUS_SERVER_NAME << " - Version: (" << STATUS_SERVER_VERSION << ")" << std::endl;
+	std::cout << "The " << STATUS_SERVER_NAME << " - Version: (" << STATUS_SERVER_VERSION <<  ")" << std::endl;
 	std::cout << "Compiled with: " << BOOST_COMPILER << std::endl;
 	std::cout << "Compiled on " << __DATE__ << ' ' << __TIME__ << " for platform ";
 
@@ -129,10 +136,8 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 #endif
 	std::cout << std::endl;
 
-	std::cout << "Special Credits for: " << STATUS_SERVER_CREDITS << "." << std::endl;
-	std::cout << "Visit our forum for updates, support, and resources: https://forums.otserv.com.br/" << std::endl;
-	std::cout << "Link of repository: https://github.com/opentibiabr/OTServBR-Global/" << std::endl;
-	std::cout << "List of contributors: https://github.com/opentibiabr/OTServBR-Global/graphs/contributors" << std::endl;
+	std::cout << "Engine Credits for: " << STATUS_SERVER_CREDITS << "." << std::endl;
+	std::cout << "A server developed by " << STATUS_SERVER_CONTRIBUTORS << "." << std::endl;
 	std::cout << std::endl;
 
 	// TODO: dirty for now; Use stdarg;
@@ -160,7 +165,7 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 #endif
 
 	//set RSA key
-    g_RSA.loadPEM("key.pem");
+	g_RSA.loadPEM("key.pem");
 
 	std::cout << ">> Establishing database connection..." << std::flush;
 
@@ -170,7 +175,6 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 	}
 
 	std::cout << " MySQL " << Database::getClientVersion() << std::endl;
-
 	// run database manager
 	std::cout << ">> Running database manager" << std::endl;
 
@@ -205,9 +209,23 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		return;
 	}
 
+	// if (g_config.getBoolean(ConfigManager::PROTO_BUFF)) {
+	// 	if (!Item::items.loadFromProtobuf("appearances.dat")) {
+	// 		startupErrorMessage("Unable to load appearances.dat!");
+	// 		return;
+	// 	}
+	// }
+
 	std::cout << ">> Loading script systems" << std::endl;
 	if (!ScriptingManager::getInstance().loadScriptSystems()) {
 		startupErrorMessage("Failed to load script systems");
+		return;
+	}
+
+	// dando prioridade
+	std::cout << ">> Loading bestiary" << std::endl;
+	if (!g_bestiaries.loadFromXml()) {
+		startupErrorMessage("Unable to load Bestiaries!");
 		return;
 	}
 
@@ -235,6 +253,31 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		return;
 	}
 
+	std::cout << ">> Loading imbuements" << std::endl;
+	if (!g_imbuements.loadFromXml()) {
+		startupErrorMessage("Unable to load imbuements!");
+		return;
+	}
+
+	std::cout << ">> Loading charms" << std::endl;
+	if (!g_charms.loadFromXml()) {
+		startupErrorMessage("Unable to load Charms!");
+		return;
+	}
+
+
+	std::cout << ">> Loading Store" << std::endl;
+	if (!g_store.loadFromXml()) {
+		startupErrorMessage("Unable to load store!");
+		return;
+	}
+
+	std::cout << ">> Loading prey data" << std::endl;
+	if (!g_prey.loadFromXml()) {
+		startupErrorMessage("Unable to load prey data!");
+		return;
+	}
+
 	std::cout << ">> Checking world type... " << std::flush;
 	std::string worldType = asLowerCaseString(g_config.getString(ConfigManager::WORLD_TYPE));
 	if (worldType == "pvp") {
@@ -243,6 +286,8 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		g_game.setWorldType(WORLD_TYPE_NO_PVP);
 	} else if (worldType == "pvp-enforced") {
 		g_game.setWorldType(WORLD_TYPE_PVP_ENFORCED);
+	} else if (worldType == "retro-pvp") {
+		g_game.setWorldType(WORLD_TYPE_RETRO_OPEN_PVP);
 	} else {
 		std::cout << std::endl;
 
@@ -260,11 +305,22 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		return;
 	}
 
+	std::cout << ">> Loading guilds... " << std::flush;
+	if (g_game.loadGuilds()) {
+		std::cout << "All guilds have been loaded." << std::endl;
+	} else {
+		std::cout << "No guild to load." << std::endl;
+	}
+
 	std::cout << ">> Initializing gamestate" << std::endl;
 	g_game.setGameState(GAME_STATE_INIT);
 
 	// Game client protocols
 	services->add<ProtocolGame>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::GAME_PORT)));
+	if (g_config.getBoolean(ConfigManager::ENABLE_LIVE_CASTING)) {
+		ProtocolGame::clearLiveCastInfo();
+		services->add<ProtocolSpectator>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LIVE_CAST_PORT)));
+	}
 	services->add<ProtocolLogin>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
 
 	// OT protocols
@@ -272,6 +328,9 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 
 	// Legacy login protocol
 	services->add<ProtocolOld>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::LOGIN_PORT)));
+
+	// Site check protocol
+	services->add<ProtocolCheck>(static_cast<uint16_t>(g_config.getNumber(ConfigManager::CHECK_PORT)));
 
 	RentPeriod_t rentPeriod;
 	std::string strRentPeriod = asLowerCaseString(g_config.getString(ConfigManager::HOUSE_RENT_PERIOD));
@@ -304,4 +363,13 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 	g_game.start(services);
 	g_game.setGameState(GAME_STATE_NORMAL);
 	g_loaderSignal.notify_all();
+
+	std::cout << ">> Server started in " << (OTSYS_TIME(true) - starttime) / (1000.) << " seconds." << std::endl;
 }
+
+#ifndef _WIN32
+__attribute__ ((used)) void saveServer() {
+	if(g_game.getPlayersOnline() > 0)
+		g_game.saveGameState(true);
+}
+#endif

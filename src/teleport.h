@@ -1,6 +1,4 @@
 /**
- * @file teleport.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_TELEPORT_H_
-#define OT_SRC_TELEPORT_H_
+#ifndef FS_TELEPORT_H_873B7F7F1DB24101A7ACFB54B25E0ABC
+#define FS_TELEPORT_H_873B7F7F1DB24101A7ACFB54B25E0ABC
 
 #include "tile.h"
 

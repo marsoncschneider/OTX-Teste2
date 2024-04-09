@@ -1,6 +1,4 @@
 /**
- * @file cylinder.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_CYLINDER_H_
-#define OT_SRC_CYLINDER_H_
+#ifndef FS_CYLINDER_H_54BBCEB2A5B7415DAD837E4D58115150
+#define FS_CYLINDER_H_54BBCEB2A5B7415DAD837E4D58115150
 
 #include "enums.h"
 #include "thing.h"

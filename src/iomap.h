@@ -1,6 +1,4 @@
 /**
- * @file iomap.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_IOMAP_H_
-#define OT_SRC_IOMAP_H_
+#ifndef FS_IOMAP_H_8085D4B1037A44288494A52FDBB775E4
+#define FS_IOMAP_H_8085D4B1037A44288494A52FDBB775E4
 
 #include "item.h"
 #include "map.h"
@@ -109,7 +107,7 @@ class IOMap
 	static Tile* createTile(Item*& ground, Item* item, uint16_t x, uint16_t y, uint8_t z);
 
 	public:
-		bool loadMap(Map* map, const std::string& identifier);
+		bool loadMap(Map* map, const std::string& identifier, const Position& relativePosition = Position());
 
 		/* Load the spawns
 		 * \param map pointer to the Map class
@@ -153,7 +151,7 @@ class IOMap
 		bool parseMapDataAttributes(OTB::Loader& loader, const OTB::Node& mapNode, Map& map, const std::string& fileName);
 		bool parseWaypoints(OTB::Loader& loader, const OTB::Node& waypointsNode, Map& map);
 		bool parseTowns(OTB::Loader& loader, const OTB::Node& townsNode, Map& map);
-		bool parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Map& map);
+		bool parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Map& map, const Position& relativePosition = Position());
 		std::string errorString;
 };
 

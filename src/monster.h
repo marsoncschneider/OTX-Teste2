@@ -1,6 +1,4 @@
 /**
- * @file monster.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_MONSTER_H_
-#define OT_SRC_MONSTER_H_
+#ifndef FS_MONSTER_H_9F5EEFE64314418CA7DA41D1B9409DD0
+#define FS_MONSTER_H_9F5EEFE64314418CA7DA41D1B9409DD0
 
 #include "tile.h"
 #include "monsters.h"
@@ -43,6 +41,7 @@ class Monster final : public Creature
 {
 	public:
 		static Monster* createMonster(const std::string& name);
+		static Monster* createMonsterByRace(uint16_t raceid);
 		static int32_t despawnRange;
 		static int32_t despawnRadius;
 
@@ -63,6 +62,12 @@ class Monster final : public Creature
 		void setID() final {
 			if (id == 0) {
 				id = monsterAutoID++;
+				setCombatID();
+			}
+		}
+		void setCombatID() final {
+			if (combatid == 0) {
+				combatid = id;
 			}
 		}
 
@@ -99,6 +104,9 @@ class Monster final : public Creature
 		int32_t getDefense() const final {
 			return mType->info.defense;
 		}
+		uint16_t getRaceId() const {
+			return mType->info.raceid;
+		}
 		bool isPushable() const final {
 			return mType->info.pushable && baseSpeed != 0;
 		}
@@ -131,8 +139,8 @@ class Monster final : public Creature
 		uint32_t getRespawnType() const {
 			return mType->info.respawnType;
 		}
-		void setSpawn(Spawn* newSpawn) {
-			this->spawn = newSpawn;
+		void setSpawn(Spawn* spawn) {
+			this->spawn = spawn;
 		}
 
 		bool canWalkOnFieldType(CombatType_t combatType) const;
@@ -173,7 +181,7 @@ class Monster final : public Creature
 
 		bool isTarget(const Creature* creature) const;
 		bool isFleeing() const {
-			return !isSummon() && getHealth() <= mType->info.runAwayHealth && targetExetaCooldown <= 0;
+			return !isSummon() && getHealth() <= mType->info.runAwayHealth && challengeFocusDuration <= 0;
 		}
 
 		bool getDistanceStep(const Position& targetPos, Direction& direction, bool flee = false);
@@ -188,6 +196,26 @@ class Monster final : public Creature
 		}
 		bool getIgnoreFieldDamage() const {
 			return ignoreFieldDamage;
+		}
+
+		bool isRaid() {
+			return raid;
+		}
+
+		void isRaid(bool b) {
+			raid = b;
+		}
+
+		void setRemoveTime(int32_t decay) final {
+			removeTime = decay;
+		}
+
+		int32_t getRemoveTime() {
+			return removeTime;
+		}
+
+		bool inChallengeFocus() const {
+			return challengeFocusDuration > 0;
 		}
 
 		BlockType_t blockHit(Creature* attacker, CombatType_t combatType, int32_t& damage,
@@ -214,8 +242,9 @@ class Monster final : public Creature
 		int32_t minCombatValue = 0;
 		int32_t maxCombatValue = 0;
 		int32_t targetChangeCooldown = 0;
-		int32_t targetExetaCooldown = 0;
+		int32_t challengeFocusDuration = 0;
 		int32_t stepDuration = 0;
+		int32_t removeTime = -1;
 
 		Position masterPos;
 
@@ -224,6 +253,7 @@ class Monster final : public Creature
 		bool isMasterInRange = false;
 		bool randomStepping = false;
 		bool ignoreFieldDamage = false;
+		bool raid = false;
 
 		void onCreatureEnter(Creature* creature);
 		void onCreatureLeave(Creature* creature);

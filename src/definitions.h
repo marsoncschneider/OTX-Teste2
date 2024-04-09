@@ -1,6 +1,4 @@
  /**
- * @file definitions.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,16 +17,17 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_DEFINITIONS_H_
-#define OT_SRC_DEFINITIONS_H_
+#ifndef FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
+#define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
 
-static constexpr auto STATUS_SERVER_NAME = "OTServBR - Global";
-static constexpr auto STATUS_SERVER_VERSION = "Based on TFS 1.3";
-static constexpr auto STATUS_SERVER_CREDITS = "OTServBR Team and Contributors, OTXServer (Mattyx Gomez) and The Forgotten Server Developers";
+static constexpr auto STATUS_SERVER_NAME = "Otg-Parrot";
+static constexpr auto STATUS_SERVER_VERSION = "1.6";
+static constexpr auto STATUS_SERVER_CREDITS = "TFS Team, Erick Nunes, Leo Pereira, Marson Schneider, LukST, worthdavi, OTX Team, OTG Team";
+static constexpr auto STATUS_SERVER_CONTRIBUTORS = "Johncore and Mark Samman";
 
 static constexpr auto CLIENT_VERSION_MIN = 1100;
-static constexpr auto CLIENT_VERSION_MAX = 1200;
-static constexpr auto CLIENT_VERSION_STR = "12.00";
+static constexpr auto CLIENT_VERSION_MAX = 1235;
+static constexpr auto CLIENT_VERSION_STR = "12.35";
 
 static constexpr auto AUTHENTICATOR_DIGITS = 6U;
 static constexpr auto AUTHENTICATOR_PERIOD = 30U;

@@ -1,6 +1,4 @@
 /**
- * @file events.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
  * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
  *
@@ -19,12 +17,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_EVENTS_H_
-#define OT_SRC_EVENTS_H_
+#ifndef FS_EVENTS_H_BD444CC0EE167E5777E4C90C766B36DC
+#define FS_EVENTS_H_BD444CC0EE167E5777E4C90C766B36DC
 
 #include "imbuements.h"
 #include "luascript.h"
 #include "spells.h"
+#include "const.h"
 
 class Party;
 class ItemType;
@@ -39,6 +38,7 @@ class Events
 		int32_t creatureOnAreaCombat = -1;
 		int32_t creatureOnTargetCombat = -1;
 		int32_t creatureOnDrainHealth = -1;
+		int32_t creatureOnHear = -1;
 
 		// Party
 		int32_t partyOnJoin = -1;
@@ -65,7 +65,7 @@ class Events
 		int32_t playerOnGainSkillTries = -1;
 		int32_t playerOnRequestQuestLog = -1;
 		int32_t playerOnRequestQuestLine = -1;
-		int32_t playerOnStorageUpdate = -1;
+		int32_t playerOnStorageUpdate = -1;		
 		int32_t playerOnRemoveCount = -1;
 		int32_t playerCanBeAppliedImbuement = -1;
 		int32_t playerOnApplyImbuement = -1;
@@ -87,6 +87,7 @@ class Events
 		ReturnValue eventCreatureOnAreaCombat(Creature* creature, Tile* tile, bool aggressive);
 		ReturnValue eventCreatureOnTargetCombat(Creature* creature, Creature* target);
 		void eventCreatureOnDrainHealth(Creature* creature, Creature* attacker, CombatType_t& typePrimary, int32_t& damagePrimary, CombatType_t& typeSecondary, int32_t& damageSecondary, TextColor_t& colorPrimary, TextColor_t& colorSecondary);
+		void eventCreatureOnHear(Creature* creature, Creature* speaker, const std::string& words, SpeakClasses type);
 
 		// Party
 		bool eventPartyOnJoin(Party* party, Player* player);
@@ -121,7 +122,7 @@ class Events
 		void eventPlayerOnCombat(Player* player, Creature* target, Item* item, CombatDamage& damage);
 
 		// Monster
-		void eventMonsterOnSpawn(Monster* monster, const Position& position);
+		bool eventMonsterOnSpawn(Monster* monster, const Position& position, bool startup, bool artificial);
 		void eventMonsterOnDropLoot(Monster* monster, Container* corpse);
 
 	private:

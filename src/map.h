@@ -1,8 +1,6 @@
 /**
- * @file map.h
- * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2019  Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +17,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OT_SRC_MAP_H_
-#define OT_SRC_MAP_H_
+#ifndef FS_MAP_H_E3953D57C058461F856F5221D359DAFA
+#define FS_MAP_H_E3953D57C058461F856F5221D359DAFA
 
 #include "position.h"
 #include "item.h"
@@ -43,7 +41,7 @@ static constexpr int32_t MAP_MAX_LAYERS = 16;
 struct FindPathParams;
 struct AStarNode {
 	AStarNode* parent;
-	int_fast32_t f;
+	int_fast32_t f, g;
 	uint16_t x, y;
 };
 
@@ -57,7 +55,7 @@ class AStarNodes
 	public:
 		AStarNodes(uint32_t x, uint32_t y);
 
-		AStarNode* createOpenNode(AStarNode* parent, uint32_t x, uint32_t y, int_fast32_t f);
+		AStarNode* createOpenNode(AStarNode* parent, uint32_t x, uint32_t y, int_fast32_t f, int_fast32_t g);
 		AStarNode* getBestNode();
 		void closeNode(AStarNode* node);
 		void openNode(AStarNode* node);
@@ -75,95 +73,179 @@ class AStarNodes
 		int_fast32_t closedNodes;
 };
 
-using SpectatorCache = std::map<Position, SpectatorHashSet>;
-
 static constexpr int32_t FLOOR_BITS = 3;
 static constexpr int32_t FLOOR_SIZE = (1 << FLOOR_BITS);
 static constexpr int32_t FLOOR_MASK = (FLOOR_SIZE - 1);
 
 struct Floor {
-	constexpr Floor() = default;
+	Floor() : tiles() {}
 	~Floor();
 
 	// non-copyable
 	Floor(const Floor&) = delete;
 	Floor& operator=(const Floor&) = delete;
 
-	Tile* tiles[FLOOR_SIZE][FLOOR_SIZE] = {};
+	Tile* tiles[FLOOR_SIZE][FLOOR_SIZE];
 };
 
 class FrozenPathingConditionCall;
-class QTreeLeafNode;
 
-class QTreeNode
-{
+/* Much faster modified version of spectators holder - FastSpectatorHolder by bbarwik@gmail.com */
+class FastSpectatorHolder {
 	public:
-		constexpr QTreeNode() = default;
-		virtual ~QTreeNode();
+		struct SpectatorVector {
+			Creature* creature = nullptr;
+			Position pos;
+			bool player = false;
+		};
 
-		// non-copyable
-		QTreeNode(const QTreeNode&) = delete;
-		QTreeNode& operator=(const QTreeNode&) = delete;
+		FastSpectatorHolder() {
+			creatures = new SpectatorVector[2]{};
+			capacity = 2;
+		}
+		~FastSpectatorHolder() {
+			delete[] creatures;
+		}
+		void add(Creature* creature, const Position& pos);
+		void move(Creature* creature, const Position& pos);
+		void remove(Creature* creature);
 
-		bool isLeaf() const {
-			return leaf;
+		const SpectatorVector* getCreatures() const {
+			return creatures;
+		}
+		uint16_t getCapacity() const {
+			return capacity;
+		}
+		uint16_t getCount() const {
+			return count;
 		}
 
-		QTreeLeafNode* getLeaf(uint32_t x, uint32_t y);
+	private:
+		void _add(Creature* creature, const Position& pos, uint16_t i);
 
-		template<typename Leaf, typename Node>
-		static Leaf getLeafStatic(Node node, uint32_t x, uint32_t y)
-		{
-			do {
-				node = node->child[((x & 0x8000) >> 15) | ((y & 0x8000) >> 14)];
-				if (!node) {
-					return nullptr;
-				}
-
-				x <<= 1;
-				y <<= 1;
-			} while (!node->leaf);
-			return static_cast<Leaf>(node);
-		}
-
-		QTreeLeafNode* createLeaf(uint32_t x, uint32_t y, uint32_t level);
-
-	protected:
-		QTreeNode* child[4] = {};
-
-		bool leaf = false;
-
-		friend class Map;
+		SpectatorVector *creatures = nullptr;
+		uint16_t index = 0, count = 0, capacity = 0, player_index = 0xFFFF;
 };
 
-class QTreeLeafNode final : public QTreeNode
-{
+class QTreeLeafNode {
 	public:
-		QTreeLeafNode() { leaf = true; newLeaf = true; }
-		~QTreeLeafNode();
+		~QTreeLeafNode() {
+			for (auto* ptr : array) {
+				if (ptr) {
+					delete ptr;
+				}
+			}
+		}
 
-		// non-copyable
-		QTreeLeafNode(const QTreeLeafNode&) = delete;
-		QTreeLeafNode& operator=(const QTreeLeafNode&) = delete;
+		QTreeLeafNode& operator=(QTreeLeafNode&& o) {
+			spectators = std::move(o.spectators);
+			x = o.x;
+			y = o.y;
+			for (int i = 0; i < MAP_MAX_LAYERS; ++i) {
+				array[i] = o.array[i];
+				o.array[i] = nullptr;
+			}
+			return *this;
+		}
 
-		Floor* createFloor(uint32_t z);
+		Floor* createFloor(uint32_t z) {
+			if (!array[z]) {
+				array[z] = new Floor();
+			}
+
+			return array[z];
+		}
+
 		Floor* getFloor(uint8_t z) const {
 			return array[z];
 		}
 
-		void addCreature(Creature* c);
-		void removeCreature(Creature* c);
+		void addCreature(Creature* c, const Position& pos) {
+			spectators.add(c, pos);
+		}
 
-	protected:
-		static bool newLeaf;
-		QTreeLeafNode* leafS = nullptr;
-		QTreeLeafNode* leafE = nullptr;
-		Floor* array[MAP_MAX_LAYERS] = {};
-		CreatureVector creature_list;
-		CreatureVector player_list;
+		void moveCreature(Creature* c, const Position& pos) {
+			spectators.move(c, pos);
+		}
+
+		void removeCreature(Creature* c) {
+			spectators.remove(c);
+		}
+
+		void setXY(uint16_t _x, uint16_t _y) {
+			x = _x;
+			y = _y;
+		}
+
+		uint16_t getX() const { return x; };
+		uint16_t getY() const { return y; };
+
+		const FastSpectatorHolder& getSpectators() const {
+			return spectators;
+		};
+
+	private:
+		Floor* array[MAP_MAX_LAYERS] = {nullptr};
+		FastSpectatorHolder spectators;
+		uint16_t x, y;
 
 		friend class Map;
 		friend class QTreeNode;
+};
+
+/* Much faster modified version of QTreeNode by bbarwik@gmail.com */
+class QTreeNodeHashMap {
+	public:
+		QTreeLeafNode* getLeaf(uint16_t x, uint16_t y) const {
+			x >>= FLOOR_BITS;
+			y >>= FLOOR_BITS;
+			const Node& node = nodes[x % 1024][y % 1024];
+			if (!node.nodes) {
+				return nullptr;
+			}
+
+			for (int i = 0; i < node.count; ++i) {
+				if (node.nodes[i].getX() == x && node.nodes[i].getY() == y) {
+					return &node.nodes[i];
+				}
+			}
+
+			return nullptr;
+		};
+
+		QTreeLeafNode* createLeaf(uint16_t x, uint16_t y) {
+			x >>= FLOOR_BITS;
+			y >>= FLOOR_BITS;
+			Node& node = nodes[x % 1024][y % 1024];
+			if (!node.nodes) {
+				node.nodes = new QTreeLeafNode[1];
+				node.count = 1;
+				node.nodes[0].setXY(x,y);
+				return &node.nodes[0];
+			}
+
+			for (int i = 0; i < node.count; ++i) {
+				if (node.nodes[i].getX() == x && node.nodes[i].getY() == y) {
+					return &node.nodes[i];
+				}
+			}
+
+			QTreeLeafNode* newNodes = new QTreeLeafNode[node.count + 1];
+			for (int i = 0; i < node.count; ++i) {
+				newNodes[i] = std::move(node.nodes[i]);
+			}
+
+			delete[] node.nodes;
+			node.nodes = newNodes;
+			node.count += 1;
+			node.nodes[node.count - 1].setXY(x,y);
+			return &node.nodes[node.count - 1];
+		};
+
+		struct Node {
+			QTreeLeafNode* nodes = nullptr;
+			int count = 0;
+		} nodes[1024][1024];
 };
 
 /**
@@ -174,10 +256,10 @@ class QTreeLeafNode final : public QTreeNode
 class Map
 {
 	public:
-		static constexpr int32_t maxViewportX = 11; //min value: maxClientViewportX + 1
-		static constexpr int32_t maxViewportY = 11; //min value: maxClientViewportY + 1
-		static constexpr int32_t maxClientViewportX = 8;
-		static constexpr int32_t maxClientViewportY = 6;
+		static constexpr int32_t maxViewportX = 18; //min value: maxClientViewportX + 1
+		static constexpr int32_t maxViewportY = 18; //min value: maxClientViewportY + 1
+		static constexpr int32_t maxClientViewportX = 15;
+		static constexpr int32_t maxClientViewportY = 8;
 
 		uint32_t clean() const;
 
@@ -185,7 +267,7 @@ class Map
 		  * Load a map.
 		  * \returns true if the map was loaded successfully
 		  */
-		bool loadMap(const std::string& identifier, bool loadHouses);
+		bool loadMap(const std::string& identifier, bool loadHouses, const Position& relativePosition);
 
 		/**
 		  * Save a map.
@@ -220,12 +302,7 @@ class Map
 		bool placeCreature(const Position& centerPos, Creature* creature, bool extendedPos = false, bool forceLogin = false);
 
 		void moveCreature(Creature& creature, Tile& newTile, bool forceTeleport = false);
-
-		void getSpectators(SpectatorHashSet& spectators, const Position& centerPos, bool multifloor = false, bool onlyPlayers = false,
-						   int32_t minRangeX = 0, int32_t maxRangeX = 0,
-						   int32_t minRangeY = 0, int32_t maxRangeY = 0);
-
-		void clearSpectatorCache();
+		void getSpectators(SpectatorVec& list, const Position& centerPos, bool multifloor = false, bool onlyPlayers = false, int32_t minRangeX = 0, int32_t maxRangeX = 0, int32_t minRangeY = 0, int32_t maxRangeY = 0);
 
 		/**
 		  * Checks if you can throw an object to that position
@@ -237,7 +314,7 @@ class Map
 		  *	\returns The result if you can throw there or not
 		  */
 		bool canThrowObjectTo(const Position& fromPos, const Position& toPos, bool checkLineOfSight = true,
-							  int32_t rangex = Map::maxClientViewportX, int32_t rangey = Map::maxClientViewportY) const;
+		                      int32_t rangex = Map::maxClientViewportX, int32_t rangey = Map::maxClientViewportY) const;
 
 		/**
 		  * Checks if path is clear from fromPos to toPos
@@ -252,35 +329,27 @@ class Map
 
 		const Tile* canWalkTo(const Creature& creature, const Position& pos) const;
 
-		bool getPathMatching(const Creature& creature, std::forward_list<Direction>& dirList,
-						const FrozenPathingConditionCall& pathCondition, const FindPathParams& fpp) const;
+		bool getPathMatching(const Creature& creature, Position targetPos, std::forward_list<Direction>& dirList,
+		                     const FrozenPathingConditionCall& pathCondition, const FindPathParams& fpp) const;
 
 		std::map<std::string, Position> waypoints;
 
 		QTreeLeafNode* getQTNode(uint16_t x, uint16_t y) {
-			return QTreeNode::getLeafStatic<QTreeLeafNode*, QTreeNode*>(&root, x, y);
+			return root.getLeaf(x, y);
 		}
 
 		Spawns spawns;
 		Towns towns;
 		Houses houses;
-	protected:
-		SpectatorCache spectatorCache;
-		SpectatorCache playersSpectatorCache;
 
-		QTreeNode root;
+	private:
+		QTreeNodeHashMap root;
 
 		std::string spawnfile;
 		std::string housefile;
 
 		uint32_t width = 0;
 		uint32_t height = 0;
-
-		// Actually scans the map for spectators
-		void getSpectatorsInternal(SpectatorHashSet& spectators, const Position& centerPos,
-								   int32_t minRangeX, int32_t maxRangeX,
-								   int32_t minRangeY, int32_t maxRangeY,
-								   int32_t minRangeZ, int32_t maxRangeZ, bool onlyPlayers) const;
 
 		friend class Game;
 		friend class IOMap;
